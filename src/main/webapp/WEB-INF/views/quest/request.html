@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>퀘스트</title>
+<script data-main="/resources/js/main" src="/resources/assets/lib/jquery/jquery-2.1.0.min.js"></script>
+<script data-main="/resources/js/main" src="/resources/js/ajax.js"></script>
+<script type="text/javascript">
+function request(form) {
+	ajax.submit(form, function(data) {
+		console.log(data);
+		if(data != null) {
+			alert("퀘스트를 올렸습니다.");
+			location.href = '/quest/mainlist';
+		}
+		else {
+			alert(data.mssege);
+		}
+	});
+	return false;
+}
+</script>
+</head>
+<body>
+<h1>요청</h1>
+<form action="/api/quest" method="POST" onsubmit="return request(this);">
+<label>퀘스트명</label><input type="text" name="name" id="name"><br>
+<input type="submit" id="" name="" value="요청">
+</form>
+<!-- <label>지원시작일</label><input type="datetime-local" name="지원시작일" id=""><br>
+<label>지원마감일</label><input type="datetime-local" name="지원마감일" id=""><br>
+<label>퀘스트시작일</label><input type="date" name="퀘스트시작일" id=""><br>
+<label>퀘스트마감일</label><input type="date" name="퀘스트마감일" id=""><br>
+<label>보상</label><input type="number" name="보상" id="보상"><br>
+<label>내용</label><input type="text" name="내용" id="내용"><br>
+<span>참고 이미지</span><br> -->
+</body>
+</html>

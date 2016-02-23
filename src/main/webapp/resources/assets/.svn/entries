@@ -1,0 +1,40 @@
+10
+
+dir
+97
+svn://svn.gabia.com/deploy/trunk/Deployment%20System/src/main/webapp/resources/assets
+svn://svn.gabia.com/deploy
+
+
+
+2014-05-28T00:28:27.773810Z
+77
+lhh
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+c54181bc-d58a-4412-b92b-eda6717f3e03
+
+bootstrap
+dir
+
+fonts
+dir
+
+img
+dir
+
+lib
+dir
+
