@@ -9,19 +9,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.poom.quest.services.model.user.User;
+
 /**
  * Handles requests for the application home page.
  */
 @Controller
 @RequestMapping("/user")
-public class UserController { /* 로그인 하지 않은 사용자를 대상으로 한 view 컨트롤러 */
+public class UserController extends GenericViewController<User>{ /* 로그인 하지 않은 사용자를 대상으로 한 view 컨트롤러 */
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-	
-	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String main(HttpServletRequest request, Model model) {
-		return "user/main";
-	}
 	
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String login(HttpServletRequest request, Model model) {

@@ -17,8 +17,7 @@ public abstract class GenericDao<T> {
 	protected EntityManager em;
 	
     @SuppressWarnings("unchecked")
-	protected
-	final Class<T> clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+	protected final Class<T> clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	private final String model = clazz.getSimpleName();
 	protected String SELECT_ALL_SQL = "SELECT * FROM " + this.model;
 	private String SELECT_COUNT_SQL = "SELECT count(*) FROM " + this.model;

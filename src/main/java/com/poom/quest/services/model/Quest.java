@@ -26,6 +26,8 @@ public class Quest extends GenericModel {
 	private Date recruitmentEndDate; //마감일
 	private Integer duration; //수행기간(일)
 	private String description; //설명 description
+	//계약에 대한.. (패널티 - 위약금)
+	//sub Project?
 	
 	@OneToMany(mappedBy = "quest", fetch = FetchType.LAZY)
 	private Set<Classification> classification;
