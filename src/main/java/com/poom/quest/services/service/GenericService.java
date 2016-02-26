@@ -3,10 +3,9 @@ package com.poom.quest.services.service;
 import java.util.Date;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.poom.quest.services.dao.GenericDao;
 import com.poom.quest.services.model.abstractModel.GenericModel;
@@ -41,8 +40,12 @@ public abstract class GenericService<T> {
 		return genericDao.listByKey(keyName, key);
 	}
 	
+	public List<T> listByParent(Integer parentId, Class<?> parentClass) {
+		return genericDao.listByParent(parentId, parentClass);
+	}
+	
 	public List<T> listByParent(Integer parentId, String parentName) {
-		return listByParent(parentId, parentName);
+		return genericDao.listByParent(parentId, parentName);
 	}
 	
 	public List<T> search(String keyword, String[] keys) {

@@ -46,8 +46,9 @@ public abstract class GenericDao<T> {
 		return em.createNativeQuery(SELECT_ALL_SQL + where, clazz).setParameter("key", key).getResultList();
 	}
 	
-	public List<T> listByParent(Integer parentId, String parentName) {
-		String columnName = parentName + "Id";
+	public List<T> listByParent(Integer parentId, Class<?> parentClass) {
+		String parentName = parentClass.getSimpleName();
+		String columnName = parentName.toLowerCase() + "Id";
 		if(parentId != null) {
 			String where = " WHERE " + columnName + "=:" + columnName;
 			return em.createNativeQuery(SELECT_ALL_SQL + where, clazz).setParameter(columnName, parentId).getResultList();
@@ -55,7 +56,17 @@ public abstract class GenericDao<T> {
 			String where = " WHERE " + columnName + " is NULL";
 			return em.createNativeQuery(SELECT_ALL_SQL + where, clazz).getResultList();
 		}
-		
+	}
+	
+	public List<T> listByParent(Integer parentId, String parentName) {
+		String columnName = parentName.toLowerCase() + "Id";
+		if(parentId != null) {
+			String where = " WHERE " + columnName + "=:" + columnName;
+			return em.createNativeQuery(SELECT_ALL_SQL + where, clazz).setParameter(columnName, parentId).getResultList();
+		} else {
+			String where = " WHERE " + columnName + " is NULL";
+			return em.createNativeQuery(SELECT_ALL_SQL + where, clazz).getResultList();
+		}
 	}
 	
 	public List<T> search(String keyword, String[] keys) {

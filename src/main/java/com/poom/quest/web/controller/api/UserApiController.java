@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.poom.quest.services.model.user.User;
 
-/**
- * Handles requests for the application home page.
- */
 @Controller
 @RequestMapping("api/user")
 public class UserApiController extends GenericApiController<User> {

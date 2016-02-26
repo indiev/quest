@@ -6,6 +6,30 @@
 <script data-main="/resources/js/main" src="/resources/assets/lib/jquery/jquery-2.1.0.min.js"></script>
 <script data-main="/resources/js/main" src="/resources/js/ajax.js"></script>
 <script type="text/javascript">
+function selectInputList(name, list) {
+	var select = $("select[name='" + name + "']");
+	select.html('');
+	select.append($("<option>").html('선택').val(null));
+	for(i in list) {
+		option = $("<option>");
+		option.html(list[i].name).val(list[i].id);
+		select.append(option);
+	}
+}
+$(function(){
+	selectInputList('area', {});
+	selectInputList('kind', {});
+	
+	ajax.get("/api/area/list", {}, function(list) {
+		selectInputList('area', list);
+	});
+	
+	$("select[name='area']").change(function(){
+		if(this.value != '') ajax.get("/api/kind/area/" + this.value, {}, function(list) {
+			selectInputList('kind', list);
+		});
+	});
+});
 function request(form) {
 	ajax.submit(form, function(data) {
 		console.log(data);
@@ -23,16 +47,21 @@ function request(form) {
 </head>
 <body>
 <h1>요청</h1>
+일반 사용자 정보
 <form action="/api/quest" method="POST" onsubmit="return request(this);">
-<label>퀘스트명</label><input type="text" name="name" id="name"><br>
+<label for="name">퀘스트명</label><input type="text" name="name" id="name"><br>
+<label for="area">분야</label><select name="area" id="area"></select>
+<label for="kind">업무</label><select name="kind" id="kind"></select><br>
+<!-- 
+<label for="recruitmentEndDate">지원마감일</label><input type="datetime-local" name="recruitmentEndDate" id="recruitmentEndDate"><br>
+ -->
+<label for="duration">기간</label><input type="number" name="duration" id="duration"><br>
+<label for="reward">보상</label><input type="text" name="reward" id="reward"><br>
+<label for="qualification">자격</label><input type="text" name="qualification" id="qualification"><br>
+<label for="description">내용</label><input type="text" name="description" id="description"><br>
 <input type="submit" id="" name="" value="요청">
 </form>
-<!-- <label>지원시작일</label><input type="datetime-local" name="지원시작일" id=""><br>
-<label>지원마감일</label><input type="datetime-local" name="지원마감일" id=""><br>
-<label>퀘스트시작일</label><input type="date" name="퀘스트시작일" id=""><br>
-<label>퀘스트마감일</label><input type="date" name="퀘스트마감일" id=""><br>
-<label>보상</label><input type="number" name="보상" id="보상"><br>
-<label>내용</label><input type="text" name="내용" id="내용"><br>
+<!--
 <span>참고 이미지</span><br> -->
 </body>
 </html>

@@ -23,6 +23,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import com.poom.quest.services.config.ServicesConfiguration;
 
 
@@ -88,6 +90,7 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter {
     	supportedMediaTypes.add(new MediaType("application", "json", StandardCharsets.UTF_8));
     	supportedMediaTypes.add(new MediaType("application", "x-www-form-urlencoded", StandardCharsets.UTF_8));
     	mappingJackson2HttpMessageConverter.setSupportedMediaTypes(supportedMediaTypes);
+    	mappingJackson2HttpMessageConverter.setObjectMapper(new ObjectMapper().registerModule(new Hibernate5Module()));
     	converters.add(new MappingJackson2HttpMessageConverter());
 	}
 }

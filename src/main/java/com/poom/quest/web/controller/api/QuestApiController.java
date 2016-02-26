@@ -33,8 +33,12 @@ public class QuestApiController extends GenericApiController<Quest> {
 		HttpSession session = request.getSession(true);
 		SecurityContext securityContext = (SecurityContext) session.getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
 		String name = securityContext.getAuthentication().getName();
-		User user = userService.getByKey("name", name);
-		entity.setRequester(user.getRequester());
-		return genericService.add(entity);
+		if(name != null && !name.equals("")) {
+			User user = userService.getByKey("name", name);
+			entity.setRequester(user.getRequester());
+			return genericService.add(entity);
+		} else {
+			return null;
+		}
 	}
 }
