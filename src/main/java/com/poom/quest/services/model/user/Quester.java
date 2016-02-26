@@ -2,6 +2,7 @@ package com.poom.quest.services.model.user;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -21,11 +22,11 @@ public class Quester extends GenericModel {
 	@JoinColumn(name = "userId", referencedColumnName="id")
 	private User user;
 	
-	@ManyToMany(mappedBy = "questers", fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "questers", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<Quest> quests;
 
-	@ManyToMany(mappedBy = "applicants", fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "applicants", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<Quest> appliedQuests;
 	
