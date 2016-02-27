@@ -1,1 +1,1 @@
-web: sh target/quest-1.0.0
+web: java $JAVA_OPTS -cp target/classes:target/dependency/* Main
