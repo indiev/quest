@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>퀘스트</title>
+<link rel="stylesheet" href="/resources/assets/lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/resources/assets/lib/bootstrap/css/bootstrap-theme.min.css">
 <script data-main="/resources/js/main" src="/resources/assets/lib/jquery/jquery-2.1.0.min.js"></script>
 <script data-main="/resources/js/main" src="/resources/js/ajax.js"></script>
 <script type="text/javascript">
@@ -20,10 +22,19 @@ function login(form) {
 </script>
 </head>
 <body>
-<form name="login-form" action="/api/login" method="POST" onsubmit="return login(this);">
-<label for="login_userid">로그인 아이디</label><input type="text" id="login_userid" name="name"><br/>
-<label for="login_password">로그인 비밀번호</label><input type="password" id="login_password" name="password"><br/>
-<label for="login_submit">로그인 버튼</label><input type="submit" id="login_submit" name="submit" value="로그인">
+
+<form role="form" name="login-form" action="/api/login" method="POST" onsubmit="return login(this);">
+	<div class="container-pluid">
+		<div class="form-group">
+			<label for="login_userid" class="sr-only">로그인 아이디</label>
+			<input type="text" id="login_userid" name="name" class="form-control" placeholder="아이디">
+		</div>
+		<div class="form-group">
+			<label for="login_password" class="sr-only">로그인 비밀번호</label>
+			<input type="password" id="login_password" name="password" class="form-control" placeholder="비밀번호">
+		</div>
+		<input type="submit" id="login_submit" name="submit" class="btn btn-default btn-block" value="로그인">
+	</div>
 </form>
 <a href="/join"><span>회원가입</span></a>
 <span><a href="/searchId">아이디</a>/<a href="/searchPassword">비밀번호</a> 찾기</span>
