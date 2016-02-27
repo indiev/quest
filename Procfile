@@ -1,0 +1,1 @@
+web: sh target/bin/quest-1.0.0
