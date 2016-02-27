@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>list</title>
+<link rel="stylesheet" href="/resources/css/normalize.css">
+<link rel="stylesheet" href="/resources/assets/lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/resources/assets/lib/bootstrap/css/bootstrap-theme.min.css">
+<script data-main="/resources/js/main" src="/resources/assets/lib/jquery/jquery-2.1.0.min.js"></script>
+<script data-main="/resources/js/main" src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script data-main="/resources/js/main" src="/resources/js/ajax.js"></script>
+<script data-main="/resources/js/main" src="/resources/js/function.js"></script>
+<script data-main="/resources/js/main" src="/resources/assets/lib/react/react.js"></script>
+<script data-main="/resources/js/main" src="/resources/assets/lib/react/react-dom.js"></script>
+<script type="text/javascript">
+//ajax.get("/api/quest/list", {}, function(list){func.list(list)});
+
+function apply(value) {
+	ajax.post("/api/quest/apply", {"id":value}, function(result){
+		if(result) {
+			alert("지원하였습니다");
+		} else {
+			alert("지원할 수 없습니다.")
+		}
+	});
+}
+ajax.get("/api/quest/list", {}, function(list){
+	console.log(list);
+	for(i in list) {
+		$container = $("<div>").addClass("container-pluid");
+		
+		$row = $("<div>").addClass("row");
+		$col = $("<div>").addClass("col-xs-10");
+		if(jQuery.type(list[i].classification[0]) != "undefined") {
+			var text = list[i].classification[0].kind.area.name + "&nbsp;>&nbsp;" + list[i].classification[0].kind.name + "&nbsp;|&nbsp;";  
+			$col.append($("<span>").html(text));
+		}
+		$col.append($("<span>").html(list[i].requester.user.realname));
+		$row.append($col);
+		var createdDate = $.datepicker.formatDate('y.mm.dd', new Date(list[i].createdDate));
+		$row.append($("<div>").addClass("col-xs-2").append($("<span>").addClass("pull-right").append(createdDate)));
+		$container.append($row);
+		
+		$row = $("<div>").addClass("row");
+		$name = $("<a>").attr("href", "/quest/" + list[i].id).html(list[i].name);
+		$row.append($("<div>").addClass("col-xs-10").append($("<span>").append($name)));
+		$row.append($("<div>").addClass("col-xs-2").append($("<span>").addClass("pull-right").append(list[i].duration + "일간")));
+		$container.append($row);
+		
+		$row = $("<div>").addClass("row");
+		$row.append($("<div>").addClass("col-xs-6").append($("<span>").append(list[i].reward)));
+		$row.append($("<div>").addClass("col-xs-6").append($("<span>").addClass("pull-right").append(list[i].qualification)));
+		$container.append($row);
+		
+		$row = $("<div>").addClass("row");
+		$row.append($("<div>").addClass("col-xs-12").html(list[i].description));
+		$container.append($row);
+		
+		$row = $("<div>").addClass("row");
+		$applyButton = $("<button>").attr("id", "applyButton" + list[i].id).attr("name", "applyButton").val(list[i].id).html("지원");
+		$applyButton.addClass("pull-right");
+		$applyButton.click(function() { apply(this.value); });
+		$row.append($("<div>").addClass("col-xs-12").append($applyButton))
+		$container.append($row);
+		$("body").append($container);
+		//마감일
+		//지원자수
+		//모집자수?
+	}
+});
+</script>
+<style type="text/css">
+.container {border:1px solid;}
+.container-pluid {border:1px solid;}
+.row {clear:both; display: block;}
+</style>
+</head>
+<body>
+</body>
+</html>

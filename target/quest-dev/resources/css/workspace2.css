@@ -1,0 +1,81 @@
+<style type="text/css">
+ol, ul {
+  list-style: none;
+}
+
+.tools > li {
+  margin: 8px 8px;
+}
+
+input[type="radio" i], input[type="checkbox" i] {
+  margin: 3px 0.5ex;
+  padding: initial;
+  background-color: initial;
+  border: initial;
+}
+
+input[type="radio" i] {
+  -webkit-appearance: radio;
+  box-sizing: border-box;
+}
+
+input[type="radio" i] {
+  margin: 3px 3px 0px 5px;
+}
+.tools {
+  position: absolute;
+  top: 10vh;
+  left: 0;
+  background-color: #888899;
+  border: 1px solid #6e6e80;
+  border-left: 0;
+  margin-left:-40px;
+}
+.tools > li {
+  margin: 8px 8px;
+}
+.tools > li.separator {
+  margin: 8px 4px;
+  border-top: 1px solid #6e6e80;
+  border-bottom: 1px solid #a3a3b1;
+}
+.tool-btn > label {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  border: 1px solid #4b4b57;
+  font-size: 12px;
+  border-radius: 2px;
+  padding: 8px;
+  color: #cdcdd4;
+  background-color: #888899;
+  box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.2), inset 1px 1px 1px rgba(255, 255, 255, 0.3), inset -1px -1px 1px rgba(0, 0, 0, 0.3);
+  transition: background-color 125ms;
+}
+.tool-btn > input[type=radio] {
+  position: absolute;
+  font-size: 0;
+  left: -100%;
+}
+.tool-btn > input[type=radio]:checked + label {
+  background-color: #4b4b57;
+  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.3);
+}
+.tool-btn > input[type=radio]:focus + label {
+  box-shadow: 0 0 15px 1px #3498db;
+}
+
+.fa-fw {
+  width: 1.28571429em;
+  text-align: center;
+}
+
+.fa {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+</style>
