@@ -1,1 +1,1 @@
-web: sh target/bin/quest-1.0.0
+web: sh target/quest-1.0.0

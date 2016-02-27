@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>퀘스트</title>
+<script data-main="/resources/js/main" src="/resources/assets/lib/jquery/jquery-2.1.0.min.js"></script>
+<script data-main="/resources/js/main" src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script data-main="/resources/js/main" src="/resources/js/ajax.js"></script>
+<script type="text/javascript">
+var id = $(location).attr("href").slice($(location).attr("href").lastIndexOf("/")+1)
+ajax.get("/api/quest/"+id, {}, function(model){
+	console.log(model);
+	$html = $("<div>");
+	$html.append($("<div>").html(model.name));
+	$html.append($("<div>").html($.datepicker.formatDate('yy년 mm월 dd일', new Date(model.createdDate))));
+	$html.append($("<div>").html(model.reward));
+	$html.append($("<div>").html(model.qualification));
+	$html.append($("<div>").html(model.requester.user.realname));
+	$html.append($("<div>").html(model.duration));
+	$html.append($("<div>").html(model.classification[0].kind.area.name));
+	$html.append($("<div>").html(model.classification[0].kind.name));
+	$html.append($("<div>").html(model.description));
+	//$html.append($("<div>").html());
+	//패널티 위약금
+	//requirements
+	//지원자수/모집자수
+	$("body").append($html);
+});
+
+/*
+var NavigationCtrl = function ($scope, $location) {
+	$scope.relativePath = $location.absUrl().substr("http://".length, $location.absUrl().length);
+	$scope.relativePath = $scope.relativePath.substr($location.$$host.length, $scope.relativePath.length);
+	if($location.$$port != 80) $scope.relativePath = $scope.relativePath.substr((":"+$location.$$port).length, $scope.relativePath.length);
+	
+	$scope.isLoaded = function(path) {
+	    if ($scope.relativePath === path) return "active";
+	    else return "";
+	};
+};
+*/
+</script>
+</head>
+<body>
+<h1>상세</h1>
+</body>
+</html>
