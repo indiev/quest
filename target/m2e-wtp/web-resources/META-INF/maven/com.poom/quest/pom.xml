@@ -6,7 +6,6 @@
 	<artifactId>quest</artifactId>
 	<name>Quest</name>
 	<packaging>war</packaging>
-	<version>1.0.0</version>
 	<properties>
 		<java-version>1.8</java-version>
 		<org.springframework-version>4.2.5.RELEASE</org.springframework-version>
@@ -290,4 +289,5 @@
             </plugin>
         </plugins>
     </build>
+    <version>dev</version>
 </project>

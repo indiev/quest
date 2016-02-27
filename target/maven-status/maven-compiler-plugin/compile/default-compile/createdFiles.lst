@@ -8,8 +8,10 @@ com\poom\quest\services\model\user\User.class
 com\poom\quest\services\service\QuesterService.class
 com\poom\quest\web\controller\view\UserController.class
 com\poom\quest\services\model\user\Quester.class
+com\poom\quest\services\service\KindService.class
 com\poom\quest\web\controller\view\GenericViewController.class
 com\poom\quest\services\model\Kind.class
+com\poom\quest\web\controller\api\KindApiController.class
 com\poom\quest\services\model\user\Requester.class
 com\poom\quest\services\model\abstractModel\TreeModel.class
 com\poom\quest\services\service\RequesterService.class
@@ -32,6 +34,7 @@ com\poom\quest\web\controller\api\UserApiController.class
 com\poom\quest\services\config\MysqlDataSourceConfiguration.class
 com\poom\quest\web\config\WebAppConfiguration.class
 com\poom\quest\web\security\LoginSuccessHandler.class
+com\poom\quest\services\dao\KindDao.class
 com\poom\quest\services\model\Classification.class
 com\poom\quest\services\service\GenericService.class
 com\poom\quest\services\model\abstractModel\GenericModel.class
