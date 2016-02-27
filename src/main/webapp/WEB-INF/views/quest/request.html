@@ -3,8 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>퀘스트</title>
-<link rel="stylesheet" href="/resources/assets/lib/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="/resources/assets/lib/bootstrap/css/bootstrap-theme.min.css">
 <script data-main="/resources/js/main" src="/resources/assets/lib/jquery/jquery-2.1.0.min.js"></script>
 <script data-main="/resources/js/main" src="/resources/js/ajax.js"></script>
 <script type="text/javascript">
@@ -49,40 +47,19 @@ function request(form) {
 </head>
 <body>
 <h1>요청</h1>
-<form role="form" class="form-horizontal" action="/api/quest" method="POST" onsubmit="return request(this);">
-	<div class="form-group">
-		<label for="name" class="col-xs-1 control-label">퀘스트명</label>
-		<div class="col-xs-11"><input type="text" name="name" id="name" class="form-control"></div>
-	</div>
-	<div class="form-group">
-		<label for="area" class="col-xs-1 control-label">분야</label>
-		<div class="col-xs-5"><select name="area" id="area" class="form-control"></select></div>
-		<label for="kind" class="col-xs-1 control-label">업무</label>
-		<div class="col-xs-5"><select name="kind" id="kind" class="form-control"></select></div>
-	</div>
-	<div class="form-group">
-		
-	</div>
-	<div class="form-group">
-		<!-- <label for="recruitmentEndDate">지원마감일</label><input type="datetime-local" name="recruitmentEndDate" id="recruitmentEndDate"> -->
-	</div>
-	<div class="form-group">
-		<label for="duration" class="col-xs-1 control-label">기간</label>
-		<div class="col-xs-11"><input type="number" name="duration" id="duration" class="form-control"></div>
-	</div>
-	<div class="form-group">
-		<label for="reward"class="col-xs-1 control-label">보상</label>
-		<div class="col-xs-11"><input type="text" name="reward" id="reward" class="form-control"></div>
-	</div>
-	<div class="form-group">
-		<label for="qualification" class="col-xs-1 control-label">자격</label>
-		<div class="col-xs-11"><input type="text" name="qualification" id="qualification" class="form-control"></div>
-	</div>
-	<div class="form-group">
-		<label for="description" class="col-xs-1 control-label">내용</label>
-		<div class="col-xs-11"><input type="text" name="description" id="description" class="form-control"></div>
-	</div>
-	<input type="submit" id="" name="" class="btn btn-default" value="요청">
+일반 사용자 정보
+<form action="/api/quest" method="POST" onsubmit="return request(this);">
+<label for="name">퀘스트명</label><input type="text" name="name" id="name"><br>
+<label for="area">분야</label><select name="area" id="area"></select>
+<label for="kind">업무</label><select name="kind" id="kind"></select><br>
+<!-- 
+<label for="recruitmentEndDate">지원마감일</label><input type="datetime-local" name="recruitmentEndDate" id="recruitmentEndDate"><br>
+ -->
+<label for="duration">기간</label><input type="number" name="duration" id="duration"><br>
+<label for="reward">보상</label><input type="text" name="reward" id="reward"><br>
+<label for="qualification">자격</label><input type="text" name="qualification" id="qualification"><br>
+<label for="description">내용</label><input type="text" name="description" id="description"><br>
+<input type="submit" id="" name="" value="요청">
 </form>
 <!--
 <span>참고 이미지</span><br> -->

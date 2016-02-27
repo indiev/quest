@@ -27,42 +27,35 @@ function apply(value) {
 ajax.get("/api/quest/list", {}, function(list){
 	console.log(list);
 	for(i in list) {
-		$container = $("<div>").addClass("container-pluid");
-		
+		$html = $("<div>").addClass("container-fluid");
 		$row = $("<div>").addClass("row");
-		$col = $("<div>").addClass("col-xs-10");
 		if(jQuery.type(list[i].classification[0]) != "undefined") {
-			var text = list[i].classification[0].kind.area.name + "&nbsp;>&nbsp;" + list[i].classification[0].kind.name + "&nbsp;|&nbsp;";  
-			$col.append($("<span>").html(text));
+			$row.append($("<div>").html(list[i].classification[0].kind.area.name));
+			$row.append($("<div>").html("&nbsp;>&nbsp;"));
+			$row.append($("<div>").html(list[i].classification[0].kind.name));
+			$row.append($("<div>").html("&nbsp;|&nbsp;"));
 		}
-		$col.append($("<span>").html(list[i].requester.user.realname));
-		$row.append($col);
-		var createdDate = $.datepicker.formatDate('y.mm.dd', new Date(list[i].createdDate));
-		$row.append($("<div>").addClass("col-xs-2").append($("<span>").addClass("pull-right").append(createdDate)));
-		$container.append($row);
-		
+		$row.append($("<div>").html(list[i].requester.user.realname));
+		$row.append($("<div>").html($.datepicker.formatDate('y.mm.dd', new Date(list[i].createdDate))).css("float", "right"));
+		$html.append($row);
 		$row = $("<div>").addClass("row");
 		$name = $("<a>").attr("href", "/quest/" + list[i].id).html(list[i].name);
-		$row.append($("<div>").addClass("col-xs-10").append($("<span>").append($name)));
-		$row.append($("<div>").addClass("col-xs-2").append($("<span>").addClass("pull-right").append(list[i].duration + "일간")));
-		$container.append($row);
-		
+		$row.append($("<div>").html($name));
+		$row.append($("<div>").html(list[i].duration + "일간").css("float", "right"));
+		$html.append($row);
 		$row = $("<div>").addClass("row");
-		$row.append($("<div>").addClass("col-xs-6").append($("<span>").append(list[i].reward)));
-		$row.append($("<div>").addClass("col-xs-6").append($("<span>").addClass("pull-right").append(list[i].qualification)));
-		$container.append($row);
-		
+		$row.append($("<div>").html(list[i].reward));
+		$row.append($("<div>").html(list[i].qualification).css("float", "right"));
+		$html.append($row);
 		$row = $("<div>").addClass("row");
-		$row.append($("<div>").addClass("col-xs-12").html(list[i].description));
-		$container.append($row);
-		
+		$row.append($("<div>").html(list[i].description));
+		$html.append($row);
 		$row = $("<div>").addClass("row");
 		$applyButton = $("<button>").attr("id", "applyButton" + list[i].id).attr("name", "applyButton").val(list[i].id).html("지원");
-		$applyButton.addClass("pull-right");
 		$applyButton.click(function() { apply(this.value); });
-		$row.append($("<div>").addClass("col-xs-12").append($applyButton))
-		$container.append($row);
-		$("body").append($container);
+		$row.append($("<div>").append($applyButton))
+		$html.append($row);
+		$("body").append($html);
 		//마감일
 		//지원자수
 		//모집자수?
@@ -70,11 +63,33 @@ ajax.get("/api/quest/list", {}, function(list){
 });
 </script>
 <style type="text/css">
-.container {border:1px solid;}
-.container-pluid {border:1px solid;}
-.row {clear:both; display: block;}
+div {float:left;}
+.row {clear:both; display: block; width:100%;}
+.container-fluid {border:1px solid; display:block; width:100%;}
 </style>
 </head>
 <body>
+<h1>퀘스트 리스트</h1>
+<div style="border:1px solid; width:600px;">
+	<div style="margin:5px;">
+		<div style="float:left;">한국공기업</div>
+		<div style="float:right;">16.01.09</div>
+	</div>
+	<div style="clear:both; margin:5px;">
+		<div style="float:left;"><b>웹 사이트를 만들어라</b></div>
+		<div style="float:right;">27일간</div>
+	</div>
+	<div style="clear:both; margin:5px;">
+		<div style="float:left; padding-right:30px;">
+			<div><b>1000만원</b> <b>유저 레벨 3이상, 프로그래밍 스킬 레벨 3 이상</b></div>
+			<div>설명 어쩌구저쩌구</div>
+		</div>
+		<div>
+			<div><b>1명 모집 | 10명 지원</b></div>
+			<div><b>13일 남음</b></div>
+			<div><button>지원하기</button></div>
+		</div>
+	</div>
+</div><br/> 
 </body>
 </html>
