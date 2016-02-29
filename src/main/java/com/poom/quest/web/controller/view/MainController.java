@@ -22,4 +22,14 @@ public class MainController { /* 기본 메인 화면에 대한 view 컨트롤�
 	public String main(HttpServletRequest request, Model model) {
 		return "main";
 	}
+	
+	@RequestMapping(value = "/main", method = RequestMethod.GET)
+	public String mainContent(HttpServletRequest request, Model model) {
+		return "mainContent";
+	}
+	
+	@RequestMapping(value = "/sidebar-top", method = RequestMethod.GET)
+	public String sidebarTop(HttpServletRequest request, Model model) {
+		return "common/sidebar-top";
+	}
 }

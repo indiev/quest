@@ -1,18 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>퀘스트</title>
-<link rel="stylesheet" href="/resources/assets/lib/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="/resources/assets/lib/bootstrap/css/bootstrap-theme.min.css">
-<script data-main="/resources/js/main" src="/resources/assets/lib/jquery/jquery-2.1.0.min.js"></script>
-<script data-main="/resources/js/main" src="/resources/js/ajax.js"></script>
 <script type="text/javascript">
 function login(form) {
 	ajax.post($(form).attr('action'), $(form).serialize(), function(data) {
 		data = JSON.parse(data);
 		if(data.success) {
-			/* alert("로그인 했습니다."); */
 			location.href="/";
 		}
 		else alert("아이디와 비밀번호를 다시 확인해주세요.");
@@ -38,5 +28,3 @@ function login(form) {
 </form>
 <a href="/join"><span>회원가입</span></a>
 <span><a href="/searchId">아이디</a>/<a href="/searchPassword">비밀번호</a> 찾기</span>
-</body>
-</html>
