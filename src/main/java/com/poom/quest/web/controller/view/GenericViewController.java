@@ -52,14 +52,12 @@ public abstract class GenericViewController<T> {
 	}
 	
 	@RequestMapping(value = "list", method = RequestMethod.GET)
-	public String list(HttpServletRequest request, Model model) {
-		//model.addAttribute("model", genericService.list());
+	public String list(HttpServletRequest request) {
 		return modelName + "/list";
 	}
 	
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public String detail(HttpServletRequest request, Model model, @PathVariable Integer id) {
-		//model.addAttribute("model", genericService.get(id));
+	public String detail(HttpServletRequest request) {
 		return modelName + "/detail";
 	}
 }

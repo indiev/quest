@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -58,5 +59,15 @@ public class QuestController extends GenericViewController<Quest> {
 	@RequestMapping(value = "reward", method = RequestMethod.GET)
 	public String reward(HttpServletRequest request, Model model) {
 		return modelName + "/reward";
+	}
+	
+	@RequestMapping(value = "node/list", method = RequestMethod.GET)
+	public String listNode(HttpServletRequest request, Model model) {
+		return modelName + "/node/list";
+	}
+	
+	@RequestMapping(value = "node/detail", method = RequestMethod.GET)
+	public String detailNode(HttpServletRequest request, Model model, @PathVariable Integer id) {
+		return modelName + "/node/detail";
 	}
 }

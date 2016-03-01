@@ -1,3 +1,9 @@
+<style type="text/css">
+.container {border:1px solid;}
+.container-pluid {border:1px solid;}
+.row {clear:both; display: block;}
+</style>
+
 <script type="text/javascript">
 function apply(value) {
 	ajax.post("/api/quest/apply", {"id":value}, function(result){
@@ -6,6 +12,11 @@ function apply(value) {
 	});
 }
 ajax.get("/api/quest/list", {}, function(list){
+	$data = $.get("/quest/node/list", function(data){
+		return data;
+	});
+	$data = $("<div>").load("/quest/node/list");
+	console.log($data);
 	console.log(list);
 	for(i in list) {
 		$container = $("<div>").addClass("container-pluid");
@@ -19,7 +30,7 @@ ajax.get("/api/quest/list", {}, function(list){
 		$col.append($("<span>").html(list[i].requester.user.realname));
 		$row.append($col);
 		var createdDate = $.datepicker.formatDate('y.mm.dd', new Date(list[i].createdDate));
-		//$row.append($("<div>").addClass("col-xs-2").append($("<span>").addClass("pull-right").append(createdDate)));
+		$row.append($("<div>").addClass("col-xs-2").append($("<span>").addClass("pull-right").append(createdDate)));
 		$container.append($row);
 		
 		$row = $("<div>").addClass("row");
@@ -51,8 +62,3 @@ ajax.get("/api/quest/list", {}, function(list){
 	}
 });
 </script>
-<style type="text/css">
-.container {border:1px solid;}
-.container-pluid {border:1px solid;}
-.row {clear:both; display: block;}
-</style>
