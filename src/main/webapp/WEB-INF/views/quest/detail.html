@@ -1,3 +1,5 @@
+<div class="quest-detail"></div>
+
 <script type="text/javascript">
 function accept(questId, questerId) {
 	if(confirm("수락하시겠습니까?")) {
@@ -11,35 +13,72 @@ function accept(questId, questerId) {
 	}
 }
 
-var id = $(location).attr("href").slice($(location).attr("href").lastIndexOf("/")+1)
-ajax.get("/api/quest/"+id, {}, function(quest){
-	console.log(quest);
-	$html = $("<div>");
-	$html.append($("<div>").html(quest.name));
-	$html.append($("<div>").html($.datepicker.formatDate('yy년 mm월 dd일', new Date(quest.createdDate))));
-	$html.append($("<div>").html(quest.reward));
-	$html.append($("<div>").html(quest.qualification));
-	$html.append($("<div>").html(quest.requester.user.realname));
-	$html.append($("<div>").html(quest.duration));
-	$html.append($("<div>").html(quest.classification[0].kind.area.name));
-	$html.append($("<div>").html(quest.classification[0].kind.name));
-	$html.append($("<div>").html(quest.description));
-	$html.append($("<div>").html(quest.applicants.length + "명"));
-	$html.append($("<div>").html(quest.questers.length + "명"));
-	$html.append($("<div>").html("지원자"));
-	for(i in quest.applicants) {
-		$applicant = $("<div>").html(quest.applicants[i].user.realname);
-		$applicant.click(function(){ accept(quest.id, quest.applicants[i].id); });
-		$html.append($applicant);
-	}
-	$html.append($("<div>").html("퀘스터"));
-	for(i in quest.questers) {
-		$html.append($("<div>").html(quest.questers[i].user.realname));
-	}
-	//$html.append($("<div>").html());
-	//패널티 위약금
-	//requirements
-	//지원자수/모집자수
-	$("#main").append($html);
+function detailNode(id) {
+	ajax.get("/api/quest/"+id, {}, function(quest){
+		$.get("/quest/node/detail", function(detailNode){
+			if(jQuery.type(quest.classification[0]) != "undefined") {
+				detailNode.find(".area").html(quest.classification[0].kind.area.name);
+				detailNode.find(".kind").html(quest.classification[0].kind.name);
+			}
+			detailNode.find(".realname").html(quest.requester.user.realname);
+			detailNode.find(".name").html(quest.name);
+			detailNode.find(".createdDate").html($.datepicker.formatDate('yy년 mm월 dd일', new Date(quest.createdDate)));
+			detailNode.find(".reward").html(quest.reward);
+			detailNode.find(".qualification").html(quest.qualification);
+			detailNode.find(".duration").html(quest.duration);
+			detailNode.find(".description").html(quest.description);
+			for(i in quest.applicants) {
+				$applicant = $("<span>").html(quest.applicants[i].user.realname);
+				$applicant.click(function(){ accept(quest.id, quest.applicants[i].id); });
+				detailNode.find(".applicant").append($applicant);
+			}
+			for(i in quest.questers) {
+				$quester = $("<span>").html(quest.questers[i].user.realname);
+				detailNode.find(".questers").append($quester);
+			}
+			$("quest-detail").html(detailNode);
+		});
+		//$html.append($("<div>").html());
+		//패널티 위약금
+		//requirements
+		//지원자수/모집자수
+		$("#main").append($html);
+	});
+}
+$(document).ready(function(){
+	var id = $(location).attr("href").slice($(location).attr("href").lastIndexOf("/")+1)
+	console.log(id);
+	/*
+	ajax.get("/api/quest/"+id, {}, function(quest){
+		$.get("/quest/node/detail", function(detailNode){
+			if(jQuery.type(quest.classification[0]) != "undefined") {
+				detailNode.find(".area").html(quest.classification[0].kind.area.name);
+				detailNode.find(".kind").html(quest.classification[0].kind.name);
+			}
+			detailNode.find(".realname").html(quest.requester.user.realname);
+			detailNode.find(".name").html(quest.name);
+			detailNode.find(".createdDate").html($.datepicker.formatDate('yy년 mm월 dd일', new Date(quest.createdDate)));
+			detailNode.find(".reward").html(quest.reward);
+			detailNode.find(".qualification").html(quest.qualification);
+			detailNode.find(".duration").html(quest.duration);
+			detailNode.find(".description").html(quest.description);
+			for(i in quest.applicants) {
+				$applicant = $("<span>").html(quest.applicants[i].user.realname);
+				$applicant.click(function(){ accept(quest.id, quest.applicants[i].id); });
+				detailNode.find(".applicant").append($applicant);
+			}
+			for(i in quest.questers) {
+				$quester = $("<span>").html(quest.questers[i].user.realname);
+				detailNode.find(".questers").append($quester);
+			}
+			$("quest-detail").html(detailNode);
+		});
+		//$html.append($("<div>").html());
+		//패널티 위약금
+		//requirements
+		//지원자수/모집자수
+		$("#main").append($html);
+	});
+	*/
 });
 </script>

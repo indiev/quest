@@ -1,7 +1,7 @@
+<div class="quest-content"></div>
+
 <style type="text/css">
-.container {border:1px solid;}
-.container-pluid {border:1px solid;}
-.row {clear:both; display: block;}
+.quest-list-node { border:1px solid; margin-bottom: 10px;}
 </style>
 
 <script type="text/javascript">
@@ -11,54 +11,79 @@ function apply(value) {
 		else alert("지원할 수 없습니다.")
 	});
 }
-ajax.get("/api/quest/list", {}, function(list){
-	$data = $.get("/quest/node/list", function(data){
-		return data;
-	});
-	$data = $("<div>").load("/quest/node/list");
-	console.log($data);
-	console.log(list);
-	for(i in list) {
-		$container = $("<div>").addClass("container-pluid");
-		
-		$row = $("<div>").addClass("row");
-		$col = $("<div>").addClass("col-xs-10");
-		if(jQuery.type(list[i].classification[0]) != "undefined") {
-			var text = list[i].classification[0].kind.area.name + "&nbsp;>&nbsp;" + list[i].classification[0].kind.name + "&nbsp;|&nbsp;";  
-			$col.append($("<span>").html(text));
-		}
-		$col.append($("<span>").html(list[i].requester.user.realname));
-		$row.append($col);
-		var createdDate = $.datepicker.formatDate('y.mm.dd', new Date(list[i].createdDate));
-		$row.append($("<div>").addClass("col-xs-2").append($("<span>").addClass("pull-right").append(createdDate)));
-		$container.append($row);
-		
-		$row = $("<div>").addClass("row");
-		$name = $("<a>").attr("href", "/quest/" + list[i].id).html(list[i].name).addClass("h3");
-		$row.append($("<div>").addClass("col-xs-10").append($("<span>").append($name)));
-		//마감정보
-		$row.append($("<div>").addClass("col-xs-2").append($("<span>").addClass("pull-right").append(list[i].duration + "일간")));
-		$container.append($row);
-		
-		$row = $("<div>").addClass("row");
-		$row.append($("<div>").addClass("col-xs-6").append($("<span>").append(list[i].reward)));
-		$row.append($("<div>").addClass("col-xs-6").append($("<span>").addClass("pull-right").append(list[i].qualification)));
-		$container.append($row);
-		
-		$row = $("<div>").addClass("row");
-		$row.append($("<div>").addClass("col-xs-12").html(list[i].description));
-		$container.append($row);
-		
-		$row = $("<div>").addClass("row");
-		$applyButton = $("<button>").attr("id", "applyButton" + list[i].id).attr("name", "applyButton").val(list[i].id).html("지원");
-		$applyButton.addClass("pull-right");
-		$applyButton.click(function() { apply(this.value); });
-		$row.append($("<div>").addClass("col-xs-12").append($applyButton))
-		$container.append($row);
-		$("#main").append($container);
-		//마감일
-		//지원자수
-		//모집자수?
+function accept(questId, questerId) {
+	if(confirm("수락하시겠습니까?")) {
+		ajax.post("/api/quest/accept", {"questId":questId, "questerId":questerId}, function(result){
+			if(result) {
+				alert("수락했습니다");				
+			} else {
+				alert("퀘스터로 수락할 수 없습니다.");
+			}
+		});
 	}
+}
+function detail(id) {
+	$("div.quest-content").empty();
+	ajax.get("/api/quest/"+id, {}, function(quest){
+		$.get("/quest/node/detail", function(detailNode){
+			$detailNodeClone = $(detailNode).clone();
+			if(jQuery.type(quest.classification[0]) != "undefined") {
+				$detailNodeClone.find(".area").html(quest.classification[0].kind.area.name);
+				$detailNodeClone.find(".kind").html(quest.classification[0].kind.name);
+			}
+			$detailNodeClone.find(".realname").html(quest.requester.user.realname);
+			$detailNodeClone.find(".name").html(quest.name);
+			$detailNodeClone.find(".createdDate").html($.datepicker.formatDate('yy년 mm월 dd일', new Date(quest.createdDate)));
+			$detailNodeClone.find(".reward").html(quest.reward);
+			$detailNodeClone.find(".qualification").html(quest.qualification);
+			$detailNodeClone.find(".duration").html(quest.duration);
+			$detailNodeClone.find(".description").html(quest.description);
+			for(i in quest.applicants) {
+				$applicant = $("<li>").html(quest.applicants[i].user.realname);
+				$applicant.click(function(){ accept(quest.id, quest.applicants[i].id); });
+				$detailNodeClone.find(".applicants").append($applicant);
+			}
+			for(i in quest.questers) {
+				$quester = $("<li>").html(quest.questers[i].user.realname);
+				$detailNodeClone.find(".questers").append($quester);
+			}
+			$("div.quest-content").html($detailNodeClone);
+		});
+		//$html.append($("<div>").html());
+		//패널티 위약금
+		//requirements
+		//지원자수/모집자수
+	});
+}
+function list() {
+	$("div.quest-content").empty();
+	ajax.get("/api/quest/list", {}, function(list){
+		$.get("/quest/node/list", function(questNode){
+			for(i in list) {
+				var questNodeClone = $(questNode).clone();
+				
+				if(jQuery.type(list[i].classification[0]) != "undefined") {
+					questNodeClone.find(".area").html(list[i].classification[0].kind.area.name);
+					questNodeClone.find(".kind").html(list[i].classification[0].kind.name);
+				}
+				questNodeClone.find(".realname").html(list[i].requester.user.realname);
+				questNodeClone.find(".name").html(list[i].name);
+				questNodeClone.find(".name").click(function() { detail(list[i].id); });
+				questNodeClone.find(".duration").html(list[i].duration + "일");
+				questNodeClone.find(".reward").html(list[i].reward);
+				questNodeClone.find(".qualification").html(list[i].qualification);
+				questNodeClone.find(".description").html(list[i].description);
+				questNodeClone.find("[name='applyButton']").val(list[i].id);
+				questNodeClone.find("[name='applyButton']").click(function(){ apply(this.value); });
+				$("div.quest-content").append(questNodeClone);
+				//마감일
+				//지원자수
+				//모집자수?
+			}
+		});
+	});
+}
+$(document).ready(function(){
+	list();
 });
 </script>

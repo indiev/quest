@@ -62,12 +62,12 @@ public class QuestController extends GenericViewController<Quest> {
 	}
 	
 	@RequestMapping(value = "node/list", method = RequestMethod.GET)
-	public String listNode(HttpServletRequest request, Model model) {
+	public String listNode(HttpServletRequest request) {
 		return modelName + "/node/list";
 	}
 	
 	@RequestMapping(value = "node/detail", method = RequestMethod.GET)
-	public String detailNode(HttpServletRequest request, Model model, @PathVariable Integer id) {
+	public String detailNode(HttpServletRequest request) {
 		return modelName + "/node/detail";
 	}
 }

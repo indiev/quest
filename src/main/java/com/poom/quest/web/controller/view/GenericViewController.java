@@ -56,7 +56,7 @@ public abstract class GenericViewController<T> {
 		return modelName + "/list";
 	}
 	
-	@RequestMapping(value = "{id}", method = RequestMethod.GET)
+	@RequestMapping(value = {"{id}", "detail"}, method = RequestMethod.GET)
 	public String detail(HttpServletRequest request) {
 		return modelName + "/detail";
 	}
