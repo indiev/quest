@@ -1,4 +1,28 @@
-<div class="quest-content"></div>
+<div class="quest-form">
+	<form class="form-inline" role="form" action="" method="POST" onsubmit="return search(this);">
+		<div class="input-group">
+			<label for="searchKeyword" class="sr-only">검색</label>
+			<input type="text" name="searchKeyword" id="searchKeyword" class="form-control input-sm" placeholder="검색">
+			<span class="input-group-btn">
+				<button class="btn btn-default btn-sm" type="button">
+					<span class="glyphicon-search glyphicon" aria-hidden="true"></span>
+				</button>
+			</span>
+		</div>
+		<button type="button" class="btn btn-default btn-sm" name="requestButton" data-toggle="modal" data-target="#requestDialog">
+			<span class="glyphicon-plus glyphicon" aria-hidden="true"></span>
+		</button>
+	</form>
+</div>
+<div class="quest-content list-group"></div>
+
+<div class="modal fade" id="requestDialog" role="dialog" aria-labelledby="requestHeader" aria-hidden="true" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body"></div>
+		</div>
+	</div>
+</div>
 
 <style type="text/css">
 .quest-list-node { border:1px solid; margin-bottom: 10px;}
@@ -23,6 +47,7 @@ function accept(questId, questerId) {
 	}
 }
 function detail(id) {
+	console.log(id);
 	$("div.quest-content").empty();
 	ajax.get("/api/quest/"+id, {}, function(quest){
 		$.get("/quest/node/detail", function(detailNode){
@@ -67,8 +92,8 @@ function list() {
 					questNodeClone.find(".kind").html(list[i].classification[0].kind.name);
 				}
 				questNodeClone.find(".realname").html(list[i].requester.user.realname);
-				questNodeClone.find(".name").html(list[i].name);
-				questNodeClone.find(".name").click(function() { detail(list[i].id); });
+				questNodeClone.find(".name").html(list[i].name).val(list[i].id);
+				questNodeClone.find(".name").click(function() { detail($(this).val()); });
 				questNodeClone.find(".duration").html(list[i].duration + "일");
 				questNodeClone.find(".reward").html(list[i].reward);
 				questNodeClone.find(".qualification").html(list[i].qualification);
@@ -85,5 +110,8 @@ function list() {
 }
 $(document).ready(function(){
 	list();
+	$("button[name='requestButton']").click(function(){
+		$("#requestDialog").find("div.modal-body").load("/quest/request");
+	});
 });
 </script>

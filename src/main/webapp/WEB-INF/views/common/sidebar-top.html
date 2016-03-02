@@ -25,21 +25,23 @@
 				</ul>
 			</li>
 			<li><a href="/">etc</a></li>
-			<li>
-				<form class="navbar-form navbar-left" role="search">
-			       	<div class="form-group">
-			       		<label for="search" class="control-label"></label>
-			       		<input type="text" class="form-control input-sm" id="search" name="search" placeholder="검색어"/>
-			       	</div>
-			       	<button type="submit" class="btn btn-sm btn-default">찾기</button>
-				</form>
-			</li>
 		</ul>
-		<div class="navbar-form navbar-right btn-group">
-			<button type="button" class="btn btn-sm btn-primary" name="loginButton" data-toggle="modal" data-target="#logDialog">로그인</button>
-			<button type="button" class="btn btn-sm btn-danger" name="logoutButton">로그아웃</button>
-			<button type="button" class="btn btn-sm btn-info" name="joinButton" data-toggle="modal" data-target="#logDialog">회원가입</button>
-			<button type="button" class="btn btn-sm btn-warning" name="findButton" data-toggle="modal" data-target="#logDialog">아이디·비밀번호 찾기</button>
+		<form class="navbar-form navbar-left" role="search">
+	       	<div class="input-group">
+	       		<label for="search" class="sr-only">검색</label>
+	       		<input type="text" class="form-control input-sm" id="search" name="search" placeholder="검색"/>
+	       		<span class="input-group-btn">
+					<button class="btn btn-default btn-sm" type="button">
+						<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+					</button>
+				</span>
+	       	</div>
+		</form>
+		<div class="navbar-right btn-group">
+			<button type="button" class="btn btn-sm navbar-btn btn-primary" name="loginButton" data-toggle="modal" data-target="#logDialog">로그인</button>
+			<button type="button" class="btn btn-sm navbar-btn btn-danger" name="logoutButton">로그아웃</button>
+			<button type="button" class="btn btn-sm navbar-btn btn-info" name="joinButton" data-toggle="modal" data-target="#logDialog">회원가입</button>
+			<button type="button" class="btn btn-sm navbar-btn btn-warning" name="findButton" data-toggle="modal" data-target="#logDialog">아이디·비밀번호 찾기</button>
 		</div>
 	</div>
 </nav>
