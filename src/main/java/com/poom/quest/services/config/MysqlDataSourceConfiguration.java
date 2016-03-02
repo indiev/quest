@@ -60,6 +60,7 @@ public class MysqlDataSourceConfiguration   {
         p.put(org.hibernate.cfg.Environment.SHOW_SQL, "false");
         p.put(org.hibernate.cfg.Environment.FORMAT_SQL, "false");
         p.put(org.hibernate.cfg.Environment.POOL_SIZE, "20");
+        p.put(org.hibernate.cfg.Environment.USE_REFLECTION_OPTIMIZER, "false");
         p.put(org.hibernate.cfg.Environment.DIALECT, MySQL5Dialect.class.getName());
         em.setJpaPropertyMap(p);
         return em;
