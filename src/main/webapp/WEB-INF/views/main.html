@@ -22,6 +22,7 @@
 <script data-main="/resources/js/main" src="/resources/assets/lib/jquery/jquery-2.1.0.min.js"></script>
 <script data-main="/resources/js/main" src="/resources/assets/lib/bootstrap/js/bootstrap.min.js"></script>
 <script data-main="/resources/js/main" src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script data-main="/resources/js/main" src="/resources/assets/lib/pjax/jquery.pjax.js"></script>
 <script data-main="/resources/js/main" src="/resources/js/ajax.js"></script>
 <script data-main="/resources/js/main" src="/resources/js/function.js"></script>
 <script type="text/javascript">
@@ -29,6 +30,8 @@ $(document).ready(function(){
 	$("#sidebar-top").load("/sidebar-top");
 	$("#main").load("/main");
 });
+$(document).pjax("a", "#main");
+/*
 $(document).on("click", "a", function(){
 	if($(this).attr("href") == "/") return ;
 	else if($(this).attr("href") != "#") {
@@ -38,6 +41,7 @@ $(document).on("click", "a", function(){
 		return true;
 	}
 });
+*/
 </script>
 </body>
 </html>
