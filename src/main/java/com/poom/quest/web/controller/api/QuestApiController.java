@@ -55,7 +55,7 @@ public class QuestApiController extends GenericApiController<Quest> {
 		User loginUser = userService.loginUser(request);
 		if(loginUser != null && loginUser != quest.getRequester().getUser()) {
 			Set<Quester> applicants = quest.getApplicants();
-			applicants.add(loginUser.getQuester());
+			applicants.add(loginUser.getQuesters().iterator().next()); //수정 필요. 특정 퀘스터만 적용되도록
 			genericService.update(quest);
 			return true;
 		}

@@ -1,6 +1,9 @@
 package com.poom.quest.services.model.user;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,9 +24,9 @@ public class User extends GenericModel {
 	@JsonIgnore
 	private Requester requester;
 	
-	@OneToOne(mappedBy = "user")
+	@OneToMany(mappedBy = "user")
 	@JsonIgnore
-	private Quester quester;
+	private Set<Quester> questers;
 
 	public String getPassword() {
 		return password;
@@ -65,11 +68,11 @@ public class User extends GenericModel {
 		this.requester = requester;
 	}
 
-	public Quester getQuester() {
-		return quester;
+	public Set<Quester> getQuesters() {
+		return questers;
 	}
 
-	public void setQuester(Quester quester) {
-		this.quester = quester;
+	public void setQuesters(Set<Quester> questers) {
+		this.questers = questers;
 	}
 }
