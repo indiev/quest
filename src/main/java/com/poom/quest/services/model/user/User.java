@@ -3,6 +3,7 @@ package com.poom.quest.services.model.user;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -27,6 +28,10 @@ public class User extends GenericModel {
 	@OneToMany(mappedBy = "user")
 	@JsonIgnore
 	private Set<Quester> questers;
+	
+	@OneToOne
+	@JoinColumn(name = "mainQuesterId", referencedColumnName="id")
+	private Quester mainQuester;
 
 	public String getPassword() {
 		return password;
