@@ -11,7 +11,7 @@ public class User extends GenericModel {
 	
 	private static final long serialVersionUID = 1L;
 	
-	@JsonIgnore
+	//@JsonIgnore
 	private String password;
 	private String realname;
 	private String email;
