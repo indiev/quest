@@ -22,7 +22,7 @@ function detailNode(id) {
 					detailNode.find(".kind").append(quest.classification[i].kind.name);
 				}
 			}
-			detailNode.find(".realname").html(quest.requester.user.realname);
+			detailNode.find(".realname").html(quest.requester.name);
 			detailNode.find(".name").html(quest.name);
 			detailNode.find(".createdDate").html($.datepicker.formatDate('yy년 mm월 dd일', new Date(quest.createdDate)));
 			detailNode.find(".reward").html(quest.reward);
@@ -30,12 +30,12 @@ function detailNode(id) {
 			detailNode.find(".duration").html(quest.duration);
 			detailNode.find(".description").html(quest.description);
 			for(i in quest.applicants) {
-				$applicant = $("<span>").html(quest.applicants[i].user.realname);
+				$applicant = $("<span>").html(quest.applicants[i].name);
 				$applicant.click(function(){ accept(quest.id, quest.applicants[i].id); });
 				detailNode.find(".applicant").append($applicant);
 			}
 			for(i in quest.questers) {
-				$quester = $("<span>").html(quest.questers[i].user.realname);
+				$quester = $("<span>").html(quest.questers[i].name);
 				detailNode.find(".questers").append($quester);
 			}
 			$("quest-detail").html(detailNode);

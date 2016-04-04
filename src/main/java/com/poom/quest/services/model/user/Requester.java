@@ -2,6 +2,7 @@ package com.poom.quest.services.model.user;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -17,7 +18,7 @@ public class Requester extends GenericModel {
 	
 	private static final long serialVersionUID = 1L;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "userId", referencedColumnName="id")
 	private User user;
 	
