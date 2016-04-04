@@ -53,7 +53,7 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter {
         InternalResourceViewResolver internalResourceViewResolver = new InternalResourceViewResolver();
         internalResourceViewResolver.setViewClass(JstlView.class);
         internalResourceViewResolver.setPrefix("/WEB-INF/views/");
-        internalResourceViewResolver.setSuffix(".html");
+        internalResourceViewResolver.setSuffix(".jsp");
         internalResourceViewResolver.setOrder(1);
         return internalResourceViewResolver;
     }

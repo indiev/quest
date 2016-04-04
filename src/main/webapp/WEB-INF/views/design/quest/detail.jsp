@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 <div class="container-fluid quest-detail-node">
 	<div class="clearfix">
 		<span class="name h4 pull-left">퀘스트를 요청합니다.</span>

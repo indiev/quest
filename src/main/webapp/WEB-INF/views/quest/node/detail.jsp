@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 <div class="container-fluid quest-detail-node">
 	<div><span class="name h3"></span></div>
 	<div><span class="realname"></span><span class="createdDate pull-right"></span></div>

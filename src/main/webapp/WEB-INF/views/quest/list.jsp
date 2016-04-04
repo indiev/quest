@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 <div class="quest-form">
 	<form class="form-inline" role="form" action="" method="POST" onsubmit="return search(this);">
 		<div class="input-group">
