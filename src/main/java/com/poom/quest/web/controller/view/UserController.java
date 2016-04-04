@@ -29,4 +29,7 @@ public class UserController extends GenericViewController<User>{ /* 로그인 �
 	public String join(HttpServletRequest request, Model model) {
 		return "user/join";
 	}
+	
+	
+	
 }

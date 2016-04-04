@@ -1,0 +1,30 @@
+<script type="text/javascript">
+function createNewQuester(form) {
+	ajax.submit(form, function(data) {
+		console.log(data);
+		if(data != null) {
+			alert("새로운 퀘스터를 생성하였습니다.");
+			location.href = '/';
+		}
+		else {
+			alert(data.mssege);
+		}
+	});
+	return false;
+}
+</script>
+
+
+
+<form role="form" action="/api/quester" method="POST" onsubmit="return createNewQuester(this);">
+	${loginedUser}
+	<div class="container-pluid">
+		
+		<div class="form-group">
+			<label for="realname" class="sr-only">닉네임</label>
+			<input type="text" id="name" name="name" class="form-control" placeholder="이름">
+		</div>
+		
+		<input type="submit" id="createNewQuester_submit" name="createNewQuester_submit" class="btn btn-default center-block" value="새로운 퀘스터 생성">
+	</div>
+</form>
