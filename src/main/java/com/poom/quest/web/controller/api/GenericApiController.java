@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.poom.quest.services.model.abstractModel.GenericModel;
-import com.poom.quest.services.model.user.Quester;
 import com.poom.quest.services.model.user.User;
 import com.poom.quest.services.service.GenericService;
 import com.poom.quest.services.service.UserService;
