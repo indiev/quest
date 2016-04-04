@@ -1,6 +1,7 @@
 package com.poom.quest.web.controller.view;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -53,6 +54,13 @@ public abstract class GenericViewController<T> {
 	
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public String list(HttpServletRequest request) {
+		Enumeration<String> estring = request.getHeaderNames();
+		for( ; estring.hasMoreElements(); ) {
+			System.out.println(estring.nextElement());
+		};
+		if(request.getHeader("x-pjax") == null) {
+			return "/main"; 
+		}
 		return modelName + "/list";
 	}
 	
