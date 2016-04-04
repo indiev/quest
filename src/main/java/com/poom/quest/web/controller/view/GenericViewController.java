@@ -42,7 +42,7 @@ public abstract class GenericViewController<T> {
 	
 	@RequestMapping(value = "/template/right", method = RequestMethod.GET)
 	public String right(HttpServletRequest request, Model model) {
-		model.addAttribute("user", userService.loginUser(request));
+		model.addAttribute("user", userService.getLoginUserByRequest(request));
 		return "/template/rightSider";
 	}
 	

@@ -39,7 +39,7 @@ public class QuestApiController extends GenericApiController<Quest> {
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public Quest add(@RequestBody Quest entity, HttpServletRequest request) {
 		Quest quest = null;
-		User user = userService.loginUser(request);
+		User user = userService.getLoginUserByRequest(request);
 		if(user != null) {
 			entity.setRequester(user.getRequester());
 			quest = genericService.add(entity);
@@ -52,7 +52,7 @@ public class QuestApiController extends GenericApiController<Quest> {
 	@RequestMapping(value = "/apply", method = RequestMethod.POST)
 	public Boolean apply(@RequestParam Integer id, HttpServletRequest request) {
 		Quest quest = genericService.get(id);
-		User loginUser = userService.loginUser(request);
+		User loginUser = userService.getLoginUserByRequest(request);
 		if(loginUser != null && loginUser != quest.getRequester().getUser()) {
 			Set<Quester> applicants = quest.getApplicants();
 			applicants.add(loginUser.getQuesters().iterator().next()); //수정 필요. 특정 퀘스터만 적용되도록
@@ -66,7 +66,7 @@ public class QuestApiController extends GenericApiController<Quest> {
 	@RequestMapping(value = "/accept", method = RequestMethod.POST)
 	public Boolean accept(@RequestParam Integer questId, @RequestParam Integer questerId, HttpServletRequest request) {
 		Quest quest = genericService.get(questId);
-		User loginUser = userService.loginUser(request);
+		User loginUser = userService.getLoginUserByRequest(request);
 		if(loginUser != null && loginUser == quest.getRequester().getUser()) {
 			Quester quester = questerService.get(questerId);
 			Set<Quester> applicants = quest.getApplicants();

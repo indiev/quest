@@ -14,7 +14,7 @@ import com.poom.quest.services.model.user.User;
 @Transactional
 public class UserService extends GenericService<User> {
 	
-	public User loginUser(HttpServletRequest request) {
+	public User getLoginUserByRequest(HttpServletRequest request) {
 		HttpSession session = request.getSession(true);
 		SecurityContext securityContext = (SecurityContext) session.getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
 		String name = null;
