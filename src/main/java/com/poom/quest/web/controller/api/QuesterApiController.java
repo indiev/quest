@@ -23,7 +23,7 @@ import com.poom.quest.services.service.UserService;
 @RequestMapping("api/quester")
 public class QuesterApiController extends GenericApiController<Quester> {
 	
-	private static final Logger logger = LoggerFactory.getLogger(UserApiController.class);
+	private static final Logger logger = LoggerFactory.getLogger(QuesterApiController.class);
 	
 	@Override
 	@ResponseBody
