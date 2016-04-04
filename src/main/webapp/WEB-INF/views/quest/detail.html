@@ -16,9 +16,11 @@ function accept(questId, questerId) {
 function detailNode(id) {
 	ajax.get("/api/quest/"+id, {}, function(quest){
 		$.get("/quest/node/detail", function(detailNode){
-			if(jQuery.type(quest.classification[0]) != "undefined") {
-				detailNode.find(".area").html(quest.classification[0].kind.area.name);
-				detailNode.find(".kind").html(quest.classification[0].kind.name);
+			if(jQuery.type(quest.classification) != "undefined" && quest.classification.length > 0) {
+				for(i in quest.classification) {
+					detailNode.find(".area").append(quest.classification[i].kind.area.name);
+					detailNode.find(".kind").append(quest.classification[i].kind.name);
+				}
 			}
 			detailNode.find(".realname").html(quest.requester.user.realname);
 			detailNode.find(".name").html(quest.name);

@@ -80,4 +80,12 @@ public class User extends GenericModel {
 	public void setQuesters(Set<Quester> questers) {
 		this.questers = questers;
 	}
+	
+	public Quester getMainQuester() {
+		return mainQuester;
+	}
+
+	public void setMainQuester(Quester mainQuester) {
+		this.mainQuester = mainQuester;
+	}
 }
