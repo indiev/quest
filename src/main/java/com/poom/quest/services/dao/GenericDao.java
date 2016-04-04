@@ -41,7 +41,13 @@ public abstract class GenericDao<T> {
 		return em.createNativeQuery(SELECT_ALL_SQL, clazz).getResultList();
 	}
 	
+	public List<T> listByKey(String keyName, Integer key) {
+		String where = " WHERE " + keyName + "=:key";
+		return em.createNativeQuery(SELECT_ALL_SQL + where, clazz).setParameter("key", key).getResultList();
+	}
+	
 	public List<T> listByKey(String keyName, String key) {
+		keyName += "Id";
 		String where = " WHERE " + keyName + "=:key";
 		return em.createNativeQuery(SELECT_ALL_SQL + where, clazz).setParameter("key", key).getResultList();
 	}

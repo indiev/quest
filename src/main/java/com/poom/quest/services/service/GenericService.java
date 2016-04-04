@@ -36,6 +36,10 @@ public abstract class GenericService<T> {
 		return genericDao.list();
 	}
 	
+	public List<T> listByKey(String keyName, Integer key) {
+		return genericDao.listByKey(keyName, key);
+	}
+	
 	public List<T> listByKey(String keyName, String key) {
 		return genericDao.listByKey(keyName, key);
 	}

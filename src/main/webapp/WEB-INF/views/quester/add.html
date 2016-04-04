@@ -1,5 +1,5 @@
 <script type="text/javascript">
-function createNewQuester(form) {
+function addQuester(form) {
 	ajax.submit(form, function(data) {
 		console.log(data);
 		if(data != null) {
@@ -16,8 +16,7 @@ function createNewQuester(form) {
 
 
 
-<form role="form" action="/api/quester" method="POST" onsubmit="return createNewQuester(this);">
-	${loginedUser}
+<form role="form" action="/api/quester" method="POST" onsubmit="return addQuester(this);">
 	<div class="container-pluid">
 		
 		<div class="form-group">
@@ -25,6 +24,6 @@ function createNewQuester(form) {
 			<input type="text" id="name" name="name" class="form-control" placeholder="이름">
 		</div>
 		
-		<input type="submit" id="createNewQuester_submit" name="createNewQuester_submit" class="btn btn-default center-block" value="새로운 퀘스터 생성">
+		<input type="submit" id="addQuester_submit" name="addQuester_submit" class="btn btn-default center-block" value="새로운 퀘스터 생성">
 	</div>
 </form>

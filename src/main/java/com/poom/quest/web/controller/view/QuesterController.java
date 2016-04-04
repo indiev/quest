@@ -32,10 +32,19 @@ public class QuesterController extends GenericViewController<Quester> {
 	@RequestMapping(value = "add", method = RequestMethod.GET)
 	public String add(HttpServletRequest request, Model model) {
 		
-		User loginedUser = userService.getLoginUserByRequest(request);
-		model.addAttribute("loginedUser",loginedUser.getName());
-		logger.debug("//////////////"+loginedUser.getName());
 		return modelName + "/add";
+	}
+	
+	/**
+	 *  메인 퀘스터 선택 화면
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "select", method = RequestMethod.GET)
+	public String select(HttpServletRequest request, Model model) {
+		
+		return modelName + "/select";
 	}
 	
 	

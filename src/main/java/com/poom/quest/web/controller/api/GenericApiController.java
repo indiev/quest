@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.poom.quest.services.model.abstractModel.GenericModel;
+import com.poom.quest.services.model.user.Quester;
+import com.poom.quest.services.model.user.User;
 import com.poom.quest.services.service.GenericService;
+import com.poom.quest.services.service.UserService;
 
 @RequestMapping("api")
 public abstract class GenericApiController<T> {
@@ -22,6 +25,7 @@ public abstract class GenericApiController<T> {
 	private Logger logger = Logger.getLogger(this.getClass());
 	
 	@Autowired GenericService<T> genericService;
+	@Autowired UserService userService;
 	
 	@ResponseBody
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -36,8 +40,23 @@ public abstract class GenericApiController<T> {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value = "/list/user", method = RequestMethod.GET)
+	public List<T> list(HttpServletRequest request) {
+		List<T> list = null;
+		User user = userService.getLoginUserByRequest(request);
+		if(user != null) list = genericService.listByKey("userId", user.getId());
+		return list;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/list/{keyname}/{key}")
+	public List<T> listByKey(@PathVariable String keyName, @PathVariable String key) {
+		return genericService.listByKey(keyName, key);
+	}
+	
+	@ResponseBody
 	@RequestMapping(value = "/list/{keyword}", method = RequestMethod.GET)
-	public List<T> list(@RequestParam String keyword, @RequestParam String[] keys) {
+	public List<T> list(@PathVariable String keyword, @RequestParam String[] keys) {
 		return genericService.search(keyword, keys);
 	}
 	

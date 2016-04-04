@@ -1,5 +1,8 @@
 package com.poom.quest.web.controller.api;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -21,7 +24,6 @@ import com.poom.quest.services.service.UserService;
 public class QuesterApiController extends GenericApiController<Quester> {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserApiController.class);
-	@Autowired UserService userService;
 	
 	@Override
 	@ResponseBody
