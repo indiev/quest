@@ -69,7 +69,6 @@ public abstract class GenericApiController<T> {
 	@ResponseBody
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public T update(@PathVariable Integer id, @RequestBody T entity) {
-		((GenericModel)entity).setCreatedDate(((GenericModel)genericService.get(id)).getCreatedDate());
 		return genericService.update(entity);
 	}
 	

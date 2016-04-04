@@ -19,6 +19,7 @@ public class Quester extends GenericModel {
 
 	private static final long serialVersionUID = 1L;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "userId", referencedColumnName="id")
 	private User user;
