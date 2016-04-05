@@ -65,12 +65,12 @@ function detail(id) {
 			$detailNodeClone.find(".duration").html(quest.duration);
 			$detailNodeClone.find(".description").html(quest.description);
 			for(i in quest.applicants) {
-				$applicant = $("<li>").html(quest.applicants[i].user.realname);
+				$applicant = $("<li>").html(quest.applicants[i].name);
 				$applicant.click(function(){ accept(quest.id, quest.applicants[i].id); });
 				$detailNodeClone.find(".applicants").append($applicant);
 			}
 			for(i in quest.questers) {
-				$quester = $("<li>").html(quest.questers[i].user.realname);
+				$quester = $("<li>").html(quest.questers[i].name);
 				$detailNodeClone.find(".questers").append($quester);
 			}
 			$("div.quest-content").html($detailNodeClone);

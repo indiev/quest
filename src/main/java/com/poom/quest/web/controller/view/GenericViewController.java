@@ -53,13 +53,6 @@ public abstract class GenericViewController<T> {
 	
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public String list(HttpServletRequest request) {
-		Enumeration<String> estring = request.getHeaderNames();
-		for( ; estring.hasMoreElements(); ) {
-			System.out.println(estring.nextElement());
-		};
-		if(request.getHeader("x-pjax") == null) {
-			return "/main"; 
-		}
 		return modelName + "/list";
 	}
 	
