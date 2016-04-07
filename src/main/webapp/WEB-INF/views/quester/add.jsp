@@ -1,12 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 <script type="text/javascript">
 $(document).ready(function() {
-	
 	/* area 로드. ajax.get()......*/
 	areaList = [];
 	areaList.push({name:'IT', id:1});
 	areaList.push({name:'디자인', id:2});
-	
 	
 	/* area 로드 이후. */
 	for(i in areaList) {
@@ -15,12 +13,10 @@ $(document).ready(function() {
 		$list = $("<li>").attr("role", "presentation").append($area);
 		$("#areaList").find(".dropdown-menu").append($list);
 	}
-	
 });
 
 
 function searchSkillByArea(id) {
-	
 	/* skills 로드. ajax.get()...... */
 	var skillList = [];
 	var skillListByAreaId = [];
@@ -39,6 +35,11 @@ function searchSkillByArea(id) {
 	for ( i in skillListByAreaId) {
 		console.log(skillListByAreaId[i]);
 	}
+}
+
+function searchWorkByArea(id) {
+	/* works 로드. ajax.get() */
+	var workList = [];
 	
 }
 
@@ -61,19 +62,32 @@ function addQuester(form) {
 </script>
 
 
-
+<div class="container">
+<div class="row">
+<div class="col-md-12">
 <form role="form" action="/api/quester" method="POST" onsubmit="return addQuester(this);">		
+	<div>
+		<label for="profileImg">1.프로필 이미지</label>
+	</div>
+	<div class="form-group">	
+		<img src="..." alt="..." class="img-circle">
+	</div>
 	
+	<div>
+		<label for="name">2.닉네임</label>
+	</div>
 	<div class="form-group">
-		<label for="name">닉네임</label>
 		<input type="text" id="name" name="name" class="form-control" placeholder="닉네임">
 	</div>
 	
-	<div class="form-group">
-		<label for="area">관심분야</label>
+	<div>
+		<label>3.분야/업무/기술</label>
+	</div>
+	<div class="form-group">	
+		<label for="area">분야</label>
 		<div class="dropdown" id=areaList>
 		  <button class="btn btn-default dropdown-toggle" type="button" id="areaMenu" data-toggle="dropdown" aria-expanded="true">
-		    분야
+		    분야선택
 		    <span class="caret"></span>
 		  </button>
 		  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
@@ -83,10 +97,31 @@ function addQuester(form) {
 	</div>
 	
 	<div class="form-group">
-		<label for="name">스킬</label>
+		<label>업무</label>
 		<input type="text" id="name" name="area" class="form-control" placeholder="관심분야">
 	</div>
 	
+	<div>
+		<label>4.이력</label>	
+	</div>
+	<div class="form-group">
+		<label></label>	
+	</div>
+	
+	<div class="form-group">
+		<label>스킬</label>
+		<input type="text" id="skill" name="skill" class="form-control" placeholder="관심분야">
+	</div>
+	
 	<input type="submit" id="addQuester_submit" name="addQuester_submit" class="btn btn-default center-block" value="새 퀘스터 생성">
+
+
+	
+
 </form>
 
+</div>
+</div>
+
+
+</div>
