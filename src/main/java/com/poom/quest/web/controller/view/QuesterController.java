@@ -47,6 +47,4 @@ public class QuesterController extends GenericViewController<Quester> {
 	
 	
 	
-	
-	
 }
