@@ -1,6 +1,7 @@
 package com.poom.quest.services.model.abstractModel;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
@@ -19,7 +20,7 @@ public abstract class TreeModel<T> extends GenericModel {
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "parentId", referencedColumnName="id", insertable=false, updatable=false)
 	@OrderBy("sequency DESC")
-	private List<T> childs;
+	private Set<T> childs;
 	
 	public Integer getParentId() {
 		return parentId;
@@ -33,10 +34,10 @@ public abstract class TreeModel<T> extends GenericModel {
 	public void setSequency(Integer sequency) {
 		this.sequency = sequency;
 	}
-	public List<T> getChilds() {
+	public Set<T> getChilds() {
 		return childs;
 	}
-	public void setChilds(List<T> childs) {
+	public void setChilds(Set<T> childs) {
 		this.childs = childs;
 	}
 }

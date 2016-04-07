@@ -30,8 +30,17 @@ public class Quest extends GenericModel {
 	//계약에 대한.. (패널티 - 위약금)
 	//sub Project?
 	
-	@OneToMany(mappedBy = "quest", fetch = FetchType.LAZY)
-	private Set<Classification> classification;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "QuestArea", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "areaId")})
+	private Set<Area> areas;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "QuestWork", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "workId")})
+	private Set<Work> works;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "QuestSkill", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "skillId")})
+	private Set<SKill> skills;
 	
 	@OneToMany(mappedBy = "quest", fetch = FetchType.LAZY)
 	@JsonIgnore
@@ -89,12 +98,28 @@ public class Quest extends GenericModel {
 		this.description = description;
 	}
 
-	public Set<Classification> getClassification() {
-		return classification;
+	public Set<Area> getAreas() {
+		return areas;
 	}
 
-	public void setClassification(Set<Classification> classification) {
-		this.classification = classification;
+	public void setAreas(Set<Area> areas) {
+		this.areas = areas;
+	}
+
+	public Set<Work> getWorks() {
+		return works;
+	}
+
+	public void setWorks(Set<Work> works) {
+		this.works = works;
+	}
+
+	public Set<SKill> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(Set<SKill> skills) {
+		this.skills = skills;
 	}
 
 	public Set<Requirement> getRequirements() {
