@@ -1,5 +1,47 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 <script type="text/javascript">
+$(document).ready(function() {
+	
+	/* area 로드. ajax.get()......*/
+	areaList = [];
+	areaList.push({name:'IT', id:1});
+	areaList.push({name:'디자인', id:2});
+	
+	
+	/* area 로드 이후. */
+	for(i in areaList) {
+		$area = $("<a>").attr("role","menuItem").attr("id",areaList[i].id).html(areaList[i].name);
+		$area.click(function() {searchSkillByArea(this.id); });
+		$list = $("<li>").attr("role", "presentation").append($area);
+		$("#areaList").find(".dropdown-menu").append($list);
+	}
+	
+});
+
+
+function searchSkillByArea(id) {
+	
+	/* skills 로드. ajax.get()...... */
+	var skillList = [];
+	var skillListByAreaId = [];
+	skillList.push({name:'spring', id:1, areaId:1});
+	skillList.push({name:'php', id:2, areaId:1});
+	skillList.push({name:'캘리그라피', id:3, areaId:2})
+	for(i in skillList) {
+		if(id == skillList[i].areaId)
+		skillListByAreaId.push(skillList[i]);
+	}
+	
+	/* skills 로드 이후. */
+	$caret = $("<span>").attr("class","caret");
+	$('#areaMenu').html($('#areaList').find("#"+id).html()).append($caret);
+	
+	for ( i in skillListByAreaId) {
+		console.log(skillListByAreaId[i]);
+	}
+	
+}
+
 function addQuester(form) {
 	ajax.submit(form, function(data) {
 		console.log(data);
@@ -13,6 +55,9 @@ function addQuester(form) {
 	});
 	return false;
 }
+
+
+
 </script>
 
 
@@ -26,6 +71,14 @@ function addQuester(form) {
 	
 	<div class="form-group">
 		<label for="area">관심분야</label>
+		<div class="dropdown" id=areaList>
+		  <button class="btn btn-default dropdown-toggle" type="button" id="areaMenu" data-toggle="dropdown" aria-expanded="true">
+		    분야
+		    <span class="caret"></span>
+		  </button>
+		  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+		  </ul>
+		</div>
 		
 	</div>
 	
@@ -37,15 +90,3 @@ function addQuester(form) {
 	<input type="submit" id="addQuester_submit" name="addQuester_submit" class="btn btn-default center-block" value="새 퀘스터 생성">
 </form>
 
-<div class="dropdown">
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-    Dropdown
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
-  </ul>
-</div>

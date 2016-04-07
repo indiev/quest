@@ -4,12 +4,8 @@ var user = null;
 
 $(document).ready(function() {
 	
-	ajax.get("/api/user/get", {}, function(data) {
-		user = data;
-	});
-	
 	ajax.get("/api/quester/list/user", {}, function(list){
-			
+		console.log(list);
 		for(i in list) {
 			
 			$quester = $("<a>").attr("role", "menuItem").attr("id", list[i].id).html(list[i].name);
@@ -25,16 +21,16 @@ $(document).ready(function() {
 });
 
 function selectMainQuester(selectedId) {
-	console.log("userId : "+ user.id);
-	console.log("mainQuester : "+ user.mainQuester);
 	
-	
-	ajax.put("/api/user/"+user.id+"/mainQuester/"+selectedId, {}, function(result){
-		alert("메인 퀘스터가 변경되었습니다.");
+	ajax.get("/api/user/get", {}, function(user) {
+		
+		ajax.put("/api/user/"+user.id+"/mainQuester/"+selectedId, {}, function(result){
+			alert("메인 퀘스터가 변경되었습니다.");
+			console.log(result);
+			
+		});
+		
 	});
-	
-	
-	console.log(selectedId);
 	
 }
 </script>
