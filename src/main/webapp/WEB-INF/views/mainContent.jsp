@@ -14,7 +14,9 @@
 				<p>가나다라마바사아차카타아파하 아야어여오유으이 가나다라마바사아차카타아파하 아야어여오유으이 가나다라마바사아차카타아파하 아야어여오유으이</p>
 				<p><strong>가나다라마바사아차카타아파하 아야어여오유으이</strong> 가나다라마바사아차카타아파하 아야어여오유으이</p>
 			</div>
-			<div class="col-sm-7"></div>
+			<div class="col-sm-7">
+				<img src="http://dummyimage.com/500x200/000/fff" />
+			</div>
 		</div>
 	</div>
 </div>

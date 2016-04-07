@@ -10,7 +10,8 @@
 <link rel="stylesheet" href="/resources/assets/lib/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="/resources/assets/lib/bootstrap/css/bootstrap-theme.min.css">
 <style type="text/css">
-* { border-collapse: collapse;}
+* { box-sizing: border-box; /* border-collapse: collapse; */}
+img { max-width: 100%; height: auto; }
 </style>
 </head>
 <body>

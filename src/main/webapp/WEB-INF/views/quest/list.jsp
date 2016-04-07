@@ -53,10 +53,10 @@ function detail(id) {
 	ajax.get("/api/quest/"+id, {}, function(quest){
 		$.get("/quest/node/detail", function(detailNode){
 			$detailNodeClone = $(detailNode).clone();
-			if(jQuery.type(quest.classification[0]) != "undefined") {
+			/* if(jQuery.type(quest.classification[0]) != "undefined") {
 				$detailNodeClone.find(".area").html(quest.classification[0].kind.area.name);
 				$detailNodeClone.find(".kind").html(quest.classification[0].kind.name);
-			}
+			} */
 			$detailNodeClone.find(".realname").html(quest.requester.user.realname);
 			$detailNodeClone.find(".name").html(quest.name);
 			$detailNodeClone.find(".createdDate").html($.datepicker.formatDate('yy년 mm월 dd일', new Date(quest.createdDate)));
@@ -88,10 +88,10 @@ function list() {
 			for(i in list) {
 				var questNodeClone = $(questNode).clone();
 				
-				if(jQuery.type(list[i].classification[0]) != "undefined") {
+				/* if(jQuery.type(list[i].classification[0]) != "undefined") {
 					questNodeClone.find(".area").html(list[i].classification[0].kind.area.name);
 					questNodeClone.find(".kind").html(list[i].classification[0].kind.name);
-				}
+				} */
 				questNodeClone.find(".realname").html(list[i].requester.user.realname);
 				questNodeClone.find(".name").html(list[i].name).val(list[i].id);
 				questNodeClone.find(".name").click(function() { detail($(this).val()); });
