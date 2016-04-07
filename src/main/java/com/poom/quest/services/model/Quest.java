@@ -40,7 +40,7 @@ public class Quest extends GenericModel {
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "QuestSkill", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "skillId")})
-	private Set<SKill> skills;
+	private Set<Skill> skills;
 	
 	@OneToMany(mappedBy = "quest", fetch = FetchType.LAZY)
 	@JsonIgnore
@@ -114,11 +114,11 @@ public class Quest extends GenericModel {
 		this.works = works;
 	}
 
-	public Set<SKill> getSkills() {
+	public Set<Skill> getSkills() {
 		return skills;
 	}
 
-	public void setSkills(Set<SKill> skills) {
+	public void setSkills(Set<Skill> skills) {
 		this.skills = skills;
 	}
 

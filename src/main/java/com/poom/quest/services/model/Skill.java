@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import com.poom.quest.services.model.abstractModel.GenericModel;
 
 @Entity
-public class SKill extends GenericModel {
+public class Skill extends GenericModel {
 
 	private static final long serialVersionUID = 1L;
 }

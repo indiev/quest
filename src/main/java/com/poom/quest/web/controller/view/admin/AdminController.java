@@ -1,4 +1,4 @@
-package com.poom.quest.web.controller.view;
+package com.poom.quest.web.controller.view.admin;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/admin")
 public class AdminController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	
 	@RequestMapping(value = "main", method = RequestMethod.GET)
 	public String login(HttpServletRequest request, Model model) {
