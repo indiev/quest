@@ -21,6 +21,9 @@ public class AreaController extends GenericViewController<Area>{ /* 로그인 �
 	
 	private static final Logger logger = LoggerFactory.getLogger(AreaController.class);
 	
-	
+	@RequestMapping(value = "node/list", method = RequestMethod.GET)
+	public String listNode(HttpServletRequest request, Model model) {
+		return modelName + "/node/list";
+	}
 	
 }

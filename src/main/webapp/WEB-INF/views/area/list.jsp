@@ -1,12 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
-<script data-main="/resources/js/main" src="/resources/js/test.js"></script>
+<div class="area-content list-group"></div>
+
 <script type="text/javascript">
+
 $(document).ready(function() {
 	/* area 로드. ajax.get()......*/
-	ajax.get("/api/area/list", {}, function(areas){
-		test.list(areas);
+	ajax.get("/api/area/list", {}, function(list){
+		$.get("/area/node/list", function(areaNode){
+			for(i in list) {
+				var areaNodeClone = $(areaNode).clone();
+				
+				areaNodeClone.find(".name").html(list[i].name);
+				areaNodeClone.attr("name", list[i].name);
+				areaNodeClone.on("mouseover",function(){console.log(this.getAttribute("name"))});
+				$("div.area-content").append(areaNodeClone);
+			
+			}
+		});
+		
+		
 	});
 });
-
 </script>
 
