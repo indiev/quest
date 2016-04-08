@@ -9,17 +9,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.poom.quest.services.model.Area;
+import com.poom.quest.services.model.Work;
 
 @Controller
-@RequestMapping("api/area")
-public class AreaApiController extends GenericApiController<Area> {
+@RequestMapping("api/work")
+public class WorkApiController extends GenericApiController<Work> {
 	
-	private static final Logger logger = LoggerFactory.getLogger(AreaApiController.class);
+	private static final Logger logger = LoggerFactory.getLogger(WorkApiController.class);
 	
 	@ResponseBody
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public List<Area> list() {
+	public List<Work> list() {
 		return genericService.listByKey("parent", (Integer)null);
 	}
 }

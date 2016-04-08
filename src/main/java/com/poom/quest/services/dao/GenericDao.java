@@ -42,14 +42,25 @@ public abstract class GenericDao<T> {
 	}
 	
 	public List<T> listByKey(String keyName, Integer key) {
-		String where = " WHERE " + keyName + "=:key";
-		return em.createNativeQuery(SELECT_ALL_SQL + where, clazz).setParameter("key", key).getResultList();
+		keyName += "Id";
+		if(key != null) {
+			String where = " WHERE " + keyName + "=:key";
+			return em.createNativeQuery(SELECT_ALL_SQL + where, clazz).setParameter("key", key).getResultList();			
+		} else {
+			String where = " WHERE " + keyName + " is NULL";
+			return em.createNativeQuery(SELECT_ALL_SQL + where, clazz).getResultList();
+		}
 	}
 	
 	public List<T> listByKey(String keyName, String key) {
 		keyName += "Id";
-		String where = " WHERE " + keyName + "=:key";
-		return em.createNativeQuery(SELECT_ALL_SQL + where, clazz).setParameter("key", key).getResultList();
+		if(key != null) {
+			String where = " WHERE " + keyName + "=:key";
+			return em.createNativeQuery(SELECT_ALL_SQL + where, clazz).setParameter("key", key).getResultList();
+		} else {
+			String where = " WHERE " + keyName + " is NULL";
+			return em.createNativeQuery(SELECT_ALL_SQL + where, clazz).getResultList();
+		}
 	}
 	
 	public List<T> listByParent(Integer parentId, Class<?> parentClass) {

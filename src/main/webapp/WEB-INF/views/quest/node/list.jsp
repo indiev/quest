@@ -16,5 +16,9 @@
 	<div class="row">
 		<div class="col-xs-12"><span class="description list-group-item-text"></span></div>
 	</div>
-	<button class="btn btn-default pull-right" name="applyButton">ì§ì</button>
+	<div class="row">
+		<div class="col-xs-12">
+			<button class="btn btn-default pull-right" name="applyButton">지원</button>
+		</div>
+	</div>
 </div>

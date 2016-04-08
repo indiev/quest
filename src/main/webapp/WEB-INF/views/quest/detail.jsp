@@ -45,7 +45,7 @@ function detailNode(id) {
 		//패널티 위약금
 		//requirements
 		//지원자수/모집자수
-		$("#main").append($html);
+		$("div.quest-detail").append($html);
 	});
 }
 $(document).ready(function(){

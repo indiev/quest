@@ -47,6 +47,7 @@ function accept(questId, questerId) {
 		});
 	}
 }
+
 function detail(id) {
 	console.log(id);
 	$("div.quest-content").empty();
@@ -81,6 +82,7 @@ function detail(id) {
 		//지원자수/모집자수
 	});
 }
+
 function list() {
 	$("div.quest-content").empty();
 	ajax.get("/api/quest/list", {}, function(list){
@@ -109,6 +111,7 @@ function list() {
 		});
 	});
 }
+
 $(document).ready(function(){
 	list();
 	$("button[name='requestButton']").click(function(){
