@@ -2,8 +2,7 @@
 <script type="text/javascript">
 function selectInputList(name, list, defaultText) {
 	var select = $("select[name='" + name + "']");
-	select.html('');
-	console.log(defaultText);
+	select.empty();
 	select.append($("<option>").html(defaultText).val(null));
 	for(i in list) {
 		option = $("<option>");
@@ -11,6 +10,12 @@ function selectInputList(name, list, defaultText) {
 		select.append(option);
 	}
 }
+
+function htmlBadge(text, value) {
+	$removeIcon = $("<span>").addClass("glyphicon glyphicon-remove");
+	return $("<span>").addClass("badge").append(text + "&nbsp;").append($removeIcon);
+}
+
 $(function(){
 	selectInputList("area", {}, "분야");
 	selectInputList("subArea", {}, "세부분야");
@@ -31,20 +36,55 @@ $(function(){
 	});
 	
 	$("select[name='area']").change(function(){
-		if(this.value != '') ajax.get("/api/area/list/parent/" + this.value, {}, function(list) {
+		if(this.value != "") ajax.get("/api/area/list/parent/" + this.value, {}, function(list) {
 			selectInputList('subArea', list, "세부분야");
 		});
 	});
 	
 	$("select[name='work']").change(function(){
-		if(this.value != '') ajax.get("/api/work/list/parent/" + this.value, {}, function(list) {
+		if(this.value != "") ajax.get("/api/work/list/parent/" + this.value, {}, function(list) {
 			selectInputList('subWork', list, "세부업무");
+		});
+	});
+	
+	$("select[name='subArea']").change(function(){
+		var text = $(this).find(":selected").html()
+		var value = this.value;
+		if(value != "") $("ul.area").append(function(){
+			$node = htmlBadge(text, value);
+			$node.find("span.glyphicon-remove").click(function(){
+				alert("제외");
+			});
+			return $("<li>").append($node);
+		});
+	});
+	
+	$("select[name='subWork']").change(function(){
+		var text = $(this).find(":selected").html()
+		var value = this.value;
+		if(value != "") $("ul.work").append(function(){
+			$node = htmlBadge(text, value);
+			$node.find("span.glyphicon-remove").click(function(){
+				alert("제외");
+			});
+			return $("<li>").append($node);
+		});
+	});
+	
+	$("select[name='skill']").change(function(){
+		var text = $(this).find(":selected").html()
+		var value = this.value;
+		if(value != "") $("ul.skill").append(function(){
+			$node = htmlBadge(text, value);
+			$node.find("span.glyphicon-remove").click(function(){
+				alert("제외");
+			});
+			return $("<li>").append($node);
 		});
 	});
 });
 function request(form) {
 	ajax.submit(form, function(data) {
-		console.log(data);
 		if(data != null) {
 			alert("퀘스트를 올렸습니다.");
 			location.href = '/quest/mainlist';
@@ -71,7 +111,7 @@ function request(form) {
 		</div>
 		<div class="form-group row">
 			<div class="col-xs-12">
-				<ul class="list-inline form-control-static">
+				<ul class="list-inline form-control-static area">
 					<li><span class="badge">분야 > 세부분야 <span class="glyphicon glyphicon-remove"></span></span></li>
 					<li><span class="badge">세부분야 <span class="glyphicon glyphicon-remove"></span></span></li>
 				</ul>
@@ -85,10 +125,7 @@ function request(form) {
 		</div>
 		<div class="form-group row">
 			<div class="col-xs-12">
-				<ul class="list-inline form-control-static">
-					<li><span class="badge">업무 > 세부업무 <span class="glyphicon glyphicon-remove"></span></span></li>
-					<li><span class="badge">세부업무 <span class="glyphicon glyphicon-remove"></span></span></li>
-				</ul>
+				<ul class="list-inline form-control-static work"></ul>
 			</div>
 		</div>
 		<div class="form-group row">
@@ -99,10 +136,7 @@ function request(form) {
 		</div>
 		<div class="form-group row">
 			<div class="col-xs-12">
-				<ul class="list-inline form-control-static">
-					<li><span class="badge">스킬1 <span class="glyphicon glyphicon-remove"></span></span></li>
-					<li><span class="badge">스킬2 <span class="glyphicon glyphicon-remove"></span></span></li>
-				</ul>
+				<ul class="list-inline form-control-static skill"><li>선택없음</li></ul>
 			</div>
 		</div>
 		<div class="form-group">
