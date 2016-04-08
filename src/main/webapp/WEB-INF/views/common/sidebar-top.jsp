@@ -34,6 +34,12 @@
 				</ul>
 			</li>
 			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">관리자 <span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="/admin/main">main</a></li>
+				</ul>
+			</li>
+			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">디자인 <span class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu">
 					<li><a href="/design/quest/list">quest-list</a></li>

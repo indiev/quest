@@ -13,6 +13,8 @@ $(document).ready(function() {
 		$list = $("<li>").attr("role", "presentation").append($area);
 		$("#areaList").find(".dropdown-menu").append($list);
 	}
+	
+	
 });
 
 

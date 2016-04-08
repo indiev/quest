@@ -3,35 +3,23 @@
 var user = null;
 
 $(document).ready(function() {
-	
 	ajax.get("/api/quester/list/user", {}, function(list){
-		console.log(list);
 		for(i in list) {
-			
 			$quester = $("<a>").attr("role", "menuItem").attr("id", list[i].id).html(list[i].name);
 			$quester.click(function() { selectMainQuester(this.id); });
 			$list = $("<li>").attr("role", "presentation").append($quester);
 			$("#questerList").find(".dropdown-menu").append($list);
 		}
-		
-		
 	});
-	
-	
 });
 
 function selectMainQuester(selectedId) {
-	
 	ajax.get("/api/user/get", {}, function(user) {
-		
 		ajax.put("/api/user/"+user.id+"/mainQuester/"+selectedId, {}, function(result){
 			alert("메인 퀘스터가 변경되었습니다.");
 			console.log(result);
-			
 		});
-		
 	});
-	
 }
 </script>
 
