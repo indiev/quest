@@ -109,35 +109,29 @@ function request(form) {
 			<label for="subArea" class="sr-only">세부분야</label>
 			<div class="col-xs-6"><select name="subArea" id="subArea" class="form-control"></select></div>
 		</div>
-		<div class="form-group row">
-			<div class="col-xs-12">
-				<ul class="list-inline form-control-static area">
-					<li><span class="badge">분야 > 세부분야 <span class="glyphicon glyphicon-remove"></span></span></li>
-					<li><span class="badge">세부분야 <span class="glyphicon glyphicon-remove"></span></span></li>
-				</ul>
-			</div>
+		<div class="form-group">
+			<ul class="list-inline form-control-static area">
+				<li><span class="badge">분야 > 세부분야 <span class="glyphicon glyphicon-remove"></span></span></li>
+				<li><span class="badge">세부분야 <span class="glyphicon glyphicon-remove"></span></span></li>
+			</ul>
 		</div>
 		<div class="form-group row">
-			<label for="area" class="sr-only">업무</label>
+			<label for="work" class="sr-only">업무</label>
 			<div class="col-xs-6"><select name="work" id="work" class="form-control"></select></div>
 			<label for="subArea" class="sr-only">세부업무</label>
 			<div class="col-xs-6"><select name="subWork" id="subWork" class="form-control"></select></div>
 		</div>
-		<div class="form-group row">
-			<div class="col-xs-12">
-				<ul class="list-inline form-control-static work"></ul>
-			</div>
+		<div class="form-group">
+			<ul class="list-inline form-control-static work"></ul>
 		</div>
 		<div class="form-group row">
-			<label for="area" class="sr-only">스킬</label>
+			<label for="skill" class="sr-only">스킬</label>
 			<div class="col-xs-6"><select name="skill" id="skill" class="form-control"></select></div>
 			<label for="subArea" class="sr-only">-</label>
 			<div class="col-xs-6"></div>
 		</div>
-		<div class="form-group row">
-			<div class="col-xs-12">
+		<div class="form-group">
 				<ul class="list-inline form-control-static skill"><li>선택없음</li></ul>
-			</div>
 		</div>
 		<div class="form-group">
 			<!-- <label for="recruitmentEndDate">지원마감일</label><input type="datetime-local" name="recruitmentEndDate" id="recruitmentEndDate"> -->
@@ -153,6 +147,22 @@ function request(form) {
 		<div class="form-group">
 			<label for="qualification" class="sr-only">자격</label>
 			<input type="text" name="qualification" id="qualification" class="form-control" placeholder="자격">
+		</div>
+		<div class="form-group row">
+			<div class="col-xs-4">
+				<label for="requirement" class="sr-only">요구사항 이름</label>
+				<input type="text" name="requirement" id="requirement" class="form-control" placeholder="요구사항 이름">
+			</div>
+			<div class="col-xs-6">
+				<label for="requirement" class="sr-only">요구사항 내용</label>
+				<input type="text" name="requirement" id="requirement" class="form-control" placeholder="요구사항 내용">
+			</div>
+			<div class="col-xs-2">
+				<input type="submit" id="" name="" class="btn btn-default" value="추가">
+			</div>
+		</div>
+		<div class="form-group">
+			요구사항에 대해서 추가된 사항 기입
 		</div>
 		<div class="form-group">
 			<label for="description" class="sr-only">내용</label>
