@@ -28,11 +28,4 @@ public class AreaApiController extends GenericApiController<Area> {
 	public List<Area> list() {
 		return genericService.listByKey("parent", (Integer)null);
 	}
-	
-	@ResponseBody
-	@RequestMapping(value = "", method = RequestMethod.POST)
-	public Area add(@RequestBody Area entity, HttpServletRequest request) {
-		System.out.println(entity.getParentId());
-		return genericService.add(entity);
-	}
 }
