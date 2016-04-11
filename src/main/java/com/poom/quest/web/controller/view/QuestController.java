@@ -60,6 +60,11 @@ public class QuestController extends GenericViewController<Quest> {
 		return modelName + "/reward";
 	}
 	
+	@RequestMapping(value = "detail/{i}", method = RequestMethod.GET)
+	public String detail(HttpServletRequest request, Model model) {
+		return modelName + "/detail";
+	}
+	
 	@RequestMapping(value = "node/list", method = RequestMethod.GET)
 	public String listNode(HttpServletRequest request) {
 		return modelName + "/node/list";

@@ -36,52 +36,6 @@ function apply(value) {
 		else alert("지원할 수 없습니다.")
 	});
 }
-function accept(questId, questerId) {
-	if(confirm("수락하시겠습니까?")) {
-		ajax.post("/api/quest/accept", {"questId":questId, "questerId":questerId}, function(result){
-			if(result) {
-				alert("수락했습니다");				
-			} else {
-				alert("퀘스터로 수락할 수 없습니다.");
-			}
-		});
-	}
-}
-
-function detail(id) {
-	console.log(id);
-	$("div.quest-content").empty();
-	ajax.get("/api/quest/"+id, {}, function(quest){
-		$.get("/quest/node/detail", function(detailNode){
-			$detailNodeClone = $(detailNode).clone();
-			/* if(jQuery.type(quest.classification[0]) != "undefined") {
-				$detailNodeClone.find(".area").html(quest.classification[0].kind.area.name);
-				$detailNodeClone.find(".kind").html(quest.classification[0].kind.name);
-			} */
-			$detailNodeClone.find(".realname").html(quest.requester.user.realname);
-			$detailNodeClone.find(".name").html(quest.name);
-			$detailNodeClone.find(".createdDate").html($.datepicker.formatDate('yy년 mm월 dd일', new Date(quest.createdDate)));
-			$detailNodeClone.find(".reward").html(quest.reward);
-			$detailNodeClone.find(".qualification").html(quest.qualification);
-			$detailNodeClone.find(".duration").html(quest.duration);
-			$detailNodeClone.find(".description").html(quest.description);
-			for(i in quest.applicants) {
-				$applicant = $("<li>").html(quest.applicants[i].name);
-				$applicant.click(function(){ accept(quest.id, quest.applicants[i].id); });
-				$detailNodeClone.find(".applicants").append($applicant);
-			}
-			for(i in quest.questers) {
-				$quester = $("<li>").html(quest.questers[i].name);
-				$detailNodeClone.find(".questers").append($quester);
-			}
-			$("div.quest-content").html($detailNodeClone);
-		});
-		//$html.append($("<div>").html());
-		//패널티 위약금
-		//requirements
-		//지원자수/모집자수
-	});
-}
 
 function list() {
 	$("div.quest-content").empty();
@@ -95,8 +49,8 @@ function list() {
 					questNodeClone.find(".kind").html(list[i].classification[0].kind.name);
 				} */
 				questNodeClone.find(".realname").html(list[i].requester.user.realname);
-				questNodeClone.find(".name").html(list[i].name).val(list[i].id);
-				questNodeClone.find(".name").click(function() { detail($(this).val()); });
+				$name = $("<a>").attr("href", "/quest/detail/" + list[i].id).html(list[i].name);
+				questNodeClone.find(".name").html($name);
 				questNodeClone.find(".duration").html(list[i].duration + "일");
 				questNodeClone.find(".reward").html(list[i].reward);
 				questNodeClone.find(".qualification").html(list[i].qualification);
