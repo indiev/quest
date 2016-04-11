@@ -11,22 +11,19 @@ var ajax = {
     		alert('error trying.\r' + xhr.status + "/" + thrownError);
     	}
     },
-    toArrayForUrl:function(urlString) {
+    toArrayForUrl:function(keynvalues) {
     	var data = {};
-    	urlString = urlString.replace(/\+/g, ' ');
-    	var keynvalues = urlString.split('&');
     	for(var i in keynvalues) {
-    		var keynvalue = keynvalues[i].split('=');
-    		keynvalue[0] = decodeURIComponent(keynvalue[0]);
-    		keynvalue[1] = decodeURIComponent(keynvalue[1]);
-    		if(typeof keynvalue[0].split('Id')[1] != "undefined" && keynvalue[0].split('Id')[1] == "" && keynvalue[0] != "parentId") data[keynvalue[0].split('Id')[0]] = {id:keynvalue[1]};
-    		else data[keynvalue[0]] = keynvalue[1];
+    		key = keynvalues[i].name;
+    		value = keynvalues[i].value;//decodeURIComponent(keynvalue[1]);
+    		if(typeof key.split('Id')[1] != "undefined" && key.split('Id')[1] == "" && key != "parentId") data[key.split('Id')[0]] = {id:value};
+    		else data[key] = value;
     	}
     	return data;
     },
 	submit:function(form, cb) {
 		$form = $(form);
-		var data = ajax.toArrayForUrl($form.serialize());
+		var data = ajax.toArrayForUrl($form.serializeArray());
 		var headers = {};
 //		data['_method'] = $form.attr("method");
 		data = JSON.stringify(data);
