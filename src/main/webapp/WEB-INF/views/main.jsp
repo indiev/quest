@@ -8,11 +8,8 @@
 <title>퀘스트</title>
 <link rel="stylesheet" href="/resources/css/normalize.css">
 <link rel="stylesheet" href="/resources/assets/lib/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="/resources/assets/lib/bootstrap/css/bootstrap-theme.min.css">
-<style type="text/css">
-* { box-sizing: border-box; /* border-collapse: collapse; */}
-img { max-width: 100%; height: auto; }
-</style>
+<link rel="stylesheet" href="/resources/assets/lib/bootflat/css/bootflat.min.css"> <!-- 부트스트랩 테마 Bootflat CSS -->
+<link rel="stylesheet" href="/resources/css/custom.css">
 </head>
 <body>
 <!-- navbar-inverse -->
@@ -27,6 +24,10 @@ img { max-width: 100%; height: auto; }
 <script data-main="/resources/js/main" src="/resources/assets/lib/pjax/jquery.pjax.js"></script>
 <script data-main="/resources/js/main" src="/resources/js/ajax.js"></script>
 <script data-main="/resources/js/main" src="/resources/js/function.js"></script>
+<!-- 부트스트랩 테마 Bootflat JS -->
+<script src="/resources/assets/lib/bootflat/js/icheck.min.js"></script>
+<script src="/resources/assets/lib/bootflat/js/jquery.fs.selecter.min.js"></script>
+<script src="/resources/assets/lib/bootflat/js/jquery.fs.stepper.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#sidebar-top").load("/sidebar-top");

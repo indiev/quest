@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
-<div class="quest-form">
+<div class="page-header">
+  <h1>퀘스트 > 목록 <small>Subtext for header</small></h1>
+</div>
+<div class="quest-form text-center">
 	<form class="form-inline" role="form" action="" method="POST" onsubmit="return search(this);">
 		<div class="input-group">
 			<label for="searchKeyword" class="sr-only">검색</label>
