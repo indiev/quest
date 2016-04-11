@@ -15,9 +15,9 @@ public class AdminController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	
-	@RequestMapping(value = "main", method = RequestMethod.GET)
+	@RequestMapping(value = "area/add", method = RequestMethod.GET)
 	public String main(HttpServletRequest request, Model model) {
-		return "admin/main";
+		return "admin/area/add";
 	}
 	
 

@@ -15,6 +15,7 @@ public class DesignController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(DesignController.class);
 	
+	
 	@RequestMapping(value = "quest/detail", method = RequestMethod.GET)
 	public String main(HttpServletRequest request, Model model) {
 		return "design/quest/detail";

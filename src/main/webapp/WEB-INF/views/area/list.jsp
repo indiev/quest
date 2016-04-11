@@ -8,12 +8,16 @@ $(document).ready(function() {
 	ajax.get("/api/area/list", {}, function(list){
 		$.get("/area/node/list", function(areaNode){
 			for(i in list) {
-				var areaNodeClone = $(areaNode).clone();
+				var $areaNodeClone = $(areaNode).clone();
 				
-				areaNodeClone.find(".name").html(list[i].name);
-				areaNodeClone.attr("name", list[i].name);
-				areaNodeClone.on("mouseover",function(){console.log(this.getAttribute("name"))});
-				$("div.area-content").append(areaNodeClone);
+				$areaNodeClone.find(".name").html(list[i].name);
+				$areaNodeClone.attr("name", list[i].name);
+				$areaNodeClone.on("mouseover",function(){this.style.backgroundColor ="#eee"; });
+				$areaNodeClone.on("mouseout",function(){this.style.backgroundColor ="#fff"; });
+				$areaNodeClone.click(function() {
+					console.log('ss');
+				});
+				$("div.area-content").append($areaNodeClone);
 			
 			}
 		});
