@@ -31,7 +31,8 @@ var ajax = {
 		var headers = {};
 //		data['_method'] = $form.attr("method");
 		/*data = {area:"1",description:"1",duration:"1",name:"1",qualification:"1",requirementDescription:"",requirementName:"",reward:"1",skill:"4",subArea:"4",
-		subWork:"7",work:"4",areas:[{id:7},{id:8}],works:[{id:7},{id:8}],skills:[{id:4},{id:5}],requirements:[{name:"1",description:"1"},{name:"2",description:"2"}]};*/
+		subWork:"7",work:"4",areas:[{id:7},{id:8}],works:[{id:7},{id:8}],skills:[{id:4},{id:5}],
+		requirements:[{name:"1",description:"1"},{name:"2",description:"2"}]};*/
 		console.log(data);
 		data = JSON.stringify(data);
 		console.log(data);

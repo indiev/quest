@@ -12,7 +12,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poom.quest.services.model.abstractModel.GenericModel;
 import com.poom.quest.services.model.user.Quester;
 import com.poom.quest.services.model.user.Requester;
@@ -41,9 +40,8 @@ public class Quest extends GenericModel {
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "QuestSkill", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "skillId")})
 	private Set<Skill> skills;
-	
-	@OneToMany(mappedBy = "quest", fetch = FetchType.LAZY)
-	@JsonIgnore
+
+	@OneToMany(mappedBy = "quest", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Requirement> requirements; //요구사항들
 	
 	@ManyToOne(fetch = FetchType.LAZY)
