@@ -25,24 +25,6 @@ public class UserApiController extends GenericApiController<User> {
 	@Autowired RequesterService requestserService;
 	@Autowired QuesterService questerService;
 	
-	@ResponseBody
-	@RequestMapping(value = "{id}/mainQuester/{questerId}", method = RequestMethod.PUT)
-	public User update(@PathVariable Integer id, @PathVariable Integer questerId) {
-		User user = genericService.get(id);
-		user.setMainQuester(questerService.get(questerId));
-		return genericService.update(user);
-	}
-	
-	
-	@ResponseBody
-	@RequestMapping(value = "get", method = RequestMethod.GET)
-	public User get(HttpServletRequest request) {
-		
-		User user = userService.getLoginUserByRequest(request);
-		
-		return userService.get(user.getId());
-	}
-	
 	@Override
 	@ResponseBody
 	@RequestMapping(value = "", method = RequestMethod.POST)
@@ -53,5 +35,20 @@ public class UserApiController extends GenericApiController<User> {
 		requester.setUser(entity);
 		requestserService.add(requester);
 		return user;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "get", method = RequestMethod.GET)
+	public User get(HttpServletRequest request) {
+		User user = userService.getLoginUserByRequest(request);
+		return userService.get(user.getId());
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "{id}/mainQuester/{questerId}", method = RequestMethod.PUT)
+	public User update(@PathVariable Integer id, @PathVariable Integer questerId) {
+		User user = genericService.get(id);
+		user.setMainQuester(questerService.get(questerId));
+		return genericService.update(user);
 	}
 }

@@ -1,22 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 <script type="text/javascript">
-function selectInputList(name, list, defaultText) {
-	var select = $("select[name='" + name + "']");
-	select.empty();
-	select.append($("<option>").html(defaultText).val(null));
-	for(i in list) {
-		option = $("<option>");
-		option.html(list[i].name).val(list[i].id);
-		select.append(option);
-	}
+var classQuest = function() {
+	this.areas = new Array();
+	this.works = new Array();
+	this.skills = new Array();
+	this.requirements = new Array();
+	
 }
 
-function htmlBadge(text, value) {
-	$removeIcon = $("<span>").addClass("glyphicon glyphicon-remove");
-	return $("<span>").addClass("badge").append(text + "&nbsp;").append($removeIcon);
-}
+var quest = new classQuest();
 
-$(function(){
+$(function() {
 	selectInputList("area", {}, "분야");
 	selectInputList("subArea", {}, "세부분야");
 	selectInputList("work", {}, "업무");
@@ -35,13 +29,13 @@ $(function(){
 		selectInputList("skill", list, "스킬");
 	});
 	
-	$("select[name='area']").change(function(){
+	$("select[name='area']").change(function() {
 		if(this.value != "") ajax.get("/api/area/list/parent/" + this.value, {}, function(list) {
 			selectInputList('subArea', list, "세부분야");
 		});
 	});
 	
-	$("select[name='work']").change(function(){
+	$("select[name='work']").change(function() {
 		if(this.value != "") ajax.get("/api/work/list/parent/" + this.value, {}, function(list) {
 			selectInputList('subWork', list, "세부업무");
 		});
@@ -50,16 +44,17 @@ $(function(){
 	$("select[name='subArea']").change(function(){
 		var text = $(this).find(":selected").html()
 		var value = this.value;
-		if(value != "") $("ul.area").append(function(){
+		if(value != "") $("ul.area").append(function() {
 			$node = htmlBadge(text, value);
 			$node.find("span.glyphicon-remove").click(function(){
 				alert("제외");
 			});
+			quest.areas.push(value);
 			return $("<li>").append($node);
 		});
 	});
 	
-	$("select[name='subWork']").change(function(){
+	$("select[name='subWork']").change(function() {
 		var text = $(this).find(":selected").html()
 		var value = this.value;
 		if(value != "") $("ul.work").append(function(){
@@ -67,11 +62,12 @@ $(function(){
 			$node.find("span.glyphicon-remove").click(function(){
 				alert("제외");
 			});
+			quest.works.push(value);
 			return $("<li>").append($node);
 		});
 	});
 	
-	$("select[name='skill']").change(function(){
+	$("select[name='skill']").change(function() {
 		var text = $(this).find(":selected").html()
 		var value = this.value;
 		if(value != "") $("ul.skill").append(function(){
@@ -79,19 +75,62 @@ $(function(){
 			$node.find("span.glyphicon-remove").click(function(){
 				alert("제외");
 			});
+			quest.skills.push(value);
 			return $("<li>").append($node);
 		});
 	});
 });
+
+function selectInputList(name, list, defaultText) {
+	var select = $("select[name='" + name + "']");
+	select.empty();
+	select.append($("<option>").html(defaultText).val(null));
+	for(i in list) {
+		option = $("<option>");
+		option.html(list[i].name).val(list[i].id);
+		select.append(option);
+	}
+}
+
+function htmlBadge(text, value) {
+	$removeIcon = $("<span>").addClass("glyphicon glyphicon-remove");
+	return $("<span>").addClass("badge").append(text + "&nbsp;").append($removeIcon);
+}
+
+function addRequirement() {
+	var $name = $("input[name='requirementName']");
+	var $description = $("input[name='requirementDescription']");
+	var name = $name.val();
+	var description = $description.val();
+	$name.val('');
+	$description.val('');
+	
+	$row = $("<tr>");
+	$row.append($("<td>").html(name).addClass("col-xs-3"));
+	$row.append($("<td>").html(description).addClass("col-xs-9"));
+	$("table.requirement-list > tbody").append($row);
+	
+	quest.requirements.push({"name":name, "description":description});
+}
+
 function request(form) {
-	ajax.submit(form, function(data) {
-		if(data != null) {
-			alert("퀘스트를 올렸습니다.");
-			location.href = '/quest/mainlist';
-		}
-		else {
-			alert(data.mssege);
-		}
+	/* ajax.submit(form, function(data) {
+		if(data != null) alert("퀘스트를 올렸습니다.");
+		else alert(data.mssege);
+	}); */
+	/* data = $(form).serializeArray();
+	console.log(data);
+	console.log(JSON.stringify(data));
+	data = ajax.serializeObject($(form));
+	console.log(data);
+	data.areas = quest.areas;
+	data.works = quest.works;
+	data.skills = quest.skills;
+	data.requirements = quest.requirements;
+	console.log(data); */
+	ajax.submit(form, function(result) {
+		if(result!= null) alert("퀘스트를 올렸습니다.");
+		else alert(data.mssege);
 	});
 	return false;
 }
@@ -110,10 +149,7 @@ function request(form) {
 			<div class="col-xs-6"><select name="subArea" id="subArea" class="form-control"></select></div>
 		</div>
 		<div class="form-group">
-			<ul class="list-inline form-control-static area">
-				<li><span class="badge">분야 > 세부분야 <span class="glyphicon glyphicon-remove"></span></span></li>
-				<li><span class="badge">세부분야 <span class="glyphicon glyphicon-remove"></span></span></li>
-			</ul>
+			<ul class="list-inline form-control-static area"></ul>
 		</div>
 		<div class="form-group row">
 			<label for="work" class="sr-only">업무</label>
@@ -151,18 +187,19 @@ function request(form) {
 		<div class="form-group row">
 			<div class="col-xs-4">
 				<label for="requirement" class="sr-only">요구사항 이름</label>
-				<input type="text" name="requirement" id="requirement" class="form-control" placeholder="요구사항 이름">
+				<input type="text" name="requirementName" id="requirement" class="form-control" placeholder="요구사항 이름">
 			</div>
 			<div class="col-xs-6">
 				<label for="requirement" class="sr-only">요구사항 내용</label>
-				<input type="text" name="requirement" id="requirement" class="form-control" placeholder="요구사항 내용">
+				<input type="text" name="requirementDescription" id="requirement" class="form-control" placeholder="요구사항 내용">
 			</div>
 			<div class="col-xs-2">
-				<input type="submit" id="" name="" class="btn btn-default" value="추가">
+				<button type="button" id="" name="" class="btn btn-default" onclick="addRequirement();">추가</button>
 			</div>
 		</div>
 		<div class="form-group">
-			요구사항에 대해서 추가된 사항 기입
+			<table class="table table-bordered requirement-list"><tbody></tbody></table>
+			<ul class="list-inline requirement-list"></ul>
 		</div>
 		<div class="form-group">
 			<label for="description" class="sr-only">내용</label>

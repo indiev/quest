@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
-
 <script type="text/javascript">
 function login(form) {
-	ajax.post($(form).attr('action'), $(form).serialize(), function(data) {
+	ajax.post(form, function(data) {
+		console.log(data);
 		data = JSON.parse(data);
 		if(data.success) {
-			location.href="/";
+			//location.href="/";
+			alert("로그인하였습니다.");
 		}
 		else alert("아이디와 비밀번호를 다시 확인해주세요.");
 	});

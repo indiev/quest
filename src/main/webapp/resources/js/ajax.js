@@ -11,26 +11,34 @@ var ajax = {
     		alert('error trying.\r' + xhr.status + "/" + thrownError);
     	}
     },
-    toArrayForUrl:function(keynvalues) {
+    serializeObject:function($form) {
+    	keynvalues = $form.serializeArray();
     	var data = {};
     	for(var i in keynvalues) {
-    		key = keynvalues[i].name;
-    		value = keynvalues[i].value;//decodeURIComponent(keynvalue[1]);
-    		if(typeof key.split('Id')[1] != "undefined" && key.split('Id')[1] == "" && key != "parentId") data[key.split('Id')[0]] = {id:value};
-    		else data[key] = value;
+    		if($.isArray(keynvalues[i])) {
+    			;
+    		} else {
+    			key = keynvalues[i].name;
+        		value = keynvalues[i].value;
+        		if(typeof key.split('Id')[1] != "undefined" && key.split('Id')[1] == "" && key != "parentId") data[key.split('Id')[0]] = {id:value};
+        		else data[key] = value;    			
+    		}
     	}
     	return data;
     },
 	submit:function(form, cb) {
-		$form = $(form);
-		var data = ajax.toArrayForUrl($form.serializeArray());
+		var data = ajax.serializeObject($(form));
 		var headers = {};
 //		data['_method'] = $form.attr("method");
+		/*data = {area:"1",description:"1",duration:"1",name:"1",qualification:"1",requirementDescription:"",requirementName:"",reward:"1",skill:"4",subArea:"4",
+		subWork:"7",work:"4",areas:[{id:7},{id:8}],works:[{id:7},{id:8}],skills:[{id:4},{id:5}],requirements:[{name:"1",description:"1"},{name:"2",description:"2"}]};*/
+		console.log(data);
 		data = JSON.stringify(data);
-		headers['_method'] = $form.attr("method");
+		console.log(data);
+		headers['_method'] = $(form).attr("method");
 		$.ajax({
-		    type:$form.attr("method"),
-		    url:$form.attr("action"),
+		    type:$(form).attr("method"),
+		    url:$(form).attr("action"),
 		    cache:false,
 		    data:data,
 		    dataType:'json',
@@ -51,10 +59,11 @@ var ajax = {
 		    error:ajax.error
 		});
 	},
-	post:function (url, data, cb) {
+	post:function (form, cb) {
+		data = ajax.serializeObject($(form));
         $.ajax({
             type:'POST',
-            url:url,
+            url:$(form).attr("action"),
             cache:false,
             data:data,
             /*contentType:'application/json; charset=utf-8',*/
