@@ -46,7 +46,7 @@ function searchWorkByArea(id) {
 }
 
 function addQuester(form) {
-	ajax.submit(form, function(data) {
+	ajax.submit(form, {}, function(data) {
 		console.log(data);
 		if(data != null) {
 			alert("새로운 퀘스터를 생성하였습니다.");

@@ -40,7 +40,7 @@ $(document).ready(function() {
 
 function request(form) {
 	console.log($(form).serialize());
-	ajax.submit(form, function(data) {
+	ajax.submit(form, {}, function(data) {
 		if(data != null) {
 			alert("업무가 추가되었습니다.");
 			//location.href = '/admin/work/add';

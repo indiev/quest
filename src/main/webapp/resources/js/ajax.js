@@ -26,22 +26,28 @@ var ajax = {
     	}
     	return data;
     },
-	submit:function(form, cb) {
-		var data = ajax.serializeObject($(form));
+	submit:function(form, data, cb) {
+		var formData = ajax.serializeObject($(form));
 		var headers = {};
 //		data['_method'] = $form.attr("method");
 		/*data = {area:"1",description:"1",duration:"1",name:"1",qualification:"1",requirementDescription:"",requirementName:"",reward:"1",skill:"4",subArea:"4",
-		subWork:"7",work:"4",areas:[{id:7},{id:8}],works:[{id:7},{id:8}],skills:[{id:4},{id:5}],
+		subWork:"7",work:"4",
+		areas:[{id:7},{id:8}],
+		works:[{id:7},{id:8}],
+		skills:[{id:4},{id:5}],
 		requirements:[{name:"1",description:"1"},{name:"2",description:"2"}]};*/
-		console.log(data);
-		data = JSON.stringify(data);
-		console.log(data);
+		//formData = {area:"1",description:"1",duration:"1",name:"1",qualification:"1",requirementDescription:"",requirementName:"",reward:"1"};
+		console.log(formData);
+		$.extend(formData, data);
+		console.log(formData);
+		formData = JSON.stringify(formData);
+		console.log(formData);
 		headers['_method'] = $(form).attr("method");
 		$.ajax({
 		    type:$(form).attr("method"),
 		    url:$(form).attr("action"),
 		    cache:false,
-		    data:data,
+		    data:formData,
 		    dataType:'json',
 		    contentType:'application/json; charset=utf-8',
 		    success:cb,

@@ -2,7 +2,7 @@
 
 <script type="text/javascript">
 function join(form) {
-	ajax.submit(form, function(data) {
+	ajax.submit(form, {}, function(data) {
 		console.log(data);
 		if(data != null) {
 			alert("회원가입에 성공하였습니다.");
