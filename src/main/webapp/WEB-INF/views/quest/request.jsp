@@ -146,11 +146,13 @@ function request(form) {
 	<div class="container-pluid">
 		<div class="form-group">
 			<label for="name" class="sr-only">퀘스트명</label>
-			<input type="text" name="name" id="name" class="form-control" placeholder="퀘스트명">
+			<input type="text" name="name" id="name" class="form-control input-lg" placeholder="퀘스트명">
 		</div>
 		<div class="form-group row">
-			<label for="area" class="sr-only">분야</label>
-			<div class="col-xs-6"><select name="area" id="area" class="form-control"></select></div>
+			<div class="col-xs-6">
+				<label for="area" class="sr-only">분야</label>
+				<select name="area" id="area" class="form-control"></select>
+			</div>
 			<label for="subArea" class="sr-only">세부분야</label>
 			<div class="col-xs-6"><select name="subArea" id="subArea" class="form-control"></select></div>
 		</div>
@@ -211,6 +213,5 @@ function request(form) {
 			<label for="description" class="sr-only">내용</label>
 			<input type="text" name="description" id="description" class="form-control" placeholder="내용">
 		</div>
-		<input type="submit" id="" name="" class="btn btn-default" value="요청">
 	</div>
 </form>

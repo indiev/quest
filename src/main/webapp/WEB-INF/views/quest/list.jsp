@@ -1,36 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
-<div class="page-header">
-  <h1>퀘스트 > 목록 <small>Subtext for header</small></h1>
+<div class="mainWrap center-block">
+	<div class="jumbotron">
+		<div class="jumbotron-contents text-center">
+		  	<h2>N개의 프로젝트가 있습니다</h2>
+	 		<form class="form-inline" role="form" action="" method="POST" onsubmit="return search(this);">
+		 		<div class="input-group form-search">
+		 			<label for="searchKeyword" class="sr-only">검색</label>
+		 			<input type="text" name="searchKeyword" id="searchKeyword" class="form-control input-sm search-query" placeholder="검색" />
+		 			<span class="input-group-btn">
+		 				<button class="btn btn-default btn-sm" type="button"><span class="glyphicon-search glyphicon" aria-hidden="true"></span></button>
+		 				<button type="button" class="btn btn-default btn-sm" name="requestButton" data-toggle="modal" data-target="#requestDialog"><span class="glyphicon-plus glyphicon" aria-hidden="true"></span></button>
+		 			</span>
+		 		</div>
+	 		</form>
+	 	</div>
+	</div>
+	<div class="quest-content list-group"></div>
 </div>
-<div class="quest-form text-center">
-	<form class="form-inline" role="form" action="" method="POST" onsubmit="return search(this);">
-		<div class="input-group">
-			<label for="searchKeyword" class="sr-only">검색</label>
-			<input type="text" name="searchKeyword" id="searchKeyword" class="form-control input-sm" placeholder="검색">
-			<span class="input-group-btn">
-				<button class="btn btn-default btn-sm" type="button">
-					<span class="glyphicon-search glyphicon" aria-hidden="true"></span>
-				</button>
-			</span>
-		</div>
-		<button type="button" class="btn btn-default btn-sm" name="requestButton" data-toggle="modal" data-target="#requestDialog">
-			<span class="glyphicon-plus glyphicon" aria-hidden="true"></span>
-		</button>
-	</form>
-</div>
-<div class="quest-content list-group"></div>
-
+ 
 <div class="modal fade" id="requestDialog" role="dialog" aria-labelledby="requestHeader" aria-hidden="true" tabindex="-1">
 	<div class="modal-dialog">
 		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title">퀘스트 등록</h4>
+			</div>
 			<div class="modal-body"></div>
+			<div class="modal-footer"><input type="submit" id="" name="" class="btn btn-default" value="요청"></div>
 		</div>
 	</div>
 </div>
-
-<style type="text/css">
-.quest-list-node { border:1px solid; margin-bottom: 10px;}
-</style>
 
 <script type="text/javascript">
 function apply(value) {
