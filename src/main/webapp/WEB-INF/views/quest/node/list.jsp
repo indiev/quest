@@ -3,8 +3,12 @@
 <div class="list-group-item">
 	<div class="row">
 		<div class="col-xs-10">
-			<span class="glyphicon glyphicon-flag" aria-hidden="true"></span> <span
-				class="area"></span> > <span class="kind"></span>
+			<span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+			<div>
+				<ul class="list-inline areas pull-left" style="padding-right:10px;"></ul>
+				<ul class="list-inline works pull-left" style="padding-right:10px;"></ul>
+				<ul class="list-inline skills pull-left"></ul>
+			</div>
 		</div>
 		<div class="col-xs-2 text-right">
 			<span class="glyphicon glyphicon-user" aria-hidden="true"></span> <span

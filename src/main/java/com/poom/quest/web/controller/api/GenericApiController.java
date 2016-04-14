@@ -54,7 +54,8 @@ public abstract class GenericApiController<T> {
 	
 	@ResponseBody
 	@RequestMapping(value = "/list/{keyword}", method = RequestMethod.GET)
-	public List<T> list(@PathVariable String keyword, @RequestParam String[] keys) {
+	public List<T> list(@PathVariable String keyword/*, @RequestParam String[] keys*/) {
+		String[] keys = new String[] { "name" };
 		return genericService.search(keyword, keys);
 	}
 	
