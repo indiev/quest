@@ -31,6 +31,10 @@ public class Quester extends GenericModel {
 	@JsonIgnore
 	private Set<Quest> appliedQuests;
 	
+	//분야
+	//업무
+	//스킬
+	
 	public User getUser() {
 		return user;
 	}
