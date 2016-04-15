@@ -1,10 +1,13 @@
 package com.poom.quest.services.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poom.quest.services.model.abstractModel.GenericModel;
 
 @Entity
@@ -13,11 +16,18 @@ public class Requirement extends GenericModel {
 	private static final long serialVersionUID = 1L;
 	
 	private String description;
-	private Boolean flag;
+	private Boolean state;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "questId", referencedColumnName = "id")
 	private Quest quest;
+	
+	@PrePersist
+	public void onCreate() {
+		if(this.state == null) this.state = false;
+		super.onCreate();
+	};
 	
 	public String getDescription() {
 		return description;
@@ -25,11 +35,11 @@ public class Requirement extends GenericModel {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Boolean getFlag() {
-		return flag;
+	public Boolean getState() {
+		return state;
 	}
-	public void setFlag(Boolean flag) {
-		this.flag = flag;
+	public void setState(Boolean state) {
+		this.state = state;
 	}
 	public Quest getQuest() {
 		return quest;

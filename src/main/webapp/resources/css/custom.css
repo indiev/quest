@@ -9,6 +9,17 @@ img {
 	height: auto;
 }
 
+.container-fluid { padding: 0; }
+
+#main {
+	padding-top: 50px;
+}
+
+.navWrap, .mainWrap {
+	width: 80%;
+	max-width: 1170px;
+}
+
 .firstWrap {
 	padding: 5em 0;
 	border-bottom: 1px solid #999;

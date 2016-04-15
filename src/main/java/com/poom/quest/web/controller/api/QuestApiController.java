@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.poom.quest.services.model.Quest;
+import com.poom.quest.services.model.Requirement;
 import com.poom.quest.services.model.user.Quester;
 import com.poom.quest.services.model.user.User;
 import com.poom.quest.services.service.QuesterService;
@@ -37,9 +38,9 @@ public class QuestApiController extends GenericApiController<Quest> {
 		User user = userService.getLoginUserByRequest(request);
 		if(user != null) {
 			entity.setRequester(user.getRequester());
+			for(Requirement requirement : entity.getRequirements()) requirement.setQuest(entity);
 			quest = genericService.add(entity);
 		}
-		
 		return quest;
 	}
 	

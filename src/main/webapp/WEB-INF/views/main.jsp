@@ -15,7 +15,7 @@
 <!-- navbar-inverse -->
 <div class="container-fluid">
 	<div id="sidebar-top"></div>
-	<div id="main" class="row" style="padding-top:50px;"></div>
+	<div id="main" class="row center-block"></div>
 </div>
 
 <script data-main="/resources/js/main" src="/resources/assets/lib/jquery/jquery-2.1.0.min.js"></script>
@@ -34,6 +34,7 @@ $(document).ready(function(){
 	$("#main").load("/${mainContent}");
 });
 $(document).pjax("a", "#main");
+
 /*
 $(document).on("click", "a", function(){
 	if($(this).attr("href") == "/") return ;

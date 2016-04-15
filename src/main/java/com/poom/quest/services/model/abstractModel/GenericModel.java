@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -26,6 +28,17 @@ public abstract class GenericModel extends Model {
 	private Date createdDate;
 	@NotNull
 	private Date modifiedDate;
+	
+	@PrePersist
+	public void onCreate() {
+		this.createdDate = new Date();
+		this.modifiedDate = new Date();
+	}
+	
+	@PreUpdate
+	public void onUpdate() {
+		this.modifiedDate = new Date();
+	}
 	
 	public Integer getId() {
 		return id;

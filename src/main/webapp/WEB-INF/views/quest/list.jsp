@@ -1,36 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
-<div class="page-header">
-  <h1>퀘스트 > 목록 <small>Subtext for header</small></h1>
+<div class="mainWrap center-block">
+	<div class="jumbotron">
+		<div class="jumbotron-contents text-center">
+		  	<h2><span class="project-search-length">0</span>개의 프로젝트가 있습니다</h2>
+	 		<form class="form-inline" name="questSearchForm" role="form" action="/api/quest/list" method="GET" onsubmit="return list();">
+		 		<div class="input-group form-search">
+		 			<label for="searchKeyword" class="sr-only">검색</label>
+		 			<input type="text" name="searchKeyword" id="searchKeyword" class="form-control input-sm search-query" placeholder="검색" />
+		 			<span class="input-group-btn">
+		 				<button class="btn btn-default btn-sm" type="button" onclick="list()"><span class="glyphicon-search glyphicon" aria-hidden="true"></span></button>
+		 				<button type="button" class="btn btn-default btn-sm" name="requestButton" data-toggle="modal" data-target="#requestDialog"><span class="glyphicon-plus glyphicon" aria-hidden="true"></span></button>
+		 			</span>
+		 		</div>
+	 		</form>
+	 	</div>
+	</div>
+	<div class="quest-content list-group"></div>
 </div>
-<div class="quest-form text-center">
-	<form class="form-inline" role="form" action="" method="POST" onsubmit="return search(this);">
-		<div class="input-group">
-			<label for="searchKeyword" class="sr-only">검색</label>
-			<input type="text" name="searchKeyword" id="searchKeyword" class="form-control input-sm" placeholder="검색">
-			<span class="input-group-btn">
-				<button class="btn btn-default btn-sm" type="button">
-					<span class="glyphicon-search glyphicon" aria-hidden="true"></span>
-				</button>
-			</span>
-		</div>
-		<button type="button" class="btn btn-default btn-sm" name="requestButton" data-toggle="modal" data-target="#requestDialog">
-			<span class="glyphicon-plus glyphicon" aria-hidden="true"></span>
-		</button>
-	</form>
-</div>
-<div class="quest-content list-group"></div>
-
+ 
 <div class="modal fade" id="requestDialog" role="dialog" aria-labelledby="requestHeader" aria-hidden="true" tabindex="-1">
 	<div class="modal-dialog">
 		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title">퀘스트 등록</h4>
+			</div>
 			<div class="modal-body"></div>
+			<div class="modal-footer"><input type="submit" id="" name="" class="btn btn-default" value="요청"></div>
 		</div>
 	</div>
 </div>
-
-<style type="text/css">
-.quest-list-node { border:1px solid; margin-bottom: 10px;}
-</style>
 
 <script type="text/javascript">
 function apply(value) {
@@ -42,15 +41,34 @@ function apply(value) {
 
 function list() {
 	$("div.quest-content").empty();
-	ajax.get("/api/quest/list", {}, function(list){
+	$form = $("form[name='questSearchForm']");
+	searchKeyword = "/" + $form.find("[name='searchKeyword']").val();
+	ajax.get($form.attr("action") + searchKeyword, {}, function(list){
+		$("span.project-search-length").html(list.length);
 		$.get("/quest/node/list", function(questNode){
 			for(i in list) {
 				var questNodeClone = $(questNode).clone();
-				
-				/* if(jQuery.type(list[i].classification[0]) != "undefined") {
-					questNodeClone.find(".area").html(list[i].classification[0].kind.area.name);
-					questNodeClone.find(".kind").html(list[i].classification[0].kind.name);
-				} */
+				if(list[i].areas.length > 0) {
+					questNodeClone.find(".areas").empty();
+					for(index in list[i].areas) {
+						$area = $("<li>").html(list[i].areas[index].name).addClass("badge label-primary");
+						questNodeClone.find(".areas").append($area);
+					}
+				}
+				if(list[i].works.length > 0) {
+					questNodeClone.find(".works").empty();
+					for(index in list[i].works) {
+						$work = $("<li>").html(list[i].works[index].name).addClass("badge label-warning");
+						questNodeClone.find(".works").append($work);
+					}
+				}
+				if(list[i].skills.length > 0) {
+					questNodeClone.find(".skills").empty();
+					for(index in list[i].skills) {
+						$skill = $("<li>").html(list[i].skills[index].name).addClass("badge label-danger");
+						questNodeClone.find(".skills").append($skill);
+					}
+				}
 				questNodeClone.find(".realname").html(list[i].requester.user.realname);
 				$name = $("<a>").attr("href", "/quest/detail/" + list[i].id).html(list[i].name);
 				questNodeClone.find(".name").html($name);
@@ -67,6 +85,7 @@ function list() {
 			}
 		});
 	});
+	return false;
 }
 
 $(document).ready(function(){

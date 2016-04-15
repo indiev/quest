@@ -94,7 +94,7 @@ public abstract class GenericDao<T> {
 			if(i !=0 ) where += " AND ";
 			where += "LOWER(" + keys[i] + ") LIKE :keyword";
 		}
-		return em.createNativeQuery(SELECT_ALL_SQL + where).setParameter("keyword", sqlKeyword).getResultList();
+		return em.createNativeQuery(SELECT_ALL_SQL + where, clazz).setParameter("keyword", sqlKeyword).getResultList();
 	}
 	
 	public T update(T entity) {
