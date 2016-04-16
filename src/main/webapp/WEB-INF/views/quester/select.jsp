@@ -3,6 +3,11 @@
 var user = null;
 
 $(document).ready(function() {
+	
+	/* 유저  현재 메인 퀘스터 확인 */
+	showMainQuesterInfo();
+	
+	/* 퀘스터  리스트  */
 	ajax.get("/api/quester/list/user", {}, function(list){
 		for(i in list) {
 			$quester = $("<a>").attr("role", "menuItem").attr("id", list[i].id).html(list[i].name);
@@ -12,6 +17,15 @@ $(document).ready(function() {
 		}
 	});
 });
+
+
+function showMainQuesterInfo() {
+	ajax.get("/api/user/get", {}, function(user) {
+		ajax.get("/api/quester/"+user.mainQuesterId,{},function(quester){
+			console.log(quester.name);
+		});
+	});
+}
 
 function selectMainQuester(selectedId) {
 	ajax.get("/api/user/get", {}, function(user) {

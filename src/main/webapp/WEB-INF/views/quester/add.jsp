@@ -1,129 +1,153 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
+<form role="form" action="/api/quester" method="POST" onsubmit="return request(this);">
+	<div class="container-pluid">
+		<div class="form-gorup">
+			<label for="name">1.닉네임</label> 
+			<input type="text" name="name" id="name" class="form-control" placeholder="닉네임">
+		</div>
+		
+		<div class="form-group">
+			<label>2.분야</label> 
+			<div class="row">
+				<div class="col-md-5"><select name="area" id="area" class="form-control" ></select></div>
+				<div class="col-md-5"><select name="subArea" id="subArea" class="form-control" ></select></div>
+				<div class="col-md-2"><button type="button" id="addAreaBtn" class="btn btn-success">분야 추가</button></div>
+			</div>
+		</div>
+		
+		<ul class="list-inline form-control-static area">
+			<li><span class="badge">분야 > 세부분야 <span class="glyphicon glyphicon-remove"></span></span></li>
+			<li><span class="badge">세부분야 <span class="glyphicon glyphicon-remove"></span></span></li>
+		</ul>
+		
+		<div class="form-group">
+			<label>3.업무</label> 
+			<div class="row">
+				<div class="col-md-5"><select name="work" id="work" class="form-control" ></select></div>
+				<div class="col-md-5"><select name="subWork" id="subWork" class="form-control" ></select></div>
+				<div class="col-md-2"><button type="button" id="addWorkBtn" class="btn btn-success">업무 추가</button></div>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label>3.스킬</label> 
+			<div class="row">
+				<div class="col-md-5"><select name="skill" id="skill" class="form-control" ></select></div>
+				<div class="col-md-2"><button type="button" id="addWorkBtn" class="btn btn-success">스킬 추가</button></div>
+			</div>
+		</div>
+		 
+		<input type="submit" class="btn btn-default" value="추가">
+		
+		1.닉네임 2.분야3.업무4.기술 5.자기소개
+
+	</div>
+</form>
+
+
+
 <script type="text/javascript">
-$(document).ready(function() {
-	/* area 로드. ajax.get()......*/
-	areaList = [];
-	areaList.push({name:'IT', id:1});
-	areaList.push({name:'디자인', id:2});
-	
-	/* area 로드 이후. */
-	for(i in areaList) {
-		$area = $("<a>").attr("role","menuItem").attr("id",areaList[i].id).html(areaList[i].name);
-		$area.click(function() {searchSkillByArea(this.id); });
-		$list = $("<li>").attr("role", "presentation").append($area);
-		$("#areaList").find(".dropdown-menu").append($list);
-	}
-	
-	
-});
 
+var classQuester = function() {
+	this.areas = new Array();
+	this.works = new Array();
+	this.skills = new Array();
+}
 
-function searchSkillByArea(id) {
-	/* skills 로드. ajax.get()...... */
-	var skillList = [];
-	var skillListByAreaId = [];
-	skillList.push({name:'spring', id:1, areaId:1});
-	skillList.push({name:'php', id:2, areaId:1});
-	skillList.push({name:'캘리그라피', id:3, areaId:2})
-	for(i in skillList) {
-		if(id == skillList[i].areaId)
-		skillListByAreaId.push(skillList[i]);
-	}
-	
-	/* skills 로드 이후. */
-	$caret = $("<span>").attr("class","caret");
-	$('#areaMenu').html($('#areaList').find("#"+id).html()).append($caret);
-	
-	for ( i in skillListByAreaId) {
-		console.log(skillListByAreaId[i]);
+var quester = new classQuester();
+
+function selectInputList(name, list, defaultText) {
+	var select = $("select[name='" + name + "']");
+	select.empty();
+	select.append($("<option>").html(defaultText).val(null));
+	for(i in list) {
+		$option = $("<option>");
+		$option.html(list[i].name).val(list[i].id)
+		$option.attr("parentId", list[i].parentId);
+		select.append($option);
 	}
 }
 
-function searchWorkByArea(id) {
-	/* works 로드. ajax.get() */
-	var workList = [];
-	
+function htmlBadge(text, value) {
+	$removeIcon = $("<span>").addClass("glyphicon glyphicon-remove");
+	return $("<span>").addClass("badge").append(text + "&nbsp;").append($removeIcon);
 }
 
-function addQuester(form) {
-	ajax.submit(form, {}, function(data) {
-		console.log(data);
-		if(data != null) {
-			alert("새로운 퀘스터를 생성하였습니다.");
-			location.href = '/';
-		}
-		else {
-			alert(data.mssege);
-		}
+function request(form) {
+	ajax.submit(form, quester, function(result) {
+		if(result!= null) alert("퀘스트를 올렸습니다.");
+		else alert(data.mssege);
 	});
 	return false;
 }
 
 
+$(document).ready(function() {
+	var area = 	new Object();
+	area.id=1;
+	area.parentId=4
+	
+	var work = 	new Object();
+	work.id=7;
+	work.parentId=4
+	
+	quester.areas.push(area);
+	quester.works.push(work);
+	
+	ajax.get("/api/area/list",{},function(list){
+		selectInputList("area", list, "분야");
+	});
+	
+	$("select[name='subArea']").attr("readonly",true);
+	
+	$("select[name='area']").change(function(){
+		if(this.value != "") ajax.get("/api/area/list/parent/" + this.value, {}, function(list) {
+			selectInputList('subArea', list, "세부분야 없음");
+			$("select[name='subArea']").attr("readonly", false);
+		});
+		else {
+			selectInputList('subArea', {}, "세부분야 없음");
+			$("select[name='subArea']").attr("readonly", true);
+		}
+			
+	});
+	
+	
+	$("button#addAreaBtn").click(function(){
+		/*
+		var area = new Object();
+		//console.log($("select[name='area']").val());
+		//console.log($("select[name='area'] option:selected").text());
+		//console.log($("select[name='subArea']").val());
+		//console.log($("select[name='subArea'] option:selected").text());
+		area.id = $("select[name='subArea']").val();
+		area.parentId = $("select[name='area']").val();
+		
+		areaIds.add(area);
+		areaIds.forEach(function(item){
+			console.log('id: '+ item);
+		});
+		*/
+	
+		var text = $("select[name='subArea']").find(":selected").html();
+		var value = $("select[name='subArea']").val();
+		
+		$("ul.area").append(function(){
+			$node = htmlBadge(text, value);
+			return $("<li>").append($node);
+		});
+
+	
+	});
+	
+	
+	
+	
+	
+	
+});
+
 
 </script>
 
 
-<div class="container">
-<div class="row">
-<div class="col-md-12">
-<form role="form" action="/api/quester" method="POST" onsubmit="return addQuester(this);">		
-	<div>
-		<label for="profileImg">1.프로필 이미지</label>
-	</div>
-	<div class="form-group">	
-		<img src="..." alt="..." class="img-circle">
-	</div>
-	
-	<div>
-		<label for="name">2.닉네임</label>
-	</div>
-	<div class="form-group">
-		<input type="text" id="name" name="name" class="form-control" placeholder="닉네임">
-	</div>
-	
-	<div>
-		<label>3.분야/업무/기술</label>
-	</div>
-	<div class="form-group">	
-		<label for="area">분야</label>
-		<div class="dropdown" id=areaList>
-		  <button class="btn btn-default dropdown-toggle" type="button" id="areaMenu" data-toggle="dropdown" aria-expanded="true">
-		    분야선택
-		    <span class="caret"></span>
-		  </button>
-		  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-		  </ul>
-		</div>
-		
-	</div>
-	
-	<div class="form-group">
-		<label>업무</label>
-		<input type="text" id="name" name="area" class="form-control" placeholder="관심분야">
-	</div>
-	
-	<div>
-		<label>4.이력</label>	
-	</div>
-	<div class="form-group">
-		<label></label>	
-	</div>
-	
-	<div class="form-group">
-		<label>스킬</label>
-		<input type="text" id="skill" name="skill" class="form-control" placeholder="관심분야">
-	</div>
-	
-	<input type="submit" id="addQuester_submit" name="addQuester_submit" class="btn btn-default center-block" value="새 퀘스터 생성">
-
-
-	
-
-</form>
-
-</div>
-</div>
-
-
-</div>

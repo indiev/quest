@@ -42,7 +42,7 @@ public abstract class GenericApiController<T> {
 	public List<T> list(HttpServletRequest request) {
 		List<T> list = null;
 		User user = userService.getLoginUserByRequest(request);
-		if(user != null) list = genericService.listByKey("userId", user.getId());
+		if(user != null) list = genericService.listByKey("user", user.getId());
 		return list;
 	}
 	
