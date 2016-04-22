@@ -31,7 +31,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#sidebar-top").load("/sidebar-top");
-	$("#main").load("/${mainContent}");
+	$("#main").load("${mainContent}");
 });
 $(document).pjax("a", "#main");
 
