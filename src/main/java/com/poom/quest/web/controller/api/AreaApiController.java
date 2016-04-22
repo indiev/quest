@@ -26,6 +26,6 @@ public class AreaApiController extends GenericApiController<Area> {
 	@ResponseBody
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public List<Area> list() {
-		return genericService.listByKey("parent", (Integer)null);
+		return genericService.listByKeyId("parent", (Integer)null);
 	}
 }

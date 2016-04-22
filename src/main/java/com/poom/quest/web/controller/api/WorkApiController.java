@@ -20,6 +20,6 @@ public class WorkApiController extends GenericApiController<Work> {
 	@ResponseBody
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public List<Work> list() {
-		return genericService.listByKey("parent", (Integer)null);
+		return genericService.listByKeyId("parent", (Integer)null);
 	}
 }

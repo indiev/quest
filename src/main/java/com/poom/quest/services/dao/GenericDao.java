@@ -2,9 +2,12 @@ package com.poom.quest.services.dao;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
@@ -37,12 +40,30 @@ public abstract class GenericDao<T> {
 		return (list.isEmpty())?null:list.get(0);
 	}
 	
+	public T getByKeys(Map<String, String> keys) {
+		String where = " WHERE 1=1";
+		for(Entry<String, String> entry : keys.entrySet()) where += " AND " + entry.getKey() + "=:" + entry.getKey();
+		Query query = em.createNativeQuery(SELECT_ALL_SQL + where, clazz);
+		for(Entry<String, String> entry : keys.entrySet()) query.setParameter(entry.getKey(), entry.getValue());
+		List<T> list = query.getResultList();
+		return (list.isEmpty())?null:list.get(0);
+	}
+	
 	public List<T> list() {
 		return em.createNativeQuery(SELECT_ALL_SQL, clazz).getResultList();
 	}
 	
-	public List<T> listByKey(String keyName, Integer key) {
+	public List<T> listByKeyId(String keyName, Integer key) {
 		keyName += "Id";
+		return this.listByKey(keyName, key);
+	}
+	
+	public List<T> listByKeyId(String keyName, String key) {
+		keyName += "Id";
+		return this.listByKey(keyName, key);
+	}
+	
+	public List<T> listByKey(String keyName, Integer key) {
 		if(key != null) {
 			String where = " WHERE " + keyName + "=:key";
 			return em.createNativeQuery(SELECT_ALL_SQL + where, clazz).setParameter("key", key).getResultList();			
@@ -53,7 +74,6 @@ public abstract class GenericDao<T> {
 	}
 	
 	public List<T> listByKey(String keyName, String key) {
-		keyName += "Id";
 		if(key != null) {
 			String where = " WHERE " + keyName + "=:key";
 			return em.createNativeQuery(SELECT_ALL_SQL + where, clazz).setParameter("key", key).getResultList();
@@ -61,6 +81,14 @@ public abstract class GenericDao<T> {
 			String where = " WHERE " + keyName + " is NULL";
 			return em.createNativeQuery(SELECT_ALL_SQL + where, clazz).getResultList();
 		}
+	}
+	
+	public List<T> listByKeys(Map<String, String> keys) {
+		String where = " WHERE 1=1";
+		for(Entry<String, String> entry : keys.entrySet()) where += " AND " + entry.getKey() + "=:" + entry.getKey();
+		Query query = em.createNativeQuery(SELECT_ALL_SQL + where, clazz);
+		for(Entry<String, String> entry : keys.entrySet()) query.setParameter(entry.getKey(), entry.getValue());
+		return query.getResultList();
 	}
 	
 	public List<T> listByParent(Integer parentId, Class<?> parentClass) {

@@ -42,14 +42,14 @@ public abstract class GenericApiController<T> {
 	public List<T> list(HttpServletRequest request) {
 		List<T> list = null;
 		User user = userService.getLoginUserByRequest(request);
-		if(user != null) list = genericService.listByKey("user", user.getId());
+		if(user != null) list = genericService.listByKeyId("user", user.getId());
 		return list;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/list/{keyname}/{key}")
 	public List<T> listByKey(@PathVariable("keyname") String keyName, @PathVariable("key") String key) {
-		return genericService.listByKey(keyName, key);
+		return genericService.listByKeyId(keyName, key);
 	}
 	
 	@ResponseBody

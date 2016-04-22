@@ -31,15 +31,26 @@ function detail(id) {
 			$detailNodeClone.find(".qualification").html(quest.qualification);
 			$detailNodeClone.find(".duration").html(quest.duration);
 			$detailNodeClone.find(".description").html(quest.description);
-			for(i in quest.applicants) {
-				$applicant = $("<span>").html(quest.applicants[i].name);
-				$applicant.click(function(){ accept(quest.id, quest.applicants[i].id); });
-				$detailNodeClone.find(".applicant").append($applicant);
+			if(quest.applicants.length > 0) {
+				$detailNodeClone.find(".applicant").empty();
+				for(i in quest.applicants) {
+					$applicant = $("<li>").html(quest.applicants[i].name);
+					$applicant.click(function(){ accept(quest.id, quest.applicants[i].id); });
+					$detailNodeClone.find(".applicant").append($applicant);
+				}
 			}
-			for(i in quest.questers) {
-				$quester = $("<span>").html(quest.questers[i].name);
-				$detailNodeClone.find(".questers").append($quester);
+			if(quest.questers.length > 0) {
+				$detailNodeClone.find(".questers").empty();
+				for(i in quest.questers) {
+					$quester = $("<li>").html(quest.questers[i].name);
+					$detailNodeClone.find(".questers").append($quester);
+				}
 			}
+			$detailNodeClone.find("button").click(function() {
+				ajax.get("/api/quest/" + quest.id + "/state/discuss", {}, function(result) {
+					console.log(result);
+				});
+			})
 			$("div.quest-detail").append($detailNodeClone);
 		});
 	});

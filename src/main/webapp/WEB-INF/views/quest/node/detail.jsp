@@ -8,18 +8,7 @@
 	<div><span class="area"></span></div>
 	<div><span class="kind"></span></div>
 	<div><span class="description"></span></div>
-	<div><ul class="applicants"></ul></div>
-	<div><ul class="questers"></ul></div>
+	<div><b>지원한 퀘스터</b><ul class="applicants list-inline"><li>없음</li></ul></div>
+	<div><b>선정 퀘스터</b><ul class="questers list-inline"><li>없음</li></ul></div>
+	<button type="button" class="btn btn-default">진행</button>
 </div>
-
-<style type="text/css">
-span.name {
-	padding-bottom:10px;
-	margin: 44px; 0 22px;
-	border-bottom: 1px solid #d4dbe0;
-	display: block;
-}
-spane.* {
-	display: block;
-}
-</style> 

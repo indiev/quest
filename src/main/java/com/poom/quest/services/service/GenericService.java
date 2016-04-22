@@ -1,14 +1,13 @@
 package com.poom.quest.services.service;
 
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.poom.quest.services.dao.GenericDao;
-import com.poom.quest.services.model.abstractModel.GenericModel;
 
 @Service
 @Transactional
@@ -32,8 +31,20 @@ public abstract class GenericService<T> {
 		return genericDao.getByKey(keyName, key);
 	}
 	
+	public T getByKeys(Map<String, String> keys) {
+		return genericDao.getByKeys(keys);
+	}
+	
 	public List<T> list() {
 		return genericDao.list();
+	}
+	
+	public List<T> listByKeyId(String keyName, Integer key) {
+		return genericDao.listByKeyId(keyName, key);
+	}
+	
+	public List<T> listByKeyId(String keyName, String key) {
+		return genericDao.listByKeyId(keyName, key);
 	}
 	
 	public List<T> listByKey(String keyName, Integer key) {

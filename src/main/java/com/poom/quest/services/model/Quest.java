@@ -20,7 +20,7 @@ import com.poom.quest.services.model.user.Requester;
 public class Quest extends GenericModel {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private String reward; //보상 reward 경험치 point 물건? model로 따로 뺌? rewardPoint, rewardExperiencePoint other
 	private String qualification;	//자격
 	private Date recruitmentEndDate; //마감일
@@ -28,6 +28,10 @@ public class Quest extends GenericModel {
 	private String description; //설명 description
 	//계약에 대한.. (패널티 - 위약금)
 	//sub Project?
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "stateId", referencedColumnName = "id")
+	private Code state; //상태 - 준비(R), 요청자를 기다림(wait), 토의(discuss), 진행(progress), 완료(complete), 중지(stop), 일시정지(pause)
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "QuestArea", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "areaId")})
@@ -94,6 +98,14 @@ public class Quest extends GenericModel {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Code getState() {
+		return state;
+	}
+
+	public void setState(Code state) {
+		this.state = state;
 	}
 
 	public Set<Area> getAreas() {

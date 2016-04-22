@@ -1,5 +1,7 @@
 package com.poom.quest.web.controller.api;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,16 +10,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.poom.quest.services.model.Code;
 import com.poom.quest.services.model.Quest;
 import com.poom.quest.services.model.Requirement;
 import com.poom.quest.services.model.user.Quester;
 import com.poom.quest.services.model.user.User;
+import com.poom.quest.services.service.CodeService;
 import com.poom.quest.services.service.QuesterService;
 import com.poom.quest.services.service.UserService;
 
@@ -29,7 +34,9 @@ public class QuestApiController extends GenericApiController<Quest> {
 	
 	@Autowired UserService userService;
 	@Autowired QuesterService questerService;
+	@Autowired CodeService codeService;
 	
+	//정해진 값 범위 내에서 추가되도록, 벗어나는 값 관련 작업 필요
 	@Override
 	@ResponseBody
 	@RequestMapping(value = "", method = RequestMethod.POST)
@@ -39,6 +46,10 @@ public class QuestApiController extends GenericApiController<Quest> {
 		if(user != null) {
 			entity.setRequester(user.getRequester());
 			for(Requirement requirement : entity.getRequirements()) requirement.setQuest(entity);
+			Map<String, String> keys = new HashMap<>();
+			keys.put("model", "Quest");
+			keys.put("name", "wait");
+			entity.setState(codeService.getByKeys(keys));
 			quest = genericService.add(entity);
 		}
 		return quest;
@@ -73,5 +84,30 @@ public class QuestApiController extends GenericApiController<Quest> {
 			return true;
 		}
 		return false;
+	}
+
+	//정해진 상태값 이외의 값으로 변경될 시 에외 처리 추가해야됨
+	@ResponseBody
+	@RequestMapping(value = "/{id}/state/{stateValue}", method = RequestMethod.GET)
+	public Map<String, String> updateState(@PathVariable("id") Integer id, @PathVariable("stateValue") String stateValue, HttpServletRequest request) {
+		Map<String, String> result = new HashMap<>();
+		User user = userService.getLoginUserByRequest(request);
+		if(user != null) {
+			Quest quest = genericService.get(id);
+			if(quest.getRequester().getId().equals(user.getId())) {
+				Map<String, String> keys = new HashMap<>();
+				keys.put("model", "Quest");
+				keys.put("name", stateValue);
+				Code state = codeService.getByKeys(keys);
+				if(state != null) {
+					if(!quest.getState().getId().equals(state.getId())) {
+						quest.setState(state);
+						genericService.update(quest);
+						result.put("success", "상태를 변경했습니다.");
+					} else result.put("error", "이미 변경되었습니다.");					
+				} else result.put("error", "잘못된 상태 값으로 변경 중입니다.");
+			} else result.put("error", "권한이 없습니다.");
+		} else result.put("error", "권한이 없습니다.");
+		return result;
 	}
 }

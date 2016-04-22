@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.poom.quest.services.model.Area;
-import com.poom.quest.services.model.Kind;
+import com.poom.quest.services.model.Code;
 
 @Controller
 @RequestMapping("api/kind")
-public class KindApiController extends GenericApiController<Kind> {
+public class KindApiController extends GenericApiController<Code> {
 	
 	private static final Logger logger = LoggerFactory.getLogger(KindApiController.class);
 	
 	@ResponseBody
 	@RequestMapping(value = "/area/{parentId}", method = RequestMethod.GET)
-	public List<Kind> listByParent(@PathVariable Integer parentId) {
+	public List<Code> listByParent(@PathVariable Integer parentId) {
 		return genericService.listByParent(parentId, Area.class);
 	}
 }
