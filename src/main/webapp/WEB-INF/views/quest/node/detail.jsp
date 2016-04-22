@@ -8,7 +8,7 @@
 	<div><span class="area"></span></div>
 	<div><span class="kind"></span></div>
 	<div><span class="description"></span></div>
-	<div><b>지원한 퀘스터</b><ul class="applicants list-inline"><li>없음</li></ul></div>
+	<div><b>지원한 퀘스터(드래그앤드롭으로 이동하기? 오른쪽 마우스 클릭시 메뉴 뜨고 상세보기 가능)</b><ul class="applicants list-inline"><li>없음</li></ul></div>
 	<div><b>선정 퀘스터</b><ul class="questers list-inline"><li>없음</li></ul></div>
 	<button type="button" class="btn btn-default">진행</button>
 </div>
