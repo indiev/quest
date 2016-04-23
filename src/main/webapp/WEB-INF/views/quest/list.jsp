@@ -15,7 +15,7 @@
 	 		</form>
 	 	</div>
 	</div>
-	<div class="quest-content list-group"></div>
+	<div class="quest-content row"></div>
 </div>
  
 <div class="modal fade" id="requestDialog" role="dialog" aria-labelledby="requestHeader" aria-hidden="true" tabindex="-1">
