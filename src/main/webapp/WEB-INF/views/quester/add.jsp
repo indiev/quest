@@ -75,7 +75,7 @@ function htmlBadge(text, value) {
 
 function request(form) {
 	ajax.submit(form, quester, function(result) {
-		if(result!= null) alert("퀘스트를 올렸습니다.");
+		if(result!= null) alert("새로운 퀘스터를 생성하였습니다.");
 		else alert(data.mssege);
 	});
 	return false;
@@ -85,14 +85,22 @@ function request(form) {
 $(document).ready(function() {
 	var area = 	new Object();
 	area.id=1;
-	area.parentId=4
+	
+	var area1 = new Object();
+	area1.id=4;
 	
 	var work = 	new Object();
 	work.id=7;
-	work.parentId=4
+	
+	var skill = new Object();
+	skill.id=5;
 	
 	quester.areas.push(area);
+	quester.areas.push(area1);
 	quester.works.push(work);
+	quester.skills.push(skill);
+	
+	
 	
 	ajax.get("/api/area/list",{},function(list){
 		selectInputList("area", list, "분야");

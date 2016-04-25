@@ -45,6 +45,18 @@ public class QuesterController extends GenericViewController<Quester> {
 		return modelName + "/select";
 	}
 	
+	/**
+	 * 메인퀘스터 정보 화면.
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "getMainQuester", method = RequestMethod.GET)
+	public String getMainQuester(HttpServletRequest request, Model model) {
+		
+		return modelName + "/mainQuester";
+	}
+	
 	
 	
 }

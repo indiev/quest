@@ -5,7 +5,8 @@ var user = null;
 $(document).ready(function() {
 	
 	/* 유저  현재 메인 퀘스터 확인 */
-	showMainQuesterInfo();
+	$(".mainQuesterInfo").load("/quester/getMainQuester");
+	
 	
 	/* 퀘스터  리스트  */
 	ajax.get("/api/quester/list/user", {}, function(list){
@@ -19,25 +20,24 @@ $(document).ready(function() {
 });
 
 
-function showMainQuesterInfo() {
-	ajax.get("/api/user/get", {}, function(user) {
-		ajax.get("/api/quester/"+user.mainQuesterId,{},function(quester){
-			console.log(quester.name);
-		});
-	});
-}
 
 function selectMainQuester(selectedId) {
 	ajax.get("/api/user/get", {}, function(user) {
 		ajax.put("/api/user/"+user.id+"/mainQuester/"+selectedId, {}, function(result){
 			alert("메인 퀘스터가 변경되었습니다.");
-			console.log(result);
+			$(".mainQuesterInfo").load("/quester/getMainQuester");
 		});
 	});
 }
 </script>
 
+현재 메인퀘스터.
+<div class="mainQuesterInfo"></div>
+
+
 메인퀘스터 선택.
+
+
 <div id=currentMainQuesterName>
 </div>
 

@@ -15,7 +15,7 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">사용자 <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="#">정보</a></li>
+						<li><a href="/quester/getMainQuester">메인 퀘스터 정보</a></li>
 						<li><a href="/quester/add">퀘스터 생성</a></li>
 						<li><a href="/quester/select">메인 퀘스터 선택</a></li>
 					</ul>
