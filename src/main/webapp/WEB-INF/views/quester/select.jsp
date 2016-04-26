@@ -39,12 +39,9 @@ $(document).ready(function() {
 					}
 				}
 				
-				
-				
 				$questerNodeClone.click(function(){
-					selectMainQuester(this.id)
+					selectMainQuester(this.id);
 				});
-				
 				$("div.quester-content").append($questerNodeClone);
 			
 			}
@@ -55,9 +52,14 @@ $(document).ready(function() {
 function selectMainQuester(selectedId) {
 	ajax.get("/api/user/get", {}, function(user) {
 		ajax.put("/api/user/"+user.id+"/mainQuester/"+selectedId, {}, function(result){
+			$("#selectQuesterDialog").modal('hide');
+			getMainQuesterDetail();
 			alert("메인 퀘스터가 변경되었습니다.");
 		});
 	});
 }
+
+
+
 </script>
 

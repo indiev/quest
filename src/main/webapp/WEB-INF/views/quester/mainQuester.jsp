@@ -19,13 +19,10 @@
 
 
 <script type="text/javascript">
-$(document).ready(function() { 
-	$("button[name='changeMainQuesterBtn']").click(function(){
-		$("#selectQuesterDialog").find("div.modal-body").load("/quester/select").click(function(){
-			getMainQuesterDetail();
-		});
-	})
+$(document).ready(function() {
 	getMainQuesterDetail();
+	$("#selectQuesterDialog").find("div.modal-body").load("/quester/select");
+	
 });
 
 function getMainQuesterDetail() {
@@ -64,6 +61,16 @@ function getMainQuesterDetail() {
 				$("div.quester-detail").append($detailNodeClone);
 			
 			});
+		});
+	});
+}
+
+function selectMainQuester(selectedId) {
+	ajax.get("/api/user/get", {}, function(user) {
+		ajax.put("/api/user/"+user.id+"/mainQuester/"+selectedId, {}, function(result){
+			$("#selectQuesterDialog").modal('hide');
+			getMainQuesterDetail();
+			alert("메인 퀘스터가 변경되었습니다.");
 		});
 	});
 }
