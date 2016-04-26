@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
+<div class ="mainWrap center-block">
 <form role="form" action="/api/quester" method="POST" onsubmit="return request(this);">
 	<div class="container-pluid">
 		<div class="form-gorup">
@@ -43,6 +44,7 @@
 
 	</div>
 </form>
+</div>
 
 
 

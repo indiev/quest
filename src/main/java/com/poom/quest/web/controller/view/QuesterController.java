@@ -57,6 +57,23 @@ public class QuesterController extends GenericViewController<Quester> {
 		return modelName + "/mainQuester";
 	}
 	
+	/**
+	 * 퀘스터 정보 노드.
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "node/detail", method = RequestMethod.GET)
+	public String detailNode(HttpServletRequest request, Model model) {
+		
+		return modelName + "/node/detail";
+	}
+	
+	@RequestMapping(value = "node/list", method = RequestMethod.GET)
+	public String listNode(HttpServletRequest request, Model model) {
+		
+		return modelName + "/node/list";
+	}
 	
 	
 }
