@@ -30,13 +30,22 @@
 			</div>
 		</div>
 		
+		<ul class="list-inline form-control-static work">
+			<li><span class="badge">업무 > 세부업무<span class="glyphicon glyphicon-remove"></span></span></li>
+			<li><span class="badge">세부업무 <span class="glyphicon glyphicon-remove"></span></span></li>
+		</ul>
+		
 		<div class="form-group">
 			<label>3.스킬</label> 
 			<div class="row">
 				<div class="col-md-5"><select name="skill" id="skill" class="form-control" ></select></div>
-				<div class="col-md-2"><button type="button" id="addWorkBtn" class="btn btn-success">스킬 추가</button></div>
+				<div class="col-md-2"><button type="button" id="addSkillBtn" class="btn btn-success">스킬 추가</button></div>
 			</div>
 		</div>
+		
+		<ul class="list-inline form-control-static skill">
+			<li><span class="badge">스킬 <span class="glyphicon glyphicon-remove"></span></span></li>
+		</ul>
 		 
 		<input type="submit" class="btn btn-default" value="추가">
 		
@@ -85,30 +94,23 @@ function request(form) {
 
 
 $(document).ready(function() {
-	var area = 	new Object();
-	area.id=1;
-	
-	var area1 = new Object();
-	area1.id=4;
-	
-	var work = 	new Object();
-	work.id=7;
-	
-	var skill = new Object();
-	skill.id=5;
-	
-	quester.areas.push(area);
-	quester.areas.push(area1);
-	quester.works.push(work);
-	quester.skills.push(skill);
-	
-	
 	
 	ajax.get("/api/area/list",{},function(list){
 		selectInputList("area", list, "분야");
 	});
 	
+	ajax.get("/api/work/list",{},function(list){
+		selectInputList("work", list, "업무");
+	});
+	
+	ajax.get("/api/skill/list",{},function(list){
+		selectInputList("skill", list, "스킬");
+	});
+	
+	
 	$("select[name='subArea']").attr("readonly",true);
+	
+	$("select[name='subWork']").attr("readonly",true);
 	
 	$("select[name='area']").change(function(){
 		if(this.value != "") ajax.get("/api/area/list/parent/" + this.value, {}, function(list) {
@@ -122,37 +124,78 @@ $(document).ready(function() {
 			
 	});
 	
-	
-	$("button#addAreaBtn").click(function(){
-		/*
-		var area = new Object();
-		//console.log($("select[name='area']").val());
-		//console.log($("select[name='area'] option:selected").text());
-		//console.log($("select[name='subArea']").val());
-		//console.log($("select[name='subArea'] option:selected").text());
-		area.id = $("select[name='subArea']").val();
-		area.parentId = $("select[name='area']").val();
-		
-		areaIds.add(area);
-		areaIds.forEach(function(item){
-			console.log('id: '+ item);
+	$("select[name='work']").change(function(){
+		if(this.value != "") ajax.get("/api/work/list/parent/" + this.value, {}, function(list) {
+			selectInputList('subWork', list, "세부업무 없음");
+			$("select[name='subWork']").attr("readonly", false);
 		});
-		*/
-	
-		var text = $("select[name='subArea']").find(":selected").html();
-		var value = $("select[name='subArea']").val();
-		
-		$("ul.area").append(function(){
-			$node = htmlBadge(text, value);
-			return $("<li>").append($node);
-		});
-
-	
+		else {
+			selectInputList('subWork', {}, "세부분야 없음");
+			$("select[name='subWork']").attr("readonly", true);
+		}
+			
 	});
 	
 	
+	$("button#addAreaBtn").click(function(){
+		var area = new Object();
+		area.id = $("select[name='subArea']").val();
+		
+		for(i in quester.areas) {
+			if(quester.areas[i].id == area.id) {
+				alert("중복");
+				return;
+			}
+		}
+		
+		quester.areas.push(area);
+		var text = $("select[name='subArea']").find(":selected").html();
+		
+		$("ul.area").append(function() {
+			$node = htmlBadge(text, area.id);
+			return $("<li>").append($node);
+		});
+	});
 	
+	$("button#addWorkBtn").click(function(){
+		var work = new Object();
+		work.id = $("select[name='subWork']").val();
+		
+		for(i in quester.works) {
+			if(quester.works[i].id == work.id) {
+				alert("중복");
+				return;
+			}
+		}
+		
+		quester.works.push(work);
+		var text = $("select[name='subWork']").find(":selected").html();
+		
+		$("ul.work").append(function() {
+			$node = htmlBadge(text, work.id);
+			return $("<li>").append($node);
+		});
+	});
 	
+	$("button#addSkillBtn").click(function(){
+		var skill = new Object();
+		skill.id = $("select[name='skill']").val();
+		
+		for(i in quester.skills) {
+			if(quester.skills[i].id == skill.id) {
+				alert("중복");
+				return;
+			}
+		}
+		
+		quester.skills.push(skill);
+		var text = $("select[name='skill']").find(":selected").html();
+		
+		$("ul.skill").append(function() {
+			$node = htmlBadge(text, skill.id);
+			return $("<li>").append($node);
+		});
+	});
 	
 	
 });
