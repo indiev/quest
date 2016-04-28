@@ -54,13 +54,11 @@ public abstract class GenericDao<T> {
 	}
 	
 	public List<T> listByKeyId(String keyName, Integer key) {
-		keyName += "Id";
-		return this.listByKey(keyName, key);
+		return this.listByKey(keyName + "Id", key);
 	}
 	
 	public List<T> listByKeyId(String keyName, String key) {
-		keyName += "Id";
-		return this.listByKey(keyName, key);
+		return this.listByKey(keyName + "Id", key);
 	}
 	
 	public List<T> listByKey(String keyName, Integer key) {
