@@ -65,14 +65,4 @@ function getMainQuesterDetail() {
 	});
 }
 
-function selectMainQuester(selectedId) {
-	ajax.get("/api/user/get", {}, function(user) {
-		ajax.put("/api/user/"+user.id+"/mainQuester/"+selectedId, {}, function(result){
-			$("#selectQuesterDialog").modal('hide');
-			getMainQuesterDetail();
-			alert("메인 퀘스터가 변경되었습니다.");
-		});
-	});
-}
-
 </script>

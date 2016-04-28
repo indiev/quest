@@ -30,6 +30,18 @@ public class UserController extends GenericViewController<User>{ /* 로그인 �
 		return "user/join";
 	}
 	
+	/**
+	 * 유저 정보 노드.
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "node/detail", method = RequestMethod.GET)
+	public String detailNode(HttpServletRequest request, Model model) {
+		
+		return modelName + "/node/detail";
+	}
+	
 	
 	
 }

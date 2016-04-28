@@ -22,7 +22,7 @@ public class QuesterController extends GenericViewController<Quester> {
 	
 	@Autowired UserService userService;
 	/**
-	 * 새로운 퀘스터 생성 화면 제공
+	 * 새로운 퀘스터 생성 화면 제공.
 	 * @param request
 	 * @param model
 	 * @return
@@ -34,7 +34,7 @@ public class QuesterController extends GenericViewController<Quester> {
 	}
 	
 	/**
-	 *  메인 퀘스터 선택 화면
+	 *  메인 퀘스터 선택 화면.
 	 * @param request
 	 * @param model
 	 * @return
@@ -69,6 +69,12 @@ public class QuesterController extends GenericViewController<Quester> {
 		return modelName + "/node/detail";
 	}
 	
+	/**
+	 * 퀘스터 정보 노드 리스트.
+	 * @param request
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "node/list", method = RequestMethod.GET)
 	public String listNode(HttpServletRequest request, Model model) {
 		
