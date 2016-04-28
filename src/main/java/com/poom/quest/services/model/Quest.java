@@ -11,6 +11,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.poom.quest.services.model.abstractModel.GenericModel;
 import com.poom.quest.services.model.user.Quester;
@@ -26,8 +27,10 @@ public class Quest extends GenericModel {
 	private Date recruitmentEndDate; //마감일
 	private Integer duration; //수행기간(일)
 	private String description; //설명 description
-	//계약에 대한.. (패널티 - 위약금)
 	//sub Project?
+	
+	@OneToOne(mappedBy = "quest", fetch = FetchType.LAZY)
+	private Contract contract;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "stateId", referencedColumnName = "id")
