@@ -3,9 +3,9 @@ package com.poom.quest.services.dao;
 import org.springframework.stereotype.Repository;
 
 import com.poom.quest.services.model.Code;
-import com.poom.quest.services.model.SampleModel;
+import com.poom.quest.services.model.Contract;
 
-//@Repository
-public class SampleDao extends GenericDao<SampleModel> {
+@Repository
+public class ContractDao extends GenericDao<Contract> {
 
 }
