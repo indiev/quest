@@ -29,9 +29,6 @@ public class Quest extends GenericModel {
 	private String description; //설명 description
 	//sub Project?
 	
-	@OneToOne(mappedBy = "quest", fetch = FetchType.LAZY)
-	private Contract contract;
-	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "stateId", referencedColumnName = "id")
 	private Code state; //상태 - 준비(R), 요청자를 기다림(wait), 토의(discuss), 진행(progress), 완료(complete), 중지(stop), 일시정지(pause)
@@ -47,6 +44,9 @@ public class Quest extends GenericModel {
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "QuestSkill", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "skillId")})
 	private Set<Skill> skills;
+	
+	@OneToOne(mappedBy = "quest", fetch = FetchType.LAZY)
+	private Contract contract;
 
 	@OneToMany(mappedBy = "quest", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Requirement> requirements; //요구사항들
@@ -133,6 +133,14 @@ public class Quest extends GenericModel {
 
 	public void setSkills(Set<Skill> skills) {
 		this.skills = skills;
+	}
+
+	public Contract getContract() {
+		return contract;
+	}
+
+	public void setContract(Contract contract) {
+		this.contract = contract;
 	}
 
 	public Set<Requirement> getRequirements() {

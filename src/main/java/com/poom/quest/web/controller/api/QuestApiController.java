@@ -18,11 +18,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.poom.quest.services.model.Code;
+import com.poom.quest.services.model.Contract;
 import com.poom.quest.services.model.Quest;
 import com.poom.quest.services.model.Requirement;
 import com.poom.quest.services.model.user.Quester;
 import com.poom.quest.services.model.user.User;
 import com.poom.quest.services.service.CodeService;
+import com.poom.quest.services.service.ContractService;
+import com.poom.quest.services.service.QuestService;
 import com.poom.quest.services.service.QuesterService;
 import com.poom.quest.services.service.UserService;
 
@@ -32,16 +35,17 @@ public class QuestApiController extends GenericApiController<Quest> {
 	
 	private static final Logger logger = LoggerFactory.getLogger(QuestApiController.class);
 	
+	@Autowired QuestService questService;
 	@Autowired UserService userService;
 	@Autowired QuesterService questerService;
 	@Autowired CodeService codeService;
+	@Autowired ContractService contractService;
 	
 	//정해진 값 범위 내에서 추가되도록, 벗어나는 값 관련 작업 필요
 	@Override
 	@ResponseBody
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public Quest add(@RequestBody Quest entity, HttpServletRequest request) {
-		Quest quest = null;
 		User user = userService.getLoginUserByRequest(request);
 		if(user != null) {
 			entity.setRequester(user.getRequester());
@@ -50,9 +54,13 @@ public class QuestApiController extends GenericApiController<Quest> {
 			keys.put("model", "Quest");
 			keys.put("name", "wait");
 			entity.setState(codeService.getByKeys(keys));
-			quest = genericService.add(entity);
+			Contract contract = new Contract();
+			contract.setQuest(entity);
+			contractService.add(contract);
+			entity.setContract(contract);
+			genericService.add(entity);
 		}
-		return quest;
+		return entity;
 	}
 	
 	@ResponseBody
@@ -95,19 +103,10 @@ public class QuestApiController extends GenericApiController<Quest> {
 		if(user != null) {
 			Quest quest = genericService.get(id);
 			if(quest.getRequester().getId().equals(user.getId())) {
-				Map<String, String> keys = new HashMap<>();
-				keys.put("model", "Quest");
-				keys.put("name", stateValue);
-				Code state = codeService.getByKeys(keys);
-				if(state != null) {
-					if(!quest.getState().getId().equals(state.getId())) {
-						quest.setState(state);
-						genericService.update(quest);
-						result.put("success", "상태를 변경했습니다.");
-					} else result.put("error", "이미 변경되었습니다.");					
-				} else result.put("error", "잘못된 상태 값으로 변경 중입니다.");
+				result = questService.updateState(quest, stateValue);
 			} else result.put("error", "권한이 없습니다.");
 		} else result.put("error", "권한이 없습니다.");
+		
 		return result;
 	}
 }
