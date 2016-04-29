@@ -9,9 +9,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poom.quest.services.model.Area;
+import com.poom.quest.services.model.Portfolio;
 import com.poom.quest.services.model.Quest;
 import com.poom.quest.services.model.Skill;
 import com.poom.quest.services.model.Work;
@@ -42,6 +44,9 @@ public class Quester extends GenericModel {
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "QuesterSkill", joinColumns = {@JoinColumn(name = "questerId")}, inverseJoinColumns = {@JoinColumn(name = "skillId")})
 	private Set<Skill> skills;
+	
+	@OneToMany(mappedBy = "quester", fetch = FetchType.LAZY)
+	private Set<Portfolio> porfolios;
 	
 	@ManyToMany(mappedBy = "applicants", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore

@@ -18,8 +18,6 @@ public abstract class GenericService<T> {
 	@Autowired GenericDao<T> genericDao;
 	
 	public T add(T entity) {
-		//((GenericModel)entity).setCreatedDate(new Date());
-		//((GenericModel)entity).setModifiedDate(new Date());
 		return genericDao.add(entity);
 	}
 	
@@ -68,7 +66,6 @@ public abstract class GenericService<T> {
 	}
 	
 	public T update(T entity) {
-		//((GenericModel)entity).setModifiedDate(new Date());
 		return genericDao.update(entity);
 	}
 	 
