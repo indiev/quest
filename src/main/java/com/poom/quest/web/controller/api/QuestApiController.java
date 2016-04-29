@@ -50,10 +50,7 @@ public class QuestApiController extends GenericApiController<Quest> {
 		if(user != null) {
 			entity.setRequester(user.getRequester());
 			for(Requirement requirement : entity.getRequirements()) requirement.setQuest(entity);
-			Map<String, String> keys = new HashMap<>();
-			keys.put("model", "Quest");
-			keys.put("name", "wait");
-			entity.setState(codeService.getByKeys(keys));
+			entity.setState(codeService.getState("wait"));
 			Contract contract = new Contract();
 			contract.setQuest(entity);
 			contractService.add(contract);

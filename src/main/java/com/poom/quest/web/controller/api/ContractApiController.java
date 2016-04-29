@@ -1,7 +1,5 @@
 package com.poom.quest.web.controller.api;
 
-import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -29,17 +27,24 @@ public class ContractApiController extends GenericApiController<Contract> {
 	@Autowired QuestService questService;
 	
 	@ResponseBody
-	@RequestMapping(value = "/agree/{id}", method = RequestMethod.POST)
-	public Boolean agree(@PathVariable Integer id, HttpServletRequest request) {
+	@RequestMapping(value = "/agree/{id}", method = RequestMethod.GET)
+	public Boolean checkAgree(@PathVariable Integer id, HttpServletRequest request) {
 		User user = userService.getLoginUserByRequest(request);
 		Contract contract = genericService.get(id);
-		Set<User> agreedUsers = contract.getAgreedUsers();
-		//이미 추가되어있는지 비교?
-		agreedUsers.add(user);
+		if(contract.getAgreedUsers().contains(user)) return true;
+		else return false;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/agree/{id}", method = RequestMethod.PUT)
+	public Boolean updateAgree(@PathVariable Integer id, HttpServletRequest request) {
+		User user = userService.getLoginUserByRequest(request);
+		Contract contract = genericService.get(id);
+		contract.getAgreedUsers().add(user);
 		genericService.update(contract);
 		
 		Quest quest = contract.getQuest();
-		if(quest.getQuesters().size() + 1 == agreedUsers.size()) {
+		if(quest.getQuesters().size() + 1 == contract.getAgreedUsers().size()) { 	//전부다 동의했다면, 다음단계로.
 			questService.updateState(quest, "progress");
 		}
 		
