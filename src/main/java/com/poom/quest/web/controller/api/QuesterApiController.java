@@ -39,21 +39,4 @@ public class QuesterApiController extends GenericApiController<Quester> {
 		}
 		return null;
 	}
-	
-	@ResponseBody
-	@RequestMapping(value = "/{id}/quest/list/{state}", method = RequestMethod.GET)
-	public Quester questOfQuester(@PathVariable("id") Integer id, @PathVariable("state") String state, HttpServletRequest request) {
-		User user = userService.getLoginUserByRequest(request);
-		Quester quester = genericService.get(id);
-		quester.getUser();
-		Map<String, String> keys = new HashMap<String, String>();
-		keys.put("state", state);
-		//keys.put(, );
-		//keys.put(, );
-		questService.getByKeys(keys);
-		//검증
-		
-		return null;
-	} 
-	
 }
