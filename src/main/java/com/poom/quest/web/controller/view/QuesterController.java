@@ -46,18 +46,6 @@ public class QuesterController extends GenericViewController<Quester> {
 	}
 	
 	/**
-	 * 메인퀘스터 정보 화면.
-	 * @param request
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "getMainQuester", method = RequestMethod.GET)
-	public String getMainQuester(HttpServletRequest request, Model model) {
-		
-		return modelName + "/mainQuester";
-	}
-	
-	/**
 	 * 퀘스터 정보 노드.
 	 * @param request
 	 * @param model
