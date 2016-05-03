@@ -113,7 +113,7 @@ $(document).ready(function() {
 	$("select[name='subWork']").attr("readonly",true);
 	
 	$("select[name='area']").change(function(){
-		if(this.value != "") ajax.get("/api/area/list/parent/" + this.value, {}, function(list) {
+		if(this.value != "") ajax.get("/api/area/list/parentId/" + this.value, {}, function(list) {
 			selectInputList('subArea', list, "세부분야 없음");
 			$("select[name='subArea']").attr("readonly", false);
 		});
@@ -125,7 +125,7 @@ $(document).ready(function() {
 	});
 	
 	$("select[name='work']").change(function(){
-		if(this.value != "") ajax.get("/api/work/list/parent/" + this.value, {}, function(list) {
+		if(this.value != "") ajax.get("/api/work/list/parentId/" + this.value, {}, function(list) {
 			selectInputList('subWork', list, "세부업무 없음");
 			$("select[name='subWork']").attr("readonly", false);
 		});

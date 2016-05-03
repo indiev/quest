@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 
-<link rel="stylesheet" href="/resources/assets/lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" />
 <script src="/resources/assets/lib/moment/moment.js"></script>
 <script src="/resources/assets/lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
 
@@ -9,9 +8,8 @@
 	<div class="container-pluid">
 		
 		<div class="form-gorup">
-			<label for="name">0.유형(Type)</label> 
-			<div class="form-control" id="type">
-			</div>
+			<label for="name">0.유형(type)</label>
+			<select name="type" id="type" class="form-control" ></select>
 		</div>
 	
 		<div class="form-gorup">
@@ -20,7 +18,7 @@
 		</div>
 		
 		<div class="form-gorup">
-			<label for="name">2.목적(Target)</label> 
+			<label for="name">2.목적(target)</label> 
 			<input type="text" name="target" id="target" class="form-control" placeholder="개인프로젝트, 00공모전">
 		</div>
 		
@@ -145,6 +143,10 @@ function request(form) {
 
 $(document).ready(function() {
 	
+	ajax.get("/api/code/list/model/Portfolio",{},function(list){
+		selectInputList("type", list, "유형")
+	});
+	
 	ajax.get("/api/area/list",{},function(list){
 		selectInputList("area", list, "분야");
 	});
@@ -163,7 +165,7 @@ $(document).ready(function() {
 	$("select[name='subWork']").attr("readonly",true);
 	
 	$("select[name='area']").change(function(){
-		if(this.value != "") ajax.get("/api/area/list/parent/" + this.value, {}, function(list) {
+		if(this.value != "") ajax.get("/api/area/list/parentId/" + this.value, {}, function(list) {
 			selectInputList('subArea', list, "세부분야 없음");
 			$("select[name='subArea']").attr("readonly", false);
 		});
@@ -175,7 +177,7 @@ $(document).ready(function() {
 	});
 	
 	$("select[name='work']").change(function(){
-		if(this.value != "") ajax.get("/api/work/list/parent/" + this.value, {}, function(list) {
+		if(this.value != "") ajax.get("/api/work/list/parentId/" + this.value, {}, function(list) {
 			selectInputList('subWork', list, "세부업무 없음");
 			$("select[name='subWork']").attr("readonly", false);
 		});
@@ -248,10 +250,6 @@ $(document).ready(function() {
 	});
 	
 	
-});
-
-$(function(){
-	
 	$('#startDate').datetimepicker({
     });
 	
@@ -259,11 +257,7 @@ $(function(){
     });
 	
 	
-	ajax.get("/api/code/list/model/Portfolio",{},function(list){
-		for(i in list){
-			
-		}
-	});
+	
 	
 	
 });
