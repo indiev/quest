@@ -91,6 +91,14 @@ public class Portfolio extends GenericModel {
 	public void setType(Code type) {
 		this.type = type;
 	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public Quester getQuester() {
 		return quester;
@@ -99,4 +107,30 @@ public class Portfolio extends GenericModel {
 	public void setQuester(Quester quester) {
 		this.quester = quester;
 	}
+
+	public Set<Area> getAreas() {
+		return areas;
+	}
+
+	public void setAreas(Set<Area> areas) {
+		this.areas = areas;
+	}
+
+	public Set<Work> getWorks() {
+		return works;
+	}
+
+	public void setWorks(Set<Work> works) {
+		this.works = works;
+	}
+
+	public Set<Skill> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(Set<Skill> skills) {
+		this.skills = skills;
+	}
+	
+
 }
