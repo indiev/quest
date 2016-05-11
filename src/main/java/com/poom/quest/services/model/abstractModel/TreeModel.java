@@ -1,6 +1,5 @@
 package com.poom.quest.services.model.abstractModel;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,7 +13,7 @@ import javax.persistence.OrderBy;
 public abstract class TreeModel<T> extends GenericModel {
 
 	private static final long serialVersionUID = 1L;
-	
+	 
 	private Integer parentId;
 	private Integer sequency;
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
