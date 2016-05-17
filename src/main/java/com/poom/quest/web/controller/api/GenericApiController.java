@@ -22,6 +22,12 @@ public abstract class GenericApiController<T> {
 
 	private Logger logger = Logger.getLogger(this.getClass());
 	
+	@ResponseBody
+	@RequestMapping(value = "", method = RequestMethod.GET)
+	public List<T> list() {
+		return genericService.list();
+	}
+	
 	@Autowired GenericService<T> genericService;
 	@Autowired UserService userService;
 	
@@ -29,12 +35,6 @@ public abstract class GenericApiController<T> {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public T get(@PathVariable Integer id) {
 		return genericService.get(id);
-	}
-	
-	@ResponseBody
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public List<T> list() {
-		return genericService.list();
 	}
 	
 	@ResponseBody
