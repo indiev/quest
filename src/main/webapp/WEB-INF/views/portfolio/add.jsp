@@ -22,31 +22,10 @@
 		
 		<div class="form-gorup">
 			<label for="startDate">3.기간</label> 
-			
-			 <div class="container">
-			    <div class='col-md-3'>
-			        <div class="form-group">
-			            <div class='input-group date' id='startDate'>
-			                <input  type='text' data-format="yyyy-MM-dd" class="form-control" name='startDate' />
-			                <span class="input-group-addon">
-			                    <span class="glyphicon glyphicon-calendar"></span>
-			                </span>
-			            </div>
-			        </div>
-			    </div>
-			    <div class='col-md-1'>
-			   	 ~
-			    </div>
-			    <div class='col-md-3'>
-			        <div class="form-group">
-			            <div class='input-group date' id='endDate'>
-			                <input type='text' data-format="yyyy-MM-dd" class="form-control" name='endDate' />
-			                <span class="input-group-addon">
-			                    <span class="glyphicon glyphicon-calendar"></span>
-			                </span>
-			            </div>
-			        </div>
-   				</div>
+			<div>
+			시작일:<input type="date" id="startDate" name="startDate">
+			~
+			종료일:<input type="date" id="endDate" name="endDate">
 			</div>
 		</div>
 		
@@ -102,9 +81,6 @@
 </div>
 
 
-<link rel="stylesheet" href="/resources/assets/lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
-<script src="/resources/assets/lib/moment/moment.js"></script>
-<script src="/resources/assets/lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
 <script type="text/javascript">
 
 var classPortfolio= function() {
@@ -155,7 +131,7 @@ $(document).ready(function() {
 		selectInputList("work", list, "업무");
 	});
 	
-	ajax.get("/api/skill/list",{},function(list){
+	ajax.get("/api/skill",{},function(list){
 		selectInputList("skill", list, "스킬");
 	});
 	
@@ -248,20 +224,6 @@ $(document).ready(function() {
 			return $("<li>").append($node);
 		});
 	});
-	
-	$('#startDate').datetimepicker({
-		 viewMode: 'years',
-         format: 'YYYY-MM-DD'
-    });
-	
-	$('#endDate').datetimepicker({
-		 viewMode: 'years',
-         format: 'YYYY-MM-DD'
-    });
-	
-});
-
-$(function(){
 	
 });
 

@@ -42,6 +42,19 @@ public class PortfolioController extends GenericViewController<Portfolio> {
 		return modelName + "/node/detail";
 	}
 	
+	/**
+	 * 포트폴리오 정보 노드 리스트.
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "node/list", method = RequestMethod.GET)
+	public String listNode(HttpServletRequest request, Model model) {
+		
+		return modelName + "/node/list";
+	}
+	
+	
 	
 	
 	

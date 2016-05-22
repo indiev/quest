@@ -103,7 +103,7 @@ $(document).ready(function() {
 		selectInputList("work", list, "업무");
 	});
 	
-	ajax.get("/api/skill/list",{},function(list){
+	ajax.get("/api/skill",{},function(list){
 		selectInputList("skill", list, "스킬");
 	});
 	
