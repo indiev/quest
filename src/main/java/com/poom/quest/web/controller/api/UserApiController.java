@@ -6,12 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.poom.quest.services.model.user.Quester;
 import com.poom.quest.services.model.user.Requester;
 import com.poom.quest.services.model.user.User;
 import com.poom.quest.services.service.QuesterService;
@@ -31,9 +31,13 @@ public class UserApiController extends GenericApiController<User> {
 	public User add(@RequestBody User entity, HttpServletRequest request) {
 		User user = genericService.add(entity);
 		Requester requester = new Requester();
-		requester.setName(entity.getName());
+		Quester quester = new Quester();
+		requester.setName(entity.getRealname());
+		quester.setName(entity.getRealname());
 		requester.setUser(entity);
+		quester.setUser(entity);
 		requestserService.add(requester);
+		questerService.add(quester);
 		return user;
 	}
 	
@@ -42,13 +46,5 @@ public class UserApiController extends GenericApiController<User> {
 	public User get(HttpServletRequest request) {
 		User user = userService.getLoginUserByRequest(request);
 		return userService.get(user.getId());
-	}
-	
-	@ResponseBody
-	@RequestMapping(value = "{id}/mainQuester/{questerId}", method = RequestMethod.PUT)
-	public User update(@PathVariable Integer id, @PathVariable Integer questerId) {
-		User user = genericService.get(id);
-		user.setMainQuester(questerService.get(questerId));
-		return genericService.update(user);
 	}
 }

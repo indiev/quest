@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.poom.quest.services.model.Code;
 import com.poom.quest.services.model.Contract;
 import com.poom.quest.services.model.Quest;
 import com.poom.quest.services.model.Requirement;
@@ -65,9 +64,9 @@ public class QuestApiController extends GenericApiController<Quest> {
 	public Boolean apply(@RequestParam Integer id, HttpServletRequest request) {
 		Quest quest = genericService.get(id);
 		User loginUser = userService.getLoginUserByRequest(request);
-		if(loginUser != null && loginUser != quest.getRequester().getUser() && loginUser.getMainQuester() != null) {
+		if(loginUser != null && loginUser != quest.getRequester().getUser()) {
 			Set<Quester> applicants = quest.getApplicants();
-			applicants.add(loginUser.getMainQuester());
+			applicants.add(loginUser.getQuester());
 			genericService.update(quest);
 			return true;
 		}

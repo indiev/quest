@@ -8,8 +8,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poom.quest.services.model.Area;
@@ -24,8 +24,7 @@ public class Quester extends GenericModel {
 
 	private static final long serialVersionUID = 1L;
 
-	@JsonIgnore
-	@ManyToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "userId", referencedColumnName="id")
 	private User user;
 	

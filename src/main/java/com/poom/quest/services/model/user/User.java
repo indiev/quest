@@ -32,11 +32,7 @@ public class User extends GenericModel {
 	
 	@OneToMany(mappedBy = "user")
 	@JsonIgnore
-	private Set<Quester> questers;
-	
-	@OneToOne
-	@JoinColumn(name = "mainQuesterId", referencedColumnName="id")
-	private Quester mainQuester;
+	private Quester quester;
 	
 	public String getPassword() {
 		return password;
@@ -78,19 +74,11 @@ public class User extends GenericModel {
 		this.requester = requester;
 	}
 
-	public Set<Quester> getQuesters() {
-		return questers;
+	public Quester getQuester() {
+		return quester;
 	}
 
-	public void setQuesters(Set<Quester> questers) {
-		this.questers = questers;
-	}
-	
-	public Quester getMainQuester() {
-		return mainQuester;
-	}
-
-	public void setMainQuester(Quester mainQuester) {
-		this.mainQuester = mainQuester;
+	public void Quester(Quester quester) {
+		this.quester = quester;
 	}
 }
