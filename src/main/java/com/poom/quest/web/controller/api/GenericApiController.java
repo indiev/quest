@@ -4,13 +4,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.poom.quest.services.model.user.User;
@@ -20,8 +18,6 @@ import com.poom.quest.services.service.UserService;
 @RequestMapping("api")
 public abstract class GenericApiController<T> {
 
-	private Logger logger = Logger.getLogger(this.getClass());
-	
 	@Autowired GenericService<T> genericService;
 	@Autowired UserService userService;
 	
