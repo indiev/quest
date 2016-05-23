@@ -19,7 +19,7 @@
 						<li><a href="/portfolio/">유저 포트폴리오 정보</a>
 						<li><a href="/portfolio/add">유저 포트폴리오 생성</a>
 						<li><a href="/requester/">리퀘스터 정보</a></li>
-						<li><a href="/quester/">메인 퀘스터 정보</a></li>
+						<li><a href="/quester/">퀘스터 정보</a></li>
 						<li><a href="/quester/add">퀘스터 생성</a></li>
 					</ul>
 					

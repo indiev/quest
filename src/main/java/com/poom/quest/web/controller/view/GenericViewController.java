@@ -1,11 +1,9 @@
 package com.poom.quest.web.controller.view;
 
 import java.lang.reflect.ParameterizedType;
-import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,11 +15,10 @@ import com.poom.quest.services.service.UserService;
 @RequestMapping("/")
 public abstract class GenericViewController<T> {
 
-	private Logger logger = Logger.getLogger(this.getClass());
-	
 	@Autowired GenericService<T> genericService;
 	@Autowired private UserService userService;
 	
+	@SuppressWarnings("unchecked")
 	protected final Class<T> clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	protected final String modelName = clazz.getSimpleName().toLowerCase();
 	

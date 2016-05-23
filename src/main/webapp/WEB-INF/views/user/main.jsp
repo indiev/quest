@@ -22,7 +22,7 @@ function getUserDetail() {
 			$detailNodeClone.find(".realname").html(user.realname);
 			$detailNodeClone.find(".email").html(user.email);
 			$detailNodeClone.find(".phone").html(user.phone);
-			$detailNodeClone.find(".createdDate").html(new Date(user.createdDate));
+			$detailNodeClone.find(".createdDate").html($.datepicker.formatDate("yy년 mm월 dd일", new Date(user.createdDate)));
 			
 			$("div.user-detail").append($detailNodeClone);
 			
