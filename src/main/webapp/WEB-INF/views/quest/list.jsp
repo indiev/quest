@@ -3,7 +3,7 @@
 	<div class="jumbotron">
 		<div class="jumbotron-contents text-center">
 		  	<h2><span class="project-search-length">0</span>개의 프로젝트가 있습니다</h2>
-	 		<form class="form-inline" name="questSearchForm" role="form" action="/api/quest" method="GET" onsubmit="return list();">
+	 		<form class="form-inline" name="questSearchForm" role="form" action="/api/quest/wait/search/" method="GET" onsubmit="return list();">
 		 		<div class="input-group form-search">
 		 			<label for="searchKeyword" class="sr-only">검색</label>
 		 			<input type="text" name="searchKeyword" id="searchKeyword" class="form-control input-sm search-query" placeholder="검색" />
@@ -33,7 +33,7 @@
 
 <script type="text/javascript">
 function apply(value) {
-	ajax.post("/api/quest/apply", {"id":value}, function(result){
+	ajax.put("/api/quest/apply", {"id":value}, function(result){
 		if(result) alert("지원하였습니다");
 		else alert("지원할 수 없습니다.")
 	});
@@ -42,7 +42,7 @@ function apply(value) {
 function list() {
 	$("div.quest-content").empty();
 	$form = $("form[name='questSearchForm']");
-	searchKeyword = "/" + $form.find("[name='searchKeyword']").val();
+	searchKeyword = $form.find("[name='searchKeyword']").val();
 	ajax.get($form.attr("action") + searchKeyword, {}, function(list){
 		$("span.project-search-length").html(list.length);
 		$.get("/quest/node/list", function(questNode){
@@ -71,7 +71,7 @@ function list() {
 				}
 				questNodeClone.find(".realname").html(list[i].requester.user.realname);
 				$name = $("<a>").attr("href", "/quest/detail/" + list[i].id).html(list[i].name);
-				questNodeClone.find(".name").html($name);
+				questNodeClone.find(".name").prepend($name);
 				questNodeClone.find(".duration").html(list[i].duration + "일");
 				questNodeClone.find(".reward").html(list[i].reward);
 				questNodeClone.find(".qualification").html(list[i].qualification);

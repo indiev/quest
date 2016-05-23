@@ -1,6 +1,7 @@
 package com.poom.quest.web.controller.api;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.poom.quest.services.model.Code;
 import com.poom.quest.services.model.Quest;
 import com.poom.quest.services.model.user.Quester;
 import com.poom.quest.services.model.user.User;
@@ -32,6 +34,19 @@ public class QuestApiController extends GenericApiController<Quest> {
 	@Autowired QuesterService questerService;
 	@Autowired CodeService codeService;
 	
+	@ResponseBody
+	@RequestMapping(value = "{stateValue}/search", method = RequestMethod.GET)
+	public List<Quest> searchBySateValue(@PathVariable String stateValue) {
+		return searchBySateValue(stateValue, null);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "{stateValue}/search/{keyword}", method = RequestMethod.GET)
+	public List<Quest> searchBySateValue(@PathVariable("stateValue") String stateValue, @PathVariable("keyword") String keyword) {
+		Code state = codeService.getState(stateValue);
+		return questService.searchByState(state.getId(), keyword);
+	}
+	
 	//정해진 값 범위 내에서 추가되도록, 벗어나는 값 관련 작업 필요
 	@Override
 	@ResponseBody
@@ -43,7 +58,7 @@ public class QuestApiController extends GenericApiController<Quest> {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/apply", method = RequestMethod.POST)
+	@RequestMapping(value = "/apply", method = RequestMethod.PUT)
 	public Boolean apply(@RequestParam Integer id, HttpServletRequest request) {
 		Quest quest = genericService.get(id);
 		User loginUser = userService.getLoginUserByRequest(request);
@@ -57,7 +72,7 @@ public class QuestApiController extends GenericApiController<Quest> {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/accept", method = RequestMethod.POST)
+	@RequestMapping(value = "/accept", method = RequestMethod.PUT)
 	public Boolean accept(@RequestParam Integer questId, @RequestParam Integer questerId, HttpServletRequest request) {
 		Quest quest = genericService.get(questId);
 		User loginUser = userService.getLoginUserByRequest(request);

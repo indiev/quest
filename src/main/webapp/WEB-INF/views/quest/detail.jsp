@@ -4,7 +4,7 @@
 <script type="text/javascript">
 function accept(questId, questerId) {
 	if(confirm("수락하시겠습니까?")) {
-		ajax.post("/api/quest/accept", {"questId":questId, "questerId":questerId}, function(result){
+		ajax.put("/api/quest/accept", {"questId":questId, "questerId":questerId}, function(result){
 			if(result) {
 				alert("수락했습니다");				
 			} else {
@@ -32,11 +32,11 @@ function detail(id) {
 			$detailNodeClone.find(".duration").html(quest.duration);
 			$detailNodeClone.find(".description").html(quest.description);
 			if(quest.applicants.length > 0) {
-				$detailNodeClone.find(".applicant").empty();
+				$detailNodeClone.find(".applicants").empty();
 				for(i in quest.applicants) {
 					$applicant = $("<li>").html(quest.applicants[i].name);
 					$applicant.click(function(){ accept(quest.id, quest.applicants[i].id); });
-					$detailNodeClone.find(".applicant").append($applicant);
+					$detailNodeClone.find(".applicants").append($applicant);
 				}
 			}
 			if(quest.questers.length > 0) {

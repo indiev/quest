@@ -64,4 +64,8 @@ public class QuestService extends GenericService<Quest> {
 		Code state = codeService.getState(stateValue);
 		return questDao.questsOfQuester(questerId, state.getId());
 	}
+	
+	public List<Quest> searchByState(Integer stateId, String keyword) {
+		return questDao.searchByState(stateId, keyword);
+	}
 }

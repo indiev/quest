@@ -2,7 +2,7 @@
 <div class="col-md-3">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title name"></h3>
+			<h3 class="panel-title name"><button name="applyButton">지원</button></h3>
 		</div>
 		<div class="panel-body">
 			<p class="description"></p>
