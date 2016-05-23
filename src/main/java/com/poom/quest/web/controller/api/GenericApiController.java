@@ -34,7 +34,7 @@ public abstract class GenericApiController<T> {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/list/user", method = RequestMethod.GET)
+	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	public List<T> list(HttpServletRequest request) {
 		List<T> list = null;
 		User user = userService.getLoginUserByRequest(request);
@@ -43,14 +43,14 @@ public abstract class GenericApiController<T> {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/list/{keyname}/{key}",  method = RequestMethod.GET)
+	@RequestMapping(value = "/{keyname}/{key}",  method = RequestMethod.GET)
 	public List<T> listByKey(@PathVariable("keyname") String keyName, @PathVariable("key") String key) {
-		return genericService.listByKey(keyName, key);
+		return genericService.listByKeyId(keyName, key);
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/list/{keyword}", method = RequestMethod.GET)
-	public List<T> list(@PathVariable String keyword/*, @RequestParam String[] keys*/) {
+	@RequestMapping(value = "/search/{keyword}", method = RequestMethod.GET)
+	public List<T> search(@PathVariable String keyword/*, @RequestParam String[] keys*/) {
 		String[] keys = new String[] { "name" };
 		return genericService.search(keyword, keys);
 	}

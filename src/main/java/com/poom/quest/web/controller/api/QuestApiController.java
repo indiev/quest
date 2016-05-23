@@ -15,13 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.poom.quest.services.model.Contract;
 import com.poom.quest.services.model.Quest;
-import com.poom.quest.services.model.Requirement;
 import com.poom.quest.services.model.user.Quester;
 import com.poom.quest.services.model.user.User;
 import com.poom.quest.services.service.CodeService;
-import com.poom.quest.services.service.ContractService;
 import com.poom.quest.services.service.QuestService;
 import com.poom.quest.services.service.QuesterService;
 import com.poom.quest.services.service.UserService;
@@ -34,7 +31,6 @@ public class QuestApiController extends GenericApiController<Quest> {
 	@Autowired UserService userService;
 	@Autowired QuesterService questerService;
 	@Autowired CodeService codeService;
-	@Autowired ContractService contractService;
 	
 	//정해진 값 범위 내에서 추가되도록, 벗어나는 값 관련 작업 필요
 	@Override
@@ -42,16 +38,7 @@ public class QuestApiController extends GenericApiController<Quest> {
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public Quest add(@RequestBody Quest entity, HttpServletRequest request) {
 		User user = userService.getLoginUserByRequest(request);
-		if(user != null) {
-			entity.setRequester(user.getRequester());
-			for(Requirement requirement : entity.getRequirements()) requirement.setQuest(entity);
-			entity.setState(codeService.getState("wait"));
-			Contract contract = new Contract();
-			contract.setQuest(entity);
-			contractService.add(contract);
-			entity.setContract(contract);
-			genericService.add(entity);
-		}
+		if(user != null) questService.add(entity, user);
 		return entity;
 	}
 	

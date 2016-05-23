@@ -1,5 +1,6 @@
 package com.poom.quest.services.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,14 +11,40 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.poom.quest.services.dao.QuestDao;
 import com.poom.quest.services.model.Code;
+import com.poom.quest.services.model.Contract;
+import com.poom.quest.services.model.Provision;
 import com.poom.quest.services.model.Quest;
+import com.poom.quest.services.model.Requirement;
+import com.poom.quest.services.model.user.User;
 
 @Service
 @Transactional
 public class QuestService extends GenericService<Quest> {
 	
 	@Autowired CodeService codeService;
+	@Autowired ContractService contractService;
+	@Autowired ProvisionService provisionService;
 	@Autowired QuestDao questDao;
+	
+	public Quest add(Quest entity, User user) {
+		entity.setRequester(user.getRequester());
+		for(Requirement requirement : entity.getRequirements()) requirement.setQuest(entity);
+		entity.setState(codeService.getState("wait"));
+		Contract contract = new Contract();
+		contract.setName("");
+		contract.setQuesterPenalty(30);
+		contract.setRequesterPenalty(30);
+		contract.setQuest(entity);
+		for(int i=0; i<3; i++) {
+			Provision provision = new Provision();
+			provision.setName("조항1");
+			provision.setContract(contract);
+			provisionService.add(provision);
+		}
+		contractService.add(contract);
+		entity.setRecruitmentEndDate(new Date());
+		return add(entity);
+	}
 	
 	public Map<String, String> updateState(Quest quest, String stateValue) {
 		Map<String, String> result = new HashMap<>();

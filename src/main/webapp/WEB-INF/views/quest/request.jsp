@@ -5,7 +5,6 @@ var classQuest = function() {
 	this.works = new Array();
 	this.skills = new Array();
 	this.requirements = new Array();
-	
 }
 
 var quest = new classQuest();
@@ -17,26 +16,26 @@ $(function() {
 	selectInputList("subWork", {}, "세부업무");
 	selectInputList("Skill", {}, "스킬");
 	
-	ajax.get("/api/area/list", {}, function(list) {
+	ajax.get("/api/area", {}, function(list) {
 		selectInputList("area", list, "분야");
 	});
 	
-	ajax.get("/api/work/list", {}, function(list) {
+	ajax.get("/api/work", {}, function(list) {
 		selectInputList("work", list, "업무");
 	});
 	
-	ajax.get("/api/skill/list", {}, function(list) {
+	ajax.get("/api/skill", {}, function(list) {
 		selectInputList("skill", list, "스킬");
 	});
 	
 	$("select[name='area']").change(function() {
-		if(this.value != "") ajax.get("/api/area/list/parent/" + this.value, {}, function(list) {
+		if(this.value != "") ajax.get("/api/area/parent/" + this.value, {}, function(list) {
 			selectInputList('subArea', list, "세부분야");
 		});
 	});
 	
 	$("select[name='work']").change(function() {
-		if(this.value != "") ajax.get("/api/work/list/parent/" + this.value, {}, function(list) {
+		if(this.value != "") ajax.get("/api/work/parent/" + this.value, {}, function(list) {
 			selectInputList('subWork', list, "세부업무");
 		});
 	});
@@ -213,5 +212,6 @@ function request(form) {
 			<label for="description" class="sr-only">내용</label>
 			<input type="text" name="description" id="description" class="form-control" placeholder="내용">
 		</div>
+		<input type="submit" id="" name="" class="btn btn-default" value="요청">
 	</div>
 </form>
