@@ -43,8 +43,8 @@ public abstract class GenericApiController<T> {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/parent/{key}",  method = RequestMethod.GET)
-	public List<T> listByParentKey(@PathVariable("keyname") String keyName, @PathVariable("key") String key) {
+	@RequestMapping(value = "/ref/{keyname}/{key}",  method = RequestMethod.GET)
+	public List<T> listByReferenceKey(@PathVariable("keyname") String keyName, @PathVariable("key") String key) {
 		return genericService.listByKeyId(keyName, key);
 	}
 	
