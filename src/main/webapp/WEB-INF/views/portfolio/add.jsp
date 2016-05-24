@@ -123,11 +123,11 @@ $(document).ready(function() {
 		selectInputList("typeId", list, "유형")
 	});
 	
-	ajax.get("/api/area/list",{},function(list){
+	ajax.get("/api/area",{},function(list){
 		selectInputList("area", list, "분야");
 	});
 	
-	ajax.get("/api/work/list",{},function(list){
+	ajax.get("/api/work",{},function(list){
 		selectInputList("work", list, "업무");
 	});
 	
@@ -141,7 +141,7 @@ $(document).ready(function() {
 	$("select[name='subWork']").attr("readonly",true);
 	
 	$("select[name='area']").change(function(){
-		if(this.value != "") ajax.get("/api/area/list/parentId/" + this.value, {}, function(list) {
+		if(this.value != "") ajax.get("/api/area/parentId/" + this.value, {}, function(list) {
 			selectInputList('subArea', list, "세부분야 없음");
 			$("select[name='subArea']").attr("readonly", false);
 		});
@@ -153,7 +153,7 @@ $(document).ready(function() {
 	});
 	
 	$("select[name='work']").change(function(){
-		if(this.value != "") ajax.get("/api/work/list/parentId/" + this.value, {}, function(list) {
+		if(this.value != "") ajax.get("/api/work/parentId/" + this.value, {}, function(list) {
 			selectInputList('subWork', list, "세부업무 없음");
 			$("select[name='subWork']").attr("readonly", false);
 		});

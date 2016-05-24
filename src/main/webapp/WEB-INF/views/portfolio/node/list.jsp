@@ -9,5 +9,7 @@
 		<div>목적:<span class="target "></span></div>
 		<div>시작일자:<span class="startDate "></span></div>
 		<div>종료일자:<span class="endDate "></span></div>
+		<button type="button" class="btn btn-default detailBtn" data-toggle="modal" data-target="#detailDialog" >상세정보 보기</button>
+		
 	</div>
 </div>

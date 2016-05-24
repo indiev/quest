@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -21,6 +22,12 @@ public class PortfolioController extends GenericViewController<Portfolio> {
 	@RequestMapping(value = "node/detail", method = RequestMethod.GET)
 	public String detailNode(HttpServletRequest request, Model model) {
 		return modelName + "/node/detail";
+	}
+	
+	@RequestMapping(value = "detail/{id}", method = RequestMethod.GET)
+	public String detail(@PathVariable Integer id, HttpServletRequest request, Model model) {
+		System.out.println("##################"+id);
+		return modelName + "/detail";
 	}
 	
 	@RequestMapping(value = "node/list", method = RequestMethod.GET)
