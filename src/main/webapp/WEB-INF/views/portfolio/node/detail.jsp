@@ -6,6 +6,5 @@
 	<div>목적:<span class="target "></span></div>
 	<div>시작일자:<span class="startDate "></span></div>
 	<div>종료일자:<span class="endDate "></span></div>
-	<div>설명:<span class="description"></span></div>
-	<div>등록일:<span class="createDate"></span></div>
+	<div>설명:<pre class="description"></pre></div>
 </div>

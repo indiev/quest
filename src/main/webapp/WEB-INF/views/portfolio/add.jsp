@@ -119,7 +119,7 @@ function request(form) {
 
 $(document).ready(function() {
 	
-	ajax.get("/api/code/list/model/Portfolio",{},function(list){
+	ajax.get("/api/code/model/Portfolio",{},function(list){
 		selectInputList("typeId", list, "유형")
 	});
 	

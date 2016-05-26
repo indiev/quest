@@ -26,7 +26,6 @@ public class PortfolioController extends GenericViewController<Portfolio> {
 	
 	@RequestMapping(value = "detail/{id}", method = RequestMethod.GET)
 	public String detail(@PathVariable Integer id, HttpServletRequest request, Model model) {
-		System.out.println("##################"+id);
 		return modelName + "/detail";
 	}
 	

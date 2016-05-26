@@ -7,16 +7,13 @@ function detail(id) {
 	ajax.get("/api/portfolio/"+id, {}, function(portfolio){
 		$.get("/portfolio/node/detail", function(detailNode){
 			$detailNodeClone = $(detailNode).clone();
-			/*
-			if(jQuery.type(quest.classification) != "undefined" && quest.classification.length > 0) {
-				for(i in quest.classification) {
-					$detailNodeClone.find(".area").append(quest.classification[i].kind.area.name);
-					$detailNodeClone.find(".kind").append(quest.classification[i].kind.name);
-				}
-			}
-			*/
+		
 			$detailNodeClone.find(".type").html(portfolio.type.name);
 			$detailNodeClone.find(".name").html(portfolio.name);
+			$detailNodeClone.find(".target").html(portfolio.target);
+			$detailNodeClone.find(".startDate").html($.datepicker.formatDate('yy년 mm월 dd일', new Date(portfolio.startDate)));
+			$detailNodeClone.find(".endDate").html($.datepicker.formatDate('yy년 mm월 dd일', new Date(portfolio.endDate)));
+			$detailNodeClone.find(".description").html(portfolio.description);
 			$("div.portfolio-detail").append($detailNodeClone);
 		});
 	});
