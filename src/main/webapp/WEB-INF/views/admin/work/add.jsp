@@ -31,7 +31,7 @@ function selectInputList(name, list, defaultText) {
 }
 
 $(document).ready(function() {
-	ajax.get("/api/work/list", {}, function(list){
+	ajax.get("/api/work", {}, function(list){
 		selectInputList("parentId", list, "상위 업무 없음");
 	});
 	

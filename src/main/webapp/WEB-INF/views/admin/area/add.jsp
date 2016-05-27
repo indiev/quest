@@ -31,7 +31,7 @@ function selectInputList(name, list, defaultText) {
 }
 
 $(document).ready(function() {
-	ajax.get("/api/area/list", {}, function(list){
+	ajax.get("/api/area", {}, function(list){
 		selectInputList("parentId", list, "상위 분야 없음");
 	});
 	
