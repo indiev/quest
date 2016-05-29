@@ -59,8 +59,8 @@ public class QuestController extends GenericViewController<Quest> {
 		return modelName + "/reward";
 	}
 	
-	@RequestMapping(value = "detail/{id}", method = RequestMethod.GET)
-	public String detail(@PathVariable Integer id, HttpServletRequest request, Model model) {
+	@RequestMapping(value = "{id}", method = RequestMethod.GET)
+	public String detail(@PathVariable Integer id, HttpServletRequest requests) {
 		Quest quest = genericService.get(id);
 		Code state = codeService.get(quest.getState().getId());
 		//return return modelName + "/detail/" + state.getName();

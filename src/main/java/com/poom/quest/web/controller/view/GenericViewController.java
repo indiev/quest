@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -53,8 +54,8 @@ public abstract class GenericViewController<T> {
 		return modelName + "/list";
 	}
 	
-	@RequestMapping(value = {"{id}", "detail"}, method = RequestMethod.GET)
-	public String detail(HttpServletRequest request) {
+	@RequestMapping(value = "{id}", method = RequestMethod.GET)
+	public String detail(@PathVariable Integer id, HttpServletRequest request) {
 		return modelName + "/detail";
 	}
 }

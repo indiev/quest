@@ -40,50 +40,16 @@ function apply(value) {
 }
 
 function list() {
-	$("div.quest-content").empty();
+	$.addTemplateFormatter({
+		date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
+        link: function (value) { return "/quest/" + value; }
+    });
+	
 	$form = $("form[name='questSearchForm']");
 	searchKeyword = $form.find("[name='searchKeyword']").val();
 	ajax.get($form.attr("action") + searchKeyword, {}, function(list){
 		$("span.project-search-length").html(list.length);
-		$.get("/quest/node/list", function(questNode){
-			for(i in list) {
-				var questNodeClone = $(questNode).clone();
-				if(list[i].areas.length > 0) {
-					questNodeClone.find(".areas").empty();
-					for(index in list[i].areas) {
-						$area = $("<li>").html(list[i].areas[index].name).addClass("badge label-primary");
-						questNodeClone.find(".areas").append($area);
-					}
-				}
-				if(list[i].works.length > 0) {
-					questNodeClone.find(".works").empty();
-					for(index in list[i].works) {
-						$work = $("<li>").html(list[i].works[index].name).addClass("badge label-warning");
-						questNodeClone.find(".works").append($work);
-					}
-				}
-				if(list[i].skills.length > 0) {
-					questNodeClone.find(".skills").empty();
-					for(index in list[i].skills) {
-						$skill = $("<li>").html(list[i].skills[index].name).addClass("badge label-danger");
-						questNodeClone.find(".skills").append($skill);
-					}
-				}
-				questNodeClone.find(".realname").html(list[i].requester.user.realname);
-				$name = $("<a>").attr("href", "/quest/detail/" + list[i].id).html(list[i].name);
-				questNodeClone.find(".name").prepend($name);
-				questNodeClone.find(".duration").html(list[i].duration + "일");
-				questNodeClone.find(".reward").html(list[i].reward);
-				questNodeClone.find(".qualification").html(list[i].qualification);
-				questNodeClone.find(".description").html(list[i].description);
-				questNodeClone.find("[name='applyButton']").val(list[i].id);
-				questNodeClone.find("[name='applyButton']").click(function(){ apply(this.value); });
-				$("div.quest-content").append(questNodeClone);
-				//마감일
-				//지원자수
-				//모집자수?
-			}
-		});
+		$("div.quest-content").loadTemplate("/quest/node/list", list);
 	});
 	return false;
 }
