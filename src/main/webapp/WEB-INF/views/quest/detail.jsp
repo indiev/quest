@@ -2,9 +2,13 @@
 <div class="quest-detail"></div>
 
 <script type="text/javascript">
-function accept(questId, questerId) {
+function getId() {
+	return $(location).attr("href").slice($(location).attr("href").lastIndexOf("/")+1);
+}
+
+function accept(questerId) {
 	if(confirm("수락하시겠습니까?")) {
-		ajax.put("/api/quest/accept", {"questId":questId, "questerId":questerId}, function(result){
+		ajax.put("/api/quest/accept", {"questId":getId(), "questerId":questerId}, function(result){
 			if(result) {
 				alert("수락했습니다");				
 			} else {
@@ -15,48 +19,24 @@ function accept(questId, questerId) {
 }
 
 function detail(id) {
+	$.addTemplateFormatter({
+		date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
+        link: function (value) { return "/quest/" + value; }
+    });
+	
 	ajax.get("/api/quest/"+id, {}, function(quest){
-		$.get("/quest/node/detail", function(detailNode){
-			$detailNodeClone = $(detailNode).clone();
-			if(jQuery.type(quest.classification) != "undefined" && quest.classification.length > 0) {
-				for(i in quest.classification) {
-					$detailNodeClone.find(".area").append(quest.classification[i].kind.area.name);
-					$detailNodeClone.find(".kind").append(quest.classification[i].kind.name);
-				}
-			}
-			$detailNodeClone.find(".realname").html(quest.requester.name);
-			$detailNodeClone.find(".name").html(quest.name);
-			$detailNodeClone.find(".createdDate").html($.datepicker.formatDate('yy년 mm월 dd일', new Date(quest.createdDate)));
-			$detailNodeClone.find(".reward").html(quest.reward);
-			$detailNodeClone.find(".qualification").html(quest.qualification);
-			$detailNodeClone.find(".duration").html(quest.duration);
-			$detailNodeClone.find(".description").html(quest.description);
-			if(quest.applicants.length > 0) {
-				$detailNodeClone.find(".applicants").empty();
-				for(i in quest.applicants) {
-					$applicant = $("<li>").html(quest.applicants[i].name);
-					$applicant.click(function(){ accept(quest.id, quest.applicants[i].id); });
-					$detailNodeClone.find(".applicants").append($applicant);
-				}
-			}
-			if(quest.questers.length > 0) {
-				$detailNodeClone.find(".questers").empty();
-				for(i in quest.questers) {
-					$quester = $("<li>").html(quest.questers[i].name);
-					$detailNodeClone.find(".questers").append($quester);
-				}
-			}
-			$detailNodeClone.find("button").click(function() {
-				ajax.get("/api/quest/" + quest.id + "/state/discuss", {}, function(result) {
-					console.log(result);
-				});
-			})
-			$("div.quest-detail").append($detailNodeClone);
-		});
+		$("div.quest-detail").loadTemplate("/quest/node/detail", quest);
 	});
 }
+
+function next(id) {
+	ajax.get("/api/quest/" + id + "/state/discuss", {}, function(result) {
+		console.log(result);
+	});
+}
+
 $(document).ready(function(){
-	var id = $(location).attr("href").slice($(location).attr("href").lastIndexOf("/")+1)
+	var id = getId();
 	detail(id);
 });
 </script>

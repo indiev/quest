@@ -42,7 +42,8 @@ function apply(value) {
 function list() {
 	$.addTemplateFormatter({
 		date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
-        link: function (value) { return "/quest/" + value; }
+        link: function (value) { return "/quest/" + value; },
+        li: function (list) { return "<li>" + list[i].name + "</li>" }
     });
 	
 	$form = $("form[name='questSearchForm']");

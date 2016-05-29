@@ -2,19 +2,16 @@
 <div class="col-md-3">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title"><a data-format="link" data-format-target="href" data-href="id" data-content="name"></a><button name="applyButton" data-value="id" onclick="apply(this.value)">지원</button></h3>
+			<h3 class="panel-title">
+				<a data-content="name" data-href="id" data-format="link" data-format-target="href"></a>
+				<button name="applyButton" data-value="id" onclick="apply(this.value)">지원</button>
+			</h3>
 		</div>
 		<div class="panel-body">
 			<p data-content="description"></p>
-			<ul class="list-inline pull-left" data-format="nestedTemplateFormatter" data-content="areas">
-				<li class="badge label-primary" data-content="name"></li>
-			</ul>
-			<ul class="list-inline pull-left" data-format="nestedTemplateFormatter" data-content="works">
-				<li class="badge label-warning" data-content="name"></li>
-			</ul>
-			<ul class="list-inline pull-left" data-format="nestedTemplateFormatter" data-content="skills">
-				<li class="badge label-danger" data-content="name"></li>
-			</ul>
+			<ul data-content="areas" data-format="nestedTemplateFormatter" data-format-options="#AreaTemplate" class="list-inline pull-left"></ul>
+			<ul data-content="works" data-format="nestedTemplateFormatter" data-format-options="#WorkTemplate" class="list-inline pull-left"></ul>
+			<ul data-content="skills" data-format="nestedTemplateFormatter" data-format-options="#SkillTemplate" class="list-inline pull-left"></ul>
 		</div>
 		<ul class="list-group">
 			<li class="list-group-item">
@@ -23,7 +20,7 @@
 				<span data-content-append="questers.length">모집자수 : </span>
 			</li>
 			<li class="list-group-item">
-				<span data-format="date" data-content-append="recruitmentEndDate">마감 : </span>
+				<span data-content-append="recruitmentEndDate" data-format="date">마감 : </span>
 			</li>
 			<li class="list-group-item">
 				<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 기간: <span data-content-prepend="duration">일</span>
@@ -37,3 +34,12 @@
 		</ul>
 	</div>
 </div>
+<script type="text/html" id="AreaTemplate">
+	<li data-content="name" class="badge label-info"></li>
+</script>
+<script type="text/html" id="WorkTemplate">
+	<li data-content="name" class="badge label-warn"></li>
+</script>
+<script type="text/html" id="SkillTemplate">
+	<li data-content="name" class="badge label-danger"></li>
+</script>
