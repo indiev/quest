@@ -113,14 +113,14 @@ public abstract class GenericDao<T> {
 	}
 	
 	public List<T> search(String keyword, String[] keys) {
-		String sqlKeyword = ("%" + keyword + "%").toLowerCase();
+		keyword = ("%" + keyword + "%").toLowerCase();
 		String where = " WHERE ";
 		if(keys.length == 0) keys = new String[]{"name"};
 		for (int i=0; i<keys.length; i++) {
 			if(i !=0 ) where += " AND ";
 			where += "LOWER(" + keys[i] + ") LIKE :keyword";
 		}
-		return em.createNativeQuery(SELECT_ALL_SQL + where, clazz).setParameter("keyword", sqlKeyword).getResultList();
+		return em.createNativeQuery(SELECT_ALL_SQL + where, clazz).setParameter("keyword", keyword).getResultList();
 	}
 	
 	public T update(T entity) {
