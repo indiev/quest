@@ -44,9 +44,6 @@ public class Quester extends GenericModel {
 	@JoinTable(name = "QuesterSkill", joinColumns = {@JoinColumn(name = "questerId")}, inverseJoinColumns = {@JoinColumn(name = "skillId")})
 	private Set<Skill> skills;
 	
-	@OneToMany(mappedBy = "quester", fetch = FetchType.LAZY)
-	private Set<Portfolio> porfolios;
-	
 	@ManyToMany(mappedBy = "applicants", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<Quest> appliedQuests;

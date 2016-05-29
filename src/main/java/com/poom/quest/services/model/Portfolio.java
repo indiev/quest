@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poom.quest.services.model.abstractModel.GenericModel;
@@ -20,15 +21,16 @@ public class Portfolio extends GenericModel {
 
 	private static final long serialVersionUID = 1L;
 	
-	private String target;
+	private String place;
+	private String level;
+	private String result;
 	private Date startDate;
 	private Date endDate;
-	private String Description;
+	private String description;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "typeId", referencedColumnName = "id")
 	private Code type;
-	
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "PortfolioArea", joinColumns = {@JoinColumn(name = "portfolioId")}, inverseJoinColumns = {@JoinColumn(name = "areaId")})
@@ -42,22 +44,37 @@ public class Portfolio extends GenericModel {
 	@JoinTable(name = "PortfolioSkill", joinColumns = {@JoinColumn(name = "portfolioId")}, inverseJoinColumns = {@JoinColumn(name = "skillId")})
 	private Set<Skill> skills;
 	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "SubPortfolio", joinColumns = {@JoinColumn(name = "portfolioId")}, inverseJoinColumns = {@JoinColumn(name = "subPortfolioId")})
+	private Set<Portfolio> subPortfolios;
+	
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userId", referencedColumnName = "id")
 	private User user;
-	
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "questerId", referencedColumnName = "id")
-	private Quester quester;
 
-	public String getTarget() {
-		return target;
+	public String getPlace() {
+		return place;
 	}
 
-	public void setTarget(String target) {
-		this.target = target;
+	public void setPlace(String place) {
+		this.place = place;
+	}
+
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
 	}
 
 	public Date getStartDate() {
@@ -77,11 +94,11 @@ public class Portfolio extends GenericModel {
 	}
 
 	public String getDescription() {
-		return Description;
+		return description;
 	}
 
 	public void setDescription(String description) {
-		Description = description;
+		this.description = description;
 	}
 
 	public Code getType() {
@@ -90,22 +107,6 @@ public class Portfolio extends GenericModel {
 
 	public void setType(Code type) {
 		this.type = type;
-	}
-	
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Quester getQuester() {
-		return quester;
-	}
-
-	public void setQuester(Quester quester) {
-		this.quester = quester;
 	}
 
 	public Set<Area> getAreas() {
@@ -131,6 +132,20 @@ public class Portfolio extends GenericModel {
 	public void setSkills(Set<Skill> skills) {
 		this.skills = skills;
 	}
-	
 
+	public Set<Portfolio> getSubPortfolios() {
+		return subPortfolios;
+	}
+
+	public void setSubPortfolios(Set<Portfolio> subPortfolios) {
+		this.subPortfolios = subPortfolios;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 }
