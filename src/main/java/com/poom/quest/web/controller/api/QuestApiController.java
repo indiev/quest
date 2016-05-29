@@ -33,11 +33,23 @@ public class QuestApiController extends GenericApiController<Quest> {
 	@Autowired UserService userService;
 	@Autowired QuesterService questerService;
 	@Autowired CodeService codeService;
+
+	@ResponseBody
+	@RequestMapping(value = "all/search", method = RequestMethod.GET)
+	public List<Quest> search() {
+		return search("");
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "all/search/{keyword}", method = RequestMethod.GET)
+	public List<Quest> search(@PathVariable("keyword") String keyword) {
+		return super.search(keyword);
+	}
 	
 	@ResponseBody
 	@RequestMapping(value = "{stateValue}/search", method = RequestMethod.GET)
 	public List<Quest> searchBySateValue(@PathVariable String stateValue) {
-		return searchBySateValue(stateValue, null);
+		return searchBySateValue(stateValue, "");
 	}
 	
 	@ResponseBody

@@ -18,11 +18,10 @@ public class QuestDao extends GenericDao<Quest> {
 	}
 
 	public List<Quest> searchByState(Integer stateId, String keyword) {
+		keyword = "%" + keyword + "%";
 		String where = " WHERE stateId = :stateId";
-		
-		if(keyword != null) where += " AND LOWER(name) LIKE :keyword";
-		Query query = em.createNativeQuery(SELECT_ALL_SQL + where, clazz).setParameter("stateId", stateId);
-		if(keyword != null) query.setParameter("keyword", "%" + keyword + "%");
+		where += " AND LOWER(name) LIKE :keyword";
+		Query query = em.createNativeQuery(SELECT_ALL_SQL + where, clazz).setParameter("stateId", stateId).setParameter("keyword", "%" + keyword + "%");
 		return query.getResultList();
 	}
 }
