@@ -41,12 +41,17 @@
         if ($.type(data) === "array") {
             return processArray.call(this, template, data, settings);
         }
-
-        if (!containsSlashes(template)) {
+        
+        if (typeof template !== 'object' && !containsSlashes(template)) {
             $template = $(template);
             if (typeof template === 'string' && template.indexOf('#') === 0) {
                 settings.isFile = false;
             }
+        }
+        
+        if(typeof template === 'object') {
+        	$template = $("<div/>").append(template);
+        	settings.isFile = false;
         }
 
         isFile = settings.isFile || (typeof settings.isFile === "undefined" && (typeof $template === "undefined" || $template.length === 0));
@@ -197,7 +202,7 @@
     function loadTemplateFromDocument($template, selection, data, settings) {
         var $templateContainer = $("<div/>");
 
-        if ($template.is("script") || $template.is("template")) {
+        if ($template.is("script") || $template.is("template") || $template.is("div")) {
             $template = $.parseHTML($.trim($template.html()));
         }
 
@@ -284,6 +289,10 @@
     function bindData(template, data, settings) {
         data = data || {};
 
+        processElements("data-list", template, data, settings, function ($elem, value) {
+        	$elem.loadTemplate($elem.children(), value);
+        });
+        
         processElements("data-content", template, data, settings, function ($elem, value) {
             $elem.html(applyFormatters($elem, value, "content", settings));
         });
@@ -343,7 +352,7 @@
                 $option.attr('value', this).text(this).appendTo($elem);
             });
         });
-
+        
         processAllElements(template, data, settings);
     }
 
@@ -352,7 +361,6 @@
             var $this = $(this),
                 param = $this.attr(attribute),
                 value = getValue(data, param);
-
             if (!valueIsAllowedByBindingOptions($this, value, settings)) {
                 $this.remove();
                 return;

@@ -9,9 +9,15 @@
 		</div>
 		<div class="panel-body">
 			<p data-content="description"></p>
-			<ul data-content="areas" data-format="nestedTemplateFormatter" data-format-options="#AreaTemplate" class="list-inline pull-left"></ul>
-			<ul data-content="works" data-format="nestedTemplateFormatter" data-format-options="#WorkTemplate" class="list-inline pull-left"></ul>
-			<ul data-content="skills" data-format="nestedTemplateFormatter" data-format-options="#SkillTemplate" class="list-inline pull-left"></ul>
+			<ul data-list="areas" class="list-inline pull-left">
+				<li data-content="name" class="badge label-info"></li>
+			</ul>
+			<ul data-list="works" class="list-inline pull-left">
+				<li data-content="name" class="badge label-warn"></li>
+			</ul>
+			<ul data-list="skills" class="list-inline pull-left">
+				<li data-content="name" class="badge label-danger"></li>
+			</ul>
 		</div>
 		<ul class="list-group">
 			<li class="list-group-item">
@@ -34,12 +40,9 @@
 		</ul>
 	</div>
 </div>
+
+<!-- 
 <script type="text/html" id="AreaTemplate">
 	<li data-content="name" class="badge label-info"></li>
 </script>
-<script type="text/html" id="WorkTemplate">
-	<li data-content="name" class="badge label-warn"></li>
-</script>
-<script type="text/html" id="SkillTemplate">
-	<li data-content="name" class="badge label-danger"></li>
-</script>
+ -->

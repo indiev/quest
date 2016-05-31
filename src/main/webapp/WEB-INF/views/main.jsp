@@ -24,7 +24,8 @@
 <script data-main="/resources/js/main" src="/resources/assets/lib/pjax/jquery.pjax.js"></script>
 <script data-main="/resources/js/main" src="/resources/js/ajax.js"></script>
 <script data-main="/resources/js/main" src="/resources/js/function.js"></script>
-<script data-main="/resources/js/main" src="/resources/assets/lib/jquery-loadTemplate/jquery.loadTemplate-1.4.4.min.js"></script>
+<!-- <script data-main="/resources/js/main" src="/resources/assets/lib/jquery-loadTemplate/jquery.loadTemplate-1.4.4.min.js"></script> -->
+<script data-main="/resources/js/main" src="/resources/assets/lib/jquery-loadTemplate/jquery.loadTemplate-1.4.4.js"></script>
 <!-- 부트스트랩 테마 Bootflat JS -->
 <script src="/resources/assets/lib/bootflat/js/icheck.min.js"></script>
 <script src="/resources/assets/lib/bootflat/js/jquery.fs.selecter.min.js"></script>
