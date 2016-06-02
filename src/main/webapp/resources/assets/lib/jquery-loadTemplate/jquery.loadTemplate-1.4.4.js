@@ -32,9 +32,9 @@
             beforeInsert: null,
             afterInsert: null,
             bindingOptions: {
-                ignoreUndefined: false,
-                ignoreNull: false,
-                ignoreEmptyString: false
+                ignoreUndefined: true,
+                ignoreNull: true,
+                ignoreEmptyString: true
             }
         }, options);
 
