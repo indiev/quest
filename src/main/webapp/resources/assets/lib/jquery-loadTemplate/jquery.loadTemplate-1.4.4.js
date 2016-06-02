@@ -192,6 +192,7 @@
             success: function (templateContent) {
                 $templateContainer.html(templateContent);
                 handleTemplateLoadingSuccess($templateContainer, template, selection, data, settings);
+                selection.html($templateContainer);
             },
             error: function () {
                 handleTemplateLoadingError(template, selection, data, settings);
@@ -223,7 +224,6 @@
                 settings.beforeInsert($templateHtml);
             }
             if (settings.append) {
-
                 $(this).append($templateHtml);
             } else if (settings.prepend) {
                 $(this).prepend($templateHtml);
@@ -290,7 +290,14 @@
         data = data || {};
 
         processElements("data-list", template, data, settings, function ($elem, value) {
-        	$elem.loadTemplate($elem.children(), value);
+        	var subTemplate = $elem.children();
+        	if(typeof $elem.attr("data-template") !== "undefined") {
+        		subTemplate = $elem.attr("data-template");
+        		$elem.removeAttr("data-template");
+        	}
+        	console.log($elem);
+        	$elem.loadTemplate(subTemplate, value, settings);
+        	console.log($elem);
         });
         
         processElements("data-content", template, data, settings, function ($elem, value) {

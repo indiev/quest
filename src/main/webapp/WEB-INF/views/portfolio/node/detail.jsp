@@ -31,6 +31,6 @@
 				<li data-content="name" class="badge label-danger"></li>
 			</ul>
 		</div>
-		<div data-content="subPortfolios" data-format="nestedTemplateFormatter" data-format-options="/portfolio/node/list"></div>
+		<div data-list="subPortfolios" data-template="/portfolio/node/list" class="subPortfolios"></div>
 	</div>
 </div>
