@@ -2,7 +2,7 @@
 <script type="text/javascript">
 function login(form) {
 	data = ajax.serializeObject($(form));
-	ajax.post($(form).attr("action"), data, function(data) {
+	ajax.login($(form).attr("action"), data, function(data) {
 		console.log(data);
 		data = JSON.parse(data);
 		if(data.success) {

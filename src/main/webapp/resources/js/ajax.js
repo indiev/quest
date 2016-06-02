@@ -55,14 +55,24 @@ var ajax = {
 		    error:ajax.error
 		});
 	},
-	post:function (form, cb) {
-		data = ajax.serializeObject($(form));
+	login:function (url, data, cb) {
         $.ajax({
             type:'POST',
-            url:$(form).attr("action"),
+            url:url,
             cache:false,
             data:data,
             /*contentType:'application/json; charset=utf-8',*/
+            success:cb,
+            error:ajax.error
+        });
+    },
+    post:function (url, data, cb) {
+        $.ajax({
+            type:'POST',
+            url:url,
+            cache:false,
+            data:JSON.stringify(data),
+            contentType:'application/json; charset=utf-8',
             success:cb,
             error:ajax.error
         });
