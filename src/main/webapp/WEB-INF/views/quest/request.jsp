@@ -29,13 +29,13 @@ $(function() {
 	});
 	
 	$("select[name='area']").change(function() {
-		if(this.value != "") ajax.get("/api/area/parent/" + this.value, {}, function(list) {
+		if(this.value != "") ajax.get("/api/area/ref/parent/" + this.value, {}, function(list) {
 			selectInputList('subArea', list, "세부분야");
 		});
 	});
 	
 	$("select[name='work']").change(function() {
-		if(this.value != "") ajax.get("/api/work/parent/" + this.value, {}, function(list) {
+		if(this.value != "") ajax.get("/api/work/ref/parent/" + this.value, {}, function(list) {
 			selectInputList('subWork', list, "세부업무");
 		});
 	});
