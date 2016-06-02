@@ -57,5 +57,4 @@ function getPortfolios(type){
 		
 }
 
-
 </script>
