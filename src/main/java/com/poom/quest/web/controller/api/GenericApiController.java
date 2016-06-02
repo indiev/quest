@@ -50,7 +50,7 @@ public abstract class GenericApiController<T> {
 		User user = userService.getLoginUserByRequest(request);
 		if(user != null) {
 			keys.put("userId", user.getId());
-			keys.put("typeId", key);
+			keys.put(keyName, key);
 			return genericService.listByKeys(keys);
 		}
 		return null;
