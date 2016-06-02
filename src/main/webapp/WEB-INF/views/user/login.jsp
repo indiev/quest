@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 <script type="text/javascript">
 function login(form) {
-	ajax.post(form, function(data) {
+	data = ajax.serializeObject($(form));
+	ajax.post($(form).attr("action"), data, function(data) {
 		console.log(data);
 		data = JSON.parse(data);
 		if(data.success) {
