@@ -61,6 +61,10 @@ public abstract class GenericService<T> {
 		return genericDao.listByParent(parentId, parentName);
 	}
 	
+	public List<T> listByKeys(Map<String, Object> keys) {
+		return genericDao.listByKeys(keys);
+	}
+	
 	public List<T> search(String keyword, String[] keys) {
 		return genericDao.search(keyword, keys);
 	}

@@ -1,6 +1,8 @@
 package com.poom.quest.web.controller.api;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,11 +37,23 @@ public abstract class GenericApiController<T> {
 	
 	@ResponseBody
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	public List<T> list(HttpServletRequest request) {
-		List<T> list = null;
+	public List<T> listByUser(HttpServletRequest request) {
 		User user = userService.getLoginUserByRequest(request);
-		if(user != null) list = genericService.listByKeyId("user", user.getId());
-		return list;
+		if(user != null) return genericService.listByKeyId("user", user.getId());
+		return null;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/user/{keyname}/{key}",  method = RequestMethod.GET)
+	public List<T> listByUserAndKey(@PathVariable("keyname") String keyName, @PathVariable("key") String key, HttpServletRequest request) {
+		Map<String, Object> keys = new HashMap<>();
+		User user = userService.getLoginUserByRequest(request);
+		if(user != null) {
+			keys.put("userId", user.getId());
+			keys.put("typeId", key);
+			return genericService.listByKeys(keys);
+		}
+		return null;
 	}
 	
 	@ResponseBody

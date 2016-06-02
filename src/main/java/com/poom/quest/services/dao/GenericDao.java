@@ -81,11 +81,11 @@ public abstract class GenericDao<T> {
 		}
 	}
 	
-	public List<T> listByKeys(Map<String, String> keys) {
+	public List<T> listByKeys(Map<String, Object> keys) {
 		String where = " WHERE 1=1";
-		for(Entry<String, String> entry : keys.entrySet()) where += " AND " + entry.getKey() + "=:" + entry.getKey();
+		for(Entry<String, Object> entry : keys.entrySet()) where += " AND " + entry.getKey() + "=:" + entry.getKey();
 		Query query = em.createNativeQuery(SELECT_ALL_SQL + where, clazz);
-		for(Entry<String, String> entry : keys.entrySet()) query.setParameter(entry.getKey(), entry.getValue());
+		for(Entry<String, Object> entry : keys.entrySet()) query.setParameter(entry.getKey(), entry.getValue());
 		return query.getResultList();
 	}
 	
