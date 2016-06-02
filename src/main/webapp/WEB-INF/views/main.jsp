@@ -10,14 +10,6 @@
 <link rel="stylesheet" href="/resources/assets/lib/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="/resources/assets/lib/bootflat/css/bootflat.min.css"> <!-- 부트스트랩 테마 Bootflat CSS -->
 <link rel="stylesheet" href="/resources/css/custom.css">
-</head>
-<body>
-<!-- navbar-inverse -->
-<div class="container-fluid">
-	<div id="sidebar-top"></div>
-	<div id="main" class="row center-block"></div>
-</div>
-
 <script data-main="/resources/js/main" src="/resources/assets/lib/jquery/jquery-2.1.0.min.js"></script>
 <script data-main="/resources/js/main" src="/resources/assets/lib/bootstrap/js/bootstrap.min.js"></script>
 <script data-main="/resources/js/main" src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -30,6 +22,13 @@
 <script src="/resources/assets/lib/bootflat/js/icheck.min.js"></script>
 <script src="/resources/assets/lib/bootflat/js/jquery.fs.selecter.min.js"></script>
 <script src="/resources/assets/lib/bootflat/js/jquery.fs.stepper.min.js"></script>
+</head>
+<body>
+<!-- navbar-inverse -->
+<div class="container-fluid">
+	<div id="sidebar-top"></div>
+	<div id="main" class="row center-block"></div>
+</div>
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#sidebar-top").load("/sidebar-top");
