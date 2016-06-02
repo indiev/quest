@@ -40,7 +40,7 @@ function getPortfolios(type){
 				date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
 		        link: function (value) { return "/portfolio/" + value; }
 		    });
-			$("div.portfolio-content").loadTemplate("/portfolio/node/list", list, {bindingOptions:{"ignoreNull":true}});
+			$("div.portfolio-content").loadTemplate("/portfolio/node/list", list);
 		});
 	}
 	else 
@@ -48,9 +48,9 @@ function getPortfolios(type){
 		ajax.get("/api/portfolio/typeId/"+type, {}, function(list) {
 			$.addTemplateFormatter({
 				date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
-		        link: function (value) { return "/quest/" + value; }
+		        link: function (value) { return "/portfolio/" + value; }
 		    });
-			$("div.portfolio-content").loadTemplate("/portfolio/node/list", list, {bindingOptions:{"ignoreNull":true}});
+			$("div.portfolio-content").loadTemplate("/portfolio/node/list", list);
 		});
 	
 	}
