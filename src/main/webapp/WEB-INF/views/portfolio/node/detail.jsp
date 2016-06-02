@@ -3,7 +3,7 @@
 	
 	<div>유형:<span class="type"></span></div>
 	<div>타이틀:<span class="name"></span></div>
-	<div>목적:<span class="target "></span></div>
+	<div>place:<span class="place"></span></div>
 	<div>시작일자:<span class="startDate "></span></div>
 	<div>종료일자:<span class="endDate "></span></div>
 	<div>설명:<pre class="description"></pre></div>

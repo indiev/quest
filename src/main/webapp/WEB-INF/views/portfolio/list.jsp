@@ -11,7 +11,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	getAllPortfolio();
+	getPortfolios("전체");
 	
 	ajax.get("/api/code/model/portfolio",{},function(list){
 		$select = $("select");
@@ -20,69 +20,42 @@ $(document).ready(function() {
 		for(i in list) {
 			$option = $("<option>");
 			$option.html(list[i].name);
+			$option.val(list[i].id)
 			$select.append($option);
 		}
 	});
 	
 	$("select").change(function(){
-		selectValue = $("select").val();
-		if(selectValue =="전체")
-			getAllPortfolio();
-		else
-			getSelectPortfolio(selectValue);
-		
+		getPortfolios(this.value);
 	});
 	
 });
 
-function getAllPortfolio() {
-	$("div.portfolio-content").empty();
-	ajax.get("/api/portfolio/user", {}, function(list) {
-		$.get("/portfolio/node/list", function(portfolioNode){
-
-			for(i in list) {
-				$portfolioNodeClone = $(portfolioNode).clone();
-				
-				$portfolioNodeClone.attr("id",list[i].id);
-				$name = $("<a>").attr("href","/portfolio/" + list[i].id).html(list[i].name);
-				$portfolioNodeClone.find(".name").html($name);
-				$portfolioNodeClone.find(".type").html(list[i].type.name);
-				$portfolioNodeClone.find(".target").html(list[i].target);
-				$portfolioNodeClone.find(".startDate").html($.datepicker.formatDate('yy년 mm월 dd일', new Date(list[i].startDate)));
-				$portfolioNodeClone.find(".endDate").html($.datepicker.formatDate('yy년 mm월 dd일', new Date(list[i].endDate)));
-				
-				
-				$("div.portfolio-content").append($portfolioNodeClone);				
-			}
+function getPortfolios(type){
+	
+	if(type =="전체") 
+	{
+		ajax.get("/api/portfolio/user", {}, function(list) {
+			$.addTemplateFormatter({
+				date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
+		        link: function (value) { return "/portfolio/" + value; }
+		    });
+			$("div.portfolio-content").loadTemplate("/portfolio/node/list", list, {bindingOptions:{"ignoreNull":true}});
 		});
-	});
-}
-
-function getSelectPortfolio(selectValue) {
-	$("div.portfolio-content").empty();
-	ajax.get("/api/portfolio/user", {}, function(list) {
-		$.get("/portfolio/node/list", function(portfolioNode){
-
-			for(i in list) {
-				if(list[i].type.name != selectValue)
-					continue;
-				$portfolioNodeClone = $(portfolioNode).clone();
-				
-				$portfolioNodeClone.attr("id",list[i].id);
-				$name = $("<a>").attr("href","/portfolio/" + list[i].id).html(list[i].name);
-				$portfolioNodeClone.find(".name").html($name);
-				$portfolioNodeClone.find(".type").html(list[i].type.name);
-				$portfolioNodeClone.find(".target").html(list[i].target);
-				$portfolioNodeClone.find(".startDate").html($.datepicker.formatDate('yy년 mm월 dd일', new Date(list[i].startDate)));
-				$portfolioNodeClone.find(".endDate").html($.datepicker.formatDate('yy년 mm월 dd일', new Date(list[i].endDate)));
-				
-				
-				$("div.portfolio-content").append($portfolioNodeClone);				
-			}
+	}
+	else 
+	{
+		ajax.get("/api/portfolio/typeId/"+type, {}, function(list) {
+			$.addTemplateFormatter({
+				date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
+		        link: function (value) { return "/quest/" + value; }
+		    });
+			$("div.portfolio-content").loadTemplate("/portfolio/node/list", list, {bindingOptions:{"ignoreNull":true}});
 		});
-	});
+	
+	}
+		
 }
-
 
 
 </script>

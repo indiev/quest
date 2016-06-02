@@ -11,7 +11,7 @@ function detail(id) {
 		
 			$detailNodeClone.find(".type").html(portfolio.type.name);
 			$detailNodeClone.find(".name").html(portfolio.name);
-			$detailNodeClone.find(".target").html(portfolio.target);
+			$detailNodeClone.find(".place").html(portfolio.place);
 			$detailNodeClone.find(".startDate").html($.datepicker.formatDate('yy년 mm월 dd일', new Date(portfolio.startDate)));
 			$detailNodeClone.find(".endDate").html($.datepicker.formatDate('yy년 mm월 dd일', new Date(portfolio.endDate)));
 			$detailNodeClone.find(".description").html(portfolio.description);

@@ -6,22 +6,33 @@
 	<div class="container-pluid">
 		
 		<div class="form-gorup">
-			<label for="type">0.유형(type)</label>
+			<label id="typeId_label" for="typeId">type</label>
 			<select name="typeId" id="typeId" class="form-control" ></select>
 		</div>
 	
 		<div class="form-gorup">
-			<label for="name">1.타이틀</label> 
-			<input type="text" name="name" id="name" class="form-control" placeholder="타이틀">
+			<label id="name_label" for="name">name</label> 
+			<input type="text" name="name" id="name" class="form-control" placeholder="name">
 		</div>
 		
 		<div class="form-gorup">
-			<label for="target">2.목적(target)</label> 
-			<input type="text" name="target" id="target" class="form-control" placeholder="개인프로젝트, 00공모전">
+			<label id="place_label" for="place">place</label> 
+			<input type="text" name="place" id="place" class="form-control" placeholder="place">
 		</div>
 		
 		<div class="form-gorup">
-			<label for="startDate">3.기간</label> 
+			<label id="level_label" for="level">level</label>
+			<input type="text" name="level" id="level" class="form-control" placeholder="level">
+		</div>
+		
+		<div class="form-gorup result">
+			<label id="result_label" for="result">result</label>
+			<input type="text" name="result" id="result" class="form-control" placeholder="result">
+		</div>
+
+		
+		<div class="form-gorup">
+			<label for="startDate">date</label> 
 			<div>
 			시작일:<input type="date" id="startDate" name="startDate">
 			~
@@ -29,13 +40,25 @@
 			</div>
 		</div>
 		
-		<div class="form-gorup">
-			<label for="name">4.설명(Description)</label> 
-			<textarea name="description" id="description" class="form-control" placeholder="학교 졸업 프로젝트로 개발하게된  일정관리 웹사이트 였습니다." rows="5"></textarea>
+		<div class="form-gorup description">
+			<label id="description_label" for="description">description</label> 
+			<textarea name="description" id="description" class="form-control" placeholder="description" rows="5"></textarea>
 		</div>
 		
+		<div class="form-gorup">
+			<label id="subPortfolio_label" for="subPortfolio">subPortfolio</label>
+			<div class="row">
+				<div class="col-md-5"><select name="subPortfolio" id="subPortfolio" class="form-control" ></select></div>
+				<div class="col-md-2"><button type="button" id="addSubPortfolioBtn" class="btn btn-success">관련포트폴리오 추가</button></div>
+			</div>
+		</div>
+		
+		<ul class="list-inline form-control-static subPortfolio">
+			<li><span class="badge">subPortfolio<span class="glyphicon glyphicon-remove"></span></span></li>
+		</ul>
+		
 		<div class="form-group">
-			<label>5.분야</label> 
+			<label>분야</label> 
 			<div class="row">
 				<div class="col-md-5"><select name="area" id="area" class="form-control" ></select></div>
 				<div class="col-md-5"><select name="subArea" id="subArea" class="form-control" ></select></div>
@@ -49,7 +72,7 @@
 		</ul>
 		
 		<div class="form-group">
-			<label>6.업무</label> 
+			<label>업무</label> 
 			<div class="row">
 				<div class="col-md-5"><select name="work" id="work" class="form-control" ></select></div>
 				<div class="col-md-5"><select name="subWork" id="subWork" class="form-control" ></select></div>
@@ -63,7 +86,7 @@
 		</ul>
 		
 		<div class="form-group">
-			<label>7.스킬</label> 
+			<label>스킬</label> 
 			<div class="row">
 				<div class="col-md-5"><select name="skill" id="skill" class="form-control" ></select></div>
 				<div class="col-md-2"><button type="button" id="addSkillBtn" class="btn btn-success">스킬 추가</button></div>
@@ -87,6 +110,7 @@ var classPortfolio= function() {
 	this.areas = new Array();
 	this.works = new Array();
 	this.skills = new Array();
+	this.subPortfolios = new Array();
 }
 
 var portfolio = new classPortfolio();
@@ -123,6 +147,10 @@ $(document).ready(function() {
 		selectInputList("typeId", list, "유형")
 	});
 	
+	ajax.get("/api/portfolio/user",{},function(list){
+		selectInputList("subPortfolio", list, "관련포트폴리오");
+	})
+	
 	ajax.get("/api/area",{},function(list){
 		selectInputList("area", list, "분야");
 	});
@@ -139,6 +167,67 @@ $(document).ready(function() {
 	$("select[name='subArea']").attr("readonly",true);
 	
 	$("select[name='subWork']").attr("readonly",true);
+	
+	$("select[name='typeId']").change(function(){
+		
+		/*
+		switch(this.value) {
+		case 9:
+			$("label#name").html("근무부서");
+			$("label#place").html("회사이름");
+			$("label#level").html("직책");
+			$("label#result").html("연봉");
+			$("label#description").html("주요 성과");
+			break;
+		case 10:
+			$("label#name").html("222222");
+			$("label#place").html("22222");
+			$("label#level").html("22222");
+			$("label#result").html("22222");
+			$("label#description").html("22222");
+			break;
+		case 11:
+			$("label#name").html("근무부서");
+			$("label#place").html("회사이름");
+			$("label#level").html("직책");
+			$("label#result").html("연봉");
+			$("label#description").html("주요 성과");
+			break;
+		default :
+			console.log(this.value);
+			break;
+		}
+		*/
+		
+		$(".result").show();
+		$(".description").show();
+		
+		if(this.value == 9) {
+			$("label#name_label").html("근무부서");
+			$("label#place_label").html("회사이름");
+			$("label#level_label").html("직책");
+			$("label#result_label").html("연봉");
+			$("label#description_label").html("주요 성과");
+		}else if(this.value == 10) {
+			$("label#name_label").html("프로젝트이름");
+			$("label#place_label").html("주최기관");
+			$("label#level_label").html("공모전/개인프로젝트 크기");
+			$("label#result_label").html("수상내용");
+			$("label#description_label").html("주요 수행 내용");
+		}else if(this.value == 11) {
+			$("label#name_label").html("전공/교육과정명");
+			$("label#place_label").html("학교명");
+			$("label#level_label").html("학교분류");
+			$("label#result_label").html("주요 교과목 학점 및 성과");
+			$("label#description_label").html("주요 교과목 공부 내용");
+		}else if(this.value == 12) {
+			$("label#name_label").html("자격증 이름");
+			$("label#place_label").html("발급기관");
+			$("label#level_label").html("자격증 분류");
+			$(".result").hide();
+			$(".description").hide();
+		}
+	})
 	
 	$("select[name='area']").change(function(){
 		if(this.value != "") ajax.get("/api/area/parentId/" + this.value, {}, function(list) {
@@ -163,7 +252,26 @@ $(document).ready(function() {
 		}
 			
 	});
-	
+
+	$("button#addSubPortfolioBtn").click(function(){
+		var subPortfolio = new Object();
+		subPortfolio.id = $("select[name='subPortfolio']").val();
+		
+		for(i in portfolio.subPortfolios) {
+			if(portfolio.subPortfolios[i].id == subPortfolio.id) {
+				alert("중복");
+				return;
+			}
+		}
+		
+		portfolio.subPortfolios.push(subPortfolio);
+		var text = $("select[name='subPortfolio']").find(":selected").html();
+		
+		$("ul.subPortfolio").append(function() {
+			$node = htmlBadge(text, subPortfolio.id);
+			return $("<li>").append($node);
+		});
+	});
 	
 	$("button#addAreaBtn").click(function(){
 		var area = new Object();
@@ -224,6 +332,7 @@ $(document).ready(function() {
 			return $("<li>").append($node);
 		});
 	});
+	
 	
 });
 

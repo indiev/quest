@@ -19,23 +19,5 @@ public class PortfolioController extends GenericViewController<Portfolio> {
 		return modelName + "/add";
 	}
 	
-	@RequestMapping(value = "node/detail", method = RequestMethod.GET)
-	public String detailNode(HttpServletRequest request, Model model) {
-		return modelName + "/node/detail";
-	}
-	
-	@RequestMapping(value = "detail/{id}", method = RequestMethod.GET)
-	public String detail(@PathVariable Integer id, HttpServletRequest request, Model model) {
-		return modelName + "/detail";
-	}
-	
-	@RequestMapping(value = "node/list", method = RequestMethod.GET)
-	public String listNode(HttpServletRequest request, Model model) {
-		return modelName + "/node/list";
-	}
-	
-	
-	
-	
 	
 }
