@@ -58,4 +58,9 @@ public abstract class GenericViewController<T> {
 	public String detail(@PathVariable Integer id, HttpServletRequest request) {
 		return modelName + "/detail";
 	}
+	
+	@RequestMapping(value = "node/{view}", method = RequestMethod.GET)
+	public String node(@PathVariable String view, HttpServletRequest request) {
+		return modelName + "/node/" + view;
+	}
 }
