@@ -23,18 +23,4 @@ public class QuesterController extends GenericViewController<Quester> {
 		return modelName + "/add";
 	}
 	
-	@RequestMapping(value = "select", method = RequestMethod.GET)
-	public String select(HttpServletRequest request, Model model) {
-		return modelName + "/select";
-	}
-	
-	@RequestMapping(value = "node/detail", method = RequestMethod.GET)
-	public String detailNode(HttpServletRequest request, Model model) {
-		return modelName + "/node/detail";
-	}
-	
-	@RequestMapping(value = "node/list", method = RequestMethod.GET)
-	public String listNode(HttpServletRequest request, Model model) {
-		return modelName + "/node/list";
-	}
 }
