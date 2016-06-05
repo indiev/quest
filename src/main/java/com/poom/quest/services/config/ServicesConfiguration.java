@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableCaching
 @EnableTransactionManagement
 @Import({MysqlDataSourceConfiguration.class})
-@ComponentScan(basePackages = {"com.poom.quest.services.model", "com.poom.quest.services.dao"})
+@ComponentScan(basePackages = {"com.poom.quest.services.model", "com.poom.quest.services.repository"})
 public class ServicesConfiguration {
 	public static final String UPLOADS_DIRECTORY = "/";
 
