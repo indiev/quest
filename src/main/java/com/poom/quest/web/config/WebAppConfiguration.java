@@ -10,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
@@ -32,10 +34,11 @@ import com.poom.quest.web.adapter.TemplateInterceptor;
 
 @Configuration
 @EnableWebMvc
+@EnableSpringDataWebSupport
 @Import(ServicesConfiguration.class)
 @ComponentScan(basePackages={"com.poom.quest.web.controller", "com.poom.quest.services.model"})
 //@EnableHypermediaSupport(type = { null })
-public class WebAppConfiguration extends WebMvcConfigurerAdapter {
+public class WebAppConfiguration extends WebMvcConfigurationSupport {
 	
 	@Bean
 	public MultipartResolver multipartResolver() {
@@ -72,33 +75,36 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter {
     
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    	super.addResourceHandlers(registry);
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        //registry.addViewController("/").setViewName("customers");
+    	super.addViewControllers(registry);
     }
     
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+    	super.configureDefaultServletHandling(configurer);
         configurer.enable();
     }
     
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-    	registry.addInterceptor(new TemplateInterceptor());
     	super.addInterceptors(registry);
+    	registry.addInterceptor(new TemplateInterceptor());
     }
     
     @Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-    	MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
-    	List<MediaType> supportedMediaTypes = new ArrayList<MediaType>();
-    	supportedMediaTypes.add(new MediaType("application", "json", StandardCharsets.UTF_8));
-    	supportedMediaTypes.add(new MediaType("application", "x-www-form-urlencoded", StandardCharsets.UTF_8));
-    	mappingJackson2HttpMessageConverter.setSupportedMediaTypes(supportedMediaTypes);
-    	mappingJackson2HttpMessageConverter.setObjectMapper(new ObjectMapper().registerModule(new Hibernate5Module()));
-    	converters.add(new MappingJackson2HttpMessageConverter());
+    	super.configureMessageConverters(converters);
+//    	MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
+//    	List<MediaType> supportedMediaTypes = new ArrayList<MediaType>();
+//    	supportedMediaTypes.add(new MediaType("application", "json", StandardCharsets.UTF_8));
+//    	supportedMediaTypes.add(new MediaType("application", "x-www-form-urlencoded", StandardCharsets.UTF_8));
+//    	mappingJackson2HttpMessageConverter.setSupportedMediaTypes(supportedMediaTypes);
+//    	mappingJackson2HttpMessageConverter.setObjectMapper(new ObjectMapper().registerModule(new Hibernate5Module()));
+//    	converters.add(new MappingJackson2HttpMessageConverter());
 	}
 }

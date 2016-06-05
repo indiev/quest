@@ -57,8 +57,8 @@ public class MysqlDataSourceConfiguration   {
         em.setPersistenceProvider(new HibernatePersistenceProvider());
         Map<String, String> p = new HashMap<String, String>();
         p.put(org.hibernate.cfg.Environment.DEFAULT_BATCH_FETCH_SIZE, "4"); // 4, 8, 16
-        p.put(org.hibernate.cfg.Environment.SHOW_SQL, "false");
-        p.put(org.hibernate.cfg.Environment.FORMAT_SQL, "false");
+        p.put(org.hibernate.cfg.Environment.SHOW_SQL, "true");
+        p.put(org.hibernate.cfg.Environment.FORMAT_SQL, "true");
         p.put(org.hibernate.cfg.Environment.POOL_SIZE, "20");
         p.put(org.hibernate.cfg.Environment.USE_REFLECTION_OPTIMIZER, "false");
         p.put(org.hibernate.cfg.Environment.DIALECT, MySQL5Dialect.class.getName());

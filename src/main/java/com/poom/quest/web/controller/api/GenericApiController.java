@@ -24,7 +24,7 @@ public abstract class GenericApiController<T> {
 	@Autowired UserService userService;
 	
 	@ResponseBody
-	@RequestMapping(value = "", method = RequestMethod.GET)
+	@RequestMapping
 	public List<T> list() {
 		return genericService.list();
 	}
@@ -76,7 +76,7 @@ public abstract class GenericApiController<T> {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public T add(@RequestBody T entity, HttpServletRequest request) {
 		return genericService.add(entity);
 	}
