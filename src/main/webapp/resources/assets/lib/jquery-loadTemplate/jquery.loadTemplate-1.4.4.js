@@ -295,9 +295,7 @@
         		subTemplate = $elem.attr("data-template");
         		$elem.removeAttr("data-template");
         	}
-        	console.log($elem);
         	$elem.loadTemplate(subTemplate, value, settings);
-        	console.log($elem);
         });
         
         processElements("data-content", template, data, settings, function ($elem, value) {
