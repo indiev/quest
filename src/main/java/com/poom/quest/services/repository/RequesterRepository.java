@@ -1,10 +1,10 @@
-package com.poom.quest.services.dao;
+package com.poom.quest.services.repository;
 
 import org.springframework.stereotype.Repository;
 
 import com.poom.quest.services.model.user.Requester;
 
 @Repository
-public class RequesterDao extends GenericDao<Requester> {
+public class RequesterRepository extends GenericRepository<Requester> {
 
 }

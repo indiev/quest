@@ -9,13 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.poom.quest.services.dao.QuestDao;
 import com.poom.quest.services.model.Code;
 import com.poom.quest.services.model.Contract;
 import com.poom.quest.services.model.Provision;
 import com.poom.quest.services.model.Quest;
 import com.poom.quest.services.model.Requirement;
 import com.poom.quest.services.model.user.User;
+import com.poom.quest.services.repository.QuestRepository;
 
 @Service
 @Transactional
@@ -24,7 +24,7 @@ public class QuestService extends GenericService<Quest> {
 	@Autowired CodeService codeService;
 	@Autowired ContractService contractService;
 	@Autowired ProvisionService provisionService;
-	@Autowired QuestDao questDao;
+	@Autowired QuestRepository questDao;
 	
 	public Quest add(Quest entity, User user) {
 		entity.setRequester(user.getRequester());

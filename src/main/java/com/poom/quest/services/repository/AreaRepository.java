@@ -1,10 +1,10 @@
-package com.poom.quest.services.dao;
+package com.poom.quest.services.repository;
 
 import org.springframework.stereotype.Repository;
 
 import com.poom.quest.services.model.Area;
 
 @Repository
-public class AreaDao extends GenericDao<Area> {
+public class AreaRepository extends GenericRepository<Area> {
 
 }

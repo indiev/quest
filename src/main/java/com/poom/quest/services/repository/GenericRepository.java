@@ -1,4 +1,4 @@
-package com.poom.quest.services.dao;
+package com.poom.quest.services.repository;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
@@ -12,7 +12,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public abstract class GenericDao<T> {
+public abstract class GenericRepository<T> {
 
 	static private final String REGION = "services";
 	

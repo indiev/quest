@@ -1,4 +1,4 @@
-package com.poom.quest.services.dao;
+package com.poom.quest.services.repository;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.poom.quest.services.model.Quest;
 
 @Repository
-public class QuestDao extends GenericDao<Quest> {
+public class QuestRepository extends GenericRepository<Quest> {
 
 	public List<Quest> questsOfQuester(Integer questerId, Integer stateId) {
 		String query = SELECT_ALL_SQL + " JOIN QuesterQuest on QuesterQuest.questId = Quest.id and QuesterQuest.questerId = :questerId";

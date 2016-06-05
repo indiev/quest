@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.poom.quest.services.dao.GenericDao;
+import com.poom.quest.services.repository.GenericRepository;
 
 @Service
 @Transactional
@@ -15,7 +15,7 @@ public abstract class GenericService<T> {
 
 	static private final String REGION = "services";
 	
-	@Autowired GenericDao<T> genericDao;
+	@Autowired GenericRepository<T> genericDao;
 	
 	public T add(T entity) {
 		return genericDao.add(entity);

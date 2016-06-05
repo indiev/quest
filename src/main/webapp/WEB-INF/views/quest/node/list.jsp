@@ -40,9 +40,3 @@
 		</ul>
 	</div>
 </div>
-
-<!-- 
-<script type="text/html" id="AreaTemplate">
-	<li data-content="name" class="badge label-info"></li>
-</script>
- -->
