@@ -33,8 +33,7 @@ $(document).ready(function() {
 
 function getPortfolios(type){
 	
-	if(type =="전체") 
-	{
+	if(type =="전체") {
 		ajax.get("/api/portfolio/user", {}, function(list) {
 			$.addTemplateFormatter({
 				date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
@@ -42,9 +41,7 @@ function getPortfolios(type){
 		    });
 			$("div.portfolio-content").loadTemplate("/portfolio/node/list", list);
 		});
-	}
-	else 
-	{
+	} else {
 		ajax.get("/api/portfolio/typeId/"+type, {}, function(list) {
 			$.addTemplateFormatter({
 				date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
@@ -52,7 +49,6 @@ function getPortfolios(type){
 		    });
 			$("div.portfolio-content").loadTemplate("/portfolio/node/list", list);
 		});
-	
 	}
 		
 }
