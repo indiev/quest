@@ -1,6 +1,7 @@
 package com.poom.quest.web.adapter;
 
 import java.util.Enumeration;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,10 +18,11 @@ public class TemplateInterceptor extends HandlerInterceptorAdapter {
 	
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-		if((request.getHeader("x-requested-with") == null || !request.getHeader("x-requested-with").toLowerCase().equals("xmlhttprequest")) && request.getHeader("origin") == null && request.getHeader("x-pjax") == null && !modelAndView.getViewName().equals("main")) {
+		if((request.getHeader("x-requested-with") == null || !request.getHeader("x-requested-with").toLowerCase().equals("xmlhttprequest")) && request.getHeader("origin") == null && request.getHeader("x-pjax") == null && modelAndView != null && !modelAndView.getViewName().equals("main")) {
 			modelAndView.getModelMap().addAttribute("mainContent", request.getServletPath());
 			modelAndView.setViewName("main");
 		}
+		
 		super.postHandle(request, response, handler, modelAndView);
 	}
 }

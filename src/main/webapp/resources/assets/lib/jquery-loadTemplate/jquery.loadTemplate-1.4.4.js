@@ -360,6 +360,14 @@
             });
         });
         
+        processElements("data-exist", template, data, settings, function ($elem, value) {
+        	if(jQuery.isEmptyObject(value)) $elem.remove();
+        });
+        
+        processElements("data-non-exist", template, data, settings, function ($elem, value) {
+        	if(!jQuery.isEmptyObject(value)) $elem.remove();
+        });
+        
         processAllElements(template, data, settings);
     }
 

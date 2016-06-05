@@ -38,8 +38,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/resources/**")
-			.and().ignoring().antMatchers("/tiles/**");
+		web.ignoring().antMatchers("/resources/**");
 	}
 	
 	@Override
@@ -48,8 +47,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http
 			.authorizeRequests()
 //				.antMatchers("/resources/**").permitAll()
-//				.antMatchers("/tiles/**").permitAll()
-//				.antMatchers("/tiles/**").permitAll()
 //				.antMatchers("/project/**").hasRole("USER")
 //				.antMatchers("/server/**").hasRole("USER")
 //				.antMatchers("/setting/**").hasRole("USER")

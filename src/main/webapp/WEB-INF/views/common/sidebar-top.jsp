@@ -60,16 +60,16 @@
 		       	</div>
 			</form>
 			<div class="navbar-right btn-group">
-				<button type="button" class="btn btn-sm navbar-btn btn-primary" name="loginButton" data-toggle="modal" data-target="#logDialog">로그인</button>
-				<button type="button" class="btn btn-sm navbar-btn btn-danger" name="logoutButton">로그아웃</button>
-				<button type="button" class="btn btn-sm navbar-btn btn-info" name="joinButton" data-toggle="modal" data-target="#logDialog">회원가입</button>
-				<button type="button" class="btn btn-sm navbar-btn btn-warning" name="findButton" data-toggle="modal" data-target="#logDialog">아이디·비밀번호 찾기</button>
+				<button type="button" data-non-exist class="btn btn-sm navbar-btn btn-primary" name="loginButton" data-toggle="modal" data-target="#logDialog">로그인</button>
+				<button type="button" data-non-exist class="btn btn-sm navbar-btn btn-info" name="joinButton" data-toggle="modal" data-target="#logDialog">회원가입</button>
+				<button type="button" data-non-exist class="btn btn-sm navbar-btn btn-warning" name="findButton" data-toggle="modal" data-target="#logDialog">아이디·비밀번호 찾기</button>
+				<button type="button" data-exist class="btn btn-sm navbar-btn btn-danger" name="logoutButton">로그아웃</button>
 			</div>
 		</div>
 	</div>
 </nav>
 
-<div class="modal fade" id="logDialog" role="dialog" aria-labelledby="loginHeader" aria-hidden="true" tabindex="-1">
+<div class="modal" id="logDialog" role="dialog" aria-hidden="true" tabindex="-1">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-body"></div>
@@ -84,7 +84,10 @@ $(document).ready(function(){
 		$("#logDialog").find("div.modal-body").load("/user/login");
 	});
 	$("button[name='logoutButton']").click(function(){
-		alert("로그아웃");
+		ajax.get("/api/logout", {}, function(result) {
+			user = null;
+			$("#sidebar-top").loadTemplate("/sidebar-top", null);
+		});
 	});
 	$("button[name='joinButton']").click(function(){
 		$("#logDialog > .modal-dialog").removeClass("modal-sm");

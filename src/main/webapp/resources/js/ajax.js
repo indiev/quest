@@ -48,7 +48,7 @@ var ajax = {
 		    type:'GET',
 		    url:u,
 		    cache:false,
-		    dataType:'json',
+		    /*dataType:'json',*/
 		    data:data,
 		    contentType:'application/json; charset=utf-8',
 		    success:cb,

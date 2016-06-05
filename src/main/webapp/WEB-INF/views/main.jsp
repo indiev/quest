@@ -30,8 +30,13 @@
 	<div id="main" class="row center-block"></div>
 </div>
 <script type="text/javascript">
+var user = null;
 $(document).ready(function(){
-	$("#sidebar-top").load("/sidebar-top");
+	//$("#sidebar-top").load("/sidebar-top");
+	ajax.get("/api/user/get", {}, function(data) { 
+		user = data;
+		$("#sidebar-top").loadTemplate("/sidebar-top", user);
+	});
 	$("#main").load("${mainContent}");
 });
 $(document).pjax("a", "#main");

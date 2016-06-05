@@ -3,11 +3,13 @@
 function login(form) {
 	data = ajax.serializeObject($(form));
 	ajax.login($(form).attr("action"), data, function(data) {
-		console.log(data);
 		data = JSON.parse(data);
 		if(data.success) {
-			//location.href="/";
-			alert("로그인하였습니다.");
+			$("#logDialog").modal('toggle');
+			ajax.get("/api/user/get", {}, function(data) { 
+				user = data;
+				$("#sidebar-top").loadTemplate("/sidebar-top", user);
+			});
 		}
 		else alert("아이디와 비밀번호를 다시 확인해주세요.");
 	});

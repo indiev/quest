@@ -42,6 +42,10 @@ public class UserApiController extends GenericApiController<User> {
 	@RequestMapping(value = "get", method = RequestMethod.GET)
 	public User get(HttpServletRequest request) {
 		User user = userService.getLoginUserByRequest(request);
-		return userService.get(user.getId());
+		if(user != null) {
+			user = userService.get(user.getId());
+			user.setPassword("");
+		}
+		return user;
 	}
 }
