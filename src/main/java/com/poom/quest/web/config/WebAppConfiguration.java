@@ -21,7 +21,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
@@ -38,20 +37,12 @@ import com.poom.quest.web.adapter.TemplateInterceptor;
 @Import(ServicesConfiguration.class)
 @ComponentScan(basePackages={"com.poom.quest.web.controller", "com.poom.quest.services.model"})
 //@EnableHypermediaSupport(type = { null })
-public class WebAppConfiguration extends WebMvcConfigurationSupport {
+public class WebAppConfiguration extends WebMvcConfigurerAdapter {
 	
 	@Bean
 	public MultipartResolver multipartResolver() {
 		return new StandardServletMultipartResolver();
 	}
-	
-	/*@Bean
-    public UrlBasedViewResolver urlBasedViewResolver() {
-		UrlBasedViewResolver urlBasedViewResolver = new TilesViewResolver();
-		urlBasedViewResolver.setViewClass(TilesView.class);
-		urlBasedViewResolver.setOrder(1);
-        return urlBasedViewResolver;
-    }*/
 	
     @Bean
     public InternalResourceViewResolver internalResourceViewResolver() {
@@ -75,36 +66,32 @@ public class WebAppConfiguration extends WebMvcConfigurationSupport {
     
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    	super.addResourceHandlers(registry);
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-    	super.addViewControllers(registry);
     }
     
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-    	super.configureDefaultServletHandling(configurer);
         configurer.enable();
     }
     
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-    	super.addInterceptors(registry);
     	registry.addInterceptor(new TemplateInterceptor());
     }
     
     @Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
     	super.configureMessageConverters(converters);
-//    	MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
-//    	List<MediaType> supportedMediaTypes = new ArrayList<MediaType>();
-//    	supportedMediaTypes.add(new MediaType("application", "json", StandardCharsets.UTF_8));
-//    	supportedMediaTypes.add(new MediaType("application", "x-www-form-urlencoded", StandardCharsets.UTF_8));
-//    	mappingJackson2HttpMessageConverter.setSupportedMediaTypes(supportedMediaTypes);
-//    	mappingJackson2HttpMessageConverter.setObjectMapper(new ObjectMapper().registerModule(new Hibernate5Module()));
-//    	converters.add(new MappingJackson2HttpMessageConverter());
+    	MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
+    	List<MediaType> supportedMediaTypes = new ArrayList<MediaType>();
+    	supportedMediaTypes.add(new MediaType("application", "json", StandardCharsets.UTF_8));
+    	supportedMediaTypes.add(new MediaType("application", "x-www-form-urlencoded", StandardCharsets.UTF_8));
+    	mappingJackson2HttpMessageConverter.setSupportedMediaTypes(supportedMediaTypes);
+    	mappingJackson2HttpMessageConverter.setObjectMapper(new ObjectMapper().registerModule(new Hibernate5Module()));
+    	converters.add(new MappingJackson2HttpMessageConverter());
 	}
 }
