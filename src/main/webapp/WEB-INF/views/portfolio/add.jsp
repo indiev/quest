@@ -48,6 +48,7 @@
 		<div class="form-gorup">
 			<label id="subPortfolio_label" for="subPortfolio">subPortfolio</label>
 			<div class="row">
+				<div class="col-md-5"><select name="subPortfolioType" id="subPortfolioType" class="form-control" ></select></div>
 				<div class="col-md-5"><select name="subPortfolio" id="subPortfolio" class="form-control" ></select></div>
 				<div class="col-md-2"><button type="button" id="addSubPortfolioBtn" class="btn btn-success">관련포트폴리오 추가</button></div>
 			</div>
@@ -144,7 +145,8 @@ function request(form) {
 $(document).ready(function() {
 	
 	ajax.get("/api/code/model/Portfolio",{},function(list){
-		selectInputList("typeId", list, "유형")
+		selectInputList("typeId", list, "유형");
+		selectInputList("subPortfolioType", list, "유형");
 	});
 	
 	ajax.get("/api/portfolio/user",{},function(list){
@@ -163,6 +165,7 @@ $(document).ready(function() {
 		selectInputList("skill", list, "스킬");
 	});
 	
+	$("select[name='subPortfolio']").attr("readonly",true);
 	
 	$("select[name='subArea']").attr("readonly",true);
 	
@@ -228,6 +231,18 @@ $(document).ready(function() {
 			$(".description").hide();
 		}
 	})
+	
+	$("select[name='subPortfolioType']").change(function(){
+		if(this.value != "") ajax.get("/api/portfolio/typeId/" + this.value, {}, function(list) {
+			selectInputList('subPortfolio', list, "관련 포트폴리오");
+			$("select[name='subPortfolio']").attr("readonly", false);
+		});
+		else {
+			selectInputList('subPortfolio', {}, "관련 포트폴리오 없음");
+			$("select[name='subPortfolio']").attr("readonly", true);
+		}
+			
+	});
 	
 	$("select[name='area']").change(function(){
 		if(this.value != "") ajax.get("/api/area/parentId/" + this.value, {}, function(list) {
