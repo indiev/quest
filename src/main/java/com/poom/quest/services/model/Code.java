@@ -11,7 +11,7 @@ public class Code extends GenericModel {
 	
 	private String model;
 	private String attribute;
-	private String description;
+	private String value;
 	
 	public String getModel() {
 		return model;
@@ -25,10 +25,10 @@ public class Code extends GenericModel {
 	public void setAttribute(String attribute) {
 		this.attribute = attribute;
 	}
-	public String getDescription() {
-		return description;
+	public String getValue() {
+		return value;
 	}
-	public void setDescription(String description) {
-		this.description = description;
+	public void setValue(String value) {
+		this.value = value;
 	}
 }
