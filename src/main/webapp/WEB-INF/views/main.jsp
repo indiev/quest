@@ -14,14 +14,15 @@
 <script data-main="/resources/js/main" src="/resources/assets/lib/bootstrap/js/bootstrap.min.js"></script>
 <script data-main="/resources/js/main" src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script data-main="/resources/js/main" src="/resources/assets/lib/pjax/jquery.pjax.js"></script>
-<script data-main="/resources/js/main" src="/resources/js/ajax.js"></script>
-<script data-main="/resources/js/main" src="/resources/js/function.js"></script>
 <!-- <script data-main="/resources/js/main" src="/resources/assets/lib/jquery-loadTemplate/jquery.loadTemplate-1.4.4.min.js"></script> -->
 <script data-main="/resources/js/main" src="/resources/assets/lib/jquery-loadTemplate/jquery.loadTemplate-1.4.4.js"></script>
 <!-- 부트스트랩 테마 Bootflat JS -->
 <script src="/resources/assets/lib/bootflat/js/icheck.min.js"></script>
 <script src="/resources/assets/lib/bootflat/js/jquery.fs.selecter.min.js"></script>
 <script src="/resources/assets/lib/bootflat/js/jquery.fs.stepper.min.js"></script>
+<script data-main="/resources/js/main" src="/resources/js/ajax.js"></script>
+<script data-main="/resources/js/main" src="/resources/js/validation.js"></script>
+<script data-main="/resources/js/main" src="/resources/js/function.js"></script>
 </head>
 <body>
 <!-- navbar-inverse -->

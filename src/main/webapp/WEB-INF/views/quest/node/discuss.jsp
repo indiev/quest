@@ -25,7 +25,7 @@
 <div>
 	참여한 퀘스터들
 	<ul data-list="questers">
-		<li data-content="name"></span>
+		<li data-content="name"></li>
 	</ul>
 </div>
 <div>협의 관련 게시판 또는 채팅 ajax로 가져오기. progress에서도 활용</div>

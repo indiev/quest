@@ -1,151 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
-<script type="text/javascript">
-var classQuest = function() {
-	this.areas = new Array();
-	this.works = new Array();
-	this.skills = new Array();
-	this.requirements = new Array();
-}
-
-var quest = new classQuest();
-
-$(function() {
-	selectInputList("area", {}, "분야");
-	selectInputList("subArea", {}, "세부분야");
-	selectInputList("work", {}, "업무");
-	selectInputList("subWork", {}, "세부업무");
-	selectInputList("Skill", {}, "스킬");
-	
-	ajax.get("/api/area", {}, function(list) {
-		selectInputList("area", list, "분야");
-	});
-	
-	ajax.get("/api/work", {}, function(list) {
-		selectInputList("work", list, "업무");
-	});
-	
-	ajax.get("/api/skill", {}, function(list) {
-		selectInputList("skill", list, "스킬");
-	});
-	
-	$("select[name='area']").change(function() {
-		if(this.value != "") ajax.get("/api/area/ref/parent/" + this.value, {}, function(list) {
-			selectInputList('subArea', list, "세부분야");
-		});
-	});
-	
-	$("select[name='work']").change(function() {
-		if(this.value != "") ajax.get("/api/work/ref/parent/" + this.value, {}, function(list) {
-			selectInputList('subWork', list, "세부업무");
-		});
-	});
-	
-	$("select[name='subArea']").change(function(){
-		var text = $(this).find(":selected").html()
-		var value = this.value;
-		if(value != "") $("ul.area").append(function() {
-			$node = htmlBadge(text, value);
-			$node.find("span.glyphicon-remove").click(function(){
-				alert("제외");
-			});
-			quest.areas.push({"id":value});
-			return $("<li>").append($node);
-		});
-	});
-	
-	$("select[name='subWork']").change(function() {
-		var text = $(this).find(":selected").html()
-		var value = this.value;
-		if(value != "") $("ul.work").append(function(){
-			$node = htmlBadge(text, value);
-			$node.find("span.glyphicon-remove").click(function(){
-				alert("제외");
-			});
-			quest.works.push({"id":value});
-			return $("<li>").append($node);
-		});
-	});
-	
-	$("select[name='skill']").change(function() {
-		var text = $(this).find(":selected").html()
-		var value = this.value;
-		if(value != "") $("ul.skill").append(function(){
-			$node = htmlBadge(text, value);
-			$node.find("span.glyphicon-remove").click(function(){
-				alert("제외");
-			});
-			quest.skills.push({"id":value});
-			return $("<li>").append($node);
-		});
-	});
-});
-
-function selectInputList(name, list, defaultText) {
-	var select = $("select[name='" + name + "']");
-	select.empty();
-	select.append($("<option>").html(defaultText).val(null));
-	for(i in list) {
-		option = $("<option>");
-		option.html(list[i].name).val(list[i].id);
-		select.append(option);
-	}
-}
-
-function htmlBadge(text, value) {
-	$removeIcon = $("<span>").addClass("glyphicon glyphicon-remove");
-	return $("<span>").addClass("badge").append(text + "&nbsp;").append($removeIcon);
-}
-
-function addRequirement() {
-	var $name = $("input[name='requirementName']");
-	var $description = $("input[name='requirementDescription']");
-	var name = $name.val();
-	var description = $description.val();
-	$name.val('');
-	$description.val('');
-	
-	$row = $("<tr>");
-	$row.append($("<td>").html(name).addClass("col-xs-3"));
-	$row.append($("<td>").html(description).addClass("col-xs-9"));
-	$("table.requirement-list > tbody").append($row);
-	
-	quest.requirements.push({"name":name, "description":description});
-}
-
-function request(form) {
-	/* data = $(form).serializeArray();
-	console.log(data);
-	console.log(JSON.stringify(data));
-	data = ajax.serializeObject($(form));
-	console.log(data);
-	data.areas = quest.areas;
-	data.works = quest.works;
-	data.skills = quest.skills;
-	data.requirements = quest.requirements;
-	console.log(data); */
-	/* data = {areas:[{id:7},{id:8}],works:[{id:7},{id:8}],skills:[{id:4},{id:5}],
-			requirements:[{name:"1",description:"1"},{name:"2",description:"2"}]}; */
-	/* quest.requirements.push({"name":1, "description":1});
-	quest.requirements.push({"name":2, "description":2});
-	quest.areas.push({"id":7});
-	quest.areas.push({"id":8});
-	quest.works.push({"id":7});
-	quest.works.push({"id":8});
-	quest.skills.push({"id":4});
-	quest.skills.push({"id":5}); */
-	ajax.submit(form, quest, function(result) {
-		if(result!= null) alert("퀘스트를 올렸습니다.");
-		else alert(data.mssege);
-	});
-	return false;
-}
-</script>
-
+<style type="text/css">
+span.badge.area { background-color: #5bc0de; }
+span.badge.work { background-color: #f0ad4e; }
+span.badge.skill { background-color: #d9534f; }
+</style>
 <form role="form" action="/api/quest" method="POST" onsubmit="return request(this);">
 	<div class="container-pluid">
 		<div class="form-group">
 			<label for="name" class="sr-only">퀘스트명</label>
-			<input type="text" name="name" id="name" class="form-control input-lg" placeholder="퀘스트명">
+			<input type="text" name="name" id="name" class="form-control input-lg" placeholder="퀘스트명" title="퀘스트명" required>
 		</div>
 		<div class="form-group row">
 			<div class="col-xs-6">
@@ -181,15 +44,15 @@ function request(form) {
 		</div>
 		<div class="form-group">
 			<label for="duration" class="sr-only">기간</label>
-			<input type="number" name="duration" id="duration" class="form-control" placeholder="기간">
+			<input type="number" name="duration" id="duration" class="form-control" placeholder="기간" required>
 		</div>
 		<div class="form-group">
 			<label for="reward"class="sr-only">보상</label>
-			<input type="text" name="reward" id="reward" class="form-control" placeholder="보상">
+			<input type="text" name="reward" id="reward" class="form-control" placeholder="보상" required>
 		</div>
 		<div class="form-group">
 			<label for="qualification" class="sr-only">자격</label>
-			<input type="text" name="qualification" id="qualification" class="form-control" placeholder="자격">
+			<input type="text" name="qualification" id="qualification" class="form-control" placeholder="자격" required>
 		</div>
 		<div class="form-group row">
 			<div class="col-xs-4">
@@ -215,3 +78,114 @@ function request(form) {
 		<input type="submit" id="" name="" class="btn btn-default" value="요청">
 	</div>
 </form>
+
+<script type="text/javascript">
+var classQuest = function() {
+	this.areas = new Array();
+	this.works = new Array();
+	this.skills = new Array();
+	this.requirements = new Array();
+}
+
+var quest = new classQuest();
+
+$(function() {
+	selectInputList("area", {}, "분야");
+	selectInputList("subArea", {}, "세부분야");
+	selectInputList("work", {}, "업무");
+	selectInputList("subWork", {}, "세부업무");
+	selectInputList("Skill", {}, "스킬");
+	
+	ajax.get("/api/area", {}, function(list) { selectInputList("area", list, "분야"); });
+	ajax.get("/api/work", {}, function(list) { selectInputList("work", list, "업무"); });
+	ajax.get("/api/skill", {}, function(list) { selectInputList("skill", list, "스킬"); });
+	
+	$("select[name='area']").change(function() {
+		if(this.value != "") ajax.get("/api/area/ref/parent/" + this.value, {}, function(list) {
+			selectInputList('subArea', list, "세부분야");
+		});
+	});
+	
+	$("select[name='work']").change(function() {
+		if(this.value != "") ajax.get("/api/work/ref/parent/" + this.value, {}, function(list) {
+			selectInputList('subWork', list, "세부업무");
+		});
+	});
+	
+	$("select[name='subArea']").change(function(){ addSelectValue(this, "area", quest.areas); });
+	$("select[name='subWork']").change(function() { addSelectValue(this, "work", quest.works); });
+	$("select[name='skill']").change(function() { addSelectValue(this, "skill", quest.skills); });
+});
+
+function inArrayObject(value, list) {
+	return list.map(function(e) { return e.id; }).indexOf(value);
+}
+
+function addSelectValue(elem, category, list) {
+	var text = $(elem).find(":selected").html();
+	var value = $(elem).val();
+	if(value != "" && inArrayObject(value, list) == -1) {
+		list.push({"id":value});
+		$("ul." + category).append(function() {
+			$node = htmlBadge(text, value, category);
+			$node.find("span.glyphicon-remove").click(function(){ 
+				list.splice(inArrayObject(value, list), 1);
+				$(this).parent().remove();
+			});
+			return $("<li>").append($node);
+		});
+	}
+}
+
+function selectInputList(name, list, defaultText) {
+	var select = $("select[name='" + name + "']");
+	select.empty();
+	select.append($("<option>").html(defaultText).val(null));
+	$.each(list, function(i, node) {
+		option = $("<option>");
+		option.html(node.name).val(node.id);
+		select.append(option);
+	});
+}
+
+function htmlBadge(text, value, category) {
+	$removeIcon = $("<span>").addClass("glyphicon glyphicon-remove").css("cursor", "pointer");
+	return $("<span>").addClass("badge " + category).append(text + "&nbsp;").append($removeIcon);
+}
+
+function addRequirement() {
+	var $name = $("input[name='requirementName']");
+	var $description = $("input[name='requirementDescription']");
+	var name = $name.val();
+	var description = $description.val();
+	$name.val('');
+	$description.val('');
+	
+	$row = $("<tr>");
+	$row.append($("<td>").html(name).addClass("col-xs-3"));
+	$row.append($("<td>").html(description).addClass("col-xs-8"));
+	$button = $("<button>").addClass("btn glyphicon glyphicon-remove").attr("type", "button");
+	$button.click(function() {
+		$elem = $(this);
+		$.each(quest.requirements, function(i, requirement) {
+			if(this.name == name && this.description == description) {
+				quest.requirements.splice(i, 1);
+				$elem.parent().parent().remove();
+				return false;
+			}
+		});
+	});
+	$row.append($("<td>").html($button).addClass("col-xs-1"));
+	$("table.requirement-list > tbody").append($row);
+	
+	quest.requirements.push({"name":name, "description":description});
+}
+
+function request(form) {
+	ajax.submit(form, quest, function(result) {
+		if(result != "") alert("퀘스트를 추가했습니다.");
+		else alert("퀘스트를 추가하는 데 실패했습니다.");
+	});
+	return false;
+}
+</script>

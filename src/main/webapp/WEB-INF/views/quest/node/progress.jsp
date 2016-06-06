@@ -13,5 +13,13 @@
 	업무 게시판 - 공지, 중요한 사항 올리기
 </div>
 
+<div class="issue-list"></div>
+
 <button type="button" class="btn btn-default" disabled>업무완료</button>
 <button type="button" class="btn btn-default" disabled>완료승인</button> - 평가
+
+<script type="text/javascript">
+$(function() {
+	$("div.issue-list").load("/issue/list");
+});
+</script>
