@@ -1,41 +1,57 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 <div class="container-fluid quest-detail-node">
-	<div><span data-content="name" class="h3"></span></div>
-	<div>
-		<span data-content="requester.user.realname"></span>
-		<span data-content="createdDate" data-format="date" class="pull-right"></span>
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<h3 data-content="name" class="panel-title"></h3>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-12">
+					<ul data-list="areas" class="pull-left">
+						<li data-content="name" class="badge label-info"></li>
+					</ul>
+					<ul data-list="works" class="pull-left">
+						<li data-content="name" class="badge label-warning"></li>
+					</ul>
+					<ul data-list="skills" class="pull-left">
+						<li data-content="name" class="badge label-danger"></li>
+					</ul>
+				</div>
+			</div>
+			<div class="row">
+				<div data-content="requester.name" class="col-md-7"></div>
+				<div data-content="createdDate" data-format="date" class="col-md-2"></div>
+				<div class="col-md-1">약 <span data-content="duration"></span>일 소요</div>
+				<div data-content-prepend="recruitmentEndDate" data-format="date" class="col-md-2"> 마감</div>
+			</div>
+			<div class="row">
+				<div data-content="reward" class="col-md-6"></div>
+				<div data-content="qualification" class="col-md-6"></div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-3">
+					<p>지원자 (<span data-content="applicants.length"></span>명 지원)</p>
+					<div data-list="applicants" class="list-group">
+						<a data-content="name" data-value="id" class="list-group-item" href="#" onclick="accept(this.value)"></a>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<p>퀘스터  (<span data-content="questers.length"></span>명 선정)</p>
+					<div data-list="questers" class="list-group">
+						<a data-content="name" data-value="id" class="list-group-item" href="#" onclick="remove(this.value)"></a>
+					</div>
+				</div>
+				<div class="col-md-6">
+				</div>
+			</div>
+			<div class="row">
+				<div data-content="description" class="col-md-12"></div>
+			</div>
+		</div>
+		<button type="button" class="btn btn-default" data-value="id" onclick="next(this.value);">진행</button>
 	</div>
-	<div><span data-content="reward"></span></div>
-	<div><span data-content="qualification"></span></div>
-	<div><span data-content="duration"></span></div>
-	<div><span data-content="recruitmentEndDate" data-format="date"></span></div>
-	<div>
-		<ul data-list="areas">
-			<li data-content="name" class="badge label-info"></li>
-		</ul>
-	</div>
-	<div>
-		<ul data-list="works">
-			<li data-content="name" class="badge label-warn"></li>
-		</ul>
-	</div>
-	<div>
-		<ul data-list="skills">
-			<li data-content="name" class="badge label-danger"></li>
-		</ul>
-	</div>
-	<div><span data-content="description"></span></div>
-	<div>
-		<b>지원한 퀘스터(드래그앤드롭으로 이동하기? 오른쪽 마우스 클릭시 메뉴 뜨고 상세보기 가능)</b>
-		<ul data-list="applicants" class="list-inline">
-			<li data-content="name" data-value="id" onclick="accept(this.value)"></li>
-		</ul>
-	</div>
-	<div>
-		<b>선정 퀘스터</b>
-		<ul data-list="questers" class="list-inline">
-			<li data-content="name" data-value="id" onclick="remove(this.value)"></li>
-		</ul>
-	</div>
-	<button type="button" class="btn btn-default" data-value="id" onclick="next(this.value);">진행</button>
 </div>
