@@ -13,55 +13,69 @@ public class Updater extends GenericModel {
 
 	private static final long serialVersionUID = 1L;
 	
-	private String refModel;
-	private String refColumn;
+	private String model;
+	private String attribute;
 	private Integer refId;
 	private String origin;
 	private Character type;
 	private Character approval;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userId", referencedColumnName = "id")
 	private User user;
-	
-	public String getRefModel() {
-		return refModel;
+
+	public String getModel() {
+		return model;
 	}
-	public void setRefModel(String refModel) {
-		this.refModel = refModel;
+
+	public void setModel(String model) {
+		this.model = model;
 	}
-	public String getRefColumn() {
-		return refColumn;
+
+	public String getAttribute() {
+		return attribute;
 	}
-	public void setRefColumn(String refColumn) {
-		this.refColumn = refColumn;
+
+	public void setAttribute(String attribute) {
+		this.attribute = attribute;
 	}
+
 	public Integer getRefId() {
 		return refId;
 	}
+
 	public void setRefId(Integer refId) {
 		this.refId = refId;
 	}
+
 	public String getOrigin() {
 		return origin;
 	}
+
 	public void setOrigin(String origin) {
 		this.origin = origin;
 	}
+
 	public Character getType() {
 		return type;
 	}
+
 	public void setType(Character type) {
 		this.type = type;
 	}
+
 	public Character getApproval() {
 		return approval;
 	}
+
 	public void setApproval(Character approval) {
 		this.approval = approval;
 	}
+
 	public User getUser() {
 		return user;
 	}
+
 	public void setUser(User user) {
 		this.user = user;
 	}
