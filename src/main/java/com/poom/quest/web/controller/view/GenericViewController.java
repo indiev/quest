@@ -49,6 +49,11 @@ public abstract class GenericViewController<T> {
 		return modelName + "/main";
 	}
 	
+	@RequestMapping(value = "add", method = RequestMethod.GET)
+	public String request(HttpServletRequest request, Model model) {
+		return modelName + "/add";
+	}
+	
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public String list(HttpServletRequest request) {
 		return modelName + "/list";
