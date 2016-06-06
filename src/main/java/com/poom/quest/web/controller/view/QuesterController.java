@@ -24,7 +24,7 @@ public class QuesterController extends GenericViewController<Quester> {
 		User user = userService.getLoginUserByRequest(request);
 		if(user != null) {
 			Quester quester = genericService.getByKey("userId", user.getId());
-			return modelName + "/" + quester.getId();
+			return super.detail(quester.getId(), request);
 		}
 		return modelName + "/main";
 	}
