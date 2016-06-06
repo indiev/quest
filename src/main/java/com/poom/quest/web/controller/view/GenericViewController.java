@@ -45,7 +45,7 @@ public abstract class GenericViewController<T> {
 	}
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String main() {
+	public String main(HttpServletRequest request, Model model) {
 		return modelName + "/main";
 	}
 	

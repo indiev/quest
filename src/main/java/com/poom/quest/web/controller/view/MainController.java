@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class MainController { /* 기본 메인 화면에 대한 view 컨트롤러 */
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String main(Model model) {
+	public String main(HttpServletRequest request, Model model) {
 		model.addAttribute("mainContent", "main");
 		return "main";
 	}
