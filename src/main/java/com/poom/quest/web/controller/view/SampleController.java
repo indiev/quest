@@ -7,9 +7,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@Controller
-@RequestMapping("/sample")
-public class SampleController {
+import com.poom.quest.services.model.SampleModel;
+
+//@Controller
+//@RequestMapping("/sample")
+public class SampleController extends GenericViewController<SampleModel> {
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String main(HttpServletRequest request, Model model) {
