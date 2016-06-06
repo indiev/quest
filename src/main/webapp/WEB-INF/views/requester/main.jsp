@@ -1,9 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
-<div class ="mainWrap center-block">
-	<div><h3>리퀘스터 정보</h3></div>
-	<hr>
-	<div class="requester-detail"></div>
-	<hr>
-	<div><h3>해당 리퀘스터가 요청한 퀘스트 정보</h3></div>
-	
-</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	getMainRequesterDetail();
+});
+
+function getMainRequesterDetail() {
+	ajax.get("/api/requester/ref/user/"+user.id, {}, function(requester) {
+		//location.replace("/requester/"+requester[0].id);
+		console.log(requester);
+	});
+}
+
+</script>

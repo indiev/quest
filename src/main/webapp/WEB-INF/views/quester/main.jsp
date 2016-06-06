@@ -6,7 +6,7 @@ $(document).ready(function() {
 });
 
 function getMainQuesterDetail() {
-	ajax.get("/api/quester/user", {}, function(quester) {
+	ajax.get("/api/quester/ref/user/"+user.id, {}, function(quester) {
 		location.replace("/quester/"+quester[0].id);
 	});
 }

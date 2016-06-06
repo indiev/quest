@@ -12,7 +12,7 @@
 		<div class="collapse navbar-collapse">
 			<!-- <p class="navbar-text pull-right">v0.1</p> -->
 			<ul class="nav navbar-nav">
-				<li class="dropdown">
+				<li data-exist class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">사용자 <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="/user/">유저 정보</a></li>
