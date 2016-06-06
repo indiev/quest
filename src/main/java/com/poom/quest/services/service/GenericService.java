@@ -29,6 +29,10 @@ public abstract class GenericService<T> {
 		return genericDao.getByKey(keyName, key);
 	}
 	
+	public T getByKey(String keyName, Integer key) {
+		return genericDao.getByKey(keyName, key.toString());
+	}
+	
 	public T getByKeys(Map<String, String> keys) {
 		return genericDao.getByKeys(keys);
 	}
