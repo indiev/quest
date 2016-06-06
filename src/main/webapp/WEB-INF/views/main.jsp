@@ -36,7 +36,8 @@ $(document).ready(function(){
 	ajax.get("/api/user/get", {}, function(data) { 
 		user = data;
 		$.addTemplateFormatter({
-			link: function (value) { return "/quester/" + value; }
+			questerlink: function (value) { return "/quester/" + value; },
+			requesterlink: function (value) { return "/requester/" + value; }
 	    });
 		$("#sidebar-top").loadTemplate("/sidebar-top", user);
 	});
