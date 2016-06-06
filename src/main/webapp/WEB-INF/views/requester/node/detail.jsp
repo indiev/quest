@@ -3,7 +3,7 @@
 	
 	<p data-content="name"></p>
 	<div>
-		<ul data-list="areas">
+		<ul data-list="perfomr_areas">
 			<li data-content="name" class="badge label-info"></li>
 		</ul>
 	</div>
