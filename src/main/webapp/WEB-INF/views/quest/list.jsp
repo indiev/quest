@@ -57,7 +57,7 @@ function list() {
 $(document).ready(function(){
 	list();
 	$("button[name='requestButton']").click(function(){
-		$("#requestDialog").find("div.modal-body").load("/quest/request");
+		$("#requestDialog").find("div.modal-body").load("/quest/add");
 	});
 });
 </script>
