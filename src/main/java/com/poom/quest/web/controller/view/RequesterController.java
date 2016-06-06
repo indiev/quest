@@ -28,11 +28,4 @@ public class RequesterController extends GenericViewController<Requester>{
 		}
 		return modelName + "/main";
 	}
-	
-	@RequestMapping(value = "add", method = RequestMethod.GET)
-	public String add(HttpServletRequest request, Model model) {
-		return modelName + "/add";
-	}
-	
-
 }
