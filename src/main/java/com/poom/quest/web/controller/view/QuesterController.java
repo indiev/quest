@@ -19,7 +19,7 @@ public class QuesterController extends GenericViewController<Quester> {
 	
 	@Autowired UserService userService;
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String main(HttpServletRequest request, Model model) {
 		User user = userService.getLoginUserByRequest(request);
 		if(user != null) {

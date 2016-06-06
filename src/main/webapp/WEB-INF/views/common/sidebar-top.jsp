@@ -97,8 +97,6 @@ $(document).ready(function(){
 		$("#logDialog > .modal-dialog").removeClass("modal-sm");
 		$("#logDialog").find("div.modal-body").empty();
 	});
-	
-	if(user !=null)
 });
 
 </script>
