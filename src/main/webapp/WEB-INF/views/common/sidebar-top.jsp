@@ -19,7 +19,7 @@
 						<li><a href="/portfolio/list">유저 포트폴리오 정보</a>
 						<li><a href="/portfolio/add">유저 포트폴리오 생성</a>
 						<li><a href="/requester/">리퀘스터 정보</a></li>
-						<li><a href="/quester/">퀘스터 정보</a></li>
+						<li><a data-href="quester.id" data-format="link" data-format-target="href">퀘스터 정보</a></li>
 						<li><a href="/quester/add">퀘스터 생성</a></li>
 					</ul>
 					
@@ -62,7 +62,7 @@
 			<div class="navbar-right btn-group">
 				<button type="button" data-non-exist class="btn btn-sm navbar-btn btn-primary" name="loginButton" data-toggle="modal" data-target="#logDialog">로그인</button>
 				<button type="button" data-non-exist class="btn btn-sm navbar-btn btn-info" name="joinButton" data-toggle="modal" data-target="#logDialog">회원가입</button>
-				<button type="button" data-non-exist class="btn btn-sm navbar-btn btn-warning" name="findButton" data-toggle="modal" data-target="#logDialog">아이디·비밀번호 찾기</button>
+				<!-- <button type="button" data-non-exist class="btn btn-sm navbar-btn btn-warning" name="findButton" data-toggle="modal" data-target="#logDialog">아이디·비밀번호 찾기</button> -->
 				<button type="button" data-exist class="btn btn-sm navbar-btn btn-danger" name="logoutButton">로그아웃</button>
 			</div>
 		</div>
@@ -97,6 +97,8 @@ $(document).ready(function(){
 		$("#logDialog > .modal-dialog").removeClass("modal-sm");
 		$("#logDialog").find("div.modal-body").empty();
 	});
+	
+	if(user !=null)
 });
 
 </script>

@@ -23,11 +23,9 @@ public class User extends GenericModel {
 	private String phone;
 	
 	@OneToOne(mappedBy = "user")
-	@JsonIgnore
 	private Requester requester;
 	
 	@OneToOne(mappedBy = "user")
-	@JsonIgnore
 	private Quester quester;
 	
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)

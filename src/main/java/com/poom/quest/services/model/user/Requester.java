@@ -18,6 +18,7 @@ public class Requester extends GenericModel {
 	
 	private static final long serialVersionUID = 1L;
 
+	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "userId", referencedColumnName="id")
 	private User user;

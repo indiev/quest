@@ -35,6 +35,9 @@ $(document).ready(function(){
 	//$("#sidebar-top").load("/sidebar-top");
 	ajax.get("/api/user/get", {}, function(data) { 
 		user = data;
+		$.addTemplateFormatter({
+			link: function (value) { return "/quester/" + value; }
+	    });
 		$("#sidebar-top").loadTemplate("/sidebar-top", user);
 	});
 	$("#main").load("${mainContent}");
