@@ -8,8 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poom.quest.services.model.abstractModel.GenericModel;
 import com.poom.quest.services.model.user.User;
 
@@ -28,10 +28,15 @@ public class Issue extends GenericModel {
 	@JoinTable(name = "RequirementIssue", joinColumns = {@JoinColumn(name = "issueId")}, inverseJoinColumns = {@JoinColumn(name = "requirementId")})
 	private Set<Requirement> requirements;
 	
-	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userId", referencedColumnName = "id")
 	private User user;
+	
+	@PrePersist
+	public void onCreate() {
+		super.onCreate();
+		this.closed = false;
+	}
 	
 	public Boolean getClosed() {
 		return closed;

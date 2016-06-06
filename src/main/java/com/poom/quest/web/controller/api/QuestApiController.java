@@ -65,8 +65,8 @@ public class QuestApiController extends GenericApiController<Quest> {
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public Quest add(@RequestBody Quest entity, HttpServletRequest request) {
 		User user = userService.getLoginUserByRequest(request);
-		if(user != null) questService.add(entity, user);
-		return entity;
+		if(user != null) return questService.add(entity, user);
+		else return null;
 	}
 	
 	@ResponseBody

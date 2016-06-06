@@ -37,7 +37,7 @@ var ajax = {
 		    url:$(form).attr("action"),
 		    cache:false,
 		    data:formData,
-		    dataType:'json',
+		    /*dataType:'json',*/
 		    contentType:'application/json; charset=utf-8',
 		    success:cb,
 		    error:ajax.error

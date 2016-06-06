@@ -7,7 +7,6 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poom.quest.services.model.Portfolio;
 import com.poom.quest.services.model.abstractModel.GenericModel;
 
@@ -16,7 +15,6 @@ public class User extends GenericModel {
 	
 	private static final long serialVersionUID = 1L;
 	
-	//@JsonIgnore
 	private String password;
 	private String realname;
 	private String email;
