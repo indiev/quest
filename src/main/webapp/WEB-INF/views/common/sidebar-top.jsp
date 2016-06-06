@@ -28,7 +28,7 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">퀘스트 <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="/quest/list">list</a></li>
-						<li><a href="/quest/request">request</a></li>
+						<li><a href="/quest/add">add</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
