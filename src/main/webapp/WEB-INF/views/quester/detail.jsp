@@ -124,6 +124,7 @@ function classQuestTotalStat(list) {
 
 $(document).ready(function(){
 	var id = $(location).attr("href").slice($(location).attr("href").lastIndexOf("/")+1)
+	if(id == "" && user != null) id = user.quester.id;
 	detail(id);
 });
 

@@ -19,6 +19,7 @@ function detail(id) {
 	
 	ajax.get("/api/requester/"+id, {}, function(requester){
 		$("div.requester-detail").loadTemplate("/requester/node/detail", requester);
+		console.log(requester);
 		ajax.get("/api/quest/all/search", {}, function(list){
 			$.addTemplateFormatter({
 				date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
@@ -123,7 +124,8 @@ function classQuestTotalStat(list) {
 	
 
 $(document).ready(function(){
-	var id = $(location).attr("href").slice($(location).attr("href").lastIndexOf("/")+1)
+	var id = $(location).attr("href").slice($(location).attr("href").lastIndexOf("/")+1);
+	if(id == "" && user != null) id = user.quester.id;
 	detail(id);
 });
 
