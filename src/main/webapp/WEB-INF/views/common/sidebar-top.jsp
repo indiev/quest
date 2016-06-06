@@ -15,12 +15,12 @@
 				<li data-exist class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">사용자 <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="/user/">유저 정보</a></li>
-						<li><a href="/portfolio/list">유저 포트폴리오 정보</a>
-						<li><a href="/portfolio/add">유저 포트폴리오 생성</a>
+						<li><a data-href="id" data-format="userlink" data-format-target="href">유저 정보</a></li>
 						<li><a data-href="requester.id" data-format="requesterlink" data-format-target="href">리퀘스터 정보</a></li>
 						<li><a data-href="quester.id" data-format="questerlink" data-format-target="href">퀘스터 정보</a></li>
 						<li><a href="/quester/add">퀘스터 생성</a></li>
+						<li><a href="/portfolio/list">유저 포트폴리오 정보</a>
+						<li><a href="/portfolio/add">유저 포트폴리오 생성</a>
 					</ul>
 					
 				</li>

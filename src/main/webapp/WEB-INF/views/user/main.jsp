@@ -8,27 +8,9 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	getUserDetail();
+	console.log(user);
+	$("div.user-detail").loadTemplate("/user/node/detail",user);
 });
 
-
-function getUserDetail() {
-	ajax.get("/api/user/get", {}, function(user) {
-		$.get("/user/node/detail",function(detailNode){
-			$("div.user-detail").empty();
-			$detailNodeClone = $(detailNode).clone();
-			
-			$detailNodeClone.find(".name").html(user.name);
-			$detailNodeClone.find(".realname").html(user.realname);
-			$detailNodeClone.find(".email").html(user.email);
-			$detailNodeClone.find(".phone").html(user.phone);
-			$detailNodeClone.find(".createdDate").html($.datepicker.formatDate("yy년 mm월 dd일", new Date(user.createdDate)));
-			
-			$("div.user-detail").append($detailNodeClone);
-			
-			
-		});
-	});
-}
 
 </script>

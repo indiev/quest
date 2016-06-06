@@ -28,6 +28,7 @@ function detail(id) {
 			
 			$("div.request-content").loadTemplate("/quest/node/list", list);
 			var stat = new classQuestTotalStat(list);
+			console.log(stat);
 			$("div.requester-questTotalStat-detail").loadTemplate("/requester/node/questTotalStat", stat);
 			
 		});
@@ -36,90 +37,58 @@ function detail(id) {
 }
 
 function classQuestTotalStat(list) {
-	
-	function classElement(name, count) {
-		this.name = name;
-		this.count= count;
+	function classElement() {
+		this.perform_areas = new Array();
+		this.perform_works = new Array();
+		this.perform_skills = new Array();
 	}
-	// 순위 차트 관련
-	this.areas = new Array();
-	this.works = new Array();
-	this.skills = new Array();
 
-	this.perform_areas = new Array();
-	this.perform_works = new Array();
-	this.perform_skills = new Array();
-	
-	for ( i in list) {
-		for( j in list[i].areas) {
+	function checkDuplication(list, sublist) {
+		for( i in list) {
 			var isDuplication = false;
 			
-			for(k in this.perform_areas) {
-				if(this.perform_areas[k][0].name == list[i].areas[j].name) {
-					this.perform_areas[k].push(list[i].areas[j]);
+			for(j in sublist) {
+				if(this.sublist[j].name == list[i].name) {
+					this.sublist[k].count++;
 					isDuplication = true;
 					break;
 				}	
 			}
 			if(isDuplication == false) {
-				newArray = new Array();
-				newArray.push(list[i].areas[j]);
-				this.perform_areas.push(newArray);
-			}
-		}
-		
-	
-		for( j in list[i].works) {
-			var isDuplication = false;
-			
-			for(k in this.perform_works) {
-				if(this.perform_works[k][0].name == list[i].works[j].name) {
-					this.perform_works[k].push(list[i].works[j]);
-					isDuplication = true;
-					break;
-				}	
-			}
-			if(isDuplication == false) {
-				newArray = new Array();
-				newArray.push(list[i].works[j]);
-				this.perform_works.push(newArray);
-			}
-		}
-		
-		for( j in list[i].skills) {
-			var isDuplication = false;
-			
-			for(k in this.perform_skills) {
-				if(this.perform_skills[k][0].name == list[i].skills[j].name) {
-					this.perform_skills[k].push(list[i].skills[j]);
-					isDuplication = true;
-					break;
-				}	
-			}
-			if(isDuplication == false) {
-				newArray = new Array();
-				newArray.push(list[i].skills[j]);
-				this.perform_skills.push(newArray);
+				newElement = new classElement(list[i].areas[j].name, 1);
+				this.sublist.push(newElement);
 			}
 		}
 	}
 	
-	//**************************
-	for(i in this.perform_areas) {
-		var element = new classElement(this.perform_areas[i][0].name, this.perform_areas[i].length);
-		this.areas.push(element);
+	function init(categories) {
+		var sublist = new Array();
+		for(i in categories) {
+			var category = categories[i].name;
+			if(typeof sublist[category] == "undefined") {
+				sublist[category] = 0;
+			}
+			sublist[category]++;
+		}
+		return sublist;
 	}
 	
-	for(i in this.perform_works) {
-		var element = new classElement(this.perform_works[i][0].name, this.perform_works[i].length);
-		this.works.push(element);
+	function babo(categories, performs) {
+		$.each(categories, function(i, category) {
+			if(typeof performs[category.name] == "undefined") {
+				performs[category.name] = 0;
+			}
+			performs[category.name]++;
+		});
 	}
 	
-	for(i in this.perform_skills) {
-		var element = new classElement(this.perform_skills[i][0].name, this.perform_skills[i].length);
-		this.skills.push(element);
-	}
-	
+	var stat = new classElement();
+	$.each(list, function(i, quest) {
+		babo(quest.areas, stat.perform_areas);
+		babo(quest.works, stat.perform_works);
+		babo(quest.skills, stat.perform_skills);
+	});
+	return stat;
 }
 	
 

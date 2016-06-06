@@ -36,6 +36,7 @@ $(document).ready(function(){
 	ajax.get("/api/user/get", {}, function(data) { 
 		user = data;
 		$.addTemplateFormatter({
+			userlink: function (value) { return "/user/" + value; },
 			questerlink: function (value) { return "/quester/" + value; },
 			requesterlink: function (value) { return "/requester/" + value; }
 	    });
