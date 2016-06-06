@@ -1,7 +1,5 @@
 package com.poom.quest.web.controller.view;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +17,7 @@ public class QuestController extends GenericViewController<Quest> {
 	@Autowired CodeService codeService;
 	
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public String detail(@PathVariable Integer id, HttpServletRequest requests) {
+	public String detail(@PathVariable Integer id) {
 		Quest quest = genericService.get(id);
 		Code state = codeService.get(quest.getState().getId());
 		//return return modelName + "/detail/" + state.getName();

@@ -24,17 +24,17 @@ public abstract class GenericViewController<T> {
 	protected final String modelName = clazz.getSimpleName().toLowerCase();
 	
 	@RequestMapping(value = "/template/top", method = RequestMethod.GET)
-	public String top(Model model) {
-		return "left";
+	public String top() {
+		return "top";
 	}
 	
 	@RequestMapping(value = "/template/bottom", method = RequestMethod.GET)
-	public String bottom(Model model) {
-		return "left";
+	public String bottom() {
+		return "bottom";
 	}
 	
 	@RequestMapping(value = "/template/left", method = RequestMethod.GET)
-	public String left(Model model) {
+	public String left() {
 		return "/template/leftSider";
 	}
 	
@@ -45,27 +45,27 @@ public abstract class GenericViewController<T> {
 	}
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String main(HttpServletRequest request, Model model) {
+	public String main() {
 		return modelName + "/main";
 	}
 	
 	@RequestMapping(value = "add", method = RequestMethod.GET)
-	public String request(HttpServletRequest request, Model model) {
+	public String request() {
 		return modelName + "/add";
 	}
 	
 	@RequestMapping(value = "list", method = RequestMethod.GET)
-	public String list(HttpServletRequest request) {
+	public String list() {
 		return modelName + "/list";
 	}
 	
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public String detail(@PathVariable Integer id, HttpServletRequest request) {
+	public String detail(@PathVariable Integer id) {
 		return modelName + "/detail";
 	}
 	
 	@RequestMapping(value = "node/{view}", method = RequestMethod.GET)
-	public String node(@PathVariable String view, HttpServletRequest request) {
+	public String node(@PathVariable String view) {
 		return modelName + "/node/" + view;
 	}
 }

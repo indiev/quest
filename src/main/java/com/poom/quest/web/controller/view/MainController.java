@@ -12,18 +12,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class MainController { /* 기본 메인 화면에 대한 view 컨트롤러 */
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String main(HttpServletRequest request, Model model) {
+	public String main(Model model) {
 		model.addAttribute("mainContent", "main");
 		return "main";
 	}
 	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
-	public String mainContent(HttpServletRequest request, Model model) {
+	public String mainContent() {
 		return "mainContent";
 	}
 	
 	@RequestMapping(value = "/sidebar-top", method = RequestMethod.GET)
-	public String sidebarTop(HttpServletRequest request, Model model) {
+	public String sidebarTop() {
 		return "common/sidebar-top";
 	}
 }

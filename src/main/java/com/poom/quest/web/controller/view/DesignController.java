@@ -1,9 +1,6 @@
 package com.poom.quest.web.controller.view;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -12,12 +9,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class DesignController {
 	
 	@RequestMapping(value = "quest/detail", method = RequestMethod.GET)
-	public String main(HttpServletRequest request, Model model) {
+	public String main() {
 		return "design/quest/detail";
 	}
 	
 	@RequestMapping(value = "quest/list", method = RequestMethod.GET)
-	public String sample(HttpServletRequest request, Model model) {
+	public String sample() {
 		return "design/quest/list";
 	}
 }

@@ -24,7 +24,7 @@ public class RequesterController extends GenericViewController<Requester>{
 		User user = userService.getLoginUserByRequest(request);
 		if(user != null) {
 			Requester requester = genericService.getByKey("userId", user.getId());
-			return super.detail(requester.getId(), request);
+			return super.detail(requester.getId());
 		}
 		return modelName + "/main";
 	}
