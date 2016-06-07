@@ -2,18 +2,18 @@ package com.poom.quest.services.model.user;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poom.quest.services.model.Area;
-import com.poom.quest.services.model.Portfolio;
 import com.poom.quest.services.model.Quest;
 import com.poom.quest.services.model.Skill;
 import com.poom.quest.services.model.Work;
@@ -25,27 +25,33 @@ public class Quester extends GenericModel {
 	private static final long serialVersionUID = 1L;
 
 	@JsonIgnore
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(fetch =  FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
 	@JoinColumn(name = "userId", referencedColumnName="id")
 	private User user;
 	
-	@ManyToMany(mappedBy = "questers", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JsonIgnore
-	private Set<Quest> quests;
-
 	@ManyToMany(fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
 	@JoinTable(name = "QuesterArea", joinColumns = {@JoinColumn(name = "questerId")}, inverseJoinColumns = {@JoinColumn(name = "areaId")})
 	private Set<Area> areas;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
 	@JoinTable(name = "QuesterWork", joinColumns = {@JoinColumn(name = "questerId")}, inverseJoinColumns = {@JoinColumn(name = "workId")})
 	private Set<Work> works;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
 	@JoinTable(name = "QuesterSkill", joinColumns = {@JoinColumn(name = "questerId")}, inverseJoinColumns = {@JoinColumn(name = "skillId")})
 	private Set<Skill> skills;
+
+	@ManyToMany(mappedBy = "questers", fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
+	@JsonIgnore
+	private Set<Quest> quests;
 	
-	@ManyToMany(mappedBy = "applicants", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "applicants", fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
 	@JsonIgnore
 	private Set<Quest> appliedQuests;
 	
@@ -55,14 +61,6 @@ public class Quester extends GenericModel {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public Set<Quest> getQuests() {
-		return quests;
-	}
-
-	public void setQuests(Set<Quest> quests) {
-		this.quests = quests;
 	}
 
 	public Set<Area> getAreas() {
@@ -87,6 +85,14 @@ public class Quester extends GenericModel {
 
 	public void setSkills(Set<Skill> skills) {
 		this.skills = skills;
+	}
+	
+	public Set<Quest> getQuests() {
+		return quests;
+	}
+
+	public void setQuests(Set<Quest> quests) {
+		this.quests = quests;
 	}
 	
 	public Set<Quest> getAppliedQuests() {

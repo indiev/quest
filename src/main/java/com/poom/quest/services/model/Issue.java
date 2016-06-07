@@ -10,6 +10,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import com.poom.quest.services.model.abstractModel.GenericModel;
 import com.poom.quest.services.model.user.User;
 
@@ -21,14 +24,17 @@ public class Issue extends GenericModel {
 	private String description;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@Cascade(CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "typeId", referencedColumnName = "id")
 	private Code type;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
 	@JoinTable(name = "RequirementIssue", joinColumns = {@JoinColumn(name = "issueId")}, inverseJoinColumns = {@JoinColumn(name = "requirementId")})
 	private Set<Requirement> requirements;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@Cascade(CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "userId", referencedColumnName = "id")
 	private User user;
 	

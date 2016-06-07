@@ -2,12 +2,14 @@ package com.poom.quest.services.model.abstractModel;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @MappedSuperclass
 public abstract class TreeModel<T> extends GenericModel {
@@ -16,7 +18,8 @@ public abstract class TreeModel<T> extends GenericModel {
 	 
 	private Integer parentId;
 	private Integer sequency;
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER)
+	@Cascade(CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "parentId", referencedColumnName="id", insertable=false, updatable=false)
 	@OrderBy("sequency DESC")
 	private Set<T> childs;

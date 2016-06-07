@@ -9,11 +9,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poom.quest.services.model.abstractModel.GenericModel;
-import com.poom.quest.services.model.user.Quester;
 import com.poom.quest.services.model.user.User;
 
 @Entity
@@ -29,27 +30,33 @@ public class Portfolio extends GenericModel {
 	private String description;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@Cascade(CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "typeId", referencedColumnName = "id")
 	private Code type;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
 	@JoinTable(name = "PortfolioArea", joinColumns = {@JoinColumn(name = "portfolioId")}, inverseJoinColumns = {@JoinColumn(name = "areaId")})
 	private Set<Area> areas;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
 	@JoinTable(name = "PortfolioWork", joinColumns = {@JoinColumn(name = "portfolioId")}, inverseJoinColumns = {@JoinColumn(name = "workId")})
 	private Set<Work> works;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
 	@JoinTable(name = "PortfolioSkill", joinColumns = {@JoinColumn(name = "portfolioId")}, inverseJoinColumns = {@JoinColumn(name = "skillId")})
 	private Set<Skill> skills;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
 	@JoinTable(name = "SubPortfolio", joinColumns = {@JoinColumn(name = "portfolioId")}, inverseJoinColumns = {@JoinColumn(name = "subPortfolioId")})
 	private Set<Portfolio> subPortfolios;
 	
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
 	@JoinColumn(name = "userId", referencedColumnName = "id")
 	private User user;
 

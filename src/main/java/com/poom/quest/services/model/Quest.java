@@ -3,7 +3,6 @@ package com.poom.quest.services.model;
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -12,6 +11,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import com.poom.quest.services.model.abstractModel.GenericModel;
 import com.poom.quest.services.model.user.Quester;
@@ -30,36 +32,43 @@ public class Quest extends GenericModel {
 	//sub Project?
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@Cascade(CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "stateId", referencedColumnName = "id")
 	private Code state; //상태 - 준비(R), 요청자를 기다림(wait), 토의(discuss), 진행(progress), 완료(complete), 중지(stop), 일시정지(pause)
 	
 	@ManyToMany(fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
 	@JoinTable(name = "QuestArea", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "areaId")})
 	private Set<Area> areas;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
 	@JoinTable(name = "QuestWork", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "workId")})
 	private Set<Work> works;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
 	@JoinTable(name = "QuestSkill", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "skillId")})
 	private Set<Skill> skills;
 	
 	@OneToOne(mappedBy = "quest", fetch = FetchType.LAZY)
 	private Contract contract;
 
-	@OneToMany(mappedBy = "quest", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "quest", fetch = FetchType.LAZY)
 	private Set<Requirement> requirements; //요구사항들
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@Cascade(CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "requesterId", referencedColumnName = "id")
 	private Requester requester;	//발주자
 	 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
 	@JoinTable(name = "QuesterQuest", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "questerId")})
 	private Set<Quester> questers;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
 	@JoinTable(name = "ApplicantQuest", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "questerId")})
 	private Set<Quester> applicants;
 	

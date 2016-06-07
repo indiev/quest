@@ -2,7 +2,6 @@ package com.poom.quest.services.model;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -10,6 +9,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poom.quest.services.model.abstractModel.GenericModel;
@@ -27,11 +29,13 @@ public class Contract extends GenericModel {
 	private Set<Provision> provisions; //계약조항 디폴트 값. 폼, 템플릿 제공
 	
 	@JsonIgnore
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
 	@JoinColumn(name = "questId", referencedColumnName="id")
 	private Quest quest;	//관련 퀘스트
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
 	@JoinTable(name = "AgreedUser", joinColumns = {@JoinColumn(name = "contractId")}, inverseJoinColumns = {@JoinColumn(name = "userId")})
 	private Set<User> agreedUsers;	//동의한 사용자들.
 
