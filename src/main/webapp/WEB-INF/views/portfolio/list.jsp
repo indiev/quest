@@ -17,7 +17,7 @@ $(document).ready(function() {
 		$select.append($("<option>").html("전체"));
 		for(i in list) {
 			$option = $("<option>");
-			$option.html(list[i].name);
+			$option.html(list[i].value);
 			$option.val(list[i].id)
 			$select.append($option);
 		}

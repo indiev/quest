@@ -1,37 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 
-
-<div class ="mainWrap center-block">
 <form role="form" action="/api/portfolio" method="POST" onsubmit="return request(this);">
 	<div class="container-pluid">
 		
-		<div class="form-gorup">
+		<div class="form-group">
 			<label id="typeId_label" for="typeId">type</label>
 			<select name="typeId" id="typeId" class="form-control" ></select>
 		</div>
-	
-		<div class="form-gorup">
+		<div class="form-group">
 			<label id="name_label" for="name">name</label> 
 			<input type="text" name="name" id="name" class="form-control" placeholder="name">
 		</div>
-		
-		<div class="form-gorup">
+		<div class="form-group">
 			<label id="place_label" for="place">place</label> 
 			<input type="text" name="place" id="place" class="form-control" placeholder="place">
 		</div>
-		
-		<div class="form-gorup">
+		<div class="form-group">
 			<label id="level_label" for="level">level</label>
 			<input type="text" name="level" id="level" class="form-control" placeholder="level">
 		</div>
-		
-		<div class="form-gorup result">
+		<div class="form-group result">
 			<label id="result_label" for="result">result</label>
 			<input type="text" name="result" id="result" class="form-control" placeholder="result">
 		</div>
-
-		
-		<div class="form-gorup">
+		<div class="form-group">
 			<label for="startDate">date</label> 
 			<div>
 			시작일:<input type="date" id="startDate" name="startDate">
@@ -39,70 +31,53 @@
 			종료일:<input type="date" id="endDate" name="endDate">
 			</div>
 		</div>
-		
-		<div class="form-gorup description">
+		<div class="form-group description">
 			<label id="description_label" for="description">description</label> 
 			<textarea name="description" id="description" class="form-control" placeholder="description" rows="5"></textarea>
 		</div>
-		
-		<div class="form-gorup">
+		<div class="form-group subPortfolio">
 			<label id="subPortfolio_label" for="subPortfolio">subPortfolio</label>
 			<div class="row">
 				<div class="col-md-5"><select name="subPortfolioType" id="subPortfolioType" class="form-control" ></select></div>
 				<div class="col-md-5"><select name="subPortfolio" id="subPortfolio" class="form-control" ></select></div>
-				<div class="col-md-2"><button type="button" id="addSubPortfolioBtn" class="btn btn-success">관련포트폴리오 추가</button></div>
 			</div>
 		</div>
-		
-		<ul class="list-inline form-control-static subPortfolio">
-			<li><span class="badge">subPortfolio<span class="glyphicon glyphicon-remove"></span></span></li>
-		</ul>
-		
+		<div class="form-group">
+			<ul class="list-inline form-control-static subPortfolio"></ul>
+		</div>
 		<div class="form-group">
 			<label>분야</label> 
 			<div class="row">
 				<div class="col-md-5"><select name="area" id="area" class="form-control" ></select></div>
 				<div class="col-md-5"><select name="subArea" id="subArea" class="form-control" ></select></div>
-				<div class="col-md-2"><button type="button" id="addAreaBtn" class="btn btn-success">분야 추가</button></div>
 			</div>
 		</div>
-		
-		<ul class="list-inline form-control-static area">
-			<li><span class="badge">분야 > 세부분야 <span class="glyphicon glyphicon-remove"></span></span></li>
-			<li><span class="badge">세부분야 <span class="glyphicon glyphicon-remove"></span></span></li>
-		</ul>
-		
+		<div class="form-group">
+			<ul class="list-inline form-control-static area"></ul>
+		</div>
 		<div class="form-group">
 			<label>업무</label> 
 			<div class="row">
 				<div class="col-md-5"><select name="work" id="work" class="form-control" ></select></div>
 				<div class="col-md-5"><select name="subWork" id="subWork" class="form-control" ></select></div>
-				<div class="col-md-2"><button type="button" id="addWorkBtn" class="btn btn-success">업무 추가</button></div>
 			</div>
 		</div>
-		
-		<ul class="list-inline form-control-static work">
-			<li><span class="badge">업무 > 세부업무<span class="glyphicon glyphicon-remove"></span></span></li>
-			<li><span class="badge">세부업무 <span class="glyphicon glyphicon-remove"></span></span></li>
-		</ul>
-		
+		<div class="form-group">
+			<ul class="list-inline form-control-static work"></ul>
+		</div>
 		<div class="form-group">
 			<label>스킬</label> 
 			<div class="row">
 				<div class="col-md-5"><select name="skill" id="skill" class="form-control" ></select></div>
-				<div class="col-md-2"><button type="button" id="addSkillBtn" class="btn btn-success">스킬 추가</button></div>
 			</div>
 		</div>
-		
-		<ul class="list-inline form-control-static skill">
-			<li><span class="badge">스킬 <span class="glyphicon glyphicon-remove"></span></span></li>
-		</ul>
-		 
+		<div class="form-group">
+			<ul class="list-inline form-control-static skill"></ul>
+		 </div>
 		<input type="submit" class="btn btn-default" value="추가">
 
 	</div>
 </form>
-</div>
 
 
 <script type="text/javascript">
@@ -116,16 +91,123 @@ var classPortfolio= function() {
 
 var portfolio = new classPortfolio();
 
+$(function() {
+	selectInputList("typeId", {}, "유형");
+	selectInputList("subPortfolioType", {}, "관련포트폴리오 유형");
+	selectInputList("subPortfolio", {}, "관련포트폴리오");
+	selectInputList("area", {}, "분야");
+	selectInputList("subArea", {}, "세부분야");
+	selectInputList("work", {}, "업무");
+	selectInputList("subWork", {}, "세부업무");
+	selectInputList("Skill", {}, "스킬");
+	
+	ajax.get("/api/code/Portfolio/type",{},function(list){ 
+		selectInputList("typeId", list, "유형");
+		selectInputList("subPortfolioType", list, "유형");
+	});
+	ajax.get("/api/area",{},function(list){ selectInputList("area", list, "분야"); });
+	ajax.get("/api/work",{},function(list){ selectInputList("work", list, "업무"); });
+	ajax.get("/api/skill",{},function(list){ selectInputList("skill", list, "스킬"); });
+	
+	$("select[name='typeId']").change(function(){
+		var text = $("select[name='typeId'] option:selected").text();
+		var value = this.value;
+		init();
+		$("select[name='typeId']").val(value);
+		
+		if(text == "경력") {
+			$("label#name_label").html("근무부서");
+			$("label#place_label").html("회사이름");
+			$("label#level_label").html("직책");
+			$("label#result_label").html("연봉");
+			$("label#description_label").html("주요 성과");
+		}else if(text == "프로젝트") {
+			$("label#name_label").html("프로젝트이름");
+			$("label#place_label").html("주최기관");
+			$("label#level_label").html("공모전/개인프로젝트 크기");
+			$("label#result_label").html("수상내용");
+			$("label#description_label").html("주요 수행 내용");
+		}else if(text == "학력") {
+			$("label#name_label").html("전공/교육과정명");
+			$("label#place_label").html("학교명");
+			$("label#level_label").html("학교분류");
+			$("label#result_label").html("주요 교과목 학점 및 성과");
+			$("label#description_label").html("주요 교과목 공부 내용");
+		}else if(text == "자격증") {
+			$("label#name_label").html("자격증 이름");
+			$("label#place_label").html("발급기관");
+			$("label#level_label").html("자격증 분류");
+			$(".result").hide();
+			$(".description").hide();
+		}
+	})
+	
+	$("select[name='subPortfolioType']").change(function(){
+		if(this.value != "") ajax.get("/api/portfolio/typeId/" + this.value, {}, function(list) {
+			selectInputList('subPortfolio', list, "관련 포트폴리오");
+		});
+	});
+	
+	$("select[name='area']").change(function(){
+		if(this.value != "") ajax.get("/api/area/parentId/" + this.value, {}, function(list) {
+			selectInputList('subArea', list, "세부분야");
+		});
+	});
+	
+	$("select[name='work']").change(function(){
+		if(this.value != "") ajax.get("/api/work/parentId/" + this.value, {}, function(list) {
+			selectInputList('subWork', list, "세부업무");
+		});
+	});
+	
+	$("select[name='subPortfolio']").change(function() { addSelectValue(this, "subPortfolio", portfolio.subPortfolios); });
+	$("select[name='subArea']").change(function(){ addSelectValue(this, "area", portfolio.areas); });
+	$("select[name='subWork']").change(function() { addSelectValue(this, "work", portfolio.works); });
+	$("select[name='skill']").change(function() { addSelectValue(this, "skill", portfolio.skills); });
+	
+});
+
+function init() {
+	$("form").each(function() {  
+        this.reset();  
+     });
+	$(".result").show();
+	$(".description").show();
+	$(".subPortfolio").show();
+}
+
+function inArrayObject(value, list) {
+	return list.map(function(e) { return e.id; }).indexOf(value);
+}
+
+function addSelectValue(elem, category, list) {
+	var text = $(elem).find(":selected").html();
+	var value = $(elem).val();
+	if(value != "" && inArrayObject(value, list) == -1) {
+		list.push({"id":value});
+		$("ul." + category).append(function() {
+			$node = htmlBadge(text, value, category);
+			$node.find("span.glyphicon-remove").click(function(){ 
+				list.splice(inArrayObject(value, list), 1);
+				$(this).parent().remove();
+			});
+			return $("<li>").append($node);
+		});
+	}
+}
+
 function selectInputList(name, list, defaultText) {
 	var select = $("select[name='" + name + "']");
 	select.empty();
 	select.append($("<option>").html(defaultText).val(null));
-	for(i in list) {
-		$option = $("<option>");
-		$option.html(list[i].name).val(list[i].id)
-		$option.attr("parentId", list[i].parentId);
-		select.append($option);
-	}
+	$.each(list, function(i, node) {
+		option = $("<option>");
+		if(!(name == "typeId" || name == "subPortfolioType"))
+			option.html(node.name).val(node.id);
+		else
+			option.html(node.value).val(node.id);
+		select.append(option);
+	});
 }
 
 function htmlBadge(text, value) {
@@ -142,214 +224,6 @@ function request(form) {
 }
 
 
-$(document).ready(function() {
-	
-	ajax.get("/api/code/model/Portfolio",{},function(list){
-		selectInputList("typeId", list, "유형");
-		selectInputList("subPortfolioType", list, "유형");
-	});
-	
-	ajax.get("/api/portfolio/user",{},function(list){
-		selectInputList("subPortfolio", list, "관련포트폴리오");
-	})
-	
-	ajax.get("/api/area",{},function(list){
-		selectInputList("area", list, "분야");
-	});
-	
-	ajax.get("/api/work",{},function(list){
-		selectInputList("work", list, "업무");
-	});
-	
-	ajax.get("/api/skill",{},function(list){
-		selectInputList("skill", list, "스킬");
-	});
-	
-	$("select[name='subPortfolio']").attr("readonly",true);
-	
-	$("select[name='subArea']").attr("readonly",true);
-	
-	$("select[name='subWork']").attr("readonly",true);
-	
-	$("select[name='typeId']").change(function(){
-		
-		/*
-		switch(this.value) {
-		case 9:
-			$("label#name").html("근무부서");
-			$("label#place").html("회사이름");
-			$("label#level").html("직책");
-			$("label#result").html("연봉");
-			$("label#description").html("주요 성과");
-			break;
-		case 10:
-			$("label#name").html("222222");
-			$("label#place").html("22222");
-			$("label#level").html("22222");
-			$("label#result").html("22222");
-			$("label#description").html("22222");
-			break;
-		case 11:
-			$("label#name").html("근무부서");
-			$("label#place").html("회사이름");
-			$("label#level").html("직책");
-			$("label#result").html("연봉");
-			$("label#description").html("주요 성과");
-			break;
-		default :
-			console.log(this.value);
-			break;
-		}
-		*/
-		
-		$(".result").show();
-		$(".description").show();
-		
-		if(this.value == 9) {
-			$("label#name_label").html("근무부서");
-			$("label#place_label").html("회사이름");
-			$("label#level_label").html("직책");
-			$("label#result_label").html("연봉");
-			$("label#description_label").html("주요 성과");
-		}else if(this.value == 10) {
-			$("label#name_label").html("프로젝트이름");
-			$("label#place_label").html("주최기관");
-			$("label#level_label").html("공모전/개인프로젝트 크기");
-			$("label#result_label").html("수상내용");
-			$("label#description_label").html("주요 수행 내용");
-		}else if(this.value == 11) {
-			$("label#name_label").html("전공/교육과정명");
-			$("label#place_label").html("학교명");
-			$("label#level_label").html("학교분류");
-			$("label#result_label").html("주요 교과목 학점 및 성과");
-			$("label#description_label").html("주요 교과목 공부 내용");
-		}else if(this.value == 12) {
-			$("label#name_label").html("자격증 이름");
-			$("label#place_label").html("발급기관");
-			$("label#level_label").html("자격증 분류");
-			$(".result").hide();
-			$(".description").hide();
-		}
-	})
-	
-	$("select[name='subPortfolioType']").change(function(){
-		if(this.value != "") ajax.get("/api/portfolio/typeId/" + this.value, {}, function(list) {
-			selectInputList('subPortfolio', list, "관련 포트폴리오");
-			$("select[name='subPortfolio']").attr("readonly", false);
-		});
-		else {
-			selectInputList('subPortfolio', {}, "관련 포트폴리오 없음");
-			$("select[name='subPortfolio']").attr("readonly", true);
-		}
-			
-	});
-	
-	$("select[name='area']").change(function(){
-		if(this.value != "") ajax.get("/api/area/parentId/" + this.value, {}, function(list) {
-			selectInputList('subArea', list, "세부분야 없음");
-			$("select[name='subArea']").attr("readonly", false);
-		});
-		else {
-			selectInputList('subArea', {}, "세부분야 없음");
-			$("select[name='subArea']").attr("readonly", true);
-		}
-			
-	});
-	
-	$("select[name='work']").change(function(){
-		if(this.value != "") ajax.get("/api/work/parentId/" + this.value, {}, function(list) {
-			selectInputList('subWork', list, "세부업무 없음");
-			$("select[name='subWork']").attr("readonly", false);
-		});
-		else {
-			selectInputList('subWork', {}, "세부분야 없음");
-			$("select[name='subWork']").attr("readonly", true);
-		}
-			
-	});
-
-	$("button#addSubPortfolioBtn").click(function(){
-		var subPortfolio = new Object();
-		subPortfolio.id = $("select[name='subPortfolio']").val();
-		
-		for(i in portfolio.subPortfolios) {
-			if(portfolio.subPortfolios[i].id == subPortfolio.id) {
-				alert("중복");
-				return;
-			}
-		}
-		
-		portfolio.subPortfolios.push(subPortfolio);
-		var text = $("select[name='subPortfolio']").find(":selected").html();
-		
-		$("ul.subPortfolio").append(function() {
-			$node = htmlBadge(text, subPortfolio.id);
-			return $("<li>").append($node);
-		});
-	});
-	
-	$("button#addAreaBtn").click(function(){
-		var area = new Object();
-		area.id = $("select[name='subArea']").val();
-		
-		for(i in portfolio.areas) {
-			if(portfolio.areas[i].id == area.id) {
-				alert("중복");
-				return;
-			}
-		}
-		
-		portfolio.areas.push(area);
-		var text = $("select[name='subArea']").find(":selected").html();
-		
-		$("ul.area").append(function() {
-			$node = htmlBadge(text, area.id);
-			return $("<li>").append($node);
-		});
-	});
-	
-	$("button#addWorkBtn").click(function(){
-		var work = new Object();
-		work.id = $("select[name='subWork']").val();
-		
-		for(i in portfolio.works) {
-			if(portfolio.works[i].id == work.id) {
-				alert("중복");
-				return;
-			}
-		}
-		
-		portfolio.works.push(work);
-		var text = $("select[name='subWork']").find(":selected").html();
-		
-		$("ul.work").append(function() {
-			$node = htmlBadge(text, work.id);
-			return $("<li>").append($node);
-		});
-	});
-	
-	$("button#addSkillBtn").click(function(){
-		var skill = new Object();
-		skill.id = $("select[name='skill']").val();
-		
-		for(i in portfolio.skills) {
-			if(portfolio.skills[i].id == skill.id) {
-				alert("중복");
-				return;
-			}
-		}
-		
-		portfolio.skills.push(skill);
-		var text = $("select[name='skill']").find(":selected").html();
-		
-		$("ul.skill").append(function() {
-			$node = htmlBadge(text, skill.id);
-			return $("<li>").append($node);
-		});
-	});
-	
-	
-});
 
 </script>
 
