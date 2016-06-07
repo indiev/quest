@@ -29,6 +29,9 @@ function detail(id) {
 			$("div.request-content").loadTemplate("/quest/node/list", list);
 			var stat = new classQuestTotalStat(list);
 			console.log(stat);
+			
+			
+			
 			$("div.requester-questTotalStat-detail").loadTemplate("/requester/node/questTotalStat", stat);
 			
 		});
@@ -37,43 +40,15 @@ function detail(id) {
 }
 
 function classQuestTotalStat(list) {
+	
+	
 	function classElement() {
-		this.perform_areas = new Array();
-		this.perform_works = new Array();
-		this.perform_skills = new Array();
-	}
-
-	function checkDuplication(list, sublist) {
-		for( i in list) {
-			var isDuplication = false;
-			
-			for(j in sublist) {
-				if(this.sublist[j].name == list[i].name) {
-					this.sublist[k].count++;
-					isDuplication = true;
-					break;
-				}	
-			}
-			if(isDuplication == false) {
-				newElement = new classElement(list[i].areas[j].name, 1);
-				this.sublist.push(newElement);
-			}
-		}
+		this.perform_areas = new Object();
+		this.perform_works = new Object();
+		this.perform_skills = new Object();
 	}
 	
-	function init(categories) {
-		var sublist = new Array();
-		for(i in categories) {
-			var category = categories[i].name;
-			if(typeof sublist[category] == "undefined") {
-				sublist[category] = 0;
-			}
-			sublist[category]++;
-		}
-		return sublist;
-	}
-	
-	function babo(categories, performs) {
+	function init(categories, performs) {
 		$.each(categories, function(i, category) {
 			if(typeof performs[category.name] == "undefined") {
 				performs[category.name] = 0;
@@ -84,11 +59,18 @@ function classQuestTotalStat(list) {
 	
 	var stat = new classElement();
 	$.each(list, function(i, quest) {
-		babo(quest.areas, stat.perform_areas);
-		babo(quest.works, stat.perform_works);
-		babo(quest.skills, stat.perform_skills);
+		init(quest.areas, stat.perform_areas);
+		init(quest.works, stat.perform_works);
+		init(quest.skills, stat.perform_skills);
 	});
-	return stat;
+	
+	
+	var areas = [];
+	$.each(Object.keys(stat['perform_areas']), function(i, element){
+		console.log(element +":" + stat['perform_areas'][element]);
+		areas.push('k');
+	});
+	console.log(areas);
 }
 	
 
@@ -96,6 +78,7 @@ $(document).ready(function(){
 	var id = $(location).attr("href").slice($(location).attr("href").lastIndexOf("/")+1);
 	if(id == "" && user != null) id = user.quester.id;
 	detail(id);
+	
 });
 
 </script>
