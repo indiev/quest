@@ -1,7 +1,5 @@
 package com.poom.quest.web.controller.api;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,8 +21,8 @@ public class QuesterApiController extends GenericApiController<Quester> {
 	@Override
 	@ResponseBody
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public Quester add(@RequestBody Quester entity, HttpServletRequest request) {
-		User user = userService.getLoginUserByRequest(request);
+	public Quester add(@RequestBody Quester entity) {
+		User user = userService.getLoginUserByRequest();
 		if(user != null) {
 			entity.setUser(user);
 			return genericService.add(entity);

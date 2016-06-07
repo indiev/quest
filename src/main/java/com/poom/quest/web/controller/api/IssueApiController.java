@@ -1,7 +1,5 @@
 package com.poom.quest.web.controller.api;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,8 +20,8 @@ public class IssueApiController extends GenericApiController<Issue> {
 	@Override
 	@ResponseBody
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public Issue add(@RequestBody Issue entity, HttpServletRequest request) {
-		User user = userService.getLoginUserByRequest(request);
+	public Issue add(@RequestBody Issue entity) {
+		User user = userService.getLoginUserByRequest();
 		if(user != null) return issueService.add(entity, user);
 		else return null;
 	}

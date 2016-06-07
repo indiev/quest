@@ -1,7 +1,5 @@
 package com.poom.quest.web.controller.view;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,8 +18,8 @@ public class RequesterController extends GenericViewController<Requester>{
 	@Autowired UserService userService;
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String main(HttpServletRequest request, Model model) {
-		User user = userService.getLoginUserByRequest(request);
+	public String main(Model model) {
+		User user = userService.getLoginUserByRequest();
 		if(user != null) {
 			Requester requester = genericService.getByKey("userId", user.getId());
 			return super.detail(requester.getId());

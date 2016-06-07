@@ -2,8 +2,6 @@ package com.poom.quest.web.controller.view;
 
 import java.lang.reflect.ParameterizedType;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,13 +37,13 @@ public abstract class GenericViewController<T> {
 	}
 	
 	@RequestMapping(value = "/template/right", method = RequestMethod.GET)
-	public String right(HttpServletRequest request, Model model) {
-		model.addAttribute("user", userService.getLoginUserByRequest(request));
+	public String right(Model model) {
+		model.addAttribute("user", userService.getLoginUserByRequest());
 		return "/template/rightSider";
 	}
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String main(HttpServletRequest request, Model model) {
+	public String main(Model model) {
 		return modelName + "/main";
 	}
 	

@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -63,17 +61,17 @@ public class QuestApiController extends GenericApiController<Quest> {
 	@Override
 	@ResponseBody
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public Quest add(@RequestBody Quest entity, HttpServletRequest request) {
-		User user = userService.getLoginUserByRequest(request);
+	public Quest add(@RequestBody Quest entity) {
+		User user = userService.getLoginUserByRequest();
 		if(user != null) return questService.add(entity, user);
 		else return null;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/apply", method = RequestMethod.PUT)
-	public Boolean apply(@RequestParam Integer id, HttpServletRequest request) {
+	public Boolean apply(@RequestParam Integer id) {
 		Quest quest = genericService.get(id);
-		User loginUser = userService.getLoginUserByRequest(request);
+		User loginUser = userService.getLoginUserByRequest();
 		if(loginUser != null && loginUser != quest.getRequester().getUser()) {
 			Set<Quester> applicants = quest.getApplicants();
 			applicants.add(loginUser.getQuester());
@@ -85,9 +83,9 @@ public class QuestApiController extends GenericApiController<Quest> {
 	
 	@ResponseBody
 	@RequestMapping(value = "/accept", method = RequestMethod.PUT)
-	public Boolean accept(@RequestParam Integer questId, @RequestParam Integer questerId, HttpServletRequest request) {
+	public Boolean accept(@RequestParam Integer questId, @RequestParam Integer questerId) {
 		Quest quest = genericService.get(questId);
-		User loginUser = userService.getLoginUserByRequest(request);
+		User loginUser = userService.getLoginUserByRequest();
 		if(loginUser != null && loginUser == quest.getRequester().getUser()) {
 			Quester quester = questerService.get(questerId);
 			Set<Quester> applicants = quest.getApplicants();
@@ -103,9 +101,9 @@ public class QuestApiController extends GenericApiController<Quest> {
 	//정해진 상태값 이외의 값으로 변경될 시 에외 처리 추가해야됨
 	@ResponseBody
 	@RequestMapping(value = "/{id}/state/{stateValue}", method = RequestMethod.GET)
-	public Map<String, String> updateState(@PathVariable("id") Integer id, @PathVariable("stateValue") String stateValue, HttpServletRequest request) {
+	public Map<String, String> updateState(@PathVariable("id") Integer id, @PathVariable("stateValue") String stateValue) {
 		Map<String, String> result = new HashMap<>();
-		User user = userService.getLoginUserByRequest(request);
+		User user = userService.getLoginUserByRequest();
 		if(user != null) {
 			Quest quest = genericService.get(id);
 			if(quest.getRequester().getId().equals(user.getId())) {

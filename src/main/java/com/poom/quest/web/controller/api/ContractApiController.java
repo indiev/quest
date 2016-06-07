@@ -1,7 +1,5 @@
 package com.poom.quest.web.controller.api;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,8 +22,8 @@ public class ContractApiController extends GenericApiController<Contract> {
 	
 	@ResponseBody
 	@RequestMapping(value = "/agree/{id}", method = RequestMethod.GET)
-	public Boolean checkAgree(@PathVariable Integer id, HttpServletRequest request) {
-		User user = userService.getLoginUserByRequest(request);
+	public Boolean checkAgree(@PathVariable Integer id) {
+		User user = userService.getLoginUserByRequest();
 		Contract contract = genericService.get(id);
 		if(contract.getAgreedUsers().contains(user)) return true;
 		else return false;
@@ -33,8 +31,8 @@ public class ContractApiController extends GenericApiController<Contract> {
 	
 	@ResponseBody
 	@RequestMapping(value = "/agree/{id}", method = RequestMethod.PUT)
-	public Boolean updateAgree(@PathVariable Integer id, HttpServletRequest request) {
-		User user = userService.getLoginUserByRequest(request);
+	public Boolean updateAgree(@PathVariable Integer id) {
+		User user = userService.getLoginUserByRequest();
 		Contract contract = genericService.get(id);
 		contract.getAgreedUsers().add(user);
 		genericService.update(contract);

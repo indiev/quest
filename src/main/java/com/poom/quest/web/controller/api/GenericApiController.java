@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,17 +35,17 @@ public abstract class GenericApiController<T> {
 	
 	@ResponseBody
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	public List<T> listByUser(HttpServletRequest request) {
-		User user = userService.getLoginUserByRequest(request);
+	public List<T> listByUser() {
+		User user = userService.getLoginUserByRequest();
 		if(user != null) return genericService.listByKeyId("user", user.getId());
 		return null;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/user/{keyname}/{key}",  method = RequestMethod.GET)
-	public List<T> listByUserAndKey(@PathVariable("keyname") String keyName, @PathVariable("key") String key, HttpServletRequest request) {
+	public List<T> listByUserAndKey(@PathVariable("keyname") String keyName, @PathVariable("key") String key) {
 		Map<String, Object> keys = new HashMap<>();
-		User user = userService.getLoginUserByRequest(request);
+		User user = userService.getLoginUserByRequest();
 		if(user != null) {
 			keys.put("userId", user.getId());
 			keys.put(keyName, key);
@@ -77,7 +75,7 @@ public abstract class GenericApiController<T> {
 	
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.POST)
-	public T add(@RequestBody T entity, HttpServletRequest request) {
+	public T add(@RequestBody T entity) {
 		return genericService.add(entity);
 	}
 	

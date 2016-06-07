@@ -1,7 +1,5 @@
 package com.poom.quest.web.controller.api;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,8 +20,8 @@ public class PortfolioApiController extends GenericApiController<Portfolio> {
 	@Override
 	@ResponseBody
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public Portfolio add(@RequestBody Portfolio entity, HttpServletRequest request) {
-		User user = userService.getLoginUserByRequest(request);
+	public Portfolio add(@RequestBody Portfolio entity) {
+		User user = userService.getLoginUserByRequest();
 		if(user != null) {
 			entity.setUser(user);
 			return genericService.add(entity);
