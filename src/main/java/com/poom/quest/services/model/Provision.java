@@ -18,7 +18,6 @@ public class Provision extends GenericModel {
 	
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
-	@Cascade(CascadeType.ALL)
 	@JoinColumn(name = "contractId", referencedColumnName = "id")
 	private Contract contract;
 

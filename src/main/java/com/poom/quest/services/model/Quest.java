@@ -32,43 +32,38 @@ public class Quest extends GenericModel {
 	//sub Project?
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@Cascade(CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "stateId", referencedColumnName = "id")
 	private Code state; //상태 - 준비(R), 요청자를 기다림(wait), 토의(discuss), 진행(progress), 완료(complete), 중지(stop), 일시정지(pause)
 	
 	@ManyToMany(fetch = FetchType.LAZY)
-	@Cascade(CascadeType.ALL)
 	@JoinTable(name = "QuestArea", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "areaId")})
 	private Set<Area> areas;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
-	@Cascade(CascadeType.ALL)
 	@JoinTable(name = "QuestWork", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "workId")})
 	private Set<Work> works;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
-	@Cascade(CascadeType.ALL)
 	@JoinTable(name = "QuestSkill", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "skillId")})
 	private Set<Skill> skills;
 	
 	@OneToOne(mappedBy = "quest", fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
 	private Contract contract;
 
 	@OneToMany(mappedBy = "quest", fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
 	private Set<Requirement> requirements; //요구사항들
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@Cascade(CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "requesterId", referencedColumnName = "id")
 	private Requester requester;	//발주자
 	 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@Cascade(CascadeType.ALL)
 	@JoinTable(name = "QuesterQuest", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "questerId")})
 	private Set<Quester> questers;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
-	@Cascade(CascadeType.ALL)
 	@JoinTable(name = "ApplicantQuest", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "questerId")})
 	private Set<Quester> applicants;
 	

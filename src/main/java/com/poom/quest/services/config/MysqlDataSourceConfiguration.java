@@ -23,6 +23,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import com.mysql.jdbc.Driver;
 import com.poom.quest.services.model.Model;
@@ -55,6 +56,7 @@ public class MysqlDataSourceConfiguration   {
         em.setDataSource( localDataSource );
         em.setPackagesToScan(Model.class.getPackage().getName());
         em.setPersistenceProvider(new HibernatePersistenceProvider());
+        em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         Map<String, String> p = new HashMap<String, String>();
         p.put(org.hibernate.cfg.Environment.DEFAULT_BATCH_FETCH_SIZE, "4"); // 4, 8, 16
         p.put(org.hibernate.cfg.Environment.SHOW_SQL, "true");

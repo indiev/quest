@@ -25,17 +25,16 @@ public class Contract extends GenericModel {
 	private Integer requesterPenalty; //리퀘스터에 대한 위약금 수치. 전체 금액의 %
 	private Integer questerPenalty; //퀘스터에 대항 위약금 수치. 전체 금액의 % 
 	
-	@OneToMany(mappedBy = "contract")
+	@OneToMany(mappedBy = "contract", fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
 	private Set<Provision> provisions; //계약조항 디폴트 값. 폼, 템플릿 제공
 	
 	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY)
-	@Cascade(CascadeType.ALL)
 	@JoinColumn(name = "questId", referencedColumnName="id")
 	private Quest quest;	//관련 퀘스트
 	
 	@ManyToMany(fetch = FetchType.LAZY)
-	@Cascade(CascadeType.ALL)
 	@JoinTable(name = "AgreedUser", joinColumns = {@JoinColumn(name = "contractId")}, inverseJoinColumns = {@JoinColumn(name = "userId")})
 	private Set<User> agreedUsers;	//동의한 사용자들.
 

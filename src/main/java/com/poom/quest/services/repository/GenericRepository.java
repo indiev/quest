@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -26,7 +27,7 @@ public abstract class GenericRepository<T> {
 	private String SELECT_COUNT_SQL = "SELECT count(*) FROM " + this.model;
 	
 	public T add(T entity) {
-		em.persist(entity);
+		em.merge(entity);
 		return entity;
 	}
 	

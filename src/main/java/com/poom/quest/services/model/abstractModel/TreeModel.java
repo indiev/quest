@@ -19,8 +19,8 @@ public abstract class TreeModel<T> extends GenericModel {
 	private Integer parentId;
 	private Integer sequency;
 	@OneToMany(fetch = FetchType.EAGER)
-	@Cascade(CascadeType.SAVE_UPDATE)
-	@JoinColumn(name = "parentId", referencedColumnName="id", insertable=false, updatable=false)
+	@Cascade(CascadeType.MERGE)
+	@JoinColumn(name = "parentId", referencedColumnName="id")
 	@OrderBy("sequency DESC")
 	private Set<T> childs;
 	

@@ -2,8 +2,10 @@ package com.poom.quest.services.service;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,11 +24,10 @@ import com.poom.quest.services.repository.QuestRepository;
 public class QuestService extends GenericService<Quest> {
 	
 	@Autowired CodeService codeService;
-	@Autowired ContractService contractService;
-	@Autowired ProvisionService provisionService;
 	@Autowired QuestRepository questDao;
 	
 	public Quest add(Quest entity, User user) {
+		entity.setRecruitmentEndDate(new Date());
 		entity.setRequester(user.getRequester());
 		for(Requirement requirement : entity.getRequirements()) requirement.setQuest(entity);
 		entity.setState(codeService.getState("wait"));
@@ -34,15 +35,16 @@ public class QuestService extends GenericService<Quest> {
 		contract.setName("");
 		contract.setQuesterPenalty(30);
 		contract.setRequesterPenalty(30);
-		contract.setQuest(entity);
+		Set<Provision> provisions = new HashSet<Provision>();  
 		for(int i=0; i<3; i++) {
 			Provision provision = new Provision();
-			provision.setName("조항1");
+			provision.setName("조항"+i);
+			provisions.add(provision);
 			provision.setContract(contract);
-			provisionService.add(provision);
 		}
-		contractService.add(contract);
-		entity.setRecruitmentEndDate(new Date());
+		contract.setProvisions(provisions);
+		contract.setQuest(entity);
+		entity.setContract(contract);
 		return add(entity);
 	}
 	

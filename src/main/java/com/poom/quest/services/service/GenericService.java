@@ -15,74 +15,74 @@ public abstract class GenericService<T> {
 
 	static private final String REGION = "services";
 	
-	@Autowired GenericRepository<T> genericDao;
+	@Autowired GenericRepository<T> genericRepository;
 	
 	public T add(T entity) {
-		return genericDao.add(entity);
+		return genericRepository.add(entity);
 	}
 	
 	public T get(Integer id) {
-		return genericDao.get(id);
+		return genericRepository.get(id);
 	}
 	
 	public T getByKey(String keyName, String key) {
-		return genericDao.getByKey(keyName, key);
+		return genericRepository.getByKey(keyName, key);
 	}
 	
 	public T getByKey(String keyName, Integer key) {
-		return genericDao.getByKey(keyName, key.toString());
+		return genericRepository.getByKey(keyName, key.toString());
 	}
 	
 	public T getByKeys(Map<String, String> keys) {
-		return genericDao.getByKeys(keys);
+		return genericRepository.getByKeys(keys);
 	}
 	
 	public List<T> list() {
-		return genericDao.list();
+		return genericRepository.list();
 	}
 	
 	public List<T> listByKeyId(String keyName, Integer key) {
-		return genericDao.listByKeyId(keyName, key);
+		return genericRepository.listByKeyId(keyName, key);
 	}
 	
 	public List<T> listByKeyId(String keyName, String key) {
-		return genericDao.listByKeyId(keyName, key);
+		return genericRepository.listByKeyId(keyName, key);
 	}
 	
 	public List<T> listByKey(String keyName, Integer key) {
-		return genericDao.listByKey(keyName, key);
+		return genericRepository.listByKey(keyName, key);
 	}
 	
 	public List<T> listByKey(String keyName, String key) {
-		return genericDao.listByKey(keyName, key);
+		return genericRepository.listByKey(keyName, key);
 	}
 	
 	public List<T> listByParent(Integer parentId, Class<?> parentClass) {
-		return genericDao.listByParent(parentId, parentClass);
+		return genericRepository.listByParent(parentId, parentClass);
 	}
 	
 	public List<T> listByParent(Integer parentId, String parentName) {
-		return genericDao.listByParent(parentId, parentName);
+		return genericRepository.listByParent(parentId, parentName);
 	}
 	
 	public List<T> listByKeys(Map<String, Object> keys) {
-		return genericDao.listByKeys(keys);
+		return genericRepository.listByKeys(keys);
 	}
 	
 	public List<T> search(String keyword, String[] keys) {
-		return genericDao.search(keyword, keys);
+		return genericRepository.search(keyword, keys);
 	}
 	
 	public T update(T entity) {
-		return genericDao.update(entity);
+		return genericRepository.update(entity);
 	}
 	 
 	public long count() {
-		return genericDao.count();
+		return genericRepository.count();
 	}
 	
 	public Integer delete(Integer id) {
-		genericDao.delete(id);
+		genericRepository.delete(id);
 		return id;
 	}
 }

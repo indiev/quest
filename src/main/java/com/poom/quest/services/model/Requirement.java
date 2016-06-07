@@ -6,9 +6,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poom.quest.services.model.abstractModel.GenericModel;
 
@@ -22,7 +19,6 @@ public class Requirement extends GenericModel {
 	
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
-	@Cascade(CascadeType.ALL)
 	@JoinColumn(name = "questId", referencedColumnName = "id")
 	private Quest quest;
 	

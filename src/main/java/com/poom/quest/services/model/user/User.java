@@ -7,6 +7,9 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import com.poom.quest.services.model.Portfolio;
 import com.poom.quest.services.model.abstractModel.GenericModel;
 
@@ -21,14 +24,17 @@ public class User extends GenericModel {
 	private String phone;
 	
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
 	private Requester requester;
 	
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
 	private Quester quester;
 	
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	private Set<Portfolio> porfolios;
-	
+	@Cascade(CascadeType.ALL)
+	private Set<Portfolio> portfolios;
+
 	public String getPassword() {
 		return password;
 	}
@@ -73,7 +79,15 @@ public class User extends GenericModel {
 		return quester;
 	}
 
-	public void Quester(Quester quester) {
+	public void setQuester(Quester quester) {
 		this.quester = quester;
+	}
+
+	public Set<Portfolio> getPortfolios() {
+		return portfolios;
+	}
+
+	public void setPortfolios(Set<Portfolio> portfolios) {
+		this.portfolios = portfolios;
 	}
 }

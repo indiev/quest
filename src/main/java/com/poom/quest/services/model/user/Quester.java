@@ -9,9 +9,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poom.quest.services.model.Area;
 import com.poom.quest.services.model.Quest;
@@ -26,32 +23,26 @@ public class Quester extends GenericModel {
 
 	@JsonIgnore
 	@OneToOne(fetch =  FetchType.LAZY)
-	@Cascade(CascadeType.ALL)
 	@JoinColumn(name = "userId", referencedColumnName="id")
 	private User user;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
-	@Cascade(CascadeType.ALL)
 	@JoinTable(name = "QuesterArea", joinColumns = {@JoinColumn(name = "questerId")}, inverseJoinColumns = {@JoinColumn(name = "areaId")})
 	private Set<Area> areas;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
-	@Cascade(CascadeType.ALL)
 	@JoinTable(name = "QuesterWork", joinColumns = {@JoinColumn(name = "questerId")}, inverseJoinColumns = {@JoinColumn(name = "workId")})
 	private Set<Work> works;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
-	@Cascade(CascadeType.ALL)
 	@JoinTable(name = "QuesterSkill", joinColumns = {@JoinColumn(name = "questerId")}, inverseJoinColumns = {@JoinColumn(name = "skillId")})
 	private Set<Skill> skills;
 
 	@ManyToMany(mappedBy = "questers", fetch = FetchType.LAZY)
-	@Cascade(CascadeType.ALL)
 	@JsonIgnore
 	private Set<Quest> quests;
 	
 	@ManyToMany(mappedBy = "applicants", fetch = FetchType.LAZY)
-	@Cascade(CascadeType.ALL)
 	@JsonIgnore
 	private Set<Quest> appliedQuests;
 	
