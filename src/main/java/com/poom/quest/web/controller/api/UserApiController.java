@@ -24,15 +24,15 @@ public class UserApiController extends GenericApiController<User> {
 	@ResponseBody
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public User add(@RequestBody User entity) {
-		User user = genericService.add(entity);
 		Requester requester = new Requester();
 		Quester quester = new Quester();
 		requester.setName(entity.getRealname());
-		quester.setName(entity.getRealname());
 		requester.setUser(entity);
+		quester.setName(entity.getRealname());
 		quester.setUser(entity);
-		requestserService.add(requester);
-		questerService.add(quester);
+		entity.setRequester(requester);
+		entity.setQuester(quester);
+		User user = genericService.add(entity);
 		return user;
 	}
 	
