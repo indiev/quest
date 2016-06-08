@@ -30,24 +30,15 @@ $(document).ready(function() {
 });
 
 function getPortfolios(type){
-	
-	if(type =="전체") {
-		ajax.get("/api/portfolio/user", {}, function(list) {
-			$.addTemplateFormatter({
-				date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
-		        link: function (value) { return "/portfolio/" + value; }
-		    });
-			$("div.portfolio-content").loadTemplate("/portfolio/node/list", list);
-		});
-	} else {
-		ajax.get("/api/portfolio/typeId/"+type, {}, function(list) {
-			$.addTemplateFormatter({
-				date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
-		        link: function (value) { return "/portfolio/" + value; }
-		    });
-			$("div.portfolio-content").loadTemplate("/portfolio/node/list", list);
-		});
-	}
+	$.addTemplateFormatter({
+		date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
+        link: function (value) { return "/portfolio/" + value; }
+    });
+	var link = "/api/portfolio/typeId/"+type;
+	if(type =="전체") link = "/api/portfolio/user";
+	ajax.get(link, {}, function(list) {
+		$("div.portfolio-content").loadTemplate("/portfolio/node/list", list);
+	});
 		
 }
 

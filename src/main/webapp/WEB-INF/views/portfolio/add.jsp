@@ -3,7 +3,7 @@
 <form role="form" action="/api/portfolio" method="POST" onsubmit="return request(this);">
 	<div class="container-pluid">
 		
-		<div class="form-group">
+		<div class="form-group typeId">
 			<label id="typeId_label" for="typeId">type</label>
 			<select name="typeId" id="typeId" class="form-control" ></select>
 		</div>
@@ -11,15 +11,15 @@
 			<label id="name_label" for="name">name</label> 
 			<input type="text" name="name" id="name" class="form-control" placeholder="name">
 		</div>
-		<div class="form-group">
+		<div class="form-group place">
 			<label id="place_label" for="place">place</label> 
 			<input type="text" name="place" id="place" class="form-control" placeholder="place">
 		</div>
-		<div class="form-group">
+		<div class="form-group level">
 			<label id="level_label" for="level">level</label>
 			<input type="text" name="level" id="level" class="form-control" placeholder="level">
 		</div>
-		<div class="form-group result">
+		<div class="form-group result result">
 			<label id="result_label" for="result">result</label>
 			<input type="text" name="result" id="result" class="form-control" placeholder="result">
 		</div>
@@ -119,14 +119,16 @@ $(function() {
 			$("label#name_label").html("근무부서");
 			$("label#place_label").html("회사이름");
 			$("label#level_label").html("직책");
-			$("label#result_label").html("연봉");
 			$("label#description_label").html("주요 성과");
+			$(".result").hide();
 		}else if(text == "프로젝트") {
 			$("label#name_label").html("프로젝트이름");
-			$("label#place_label").html("주최기관");
 			$("label#level_label").html("공모전/개인프로젝트 크기");
-			$("label#result_label").html("수상내용");
 			$("label#description_label").html("주요 수행 내용");
+			$(".place").hide();
+			$(".level").hide();
+			$(".result").hide();
+			$(".subPortfolio").hide();
 		}else if(text == "학력") {
 			$("label#name_label").html("전공/교육과정명");
 			$("label#place_label").html("학교명");
@@ -139,6 +141,13 @@ $(function() {
 			$("label#level_label").html("자격증 분류");
 			$(".result").hide();
 			$(".description").hide();
+			$(".subPortfolio").hide();
+		}else if(text == "대회") {
+			$("label#name_label").html("대회 이름");
+			$("label#place_label").html("주최기관");
+			$("label#level_label").html("대회 크기");
+			$("label#result_label").html("수상 결과");
+			$("label#description_label").html("대회 설명");
 		}
 	})
 	
@@ -171,7 +180,11 @@ function init() {
 	$("form").each(function() {  
         this.reset();  
      });
+	
+	$(".place").show();
+	$(".level").show();
 	$(".result").show();
+	$(".date").show();
 	$(".description").show();
 	$(".subPortfolio").show();
 }
