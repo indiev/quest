@@ -22,8 +22,13 @@ public class MainController { /* 기본 메인 화면에 대한 view 컨트롤�
 		return "mainContent";
 	}
 	
-	@RequestMapping(value = "/sidebar-top", method = RequestMethod.GET)
+	@RequestMapping(value = "/header", method = RequestMethod.GET)
 	public String sidebarTop() {
-		return "common/sidebar-top";
+		return "common/header";
+	}
+	
+	@RequestMapping(value = "/footer", method = RequestMethod.GET)
+	public String footoer() {
+		return "common/footer";
 	}
 }

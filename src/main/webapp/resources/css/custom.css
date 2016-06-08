@@ -9,10 +9,14 @@ img {
 	height: auto;
 }
 
-.container-fluid { padding: 0; }
+/* .container-fluid { padding: 0; } */
 
-#main {
+body {
 	padding-top: 50px;
+}
+
+.footer {
+	padding: 15px 0;
 }
 
 .navWrap, .mainWrap {
@@ -46,4 +50,7 @@ img {
 
 .secondWrap {
 	margin-top: 3em;
+}
+.navbar-brand {
+	padding: 10px 15px;
 }

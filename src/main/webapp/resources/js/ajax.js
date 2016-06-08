@@ -26,6 +26,9 @@ var ajax = {
     	}
     	return data;
     },
+    submit:function(form, cb) {
+    	this.submit(form, {}, cb);
+    },
 	submit:function(form, data, cb) {
 		var formData = ajax.serializeObject($(form));
 		var headers = {};
@@ -43,6 +46,9 @@ var ajax = {
 		    error:ajax.error
 		});
 	},
+	get:function(u, cb) {
+		this.get(u, {}, cb);
+	},
 	get:function(u, data, cb) {
 		$.ajax({
 		    type:'GET',
@@ -55,6 +61,9 @@ var ajax = {
 		    error:ajax.error
 		});
 	},
+	login:function (url, cb) {
+		this.login(url, {}, cb);
+	},
 	login:function (url, data, cb) {
         $.ajax({
             type:'POST',
@@ -65,6 +74,9 @@ var ajax = {
             success:cb,
             error:ajax.error
         });
+    },
+    post:function (url, cb) {
+    	this.post(url, {}, cb);
     },
     post:function (url, data, cb) {
         $.ajax({
@@ -77,9 +89,31 @@ var ajax = {
             error:ajax.error
         });
     },
+    put:function (url, cb) {
+    	this.put(url, {}, cb);
+    },
 	put:function (url, data, cb) {
         var k = '_method',
             v = 'PUT';
+        data[k] = v;
+        var headers = {};
+        headers[k] = v;
+        $.ajax({
+            type:'POST',
+            url:url,
+            cache:false,
+            data:data,
+            headers:headers,
+            success:cb,
+            error:ajax.error
+        });
+    },
+    del:function (url, cb) {
+    	this.del(url, {}, cb);
+    },
+    del:function (url, data, cb) {
+        var k = '_method',
+            v = 'DELETE';
         data[k] = v;
         var headers = {};
         headers[k] = v;

@@ -7,32 +7,19 @@
 	            <span class="icon-bar"></span>
 	            <span class="icon-bar"></span>
 	        </button>
-	       	<a class="navbar-brand" href="/">Quest</a>
+	       	<a class="navbar-brand" href="/"><img src="/resources/images/quest_w.png" style="height:30px;"></a>
 		</div>
 		<div class="collapse navbar-collapse">
-			<!-- <p class="navbar-text pull-right">v0.1</p> -->
 			<ul class="nav navbar-nav">
-				<li data-exist class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">사용자 <span class="caret"></span></a>
-					<ul class="dropdown-menu" role="menu">
-						<li><a data-href="id" data-format="userlink" data-format-target="href">유저 정보</a></li>
-						<li><a data-href="requester.id" data-format="requesterlink" data-format-target="href">리퀘스터 정보</a></li>
-						<li><a data-href="quester.id" data-format="questerlink" data-format-target="href">퀘스터 정보</a></li>
-						<li><a href="/quester/add">퀘스터 생성</a></li>
-						<li><a href="/portfolio/list">유저 포트폴리오 정보</a>
-						<li><a href="/portfolio/add">유저 포트폴리오 생성</a>
-					</ul>
-					
-				</li>
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">퀘스트 <span class="caret"></span></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">퀘스트 <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="/quest/list">list</a></li>
 						<li><a href="/quest/add">add</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">관리자 <span class="caret"></span></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">관리자 <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="/admin/area/add">분야</a></li>
 						<li><a href="/admin/work/add">업무</a></li>
@@ -40,7 +27,7 @@
 					</ul>
 				</li>
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">디자인 <span class="caret"></span></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">디자인 <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="/design/quest/list">quest-list</a></li>
 						<li><a href="/design/quest/detail">queset-detail</a></li>
@@ -59,12 +46,28 @@
 					</span>
 		       	</div>
 			</form>
-			<div class="navbar-right btn-group">
+			<p class="navbar-text navbar-right">v0.1</p>
+			<div class="nav btn-group navbar-right">
 				<button type="button" data-non-exist class="btn btn-sm navbar-btn btn-primary" name="loginButton" data-toggle="modal" data-target="#logDialog">로그인</button>
 				<button type="button" data-non-exist class="btn btn-sm navbar-btn btn-info" name="joinButton" data-toggle="modal" data-target="#logDialog">회원가입</button>
-				<!-- <button type="button" data-non-exist class="btn btn-sm navbar-btn btn-warning" name="findButton" data-toggle="modal" data-target="#logDialog">아이디·비밀번호 찾기</button> -->
-				<button type="button" data-exist class="btn btn-sm navbar-btn btn-danger" name="logoutButton">로그아웃</button>
 			</div>
+			<ul class="nav navbar-nav navbar-right">
+				<li data-exist class="dropdown">
+					<a data-content-prepend="name" data-format="name" href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li role="presentation"><a href="#">Messages <span class="badge">3</span></a></li>
+						<li><a data-href="id" data-format="userlink" data-format-target="href">유저 정보</a></li>
+						<li><a data-href="requester.id" data-format="requesterlink" data-format-target="href">리퀘스터 정보</a></li>
+						<li><a data-href="quester.id" data-format="questerlink" data-format-target="href">퀘스터 정보</a></li>
+						<li><a href="/quester/add">퀘스터 생성</a></li>
+						<li><a href="/portfolio/list">유저 포트폴리오 정보</a>
+						<li><a href="/portfolio/add">유저 포트폴리오 생성</a>
+						<li role="separator" class="divider"></li>
+						<li><a href="#" class="logout">로그아웃</a></li>
+					</ul>
+					
+				</li>
+			</ul>
 		</div>
 	</div>
 </nav>
@@ -83,10 +86,11 @@ $(document).ready(function(){
 		$("#logDialog > .modal-dialog").addClass("modal-sm");
 		$("#logDialog").find("div.modal-body").load("/user/login");
 	});
-	$("button[name='logoutButton']").click(function(){
+	$("li a.logout").click(function(){
+		console.log(1);
 		ajax.get("/api/logout", {}, function(result) {
 			user = null;
-			$("#sidebar-top").loadTemplate("/sidebar-top", null);
+			$("header").loadTemplate("/header", null);
 		});
 	});
 	$("button[name='joinButton']").click(function(){

@@ -38,6 +38,12 @@ function apply(value) {
 		else alert("지원할 수 없습니다.")
 	});
 }
+function del(value) {
+	ajax.del("/api/quest/"+value, {}, function(result){
+		if(result) alert("퀘스트를 삭제했습니다.");
+		else alert("퀘스트를 삭제할 수 없습니다.");
+	});
+}
 
 function list() {
 	$.addTemplateFormatter({
