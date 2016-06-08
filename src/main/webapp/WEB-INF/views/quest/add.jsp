@@ -48,7 +48,7 @@ span.badge.skill { background-color: #d9534f; }
 		</div>
 		<div class="form-group">
 			<label for="reward"class="sr-only">보상</label>
-			<input type="text" name="reward" id="reward" class="form-control" placeholder="보상" required>
+			<input type="number" name="reward" id="reward" class="form-control" placeholder="보상" required>
 		</div>
 		<div class="form-group">
 			<label for="qualification" class="sr-only">자격</label>
@@ -85,6 +85,7 @@ var classQuest = function() {
 	this.works = new Array();
 	this.skills = new Array();
 	this.requirements = new Array();
+	this.rewards = new Array();
 }
 
 var quest = new classQuest();
@@ -182,6 +183,7 @@ function addRequirement() {
 }
 
 function request(form) {
+	quest.rewards.push({"hwan":$("input[name='reward']").val()});
 	ajax.submit(form, quest, function(result) {
 		if(result != "") alert("퀘스트를 추가했습니다.");
 		else alert("퀘스트를 추가하는 데 실패했습니다.");

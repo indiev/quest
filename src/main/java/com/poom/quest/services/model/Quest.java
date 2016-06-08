@@ -24,12 +24,15 @@ public class Quest extends GenericModel {
 
 	private static final long serialVersionUID = 1L;
 
-	private String reward; //보상 reward 경험치 point 물건? model로 따로 뺌? rewardPoint, rewardExperiencePoint other
 	private String qualification;	//자격
 	private Date recruitmentEndDate; //마감일
 	private Integer duration; //수행기간(일)
 	private String description; //설명 description
 	//sub Project?
+
+	@OneToMany(mappedBy = "quest", fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
+	private Set<Reward> rewards; //보상 reward 경험치 point 물건? model로 따로 뺌? rewardPoint, rewardExperiencePoint other
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "stateId", referencedColumnName = "id")
@@ -66,14 +69,6 @@ public class Quest extends GenericModel {
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "ApplicantQuest", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "questerId")})
 	private Set<Quester> applicants;
-	
-	public String getReward() {
-		return reward;
-	}
-
-	public void setReward(String reward) {
-		this.reward = reward;
-	}
 
 	public String getQualification() {
 		return qualification;
@@ -105,6 +100,14 @@ public class Quest extends GenericModel {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Set<Reward> getRewards() {
+		return rewards;
+	}
+
+	public void setRewards(Set<Reward> rewards) {
+		this.rewards = rewards;
 	}
 
 	public Code getState() {

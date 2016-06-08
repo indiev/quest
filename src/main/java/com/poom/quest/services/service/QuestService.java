@@ -16,6 +16,7 @@ import com.poom.quest.services.model.Contract;
 import com.poom.quest.services.model.Provision;
 import com.poom.quest.services.model.Quest;
 import com.poom.quest.services.model.Requirement;
+import com.poom.quest.services.model.Reward;
 import com.poom.quest.services.model.user.User;
 import com.poom.quest.services.repository.QuestRepository;
 
@@ -30,6 +31,7 @@ public class QuestService extends GenericService<Quest> {
 		entity.setRecruitmentEndDate(new Date());
 		entity.setRequester(user.getRequester());
 		for(Requirement requirement : entity.getRequirements()) requirement.setQuest(entity);
+		for(Reward reward : entity.getRewards()) reward.setQuest(entity);
 		entity.setState(codeService.getState("wait"));
 		Contract contract = new Contract();
 		contract.setName("");
