@@ -124,6 +124,18 @@ public abstract class GenericRepository<T> {
 		return em.createNativeQuery(SELECT_ALL_SQL + where, clazz).setParameter("keyword", keyword).getResultList();
 	}
 	
+	public List<T> search(String keyword, String[] keys, Integer userId) {
+		keyword = ("%" + keyword + "%").toLowerCase();
+		String where = " WHERE ";
+		if(keys.length == 0) keys = new String[]{"name"};
+		for (int i=0; i<keys.length; i++) {
+			if(i !=0 ) where += " AND ";
+			where += "LOWER(" + keys[i] + ") LIKE :keyword";
+		}
+		where += " AND userId = :userId";
+		return em.createNativeQuery(SELECT_ALL_SQL + where, clazz).setParameter("keyword", keyword).setParameter("userId", userId).getResultList();
+	}
+	
 	public T update(T entity) {
 		return em.merge(entity);
 	}

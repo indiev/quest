@@ -73,6 +73,10 @@ public abstract class GenericService<T> {
 		return genericRepository.search(keyword, keys);
 	}
 	
+	public List<T> search(String keyword, String[] keys, Integer userId) {
+		return genericRepository.search(keyword, keys, userId);
+	}
+	
 	public T update(T entity) {
 		return genericRepository.update(entity);
 	}
