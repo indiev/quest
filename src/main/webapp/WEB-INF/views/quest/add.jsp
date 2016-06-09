@@ -22,9 +22,9 @@ span.badge.skill { background-color: #d9534f; }
 			<div class="row">
 				<div class="col-md-12">
 					<div class="input-group">
-						<div class="input-group-btn">
-							<span class="btn btn-default">분야</span>
-						</div>	
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-globe"></span>
+						</span>
 						<label for="area" class="sr-only">상위분야</label>
 						<select name="area" id="area" class="form-control"></select>
 						<span class="input-group-btn" style="width:0px;"></span>
@@ -43,9 +43,9 @@ span.badge.skill { background-color: #d9534f; }
 			<div class="row">
 				<div class="col-md-12">
 					<div class="input-group">
-						<div class="input-group-btn">
-							<span class="btn btn-default">업무</span>
-						</div>
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-briefcase"></span>
+						</span>
 						<label for="work" class="sr-only">상위업무</label>
 						<select name="work" id="work" class="form-control"></select>
 						<span class="input-group-btn" style="width:0px;"></span>
@@ -62,8 +62,13 @@ span.badge.skill { background-color: #d9534f; }
 		</div>
 		<div class="form-group row">
 			<div class="col-md-4">
-				<label for="skill" class="sr-only">스킬</label>
-				<select name="skill" id="skill" class="form-control"></select>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-wrench"></span>
+					</span>
+					<label for="skill" class="sr-only">스킬</label>
+					<select name="skill" id="skill" class="form-control"></select>
+				</div>
 			</div>
 			<div class="col-md-8">
 				<button type="button" class="btn btn-default form-control skill" onclick="return false;"></button>
