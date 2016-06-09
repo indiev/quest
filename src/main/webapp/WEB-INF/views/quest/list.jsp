@@ -26,7 +26,7 @@
 				<h4 class="modal-title">퀘스트 등록</h4>
 			</div>
 			<div class="modal-body"></div>
-			<div class="modal-footer"><input type="submit" id="" name="" class="btn btn-default" value="요청"></div>
+			<div class="modal-footer"></div>
 		</div>
 	</div>
 </div>
