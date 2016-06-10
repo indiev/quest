@@ -1,14 +1,20 @@
 package com.poom.quest.web.controller.api;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.poom.quest.services.model.Code;
 import com.poom.quest.services.model.Portfolio;
+import com.poom.quest.services.model.Quest;
 import com.poom.quest.services.model.user.User;
+import com.poom.quest.services.service.CodeService;
 import com.poom.quest.services.service.PortfolioService;
 
 @Controller
@@ -16,6 +22,7 @@ import com.poom.quest.services.service.PortfolioService;
 public class PortfolioApiController extends GenericApiController<Portfolio> {
 	
 	@Autowired PortfolioService portfolioService;
+	@Autowired CodeService codeService;
 	
 	@Override
 	@ResponseBody
@@ -28,5 +35,38 @@ public class PortfolioApiController extends GenericApiController<Portfolio> {
 		}
 		return null;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "user/search", method = RequestMethod.GET)
+	public List<Portfolio> search() {
+		return search("");
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "user/search/{keyword}", method = RequestMethod.GET)
+	public List<Portfolio> search(@PathVariable String keyword) {
+		User user = userService.getLoginUserByRequest();
+		String[] keys = new String[] {"name"};
+		if(user != null) {
+			return genericService.search(keyword, keys, user.getId());
+		}
+		return null;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "user/{typeValue}/search/{keyword}", method = RequestMethod.GET)
+	public List<Portfolio> searchBySateValue(@PathVariable("typeValue") String typeValue, @PathVariable("keyword") String keyword) {
+		Code type = codeService.getByKey("type", typeValue);
+		User user = userService.getLoginUserByRequest();
+		if(user != null) {
+			return portfolioService.searchByState(type.getId(), keyword, user.getId());
+		}
+		return null;
+		
+	}
+	 
+	
+	
+	
 
 }

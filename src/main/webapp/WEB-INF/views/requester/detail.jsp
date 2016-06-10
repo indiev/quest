@@ -5,12 +5,16 @@
 <div><h3>발주한 전체 퀘스트 정보 관련 통계</h3></div>
 <div class="requester-questTotalStat-detail"></div>	
 <hr>
-<div><h3>발주한 퀘스트 리스트</h3></div>
-<div class="request-content"></div>
+<div><h3>모집중인 퀘스트 리스트</h3></div>
+<div class="readyRequest-content"></div>
+
+<div><h3>진행중인 퀘스트 리스트</h3></div>
+<div class="container progressRequest-content"></div>
+
+<div><h3>완료된 퀘스트 리스트</h3></div>
+<div class="completeRequest-content"></div>
 
 <script type="text/javascript">
-
-
 function detail(id) {
 	$.addTemplateFormatter({
 		date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
@@ -20,27 +24,42 @@ function detail(id) {
 	ajax.get("/api/requester/"+id, {}, function(requester){
 		$("div.requester-detail").loadTemplate("/requester/node/detail", requester);
 		console.log(requester);
-		ajax.get("/api/quest/all/search", {}, function(list){
+		/* 모집전  */
+		ajax.get("/api/quest/requester/stateId/"+1, {}, function(list){
 			$.addTemplateFormatter({
 				date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
 				link: function (value) { return "/quest/" + value; }
 		    });
+			$("div.readyRequest-content").loadTemplate("/quest/node/list", list);
+		});
+		
+		/* 진행중 */
+		ajax.get("/api/quest/requester/stateId/"+4, {}, function(list){
+			$.addTemplateFormatter({
+				date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
+				link: function (value) { return "/quest/" + value; }
+		    });
+			console.log(list);
+			$("div.progressRequest-content").loadTemplate("/quest/node/list", list);
+		});
+		
+		/* 완료중 */
+		ajax.get("/api/quest/requester/stateId/"+5, {}, function(list){
+			$.addTemplateFormatter({
+				date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
+				link: function (value) { return "/quest/" + value; }
+		    });
+			$("div.completeRequest-content").loadTemplate("/quest/node/list", list);
+		});
 			
-			$("div.request-content").loadTemplate("/quest/node/list", list);
-			var stat = new classQuestTotalStat(list);
-			console.log(stat);
-			
-			
-			
-			$("div.requester-questTotalStat-detail").loadTemplate("/requester/node/questTotalStat", stat);
+			//var stat = new classQuestTotalStat(list);
+			$("div.requester-questTotalStat-detail").loadTemplate("/requester/node/questTotalStat", {});
 			
 		});
-	});
 			
 }
 
 function classQuestTotalStat(list) {
-	
 	
 	function classElement() {
 		this.perform_areas = new Object();

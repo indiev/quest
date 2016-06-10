@@ -5,8 +5,8 @@
 <div><h3>참가한 전체 퀘스트 정보 관련 통계</h3></div>
 <div class="quester-questTotalStat-detail"></div>	
 <hr>
-<div><h3>완료한 퀘스트 리스트</h3></div>
-<div class="quest-content"></div>
+<div><h3>지원한 퀘스트 리스트</h3></div>
+<div class="apllicantQuest-content"></div>
 
 <script type="text/javascript">
 
@@ -25,7 +25,7 @@ function detail(id) {
 				link: function (value) { return "/quest/" + value; }
 		    });
 			
-			$("div.quest-content").loadTemplate("/quest/node/list", list);
+			$("div.apllicantQuest-content").loadTemplate("/quest/node/list", list);
 			var stat = new classQuestTotalStat(list);
 			$("div.quester-questTotalStat-detail").loadTemplate("/quester/node/questTotalStat", stat);
 			

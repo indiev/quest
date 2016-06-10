@@ -113,4 +113,17 @@ public class QuestApiController extends GenericApiController<Quest> {
 		
 		return result;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/requester/{keyname}/{key}",  method = RequestMethod.GET)
+	public List<Quest> listByUserAndKey(@PathVariable("keyname") String keyName, @PathVariable("key") String key) {
+		Map<String, Object> keys = new HashMap<>();
+		User user = userService.getLoginUserByRequest();
+		if(user != null) {
+			keys.put("requesterId", user.getRequester().getId());
+			keys.put(keyName, key);
+			return genericService.listByKeys(keys);
+		}
+		return null;
+	}
 }
