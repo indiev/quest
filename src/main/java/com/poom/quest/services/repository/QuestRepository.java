@@ -16,6 +16,12 @@ public class QuestRepository extends GenericRepository<Quest> {
 		if(stateId != null) query += " where stateId = :stateId";
 		return em.createNativeQuery(query, clazz).setParameter("questerId", questerId).setParameter("stateId", stateId).getResultList();
 	}
+	
+	public List<Quest> questsOfApplicant(Integer questerId, Integer stateId) {
+		String query = SELECT_ALL_SQL + " JOIN ApplicantQuest on ApplicantQuest.questId = Quest.id and ApplicantQuest.questerId = :questerId";
+		if(stateId != null) query += " where stateId = :stateId";
+		return em.createNativeQuery(query, clazz).setParameter("questerId", questerId).setParameter("stateId", stateId).getResultList();
+	}
 
 	public List<Quest> searchByState(Integer stateId, String keyword) {
 		keyword = "%" + keyword + "%";
