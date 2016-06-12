@@ -25,7 +25,7 @@ import com.poom.quest.services.repository.QuestRepository;
 public class QuestService extends GenericService<Quest> {
 	
 	@Autowired CodeService codeService;
-	@Autowired QuestRepository questDao;
+	@Autowired QuestRepository questRepository;
 	
 	public Quest add(Quest entity, User user) {
 		entity.setRecruitmentEndDate(new Date());
@@ -66,15 +66,19 @@ public class QuestService extends GenericService<Quest> {
 	
 	public List<Quest> questsOfQuester(Integer questerId, String stateValue) {
 		Code state = (stateValue != null)?codeService.getState(stateValue):null;
-		return questDao.questsOfQuester(questerId, state.getId());
+		return questRepository.questsOfQuester(questerId, state.getId());
 	}
 	
 	public List<Quest> questsOfApplicant(Integer questerId, String stateValue) {
 		Code state = (stateValue != null)?codeService.getState(stateValue):null;
-		return questDao.questsOfApplicant(questerId, state.getId());
+		return questRepository.questsOfApplicant(questerId, state.getId());
+	}
+	
+	public List<Quest> questsOfApplicant(Integer questerId, List<Integer> stateIds) {
+		return questRepository.questsOfApplicant(questerId, stateIds);
 	}
 	
 	public List<Quest> searchByState(Integer stateId, String keyword) {
-		return questDao.searchByState(stateId, keyword);
+		return questRepository.searchByState(stateId, keyword);
 	}
 }
