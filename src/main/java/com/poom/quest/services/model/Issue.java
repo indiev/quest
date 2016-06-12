@@ -8,7 +8,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import com.poom.quest.services.model.abstractModel.GenericModel;
 import com.poom.quest.services.model.user.User;
@@ -29,8 +33,13 @@ public class Issue extends GenericModel {
 	private Set<Requirement> requirements;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@Cascade(CascadeType.MERGE)
 	@JoinColumn(name = "userId", referencedColumnName = "id")
 	private User user;
+	
+	@OneToMany(mappedBy = "issue")
+	@Cascade(CascadeType.ALL)
+	private Set<IssueComment> comments;
 	
 	@PrePersist
 	public void onCreate() {
@@ -67,5 +76,13 @@ public class Issue extends GenericModel {
 	}
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Set<IssueComment> getComments() {
+		return comments;
+	}
+
+	public void setComments(Set<IssueComment> comments) {
+		this.comments = comments;
 	}
 }
