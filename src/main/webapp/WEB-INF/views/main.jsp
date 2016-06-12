@@ -20,6 +20,18 @@
 	<main class="row"></main>
 </div>
 <footer class="footer navbar-fixed-bottom"></footer>
+<div class="modal fade" id="modal" role="dialog" aria-labelledby="modalHeader" aria-hidden="true" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="close"><span aria-hidden="true">&times;</span></button>
+				<div class="modal-title h4" id="modalHeader"></div>
+			</div>
+			<div class="modal-body"></div>
+			<div class="modal-footer"></div>
+		</div>
+	</div>
+</div>
 <!-- Javascript -->
 <script data-main="/resources/js/main" src="/resources/assets/lib/jquery/jquery-2.1.0.min.js"></script>
 <script data-main="/resources/js/main" src="/resources/assets/lib/bootstrap/js/bootstrap.min.js"></script>

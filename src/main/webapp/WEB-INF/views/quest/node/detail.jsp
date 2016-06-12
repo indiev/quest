@@ -19,13 +19,18 @@
 				</div>
 			</div>
 			<div class="row">
-				<div data-content="requester.name" class="col-md-7"></div>
+				<div data-content-append="requester.name" class="col-md-7"><span class="glyphicon glyphicon-user"></span></div>
 				<div data-content="createdDate" data-format="date" class="col-md-2"></div>
-				<div class="col-md-1">약 <span data-content="duration"></span>일 소요</div>
-				<div data-content-prepend="recruitmentEndDate" data-format="date" class="col-md-2"> 마감</div>
+				<div class="col-md-1"><span class="glyphicon glyphicon-calendar"></span> 약 <span data-content="duration"></span>일 소요</div>
+				<div class="col-md-2"><span class="glyphicon glyphicon-calendar"></span> <span data-content-prepend="recruitmentEndDate" data-format="date"></span> 마감</div>
 			</div>
 			<div class="row">
-				<div data-content="reward" class="col-md-6"></div>
+				<div class="col-md-6">
+					<span class="glyphicon glyphicon-gift pull-left"></span>
+					<ul data-list="rewards" class="list-inline pull-left">
+						<li data-content-prepend="hwan"> H</li>
+					</ul>
+				</div>
 				<div data-content="qualification" class="col-md-6"></div>
 			</div>
 			<div class="row">
@@ -34,16 +39,32 @@
 			</div>
 			<div class="row">
 				<div class="col-md-3">
-					<p>지원자 (<span data-content="applicants.length"></span>명 지원)</p>
-					<div data-list="applicants" class="list-group">
-						<a data-content="name" data-value="id" class="list-group-item" href="#" onclick="accept(this.value)"></a>
-					</div>
+					<table class="table table-hover table-condensed">
+						<thead>
+							<tr>
+								<th>지원자 (<span data-content="applicants.length"></span>명 지원)</th>
+							</tr>
+						</thead>
+						<tbody data-list="applicants">
+							<tr>
+								<td data-content="name" data-value="id" onclick="accept(this.value)"></td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 				<div class="col-md-3">
-					<p>퀘스터  (<span data-content="questers.length"></span>명 선정)</p>
-					<div data-list="questers" class="list-group">
-						<a data-content="name" data-value="id" class="list-group-item" href="#" onclick="remove(this.value)"></a>
-					</div>
+					<table class="table table-hover table-condensed">
+						<thead>
+							<tr>
+								<th>퀘스터  (<span data-content="questers.length"></span>명 선정)</th>
+							</tr>
+						</thead>
+						<tbody data-list="questers">
+							<tr>
+								<td data-content="name" data-value="id" onclick="remove(this.value)"></td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 				<div class="col-md-6">
 				</div>

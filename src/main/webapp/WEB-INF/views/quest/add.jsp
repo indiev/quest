@@ -100,15 +100,15 @@ span.badge.skill { background-color: #d9534f; }
 		<div class="form-group row">
 			<div class="col-md-4">
 				<div class="input-group">
-					<label for="duration" class="sr-only">리퀘스터 위약금</label>
-					<input type="number" name="conract.requesterPenalty" id="requesterPenalty" class="form-control" placeholder="기간" min="0" step="1" required>
+					<label for="contract.requesterPenalty" class="sr-only">리퀘스터 위약금</label>
+					<input type="number" name="contract.requesterPenalty" id="contract.requesterPenalty" class="form-control" placeholder="리퀘스터 위약금" min="0" step="1" required>
 					<span class="input-group-addon">%</span>
 				</div>
 			</div>
 			<div class="col-md-4">
 				<div class="input-group">
-					<label for="reward"class="sr-only">퀘스터 위약금</label>
-					<input type="number" name="questerPenalty" id="questerPenalty" class="form-control" placeholder="보상" min="0" step="1" required>
+					<label for="contract.questerPenalty"class="sr-only">퀘스터 위약금</label>
+					<input type="number" name="contract.questerPenalty" id="contract.questerPenalty" class="form-control" placeholder="퀘스터 위약금" min="0" step="1" required>
 					<span class="input-group-addon">%</span>
 				</div>
 			</div>

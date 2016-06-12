@@ -9,7 +9,7 @@
 		 			<input type="text" name="searchKeyword" id="searchKeyword" class="form-control input-sm search-query" placeholder="검색" />
 		 			<span class="input-group-btn">
 		 				<button class="btn btn-default btn-sm" type="button" onclick="list()"><span class="glyphicon-search glyphicon" aria-hidden="true"></span></button>
-		 				<button type="button" class="btn btn-default btn-sm" name="requestButton" data-toggle="modal" data-target="#requestDialog"><span class="glyphicon-plus glyphicon" aria-hidden="true"></span></button>
+		 				<button type="button" class="btn btn-default btn-sm" name="requestButton" data-toggle="modal" data-target="#modal"><span class="glyphicon-plus glyphicon" aria-hidden="true"></span></button>
 		 			</span>
 		 		</div>
 	 		</form>
@@ -17,20 +17,6 @@
 	</div>
 	<div class="quest-content row"></div>
 </div>
- 
-<div class="modal fade" id="requestDialog" role="dialog" aria-labelledby="requestHeader" aria-hidden="true" tabindex="-1">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h4 class="modal-title">퀘스트 등록</h4>
-			</div>
-			<div class="modal-body"></div>
-			<div class="modal-footer"></div>
-		</div>
-	</div>
-</div>
-
 <script type="text/javascript">
 function apply(value) {
 	ajax.put("/api/quest/apply", {"id":value}, function(result){
@@ -63,7 +49,9 @@ function list() {
 $(document).ready(function(){
 	list();
 	$("button[name='requestButton']").click(function(){
-		$("#requestDialog").find("div.modal-body").load("/quest/add");
+		$modal = $("body div.modal");
+		$modal.find("div.modal-title").html("퀘스트 등록");
+		$modal.find("div.modal-body").load("/quest/add");
 	});
 });
 </script>
