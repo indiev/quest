@@ -10,6 +10,7 @@ import javax.persistence.OneToOne;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poom.quest.services.model.Portfolio;
 import com.poom.quest.services.model.abstractModel.GenericModel;
 
@@ -31,6 +32,7 @@ public class User extends GenericModel {
 	@Cascade(CascadeType.ALL)
 	private Quester quester;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	private Set<Portfolio> portfolios;
