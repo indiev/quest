@@ -21,7 +21,7 @@ public class QuestController extends GenericViewController<Quest> {
 		Quest quest = genericService.get(id);
 		Code state = codeService.get(quest.getState().getId());
 		//return return modelName + "/detail/" + state.getName();
-		switch (state.getName()) {
+		switch (state.getValue()) {
 		case "wait":
 			return modelName + "/detail";
 		case "discuss":

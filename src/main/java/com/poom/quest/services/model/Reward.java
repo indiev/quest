@@ -5,6 +5,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poom.quest.services.model.abstractModel.GenericModel;
 
 @Entity
@@ -14,6 +15,7 @@ public class Reward extends GenericModel {
 	
 	private Long hwan;
 	
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "questId", referencedColumnName = "id")
 	private Quest quest;
