@@ -1,5 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 <div class="issue-content">
+	<div>
+		<form class="form-inline" name="questSearchForm" role="form" action="/api/quest/all/search/" method="GET" onsubmit="return list();">
+	 		<div class="input-group form-search">
+	 			<label for="searchKeyword" class="sr-only">검색</label>
+	 			<input type="text" name="searchKeyword" id="searchKeyword" class="form-control input-sm search-query" placeholder="검색" />
+	 			<span class="input-group-btn">
+	 				<button class="btn btn-default btn-sm" type="button" onclick="list()"><span class="glyphicon-search glyphicon" aria-hidden="true"></span></button>
+	 				<button type="button" class="btn btn-default btn-sm" name="addButton" data-toggle="modal" data-target="#modal"><span class="glyphicon-plus glyphicon" aria-hidden="true"></span></button>
+	 			</span>
+	 		</div>
+ 		</form>
+	 </div>
 	<table class="table table-hover">
 		<thead>
 			<tr>
@@ -32,6 +44,9 @@ $(function() {
 	ajax.get("/api/issue", {}, function(list){
 		$template = $("div.issue-content table tbody");
 		$template.loadTemplate($template.children(), list);
+	});
+	$("button[name='addButton']").click(function(){
+		$("#modal").find("div.modal-body").load("/issue/add");
 	});
 });
 function detail(elem) {

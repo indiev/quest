@@ -9,11 +9,11 @@
 		</div>
 		<div class="form-group">
 			<label for="name" class="sr-only">제목</label>
-			<input type="text" name="name" id="name" class="form-control input-lg" placeholder="제목">
+			<input type="text" name="name" id="name" class="form-control" placeholder="제목">
 		</div>
 		<div class="form-group">
 			<label for="description" class="sr-only">내용</label>
-			<input type="text" name="description" id="description" class="form-control input-lg" placeholder="내용">
+			<input type="text" name="description" id="description" class="form-control" placeholder="내용">
 		</div>
 		<button type="submit" class="btn btn-default">추가</button>
 	</form>
