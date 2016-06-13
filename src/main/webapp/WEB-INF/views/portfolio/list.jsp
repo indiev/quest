@@ -6,7 +6,11 @@
 		  	<h2><span class="portfolio-search-length">0</span>개의 포트폴리오가 있습니다</h2>
 	 		<form class="form-inline" name="portfolioSearchForm" role="form" action="/api/portfolio/user/search/" method="GET" onsubmit="return list();">
 		 		<div class="input-group form-search">
+		 			
 		 			<label for="searchKeyword" class="sr-only">검색</label>
+		 			<span class="input-group-btn">
+		 			<select class="form-control portfolioType"></select>
+		 			</span>
 		 			<input type="text" name="searchKeyword" id="searchKeyword" class="form-control input-sm search-query" placeholder="검색" />
 		 			<span class="input-group-btn">
 		 				<button class="btn btn-default btn-sm" type="button" onclick="list()"><span class="glyphicon-search glyphicon" aria-hidden="true"></span></button>
@@ -18,8 +22,7 @@
 	</div>
 	
 	
-	<select name="PortfolioType">
-	</select>
+	
 </div>
 <div class="portfolio-content"></div>
 
@@ -40,22 +43,17 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	list();
-	getPortfolios("전체");
 	
 	ajax.get("/api/code/portfolio/type",{},function(list){
 		$select = $("select");
 		$select.empty();
-		$select.append($("<option>").html("전체"));
+		$select.append($("<option>").html("전체").val(""));
 		for(i in list) {
 			$option = $("<option>");
-			$option.html(list[i].value);
-			$option.val(list[i].id)
+			$option.html(list[i].name);
+			$option.val(list[i].value)
 			$select.append($option);
 		}
-	});
-	
-	$("select").change(function(){
-		getPortfolios(this.value);
 	});
 	
 	$("button[name='addButton']").click(function(){
@@ -79,25 +77,14 @@ function list() {
 	
 	$form = $("form[name='portfolioSearchForm']");
 	searchKeyword = $form.find("[name='searchKeyword']").val();
-	ajax.get($form.attr("action") + searchKeyword, {}, function(list){
+	portfolioType = $form.find(".portfolioType").val();
+	console.log(portfolioType);
+	ajax.get("/api/portfolio/user/"+portfolioType+"/search/"+searchKeyword, {}, function(list){
 		console.log(list);
 		$("span.portfolio-search-length").html(list.length);
 		$("div.portfolio-content").loadTemplate("/portfolio/node/list", list);
 	});
 	return false;
-}
-
-function getPortfolios(type){
-	$.addTemplateFormatter({
-		date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
-        link: function (value) { return "/portfolio/" + value; }
-    });
-	var link = "/api/portfolio/user/typeId/"+type;
-	if(type =="전체") link = "/api/portfolio/user";
-	ajax.get(link, {}, function(list) {
-		$("div.portfolio-content").loadTemplate("/portfolio/node/list", list);
-	});
-		
 }
 
 </script>

@@ -1,5 +1,6 @@
 package com.poom.quest.services.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -72,6 +73,16 @@ public class QuestService extends GenericService<Quest> {
 	public List<Quest> questsOfApplicant(Integer questerId, String stateValue) {
 		Code state = (stateValue != null)?codeService.getState(stateValue):null;
 		return questRepository.questsOfApplicant(questerId, state.getId());
+	}
+	
+	public List<Quest> questsOfApplicantIng(Integer questerId) {
+		String[] ingStates  = {"wait", "discuss", "progress"};
+		List<Integer> list = new ArrayList();
+		
+		for(String stateValue : ingStates) {
+			list.add(codeService.getState(stateValue).getId());
+		}
+		return this.questsOfApplicant(questerId, list);
 	}
 	
 	public List<Quest> questsOfApplicant(Integer questerId, List<Integer> stateIds) {

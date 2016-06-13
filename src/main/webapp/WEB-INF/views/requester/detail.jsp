@@ -24,7 +24,7 @@ function detail(id) {
 	ajax.get("/api/requester/"+id, {}, function(requester){
 		$("div.requester-detail").loadTemplate("/requester/node/detail", requester);
 		console.log(requester);
-		/* 모집전  */
+		/* 준비중  */
 		ajax.get("/api/quest/requester/stateId/"+1, {}, function(list){
 			$.addTemplateFormatter({
 				date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
@@ -55,7 +55,7 @@ function detail(id) {
 			//var stat = new classQuestTotalStat(list);
 			$("div.requester-questTotalStat-detail").loadTemplate("/requester/node/questTotalStat", {});
 			
-		});
+	});
 			
 }
 

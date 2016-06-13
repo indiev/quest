@@ -15,6 +15,7 @@ public class CodeService extends GenericService<Code> {
 	public Code getState(String stateValue) {
 		Map<String, String> keys = new HashMap<>();
 		keys.put("model", "Quest");
+		keys.put("attribute", "state");
 		keys.put("value", stateValue);
 		return getByKeys(keys);
 	}

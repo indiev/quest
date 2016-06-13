@@ -1,6 +1,9 @@
 package com.poom.quest.services.repository;
 
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Query;
 
@@ -25,13 +28,10 @@ public class QuestRepository extends GenericRepository<Quest> {
 	
 	public List<Quest> questsOfApplicant(Integer questerId, List<Integer> stateIds) {
 		String query = SELECT_ALL_SQL + " JOIN ApplicantQuest on ApplicantQuest.questId = Quest.id and ApplicantQuest.questerId = :questerId";
-		String stateIdsString = "";
 		if(stateIds != null && stateIds.size() > 0) {
-			query += " where stateId = (:stateIds)";
-			for(Integer stateId : stateIds) stateIdsString += stateId+",";
-			if(!stateIdsString.equals("")) stateIdsString.substring(0, stateIdsString.length()-2);
+			query += " where stateId in :stateIds";
 		}
-		return em.createNativeQuery(query, clazz).setParameter("questerId", questerId).setParameter("stateIds", stateIdsString).getResultList();
+		return em.createNativeQuery(query, clazz).setParameter("questerId", questerId).setParameter("stateIds", stateIds).getResultList();
 	}
 
 	public List<Quest> searchByState(Integer stateId, String keyword) {

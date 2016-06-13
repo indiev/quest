@@ -5,8 +5,14 @@
 <div><h3>참가한 전체 퀘스트 정보 관련 통계</h3></div>
 <div class="quester-questTotalStat-detail"></div>	
 <hr>
-<div><h3>지원한 퀘스트 리스트</h3></div>
-<div class="apllicantQuest-content"></div>
+<div><h3>준비중인 퀘스트 리스트</h3></div>
+<div class="readyRequest-content"></div>
+
+<div><h3>진행중인 퀘스트 리스트</h3></div>
+<div class="container progressRequest-content"></div>
+
+<div><h3>완료된 퀘스트 리스트</h3></div>
+<div class="completeRequest-content"></div>
 
 <script type="text/javascript">
 
@@ -19,17 +25,40 @@ function detail(id) {
 	
 	ajax.get("/api/quester/"+id, {}, function(quester){
 		$("div.quester-detail").loadTemplate("/quester/node/detail", quester);
-		ajax.get("/api/quest/all/search", {}, function(list){
+		/* 모집전  */		
+		ajax.get("/api/quest/user/state/wait", {}, function(list){
 			$.addTemplateFormatter({
 				date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
 				link: function (value) { return "/quest/" + value; }
 		    });
-			
-			$("div.apllicantQuest-content").loadTemplate("/quest/node/list", list);
-			var stat = new classQuestTotalStat(list);
-			$("div.quester-questTotalStat-detail").loadTemplate("/quester/node/questTotalStat", stat);
-			
+			$("div.readyRequest-content").loadTemplate("/quest/node/list", list);
 		});
+		
+		/* 진행중 */
+		ajax.get("/api/quest/user/stateGroup/ing", {}, function(list){
+			$.addTemplateFormatter({
+				date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
+				link: function (value) { return "/quest/" + value; }
+		    });
+			console.log(list);
+			$("div.progressRequest-content").loadTemplate("/quest/node/list", list);
+		});
+		
+		/* 완료중 */
+		ajax.get("/api/quest/user/state/complete", {}, function(list){
+			$.addTemplateFormatter({
+				date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
+				link: function (value) { return "/quest/" + value; }
+		    });
+			$("div.completeRequest-content").loadTemplate("/quest/node/list", list);
+		});
+		
+		
+		ajax.get("/api/quester/user", {}, function(list){
+			var stat = new classQuestTotalStat(list);
+			$("div.quester-questTotalStat-detail").loadTemplate("/quester/node/questTotalStat", {});
+		});
+			
 	});
 			
 }

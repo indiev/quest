@@ -1,5 +1,6 @@
 package com.poom.quest.web.controller.api;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -124,6 +125,28 @@ public class QuestApiController extends GenericApiController<Quest> {
 			keys.put(keyName, key);
 			return genericService.listByKeys(keys);
 		}
+		return null;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "user/stateGroup/ing",  method = RequestMethod.GET)
+	public List<Quest> questsOfApplicantIng() {
+		User user = userService.getLoginUserByRequest();
+		if(user != null) {
+			return questService.questsOfApplicantIng(user.getQuester().getId());
+		}
+		return null;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "user/state/{stateValue}",  method = RequestMethod.GET)
+	public List<Quest> questsOfApplicant(@PathVariable("stateValue") String stateValue) {
+		User user = userService.getLoginUserByRequest();
+		
+		if(user != null) {
+			return questService.questsOfApplicant(user.getQuester().getId(), stateValue);
+		}
+		
 		return null;
 	}
 }
