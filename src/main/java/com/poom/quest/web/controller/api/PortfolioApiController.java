@@ -55,7 +55,7 @@ public class PortfolioApiController extends GenericApiController<Portfolio> {
 	
 	@ResponseBody
 	@RequestMapping(value = "user/{typeValue}/search/{keyword}", method = RequestMethod.GET)
-	public List<Portfolio> searchBySateValue(@PathVariable("typeValue") String typeValue, @PathVariable("keyword") String keyword) {
+	public List<Portfolio> searchByTypeValue(@PathVariable("typeValue") String typeValue, @PathVariable("keyword") String keyword) {
 		Code type = codeService.getByKey("value", typeValue);
 		User user = userService.getLoginUserByRequest();
 		if(user != null) {

@@ -33,6 +33,20 @@ public class QuestRepository extends GenericRepository<Quest> {
 		}
 		return em.createNativeQuery(query, clazz).setParameter("questerId", questerId).setParameter("stateIds", stateIds).getResultList();
 	}
+	
+	public List<Quest> questsOfRequester(Integer requesterId, Integer stateId) {
+		String where = " WHERE requesterId = :requesterId AND stateId = :stateId";
+		Query query = em.createNativeQuery(SELECT_ALL_SQL + where, clazz).setParameter("requesterId", requesterId).setParameter("stateId", stateId);
+		return query.getResultList();
+	}
+
+	public List<Quest> questsOfRequester(Integer requesterId, List<Integer> stateIds) {
+		String query = SELECT_ALL_SQL + " WHERE requesterId = :requesterId";
+		if(stateIds != null && stateIds.size() > 0) {
+			query += " AND stateId in :stateIds";
+		}
+		return em.createNativeQuery(query, clazz).setParameter("requesterId", requesterId).setParameter("stateIds", stateIds).getResultList();
+	}
 
 	public List<Quest> searchByState(Integer stateId, String keyword) {
 		keyword = "%" + keyword + "%";
@@ -41,4 +55,6 @@ public class QuestRepository extends GenericRepository<Quest> {
 		Query query = em.createNativeQuery(SELECT_ALL_SQL + where, clazz).setParameter("stateId", stateId).setParameter("keyword", "%" + keyword + "%");
 		return query.getResultList();
 	}
+
+
 }

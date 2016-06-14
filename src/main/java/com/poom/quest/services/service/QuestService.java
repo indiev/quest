@@ -75,11 +75,11 @@ public class QuestService extends GenericService<Quest> {
 		return questRepository.questsOfApplicant(questerId, state.getId());
 	}
 	
-	public List<Quest> questsOfApplicantIng(Integer questerId) {
-		String[] ingStates  = {"wait", "discuss", "progress"};
+	public List<Quest> questsOfApplicantOngoing(Integer questerId) {
+		String[] ongoingStates  = {"wait", "discuss", "progress"};
 		List<Integer> list = new ArrayList();
 		
-		for(String stateValue : ingStates) {
+		for(String stateValue : ongoingStates) {
 			list.add(codeService.getState(stateValue).getId());
 		}
 		return this.questsOfApplicant(questerId, list);
@@ -89,7 +89,30 @@ public class QuestService extends GenericService<Quest> {
 		return questRepository.questsOfApplicant(questerId, stateIds);
 	}
 	
+	public List<Quest> questsOfRequester(Integer requesterId, String stateValue) {
+		Code state = (stateValue != null)?codeService.getState(stateValue):null;
+		return questRepository.questsOfRequester(requesterId, state.getId());
+	}
+	
+	public List<Quest> questsOfRequesterOngoing(Integer requesterId) {
+		String[] ongoingStates  = {"wait", "discuss", "progress"};
+		List<Integer> list = new ArrayList();
+		
+		for(String stateValue : ongoingStates) {
+			list.add(codeService.getState(stateValue).getId());
+		}
+		return this.questsOfRequester(requesterId, list);
+	}
+	
+	public List<Quest> questsOfRequester(Integer requesterId, List<Integer> stateIds) {
+		return questRepository.questsOfRequester(requesterId, stateIds);
+	}
+	
 	public List<Quest> searchByState(Integer stateId, String keyword) {
 		return questRepository.searchByState(stateId, keyword);
 	}
+
+	
+
+	
 }
