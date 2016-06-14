@@ -24,41 +24,34 @@ $(document).ready(function(){
 	detail(id);
 });
 
-$(document).on("click", "[contenteditable='true']", function(){
-	//alert($(this).html());
-})
-
 $(document).on("focus", "[contenteditable='true']", function(){
 	$this = $(this);
 	if(typeof origin[$this.attr("data-model")] === "undefined") origin[$this.attr("data-model")] = new Array();
 	if(typeof origin[$this.attr("data-model")][$this.attr("data-column")] === "undefined") origin[$this.attr("data-model")][$this.attr("data-column")] = new Array();
-	if(typeof origin[$this.attr("data-model")][$this.attr("data-column")][$this.val()] === "undefined")  origin[$this.attr("data-model")][$this.attr("data-column")][$this.val()] = $this.html();
-	console.log($this.val());
-	
-	
-	//var origin = $(this).html();
-	/* $("#updatorDialog").modal('toggle'); */
-	//alert();
+	if(typeof origin[$this.attr("data-model")][$this.attr("data-column")][$this.attr("value")] === "undefined") origin[$this.attr("data-model")][$this.attr("data-column")][$this.attr("value")] = $this.html();
 })
 
 $(document).on("focusout", "[contenteditable='true']", function(){
 	$this = $(this);
-	var originValue = origin[$this.attr("data-model")][$this.attr("data-column")][$this.val()];
-	console.log(origin);
-	console.log(originValue);
-	if(originValue != $this.html()) {
+	var model = $this.attr("data-model");
+	var column = $this.attr("data-column");
+	var id = $this.attr("value");
+	var originValue = origin[model][column][id];
+	var value = $this.html();
+	if(originValue != value) {
 		if(confirm("수정 요청을 하시겠습니까?")) {
 			data = {
-				"name":$this.html(),
-				"refModel":$this.attr("data-model"),
-				"refColumn":$this.attr("data-column"),
-				"refId":$this.val(),
-				"origin":origin[$this.attr("data-column")][$this.val()],
+				"name":value,
+				"model":model,
+				"attribute":column,
+				"refId":id,
+				"origin":originValue,
 				"type":"U"
 			};
 			ajax.post("/api/updater", data, function(result) {
-				origin[$this.attr("data-column")][$this.val()] = $this.html();
+				$this.html(originValue);
 				$this.css("color", "red");
+				alert("수정을 요청했습니다.");
 			});
 		} else {
 			$this.html(originValue);

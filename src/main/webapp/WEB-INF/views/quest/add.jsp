@@ -74,9 +74,6 @@ span.badge.skill { background-color: #d9534f; }
 				<button type="button" class="btn btn-default form-control skill" onclick="return false;"></button>
 			</div>
 		</div>
-		<div class="form-group">
-			<!-- <label for="recruitmentEndDate">지원마감일</label><input type="datetime-local" name="recruitmentEndDate" id="recruitmentEndDate"> -->
-		</div>
 		<div class="form-group row">
 			<div class="col-md-4">
 				<div class="input-group">

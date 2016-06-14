@@ -1,15 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
-<h3>협의</h3>
-<div data-content-append="duration" data-model="quest" data-value="id" data-column="duration" contenteditable="true">기간 : </div>
-<div data-content-append="reward" data-model="quest" data-value="id" data-column="reward" contenteditable="true">금액 : </div>
+<div>기간 : <span data-content="duration" data-model="Quest" data-value="id" data-column="duration" contenteditable="true"></span>일</div>
+<div>
+	보상
+	<div data-list="rewards">
+		<span data-content="hwan" data-model="reward" data-value="id" data-column="hwan" contenteditable="true"></span>
+	</div>
+</div>
 <div>위약금 관련</div>
-<div>퀘스터패널티 : <span data-content="contract.questerPenalty" data-model="contract" data-value="contract.id" data-column="questerPenalty" contenteditable="true"></span>%</div>
-<div>리퀘스터패널티 : <span data-content="contract.requesterPenalty" data-model="contract" data-value="contract.id" data-column="requesterPenalty" contenteditable="true"></span>%</div>
+<div>퀘스터패널티 : <span data-content="contract.questerPenalty" data-model="Contract" data-value="contract.id" data-column="questerPenalty" contenteditable="true"></span>%</div>
+<div>리퀘스터패널티 : <span data-content="contract.requesterPenalty" data-model="Contract" data-value="contract.id" data-column="requesterPenalty" contenteditable="true"></span>%</div>
 <hr>
 <div>
 	<p>조항</p>
 	<div data-list="contract.provisions" class="list-group">
-		<a data-content="name" data-model="provision" data-value="id" data-column="name" href="#" class="list-group-item" contenteditable="true"></a>
+		<a data-content="name" data-model="Provision" data-value="id" data-column="name" href="#" class="list-group-item" contenteditable="true"></a>
 	</div>
 </div>
 <hr>
@@ -17,8 +21,8 @@
 	<p>요구사항</p>
 	<div data-list="requirements" class="list-group">
 		<a href="#" class="list-group-item">
-			<h5 data-content="name" data-model="requirement" data-value="id" data-column="name" contenteditable="true"></h5>
-			<p data-content="description" data-model="requirement" data-value="id" data-column="description" contenteditable="true"></p>
+			<h5 data-content="name" data-model="Requirement" data-value="id" data-column="name" contenteditable="true"></h5>
+			<p data-content="description" data-model="Requirement" data-value="id" data-column="description" contenteditable="true"></p>
 		</a>
 	</div>
 </div>
