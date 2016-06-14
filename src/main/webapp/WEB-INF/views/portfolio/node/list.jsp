@@ -4,7 +4,7 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">
-				<a data-content="name" data-href="id" data-format="link" data-format-target="href"></a>
+				<a data-content="name" data-href="id" data-format="link" data-format-target="href" class="load"></a>
 				<button name="deleteButton" data-value="id" onclick="del(this.value)">삭제</button>
 			</h3>
 		</div>

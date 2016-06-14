@@ -14,26 +14,25 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">퀘스트 <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="/quest/list">list</a></li>
-						<li><a href="/quest/add">add</a></li>
+						<li><a href="/quest/list" class="load">list</a></li>
+						<li><a href="/quest/add" class="load">add</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">관리자 <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="/admin/area/add">분야</a></li>
-						<li><a href="/admin/work/add">업무</a></li>
-						<li><a href="/admin/skill/add">스킬</a></li>
+						<li><a href="/admin/area/add" class="load">분야</a></li>
+						<li><a href="/admin/work/add" class="load">업무</a></li>
+						<li><a href="/admin/skill/add" class="load">스킬</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">디자인 <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="/design/quest/list">quest-list</a></li>
-						<li><a href="/design/quest/detail">queset-detail</a></li>
+						<li><a href="/design/quest/list" class="load">quest-list</a></li>
+						<li><a href="/design/quest/detail" class="load">queset-detail</a></li>
 					</ul>
 				</li>
-				<li><a href="/">etc</a></li>
 			</ul>
 			<form class="navbar-form navbar-left" role="search">
 		       	<div class="input-group">
@@ -56,12 +55,12 @@
 					<a data-content-prepend="name" data-format="name" href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li role="presentation"><a href="#">Messages <span class="badge">3</span></a></li>
-						<li><a data-href="id" data-format="userlink" data-format-target="href">유저 정보</a></li>
-						<li><a data-href="requester.id" data-format="requesterlink" data-format-target="href">리퀘스터 정보</a></li>
-						<li><a data-href="quester.id" data-format="questerlink" data-format-target="href">퀘스터 정보</a></li>
-						<li><a href="/quester/add">퀘스터 생성</a></li>
-						<li><a href="/portfolio/list">유저 포트폴리오 정보</a>
-						<li><a href="/portfolio/add">유저 포트폴리오 생성</a>
+						<li><a data-href="id" data-format="userlink" data-format-target="href" class="load">유저 정보</a></li>
+						<li><a data-href="requester.id" data-format="requesterlink" data-format-target="href" class="load">리퀘스터 정보</a></li>
+						<li><a data-href="quester.id" data-format="questerlink" data-format-target="href" class="load">퀘스터 정보</a></li>
+						<li><a href="/quester/add" class="load">퀘스터 생성</a></li>
+						<li><a href="/portfolio/list" class="load">유저 포트폴리오 정보</a></li>
+						<li><a href="/portfolio/add" class="load">유저 포트폴리오 생성</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="#" class="logout">로그아웃</a></li>
 					</ul>

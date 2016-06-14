@@ -63,7 +63,7 @@ $(document).ready(function(){
 		/* $("header").loadTemplate($("header").children(), user); */
 	});
 });
-$(document).pjax("a", "#main");
+$(document).pjax("a.load", "main");
 
 /*
 $(document).on("click", "a", function(){
