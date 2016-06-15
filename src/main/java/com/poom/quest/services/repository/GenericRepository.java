@@ -116,7 +116,7 @@ public abstract class GenericRepository<T> {
 	public List<T> search(String keyword, String[] keys) {
 		keyword = ("%" + keyword + "%").toLowerCase();
 		String where = " WHERE ";
-		if(keys.length == 0) keys = new String[]{"name"};
+		if(keys == null || keys.length == 0) keys = new String[]{"name"};
 		for (int i=0; i<keys.length; i++) {
 			if(i !=0 ) where += " AND ";
 			where += "LOWER(" + keys[i] + ") LIKE :keyword";
@@ -127,7 +127,7 @@ public abstract class GenericRepository<T> {
 	public List<T> search(String keyword, String[] keys, Integer userId) {
 		keyword = ("%" + keyword + "%").toLowerCase();
 		String where = " WHERE ";
-		if(keys.length == 0) keys = new String[]{"name"};
+		if(keys == null || keys.length == 0) keys = new String[]{"name"};
 		for (int i=0; i<keys.length; i++) {
 			if(i !=0 ) where += " AND ";
 			where += "LOWER(" + keys[i] + ") LIKE :keyword";
