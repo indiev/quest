@@ -22,40 +22,51 @@ function agree(value) {
 $(document).ready(function(){
 	var id = $(location).attr("href").slice($(location).attr("href").lastIndexOf("/")+1)
 	detail(id);
+	
+	$.addTemplateFormatter({
+		date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
+    });
 });
 
-$(document).on("focus", "[contenteditable='true']", function(){
+$(document).on("mouseenter", ".updater", function(){
 	$this = $(this);
-	if(typeof origin[$this.attr("data-model")] === "undefined") origin[$this.attr("data-model")] = new Array();
-	if(typeof origin[$this.attr("data-model")][$this.attr("data-column")] === "undefined") origin[$this.attr("data-model")][$this.attr("data-column")] = new Array();
-	if(typeof origin[$this.attr("data-model")][$this.attr("data-column")][$this.attr("value")] === "undefined") origin[$this.attr("data-model")][$this.attr("data-column")][$this.attr("value")] = $this.html();
-})
-
-$(document).on("focusout", "[contenteditable='true']", function(){
-	$this = $(this);
-	var model = $this.attr("data-model");
-	var column = $this.attr("data-column");
-	var id = $this.attr("value");
-	var originValue = origin[model][column][id];
-	var value = $this.html();
-	if(originValue != value) {
-		if(confirm("수정 요청을 하시겠습니까?")) {
-			data = {
-				"name":value,
-				"model":model,
-				"attribute":column,
-				"refId":id,
-				"origin":originValue,
-				"type":"U"
-			};
-			ajax.post("/api/updater", data, function(result) {
-				$this.html(originValue);
-				$this.css("color", "red");
-				alert("수정을 요청했습니다.");
+	var data = saveOrigin(this);
+	$this.append($("div.quest-detail").find("template").html());
+	$this.find("span.list").click(function() {
+		ajax.get("/api/updater/"+data.model+"/"+data.attribute+"/"+data.refId, {}, function(list) {
+			$("#modal").find(".modal-body").load("/updater/list", function() {
+				$template = $("#modal").find("tbody");
+				$template.loadTemplate($template.children(), list, {bindingOptions:{"ignoreNull":false}});
+				$("#modal").modal("show");
 			});
-		} else {
-			$this.html(originValue);
+		});
+	});
+	$this.find("span.edit").click(function() {
+		data.type = "U";
+		$("#modal").find(".modal-body").loadTemplate("/updater/add", data);
+		$("#modal").modal("show");
+	});
+	$this.find("span.remove").click(function() {
+		if(confirm("삭제 요청을 하시겠습니까?")) {
+			data.type = "D";
+			ajax.post("/api/updater", data, function() {
+				alert("삭제 요청을 했습니다.");
+			});
 		}
-	}
+	});
+}).on("mouseleave", ".updater", function(){
+	$(this).find(".editButtons").remove();
 });
+
+function saveOrigin(elem) {
+	$elem = $(elem);
+	var model = $elem.attr("data-model");
+	var attribute = $elem.attr("data-attribute");
+	var refId = $elem.attr("value");
+	if(typeof origin[model] === "undefined") origin[model] = new Array();
+	if(typeof origin[model][attribute] === "undefined") origin[model][attribute] = new Array();
+	if(typeof origin[model][attribute][refId] === "undefined") origin[model][attribute][refId] = $this.html();
+	
+	return {"model":model, "attribute":attribute, "refId":refId, "name":origin[model][attribute][refId]};
+}
 </script>

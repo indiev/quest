@@ -20,7 +20,7 @@ var ajax = {
     		} else {
     			key = keynvalues[i].name;
         		value = keynvalues[i].value;
-        		if(typeof key.split('Id')[1] != "undefined" && key.split('Id')[1] == "" && key != "parentId") data[key.split('Id')[0]] = {id:value};
+        		if(typeof key.split('Id')[1] != "undefined" && key.split('Id')[1] == "" && ["parentId", "refId"].indexOf(key) == -1) data[key.split('Id')[0]] = {id:value};
         		else data[key] = value;    			
     		}
     	}

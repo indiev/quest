@@ -16,7 +16,7 @@ public class Updater extends GenericModel {
 	private String model;
 	private String attribute;
 	private Integer refId;
-	private String origin;
+	private String alternation;
 	private Character type;
 	private Character approval;
 	
@@ -48,12 +48,12 @@ public class Updater extends GenericModel {
 		this.refId = refId;
 	}
 
-	public String getOrigin() {
-		return origin;
+	public String getAlternation() {
+		return alternation;
 	}
 
-	public void setOrigin(String origin) {
-		this.origin = origin;
+	public void setAlternation(String alternation) {
+		this.alternation = alternation;
 	}
 
 	public Character getType() {
