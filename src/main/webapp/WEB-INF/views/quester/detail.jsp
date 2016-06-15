@@ -35,7 +35,7 @@ function detail(id) {
 		});
 		
 		/* 진행중 */
-		ajax.get("/api/quest/quester/stateGroup/ing", {}, function(list){
+		ajax.get("/api/quest/quester/stateGroup/ongoing", {}, function(list){
 			$.addTemplateFormatter({
 				date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
 				link: function (value) { return "/quest/" + value; }

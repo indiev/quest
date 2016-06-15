@@ -10,7 +10,7 @@ import com.poom.quest.services.model.Portfolio;
 @Repository
 public class PortfolioRepository extends GenericRepository<Portfolio> {
 	
-	public List<Portfolio> searchByState(Integer typeId, String keyword, Integer userId) {
+	public List<Portfolio> searchByType(Integer typeId, String keyword, Integer userId) {
 		keyword = ("%" + keyword + "%").toLowerCase();
 		String where = " WHERE typeId = :typeId AND userId = :userId";
 		where += " AND LOWER(name) LIKE :keyword";

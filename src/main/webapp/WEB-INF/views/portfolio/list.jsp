@@ -42,18 +42,17 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	list();
-	
-	ajax.get("/api/code/portfolio/type",{},function(list){
+	ajax.get("/api/code/portfolio/type",{},function(portfolioTypes){
 		$select = $("select");
 		$select.empty();
-		$select.append($("<option>").html("전체").val(""));
-		for(i in list) {
+		$select.append($("<option>").html("전체").val("").attr("selected", "selected"));
+		for(i in portfolioTypes) {
 			$option = $("<option>");
-			$option.html(list[i].name);
-			$option.val(list[i].value)
+			$option.html(portfolioTypes[i].name);
+			$option.val(portfolioTypes[i].value)
 			$select.append($option);
 		}
+		list();
 	});
 	
 	$("button[name='addButton']").click(function(){
@@ -72,14 +71,13 @@ function del(value) {
 function list() {
 	$.addTemplateFormatter({
 		date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
-        link: function (value) { return "/quest/" + value; },
+        link: function (value) { return "/portfolio/" + value; },
     });
 	
 	$form = $("form[name='portfolioSearchForm']");
 	searchKeyword = $form.find("[name='searchKeyword']").val();
 	portfolioType = $form.find(".portfolioType").val();
 	ajax.get("/api/portfolio/user/"+portfolioType+"/search/"+searchKeyword, {}, function(list){
-		console.log(list);
 		$("span.portfolio-search-length").html(list.length);
 		$("div.portfolio-content").loadTemplate("/portfolio/node/list", list);
 	});

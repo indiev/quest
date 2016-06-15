@@ -38,8 +38,18 @@ public class PortfolioApiController extends GenericApiController<Portfolio> {
 	
 	@ResponseBody
 	@RequestMapping(value = "user/search", method = RequestMethod.GET)
-	public List<Portfolio> search() {
+	public List<Portfolio> allSearch() {
 		return search("");
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "user/{typeValue}/search", method = RequestMethod.GET)
+	public List<Portfolio> allSearchByTypeValue(@PathVariable String typeValue) {
+		User user = userService.getLoginUserByRequest();
+		if(user != null) {
+			return portfolioService.searchByType(typeValue, "", user.getId());
+		}
+		return null;
 	}
 	
 	@ResponseBody
@@ -56,13 +66,11 @@ public class PortfolioApiController extends GenericApiController<Portfolio> {
 	@ResponseBody
 	@RequestMapping(value = "user/{typeValue}/search/{keyword}", method = RequestMethod.GET)
 	public List<Portfolio> searchByTypeValue(@PathVariable("typeValue") String typeValue, @PathVariable("keyword") String keyword) {
-		Code type = codeService.getByKey("value", typeValue);
 		User user = userService.getLoginUserByRequest();
 		if(user != null) {
-			return portfolioService.searchByState(type.getId(), keyword, user.getId());
+			return portfolioService.searchByType(typeValue, keyword, user.getId());
 		}
 		return null;
-		
 	}
 	 
 	
