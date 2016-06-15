@@ -11,13 +11,14 @@
 		</div>
 		<div class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
-				<li class="dropdown">
+				<li><a href="/quest/list" class="load">Quest</a></li>
+				<!-- <li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">퀘스트 <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="/quest/list" class="load">list</a></li>
 						<li><a href="/quest/add" class="load">add</a></li>
 					</ul>
-				</li>
+				</li> -->
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">관리자 <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
