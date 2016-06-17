@@ -57,9 +57,9 @@
 					<ul class="dropdown-menu" role="menu">
 						<li role="presentation"><a href="#">Messages <span class="badge">3</span></a></li>
 						<li><a data-href="id" data-format="userlink" data-format-target="href" class="load">유저 정보</a></li>
-						<li><a data-href="requester.id" data-format="requesterlink" data-format-target="href" class="load">리퀘스터 정보</a></li>
 						<li><a data-href="quester.id" data-format="questerlink" data-format-target="href" class="load">퀘스터 정보</a></li>
 						<li><a href="/quester/add" class="load">퀘스터 생성</a></li>
+						<li><a data-href="requester.id" data-format="requesterlink" data-format-target="href" class="load">리퀘스터 정보</a></li>
 						<li><a href="/portfolio/list" class="load">유저 포트폴리오 정보</a></li>
 						<li><a href="/portfolio/add" class="load">유저 포트폴리오 생성</a></li>
 						<li role="separator" class="divider"></li>
