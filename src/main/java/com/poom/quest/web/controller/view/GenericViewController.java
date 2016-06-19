@@ -48,7 +48,7 @@ public abstract class GenericViewController<T> {
 	}
 	
 	@RequestMapping(value = "add", method = RequestMethod.GET)
-	public String request() {
+	public String add() {
 		return modelName + "/add";
 	}
 	

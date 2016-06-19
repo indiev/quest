@@ -13,7 +13,7 @@
 		</div>
 		<div class="form-group">
 			<label for="description" class="sr-only">내용</label>
-			<input type="text" name="description" id="description" class="form-control" placeholder="내용">
+			<textarea name="description" id="description" rows="3" class="form-control" style="resize:none;" placeholder="내용"></textarea>
 		</div>
 		<button type="submit" class="btn btn-default">추가</button>
 	</form>
