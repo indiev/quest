@@ -116,44 +116,44 @@ public class QuestApiController extends GenericApiController<Quest> {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/quester/stateGroup/ongoing",  method = RequestMethod.GET)
-	public List<Quest> questsOfApplicantOngoing() {
+	@RequestMapping(value = "/questerId/{id}/stateGroup/ongoing",  method = RequestMethod.GET)
+	public List<Quest> questsOfApplicantOngoing(@PathVariable("id") Integer id) {
 		User user = userService.getLoginUserByRequest();
 		if(user != null) {
-			return questService.questsOfApplicantOngoing(user.getQuester().getId());
+			return questService.questsOfApplicantOngoing(id);
 		}
 		return null;
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/quester/state/{stateValue}",  method = RequestMethod.GET)
-	public List<Quest> questsOfApplicant(@PathVariable("stateValue") String stateValue) {
+	@RequestMapping(value = "/questerId/{id}/state/{stateValue}",  method = RequestMethod.GET)
+	public List<Quest> questsOfApplicant(@PathVariable("id") Integer id, @PathVariable("stateValue") String stateValue) {
 		User user = userService.getLoginUserByRequest();
 		if(user != null) {
-			return questService.questsOfApplicant(user.getQuester().getId(), stateValue);
-		}
-		
-		return null;
-	}
-	
-
-	@ResponseBody
-	@RequestMapping(value = "/requester/state/{stateValue}",  method = RequestMethod.GET)
-	public List<Quest> questsOfRequester(@PathVariable("stateValue") String stateValue) {
-		User user = userService.getLoginUserByRequest();
-		if(user != null) {
-			return questService.questsOfRequester(user.getRequester().getId(), stateValue);
+			return questService.questsOfApplicant(id, stateValue);
 		}
 		return null;
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/requester/stateGroup/ongoing",  method = RequestMethod.GET)
-	public List<Quest> questsOfRequesterOngoing() {
+	@RequestMapping(value = "/requesterId/{id}/stateGroup/ongoing",  method = RequestMethod.GET)
+	public List<Quest> questsOfRequesterOngoing(@PathVariable("id") Integer id) {
 		User user = userService.getLoginUserByRequest();
 		if(user != null) {
-			return questService.questsOfRequesterOngoing(user.getRequester().getId());
+			return questService.questsOfRequesterOngoing(id);
 		}
 		return null;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/requesterId/{id}/state/{stateValue}",  method = RequestMethod.GET)
+	public List<Quest> questsOfRequester(@PathVariable("id") Integer id, @PathVariable("stateValue") String stateValue) {
+		User user = userService.getLoginUserByRequest();
+		if(user != null) {
+			return questService.questsOfRequester(id, stateValue);
+		}
+		return null;
+	}
+	
+	
 }
