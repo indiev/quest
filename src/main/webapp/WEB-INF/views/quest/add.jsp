@@ -16,7 +16,7 @@ span.badge.skill { background-color: #d9534f; }
 	<div class="container-pluid">
 		<div class="form-group">
 			<label for="name" class="sr-only">퀘스트명</label>	
-			<input type="text" name="name" id="name" class="form-control input-lg" placeholder="퀘스트명" title="퀘스트명" required>
+			<input type="text" name="name" id="name" class="form-control" placeholder="퀘스트명" title="퀘스트명" required>
 		</div>
 		<div class="form-group">
 			<div class="row">

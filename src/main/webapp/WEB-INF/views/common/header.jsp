@@ -12,13 +12,6 @@
 		<div class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
 				<li><a href="/quest/list" class="load">Quest</a></li>
-				<!-- <li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">퀘스트 <span class="caret"></span></a>
-					<ul class="dropdown-menu" role="menu">
-						<li><a href="/quest/list" class="load">list</a></li>
-						<li><a href="/quest/add" class="load">add</a></li>
-					</ul>
-				</li> -->
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">관리자 <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
@@ -48,8 +41,8 @@
 			</form>
 			<p class="navbar-text navbar-right">v0.1</p>
 			<div class="nav btn-group navbar-right">
-				<button type="button" data-non-exist class="btn btn-sm navbar-btn btn-primary" name="loginButton" data-toggle="modal" data-target="#logDialog">로그인</button>
-				<button type="button" data-non-exist class="btn btn-sm navbar-btn btn-info" name="joinButton" data-toggle="modal" data-target="#logDialog">회원가입</button>
+				<button type="button" data-non-exist class="btn btn-sm navbar-btn btn-primary" name="loginButton" data-toggle="modal" data-target="#modal-sm">로그인</button>
+				<button type="button" data-non-exist class="btn btn-sm navbar-btn btn-info" name="joinButton" data-toggle="modal" data-target="#modal">회원가입</button>
 			</div>
 			<ul class="nav navbar-nav navbar-right">
 				<li data-exist class="dropdown">
@@ -72,20 +65,8 @@
 	</div>
 </nav>
 
-<div class="modal" id="logDialog" role="dialog" aria-hidden="true" tabindex="-1">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-body"></div>
-		</div>
-	</div>
-</div>
-
 <script type="text/javascript">
 $(document).ready(function(){
-	$("button[name='loginButton']").click(function(){
-		$("#logDialog > .modal-dialog").addClass("modal-sm");
-		$("#logDialog").find("div.modal-body").load("/user/login");
-	});
 	$("li a.logout").click(function(){
 		console.log(1);
 		ajax.get("/api/logout", {}, function(result) {
@@ -93,13 +74,13 @@ $(document).ready(function(){
 			$("header").loadTemplate("/header", null);
 		});
 	});
-	$("button[name='joinButton']").click(function(){
-		$("#logDialog > .modal-dialog").removeClass("modal-sm");
-		$("#logDialog").find("div.modal-body").load("/user/join");
+	$("button[name='loginButton']").click(function(){
+		/* $("#modal > .modal-dialog").addClass("modal-sm"); */
+		$("#modal-sm").find("div.modal-body").load("/user/login");
 	});
-	$("button[name='findButton']").click(function(){
-		$("#logDialog > .modal-dialog").removeClass("modal-sm");
-		$("#logDialog").find("div.modal-body").empty();
+	$("button[name='joinButton']").click(function(){
+		/* $("#modal > .modal-dialog").removeClass("modal-sm"); */
+		$("#modal").find("div.modal-body").load("/user/join");
 	});
 });
 

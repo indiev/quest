@@ -50,7 +50,6 @@ $(document).ready(function(){
 	list();
 	$("button[name='requestButton']").click(function(){
 		$modal = $("body div.modal");
-		$modal.find("div.modal-title").html("퀘스트 등록");
 		$modal.find("div.modal-body").load("/quest/add");
 	});
 });
