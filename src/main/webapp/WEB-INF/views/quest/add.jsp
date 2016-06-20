@@ -300,9 +300,13 @@ function addProvision() {
 }
 
 function request(form) {
-	quest.rewards.push({"hwan":$("input[name='reward']").val()});
+	quest.rewards.push({"name":$("input[name='reward']").val(),"hwan":$("input[name='reward']").val()});
 	ajax.submit(form, quest, function(result) {
-		if(result != "") alert("퀘스트를 추가했습니다.");
+		if(result != "") {
+			alert("퀘스트를 추가했습니다.");
+			$("#dialog").modal("toggle");
+			//퀘스트 리로드 갱신
+		}
 		else alert("퀘스트를 추가하는 데 실패했습니다.");
 	});
 	return false;
