@@ -5,7 +5,7 @@ function login(form) {
 	ajax.login($(form).attr("action"), data, function(data) {
 		data = JSON.parse(data);
 		if(data.success) {
-			$("#dialog-sm").modal('toggle');
+			$("#modal-sm").modal('toggle');
 			ajax.get("/api/user/get", {}, function(data) { 
 				user = data;
 				$("header").loadTemplate("/header", user);
