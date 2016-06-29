@@ -19,4 +19,12 @@ public class CodeService extends GenericService<Code> {
 		keys.put("value", stateValue);
 		return getByKeys(keys);
 	}
+	
+	public Code getAction(String actionValue) {
+		Map<String, String> keys = new HashMap<>();
+		keys.put("model", "PaymentLog");
+		keys.put("attribute", "action");
+		keys.put("value", actionValue);
+		return getByKeys(keys);
+	}
 }
