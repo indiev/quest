@@ -55,6 +55,7 @@
 						<li><a data-href="requester.id" data-format="requesterlink" data-format-target="href" class="load">리퀘스터 정보</a></li>
 						<li><a href="/portfolio/list" class="load">유저 포트폴리오 정보</a></li>
 						<li><a href="/portfolio/add" class="load">유저 포트폴리오 생성</a></li>
+						<li><a href="/payment/buy" class="load">포인트 결제</a>
 						<li role="separator" class="divider"></li>
 						<li><a href="#" class="logout">로그아웃</a></li>
 					</ul>

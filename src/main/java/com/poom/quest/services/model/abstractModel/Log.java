@@ -1,6 +1,5 @@
 package com.poom.quest.services.model.abstractModel;
 
-import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
