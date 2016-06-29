@@ -4,12 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MappedSuperclass;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poom.quest.services.model.Code;
 import com.poom.quest.services.model.user.User;
 
-//@Entity
+@MappedSuperclass
 public abstract class Log extends GenericModel {
 
 	private static final long serialVersionUID = 1L;
