@@ -23,6 +23,7 @@ public class User extends GenericModel {
 	private String realname;
 	private String email;
 	private String phone;
+	private int point;
 	
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
@@ -63,6 +64,14 @@ public class User extends GenericModel {
 
 	public String getPhone() {
 		return phone;
+	}
+	
+	public int getPoint() {
+		return point;
+	}
+
+	public void setPoint(int point) {
+		this.point = point;
 	}
 
 	public void setPhone(String phone) {
