@@ -16,5 +16,24 @@ public class PointLog extends Log {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "rewardId", referencedColumnName = "id")
 	private Reward reward;
+
+	private Integer point;
+	
+	public Reward getReward() {
+		return reward;
+	}
+
+	public void setReward(Reward reward) {
+		this.reward = reward;
+	}
+
+	public Integer getPoint() {
+		return point;
+	}
+
+	public void setPoint(Integer point) {
+		this.point = point;
+	}
+	
 	
 }

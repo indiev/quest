@@ -14,9 +14,12 @@ public class PaymentService {
 
 	@Autowired CodeService codeService;
 	@Autowired PaymentLogService paymentLogService;
+	@Autowired PointService pointService;
 	
-	public PaymentLog buy(PaymentLog paymentLog, User user) {
-		Code code = codeService.getAction("buy");
+	public PaymentLog buy(Integer point, User user) {
+		PaymentLog paymentLog = new PaymentLog();
+		Code code = codeService.getAction("buy", paymentLog);
+		paymentLog.setPoint(point);
 		paymentLog.setACtion(code);
 		
 		/**
@@ -31,9 +34,12 @@ public class PaymentService {
 		 * 
 		 */
 		
-		user.setPoint(user.getPoint()+paymentLog.getPoint());
-		paymentLog.setName("모의 결제 성공");
-		paymentLogService.add(paymentLog);
-		return paymentLog;
+		if(pointService.charge(point, user) != null)
+		{
+			paymentLog.setName(code.getName()+"성공");
+			return paymentLogService.add(paymentLog);
+		}
+		
+		return null;
 	}
 }

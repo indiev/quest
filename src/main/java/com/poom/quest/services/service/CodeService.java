@@ -6,7 +6,8 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.poom.quest.services.model.Code;;
+import com.poom.quest.services.model.Code;
+import com.poom.quest.services.model.abstractModel.GenericModel;
 
 @Service
 @Transactional
@@ -20,9 +21,9 @@ public class CodeService extends GenericService<Code> {
 		return getByKeys(keys);
 	}
 	
-	public Code getAction(String actionValue) {
+	public Code getAction(String actionValue, GenericModel model) {
 		Map<String, String> keys = new HashMap<>();
-		keys.put("model", "PaymentLog");
+		keys.put("model", model.getClass().getSimpleName());
 		keys.put("attribute", "action");
 		keys.put("value", actionValue);
 		return getByKeys(keys);
