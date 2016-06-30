@@ -2,7 +2,7 @@
 <form role="form" action="/api/payment/buy" method="PUT" onsubmit="return buy(this);">
 	<div class="container-pluid">
 		<div class="form-gorup">
-			<input type="number" name="relevantMoney" id="relevantMoney" class="form-control" placeholder="결제 포인트양">
+			<input type="number" name="point" id="point" class="form-control" placeholder="결제 포인트양">
 		</div>
 		 
 		<input type="submit" class="btn btn-default" value="포인트  결제">

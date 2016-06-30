@@ -15,20 +15,20 @@ public abstract class Log extends GenericModel {
 	private static final long serialVersionUID = 1L;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "typeId", referencedColumnName = "id")
-	private Code type;
+	@JoinColumn(name = "actionId", referencedColumnName = "id")
+	private Code action;
 	
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userId", referencedColumnName = "id")
 	private User user;
 
-	public Code getType() {
-		return type;
+	public Code getAction() {
+		return action;
 	}
 
-	public void setType(Code type) {
-		this.type = type;
+	public void setACtion(Code action) {
+		this.action = action;
 	}
 
 	public User getUser() {

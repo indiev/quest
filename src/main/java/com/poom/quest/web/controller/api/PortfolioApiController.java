@@ -10,11 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.poom.quest.services.model.Code;
 import com.poom.quest.services.model.Portfolio;
-import com.poom.quest.services.model.Quest;
 import com.poom.quest.services.model.user.User;
-import com.poom.quest.services.service.CodeService;
 import com.poom.quest.services.service.PortfolioService;
 
 @Controller
@@ -22,7 +19,6 @@ import com.poom.quest.services.service.PortfolioService;
 public class PortfolioApiController extends GenericApiController<Portfolio> {
 	
 	@Autowired PortfolioService portfolioService;
-	@Autowired CodeService codeService;
 	
 	@Override
 	@ResponseBody

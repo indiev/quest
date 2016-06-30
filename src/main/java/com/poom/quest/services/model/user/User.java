@@ -16,23 +16,23 @@ import com.poom.quest.services.model.abstractModel.GenericModel;
 
 @Entity
 public class User extends GenericModel {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private String password;
 	private String realname;
 	private String email;
 	private String phone;
-	private int point;
-	
+	private Integer point;
+
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	private Requester requester;
-	
+
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	private Quester quester;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
@@ -65,12 +65,12 @@ public class User extends GenericModel {
 	public String getPhone() {
 		return phone;
 	}
-	
-	public int getPoint() {
+
+	public Integer getPoint() {
 		return point;
 	}
 
-	public void setPoint(int point) {
+	public void setPoint(Integer point) {
 		this.point = point;
 	}
 

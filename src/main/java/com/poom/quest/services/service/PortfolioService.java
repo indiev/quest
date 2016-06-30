@@ -14,8 +14,8 @@ import com.poom.quest.services.repository.PortfolioRepository;
 @Transactional
 public class PortfolioService extends GenericService<Portfolio> {
 	
-	@Autowired CodeService codeService;
 	@Autowired PortfolioRepository portfolioDao;
+	@Autowired CodeService codeService;
 	
 	public List<Portfolio> searchByType(String typeValue, String keyword, Integer userId) {
 		Code type = codeService.getByKey("value", typeValue);

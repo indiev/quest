@@ -1,4 +1,4 @@
-package com.poom.quest.services.model;
+package com.poom.quest.services.model.log;
 
 import javax.persistence.Entity;
 
