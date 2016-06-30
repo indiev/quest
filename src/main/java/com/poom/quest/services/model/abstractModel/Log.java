@@ -38,6 +38,4 @@ public abstract class Log extends GenericModel {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
-	
 }

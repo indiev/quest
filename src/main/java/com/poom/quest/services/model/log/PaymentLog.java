@@ -29,7 +29,4 @@ public class PaymentLog extends Log {
 	public void setPoint(Integer point) {
 		this.point = point;
 	}
-	
-	
-	
 }
