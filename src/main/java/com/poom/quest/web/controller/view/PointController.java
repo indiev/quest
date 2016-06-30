@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.poom.quest.services.model.user.User;
 
 @Controller
-@RequestMapping("/payment")
-public class PaymentController {
+@RequestMapping("/point")
+public class PointController {
 
-	@RequestMapping(value = "buy", method = RequestMethod.GET)
-	public String buy() {
-		return "payment/buy";
+	@RequestMapping(value = "deposit", method = RequestMethod.GET)
+	public String buy(Model model) {
+		return "point/deposit";
 	}
 	
 }

@@ -19,15 +19,13 @@ public class PaymentService {
 	public PaymentLog buy(Integer point, User user) {
 		PaymentLog paymentLog = new PaymentLog();
 		Code code = codeService.getAction("buy", paymentLog);
-		paymentLog.setPoint(point);
-		paymentLog.setACtion(code);
+		
 		
 		/**
 		 * 결제요청전(요청자 설정, 요금 정책 적용.)
 		 * 
 		 */
-		paymentLog.setUser(user);
-		paymentLog.setMoney(paymentLog.getPoint() * 100);
+		
 
 		/**
 		 * 결제요청 후 성공.(요청자 포인트 증가, paymentLog 기록.)
@@ -37,6 +35,10 @@ public class PaymentService {
 		if(pointService.charge(point, user) != null)
 		{
 			paymentLog.setName(code.getName()+"성공");
+			paymentLog.setACtion(code);
+			paymentLog.setUser(user);
+			paymentLog.setMoney(point * 100);
+			paymentLog.setPoint(point);
 			return paymentLogService.add(paymentLog);
 		}
 		

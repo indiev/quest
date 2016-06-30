@@ -56,6 +56,7 @@
 						<li><a href="/portfolio/list" class="load">유저 포트폴리오 정보</a></li>
 						<li><a href="/portfolio/add" class="load">유저 포트폴리오 생성</a></li>
 						<li><a href="/payment/buy" class="load">포인트 결제</a>
+						<li><a href="/point/deposit" class="load">포인트 예치</a>
 						<li role="separator" class="divider"></li>
 						<li><a href="#" class="logout">로그아웃</a></li>
 					</ul>
