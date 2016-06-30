@@ -31,7 +31,7 @@ public class PaymentService {
 		 * 
 		 */
 		
-		user.setPoint(paymentLog.getPoint());
+		user.setPoint(user.getPoint()+paymentLog.getPoint());
 		paymentLog.setName("모의 결제 성공");
 		paymentLogService.add(paymentLog);
 		return paymentLog;
