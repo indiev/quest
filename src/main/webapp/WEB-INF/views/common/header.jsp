@@ -13,7 +13,7 @@
 			<ul class="nav navbar-nav">
 				<li><a href="/quest/list" class="load">Quest</a></li>
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">관리자 <span class="caret"></span></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover  role="button" aria-haspopup="true" aria-expanded="false">관리자 <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="/admin/area/add" class="load">분야</a></li>
 						<li><a href="/admin/work/add" class="load">업무</a></li>
@@ -57,6 +57,7 @@
 						<li><a href="/portfolio/add" class="load">유저 포트폴리오 생성</a></li>
 						<li><a href="/payment/buy" class="load">포인트 결제</a>
 						<li><a href="/point/deposit" class="load">포인트 예치</a>
+						<li><a href="/point/give" class="load">포인트 지급</a>
 						<li role="separator" class="divider"></li>
 						<li><a href="#" class="logout">로그아웃</a></li>
 					</ul>
