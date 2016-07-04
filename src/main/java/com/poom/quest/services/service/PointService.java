@@ -20,10 +20,10 @@ public class PointService {
 	
 	public PointLog charge(Integer point ,User user) {
 		PointLog pointLog = new PointLog();
-		Code code = codeService.getAction("charge", pointLog);
+		Code code = codeService.getAction("charge", pointLog.getClass().getSimpleName());
 		
 		user.setPoint(user.getPoint() + point);
-		pointLog.setName(code.getName()+"성공");
+		pointLog.setName("action: "+code.getName());
 		pointLog.setACtion(code);
 		pointLog.setUser(user);
 		pointLog.setPoint(point);
@@ -40,7 +40,8 @@ public class PointService {
 	
 	public PointLog deposit(Reward reward, User requestUser ) {
 		PointLog pointLog = new PointLog();
-		Code code = codeService.getAction("deposit", pointLog);
+		Code depositCode = codeService.getAction("deposit", pointLog.getClass().getSimpleName());
+		Code receiveWaitCode= codeService.getAction("receiveWait", pointLog.getClass().getSimpleName());
 		User questUser;
 		
 		Integer rewardPointSum = reward.getHwan().intValue();
@@ -49,8 +50,8 @@ public class PointService {
 		for (Quester quester: reward.getQuest().getQuesters()) {
 			questUser = quester.getUser();
 //			questUser.setPoint(questUser.getPoint()+rewardPoint);
-			pointLog.setName(requestUser.getRequester().getName()+code.getName()+"성공");
-			pointLog.setACtion(code);
+			pointLog.setName("action: "+receiveWaitCode.getName()+" /questName: "+reward.getQuest().getName()+" /requesterName: "+requestUser.getRequester().getName());
+			pointLog.setACtion(receiveWaitCode);
 			pointLog.setUser(questUser);
 			pointLog.setPoint(rewardPoint);
 			pointLog.setReward(reward);
@@ -58,15 +59,15 @@ public class PointService {
 		}
 		
 		requestUser.setPoint(requestUser.getPoint()-rewardPointSum);
-		pointLog.setName(code.getName()+"성공");
-		pointLog.setACtion(code);
+		pointLog.setName("action: "+depositCode.getName()+" /questName: "+reward.getQuest().getName()+" /requesterName: "+requestUser.getRequester().getName());
+		pointLog.setACtion(depositCode);
 		pointLog.setUser(requestUser);
 		pointLog.setPoint(rewardPointSum);
 		pointLog.setReward(reward);
 		
-		
 		return pointLogService.add(pointLog);
 	}
+	
 
 	
 }

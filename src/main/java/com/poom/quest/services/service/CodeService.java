@@ -21,11 +21,19 @@ public class CodeService extends GenericService<Code> {
 		return getByKeys(keys);
 	}
 	
-	public Code getAction(String actionValue, GenericModel model) {
+	public Code getAction(String actionValue, String modelName) {
 		Map<String, String> keys = new HashMap<>();
-		keys.put("model", model.getClass().getSimpleName());
+		keys.put("model", modelName);
 		keys.put("attribute", "action");
 		keys.put("value", actionValue);
+		return getByKeys(keys);
+	}
+	
+	public Code getState(String stateValue, String modelName) {
+		Map<String, String> keys = new HashMap<>();
+		keys.put("model", modelName);
+		keys.put("attribute", "state");
+		keys.put("value", stateValue);
 		return getByKeys(keys);
 	}
 }
