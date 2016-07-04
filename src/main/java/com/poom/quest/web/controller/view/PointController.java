@@ -16,4 +16,9 @@ public class PointController {
 		return "point/deposit";
 	}
 	
+	@RequestMapping(value = "give", method = RequestMethod.GET)
+	public String give(Model model) {
+		return "point/give";
+	}
+	
 }

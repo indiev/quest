@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
-예치 테스트
+지급 테스트
 <br>
 4번 퀘스트 - 보상: 1,000,000
 <br>
@@ -16,15 +16,15 @@ $(document).ready(function() {
 		selectInputList('reward', list, '보상');
 	})
 	
-	$("select[name='reward']").change(function(){deposit(this.value);});
+	$("select[name='reward']").change(function(){give(this.value);});
 });
 
-function deposit(rewardId) {
-	ajax.put("/api/point/deposit/"+rewardId, {} ,function(result){
+function give(rewardId) {
+	ajax.put("/api/point/give/"+rewardId, {} ,function(result){
 		if(result!= "") {
-			alert("해당 보상으로 포인트를 예치 하였습니다.");
+			alert("해당 보상으로 포인트를 지급 하였습니다.");
 		}
-		else alert("포인트를 예치 할 수 없습니다.");
+		else alert("포인트를 지급할 수 없습니다.");
 	});
 	return false;
 }

@@ -27,4 +27,14 @@ public class PointApiController {
 		if(user !=null ) return pointService.deposit(rewardId, user);
 		else return null;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/give/{rewardId}", method = RequestMethod.PUT)
+	public PointLog give(@PathVariable("rewardId") Integer rewardId) {
+		User user = userService.getLoginUserByRequest();
+		if(user !=null ) return pointService.give(rewardId, user);
+		else return null;
+	}
+	
+
 }

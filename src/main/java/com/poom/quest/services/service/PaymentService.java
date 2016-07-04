@@ -18,7 +18,7 @@ public class PaymentService {
 	
 	public PaymentLog buy(Integer point, User user) {
 		PaymentLog paymentLog = new PaymentLog();
-		Code code = codeService.getAction("buy", paymentLog);
+		Code code = codeService.getAction("buy", paymentLog.getClass().getSimpleName());
 		
 		
 		/**
