@@ -1,13 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 <div class="firstWrap">
 	<div class="container text-center clearfix">
 		<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
-		<h1>퀘스트 서비스</h1>
+		<h1>서비스 퀘스트</h1>
 		<p>언제, 어디서나 일을 요청하고 또한 수행할 수 있는<br>온라인 일 거래 플랫폼입니다</p>
 		<p>
-			<a class="btn btn-primary btn-lg" href="#" role="button">Learn
-				more</a>
+			<a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
 		</p>
 	</div>
 </div>
