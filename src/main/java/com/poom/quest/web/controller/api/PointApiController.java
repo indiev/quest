@@ -29,12 +29,19 @@ public class PointApiController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value = "/withdraw/{rewardId}", method = RequestMethod.PUT)
+	public PointLog withdraw(@PathVariable("rewardId") Integer rewardId) {
+		User user = userService.getLoginUserByRequest();
+		if(user !=null ) return pointService.withdraw(rewardId, user);
+		else return null;
+	}
+	
+	@ResponseBody
 	@RequestMapping(value = "/give/{rewardId}", method = RequestMethod.PUT)
 	public PointLog give(@PathVariable("rewardId") Integer rewardId) {
 		User user = userService.getLoginUserByRequest();
 		if(user !=null ) return pointService.give(rewardId, user);
 		else return null;
 	}
-	
 
 }
