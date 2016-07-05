@@ -337,6 +337,10 @@
         processElements("data-value", template, data, settings, function ($elem, value) {
             $elem.attr("value", applyFormatters($elem, value, "value", settings));
         });
+        
+        processElements("data-title", template, data, settings, function ($elem, value) {
+            $elem.attr("title", applyFormatters($elem, value, "title", settings));
+        });
 
         processElements("data-link", template, data, settings, function ($elem, value) {
             var $linkElem = $("<a/>");

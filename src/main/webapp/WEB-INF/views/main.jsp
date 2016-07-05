@@ -19,7 +19,7 @@
 <div class="container-fluid">
 	<main class="row"></main>
 </div>
-<footer class="footer navbar-fixed-bottom"></footer>
+<!-- <footer class="footer navbar-fixed-bottom"></footer> -->
 <div class="modal fade" id="modal" role="dialog" aria-labelledby="modalHeader" aria-hidden="true" tabindex="-1">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -62,7 +62,7 @@
 var user = null;
 $(document).ready(function(){
 	/* $("header").load("/header"); */
-	$("footer").load("/footer");
+	/* $("footer").load("/footer"); */
 	$("main").load("${mainContent}");
 	ajax.get("/api/user/get", {}, function(data) { 
 		user = data;
