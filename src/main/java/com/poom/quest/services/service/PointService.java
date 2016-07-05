@@ -3,6 +3,7 @@ package com.poom.quest.services.service;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.NumberFormat;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,16 +22,10 @@ public class PointService {
 	@Autowired RewardService rewardService;
 	
 	public PointLog charge(Integer point ,User user) {
-		PointLog pointLog = new PointLog();
-		Code code = codeService.getAction("charge", pointLog.getClass().getSimpleName());
+		Code chargeActionCode = codeService.getAction("charge", PointLog.class.getSimpleName());
 		
 		user.setPoint(user.getPoint() + point);
-		pointLog.setName("action: "+code.getName());
-		pointLog.setACtion(code);
-		pointLog.setUser(user);
-		pointLog.setPoint(point);
-		
-		return pointLogService.add(pointLog);
+		return pointLogService.add(new PointLog("포인트 충전", chargeActionCode, user, point, null));
 	}
 	
 
@@ -85,26 +80,34 @@ public class PointService {
 		Set<Quester> questers = reward.getQuest().getQuesters();
 		Integer rewardPointSum = reward.getHwan().intValue();
 		Integer rewardPoint = reward.getHwan().intValue()/reward.getQuest().getQuesters().size();
+		Integer tradeQuesterPoint = 0;
+		Integer tradeRequesterPoint = 0;
 		
-		if(!(reward.getState().equals(rewardConditionStateCode)))
+		if(!(reward.getState().equals(rewardConditionStateCode)) || requestUser.getPoint() < rewardPointSum)
 			return null;
 		
 		for (Quester quester: questers) {
 			User questUser = quester.getUser();
-			if(requesterActionCode.getValue().equals("give"))
+			if(requesterActionCode.getValue().equals("give")) {
 				questUser.setPoint(questUser.getPoint()+rewardPoint);
-			String logName = "action: "+questerActionCode.getName()+" /questName: "+reward.getQuest().getName()+" /requesterName: "+requestUser.getRequester().getName();
-			pointLogService.add(new PointLog(logName, questerActionCode, questUser, rewardPoint, reward ));
+				tradeQuesterPoint = rewardPoint;
+			}
+			String logName = "참가한 "+reward.getQuest().getName()+"( "+reward.getQuest().getState().getName()+" ) "+rewardPoint+" point 보상";
+			pointLogService.add(new PointLog(logName, questerActionCode, questUser, tradeQuesterPoint, reward));
 		}
 		
-		if(requesterActionCode.getValue().equals("deposit"))
+		if(requesterActionCode.getValue().equals("deposit")) {
 			requestUser.setPoint(requestUser.getPoint()-rewardPointSum);
-		else if(requesterActionCode.getValue().equals("withdraw"))
+			tradeRequesterPoint = -rewardPointSum;
+		}
+		else if(requesterActionCode.getValue().equals("withdraw")) {
 			requestUser.setPoint(requestUser.getPoint()+rewardPointSum);
+			tradeRequesterPoint = rewardPointSum;
+		}
 		
 		reward.setState(rewardNextStateCode);
-		String logName = "action: "+requesterActionCode.getName()+" /questName: "+reward.getQuest().getName()+" /requesterName: "+requestUser.getRequester().getName();
-		return pointLogService.add(new PointLog(logName, requesterActionCode, requestUser, rewardPointSum, reward));
+		String logName = "요청한 "+reward.getQuest().getName()+"( "+reward.getQuest().getState().getName()+" ) "+rewardPointSum+" point 보상";
+		return pointLogService.add(new PointLog(logName, requesterActionCode, requestUser, tradeRequesterPoint, reward));
 	}
 
 	

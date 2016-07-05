@@ -35,7 +35,7 @@ function selectInputList(name, list, defaultText) {
 	select.append($("<option>").html(defaultText).val(null));
 	$.each(list, function(i, node) {
 		option = $("<option>");
-		option.html("보상id"+node.id+"금액:"+node.hwan+node.name).val(node.id).attr("id", this.value);
+		option.html("보상Id"+node.id+" /상태:"+node.state.name+"/ 포인트:"+node.hwan+node.name).val(node.id).attr("id", this.value);
 		select.append(option);
 	});
 }

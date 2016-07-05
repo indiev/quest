@@ -12,12 +12,17 @@ import com.poom.quest.services.model.user.User;
 public class PointController {
 
 	@RequestMapping(value = "deposit", method = RequestMethod.GET)
-	public String buy(Model model) {
+	public String buy() {
 		return "point/deposit";
 	}
 	
+	@RequestMapping(value = "withdraw", method = RequestMethod.GET)
+	public String withdraw() {
+		return "point/withdraw";
+	}
+	
 	@RequestMapping(value = "give", method = RequestMethod.GET)
-	public String give(Model model) {
+	public String give() {
 		return "point/give";
 	}
 	

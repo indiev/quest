@@ -1,11 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
-예치 테스트
-<br>
-4번 퀘스트 - 보상: 1,000,000
-<br>
-리퀘스터 1
-<br>
-퀘스터 1,2
+예치취소 테스트
 
 <select name="reward" id="rewardId" class="form-control" ></select>
 
@@ -13,18 +7,19 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	ajax.get("/api/reward", {}, function(list) {
+		console.log(list);
 		selectInputList('reward', list, '보상');
 	})
 	
-	$("select[name='reward']").change(function(){deposit(this.value);});
+	$("select[name='reward']").change(function(){withdraw(this.value);});
 });
 
-function deposit(rewardId) {
-	ajax.put("/api/point/deposit/"+rewardId, {} ,function(result){
+function withdraw(rewardId) {
+	ajax.put("/api/point/withdraw/"+rewardId, {} ,function(result){
 		if(result!= "") {
-			alert("해당 보상으로 포인트를 예치 하였습니다.");
+			alert("해당 보상으로 포인트를 예치취소 하였습니다.");
 		}
-		else alert("포인트를 예치 할 수 없습니다.");
+		else alert("포인트를 예치취소를 할 수 없습니다.");
 	});
 	return false;
 }
