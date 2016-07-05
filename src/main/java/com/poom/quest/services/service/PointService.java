@@ -1,5 +1,7 @@
 package com.poom.quest.services.service;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,41 +41,30 @@ public class PointService {
 	}
 	
 	public PointLog deposit(Reward reward) {
-		PointLog pointLog = new PointLog();
-		Code depositCode = codeService.getAction("deposit", pointLog.getClass().getSimpleName());
-		Code receiveWaitCode= codeService.getAction("receiveWait", pointLog.getClass().getSimpleName());
-		Code rewardCode = codeService.getState("rewardKeeping", reward.getClass().getSimpleName());
-		User requestUser = reward.getQuest().getRequester().getUser();
-		User questUser;
+		Code requesterActionCode = codeService.getAction("deposit", PointLog.class.getSimpleName());
+		Code questerActionCode = codeService.getAction("receiveWait", PointLog.class.getSimpleName());
+		Code rewardConditionStateCode = codeService.getState("depositWaiting", Reward.class.getSimpleName());
+		Code rewardNextStateCode = codeService.getState("pointKeeping", Reward.class.getSimpleName());
 		
-		Integer rewardPointSum = reward.getHwan().intValue();
-		Integer rewardPoint = reward.getHwan().intValue()/reward.getQuest().getQuesters().size();
-		
-		if(!(reward.getState().equals(codeService.getState("rewardWaiting",reward.getClass().getSimpleName()))))
-			return null;
-		
-		for (Quester quester: reward.getQuest().getQuesters()) {
-			questUser = quester.getUser();
-//			questUser.setPoint(questUser.getPoint()+rewardPoint);
-			pointLog.setName("action: "+receiveWaitCode.getName()+" /questName: "+reward.getQuest().getName()+" /requesterName: "+requestUser.getRequester().getName());
-			pointLog.setACtion(receiveWaitCode);
-			pointLog.setUser(questUser);
-			pointLog.setPoint(rewardPoint);
-			pointLog.setReward(reward);
-			pointLogService.add(pointLog);
-		}
-		
-		requestUser.setPoint(requestUser.getPoint()-rewardPointSum);
-		pointLog.setName("action: "+depositCode.getName()+" /questName: "+reward.getQuest().getName()+" /requesterName: "+requestUser.getRequester().getName());
-		pointLog.setACtion(depositCode);
-		pointLog.setUser(requestUser);
-		pointLog.setPoint(rewardPointSum);
-		pointLog.setReward(reward);
-		
-		reward.setState(rewardCode);
-		return pointLogService.add(pointLog);
+		return tradeRequesterToQuester(reward, requesterActionCode, questerActionCode, rewardConditionStateCode, rewardNextStateCode);
 	}
 	
+	public PointLog withdraw(Integer rewardId, User user) {
+		if(rewardService.get(rewardId) != null && rewardService.get(rewardId).getQuest().getRequester().equals(user.getRequester()))
+			return this.withdraw(rewardService.get(rewardId));
+		return null;
+	}
+	
+	private PointLog withdraw(Reward reward) {
+		Code requesterActionCode = codeService.getAction("withdraw", PointLog.class.getSimpleName());
+		Code questerActionCode = codeService.getAction("depositCancel", PointLog.class.getSimpleName());
+		Code rewardConditionStateCode = codeService.getState("pointKeeping", Reward.class.getSimpleName());
+		Code rewardNextStateCode = codeService.getState("depositWaiting", Reward.class.getSimpleName());
+		
+		return tradeRequesterToQuester(reward, requesterActionCode, questerActionCode, rewardConditionStateCode, rewardNextStateCode);
+	}
+
+
 	public PointLog give(Integer rewardId, User user) {
 		if(rewardService.get(rewardId) != null && rewardService.get(rewardId).getQuest().getRequester().equals(user.getRequester()))
 			return this.give(rewardService.get(rewardId));
@@ -81,40 +72,40 @@ public class PointService {
 	}
 	
 	public PointLog give(Reward reward) {
-		PointLog pointLog = new PointLog();
-		Code giveCode = codeService.getAction("give", pointLog.getClass().getSimpleName());
-		Code receiveCode = codeService.getAction("receive", pointLog.getClass().getSimpleName());
-		Code rewardCode = codeService.getState("rewardCompleted", reward.getClass().getSimpleName());
-		User requestUser = reward.getQuest().getRequester().getUser();
-		User questUser;
+		Code requesterActionCode = codeService.getAction("give", PointLog.class.getSimpleName());
+		Code questerActionCode = codeService.getAction("receive", PointLog.class.getSimpleName());
+		Code rewardConditionStateCode = codeService.getState("pointKeeping", Reward.class.getSimpleName());
+		Code rewardNextStateCode = codeService.getState("rewardCompleted", Reward.class.getSimpleName());
 		
+		return tradeRequesterToQuester(reward, requesterActionCode, questerActionCode, rewardConditionStateCode, rewardNextStateCode);
+	}
+	
+	private PointLog tradeRequesterToQuester(Reward reward, Code requesterActionCode, Code questerActionCode, Code rewardConditionStateCode, Code rewardNextStateCode) {
+		User requestUser = reward.getQuest().getRequester().getUser();
+		Set<Quester> questers = reward.getQuest().getQuesters();
 		Integer rewardPointSum = reward.getHwan().intValue();
 		Integer rewardPoint = reward.getHwan().intValue()/reward.getQuest().getQuesters().size();
 		
-		if(!(reward.getState().equals(codeService.getState("rewardKeeping",reward.getClass().getSimpleName()))))
+		if(!(reward.getState().equals(rewardConditionStateCode)))
 			return null;
 		
-		for (Quester quester: reward.getQuest().getQuesters()) {
-			questUser = quester.getUser();
-			questUser.setPoint(questUser.getPoint()+rewardPoint);
-			pointLog.setName("action: "+receiveCode.getName()+" /questName: "+reward.getQuest().getName()+" /requesterName: "+requestUser.getRequester().getName());
-			pointLog.setACtion(receiveCode);
-			pointLog.setUser(questUser);
-			pointLog.setPoint(rewardPoint);
-			pointLog.setReward(reward);
-			pointLogService.add(pointLog);
+		for (Quester quester: questers) {
+			User questUser = quester.getUser();
+			if(requesterActionCode.getValue().equals("give"))
+				questUser.setPoint(questUser.getPoint()+rewardPoint);
+			String logName = "action: "+questerActionCode.getName()+" /questName: "+reward.getQuest().getName()+" /requesterName: "+requestUser.getRequester().getName();
+			pointLogService.add(new PointLog(logName, questerActionCode, questUser, rewardPoint, reward ));
 		}
 		
-		pointLog.setName("action: "+giveCode.getName()+" /questName: "+reward.getQuest().getName()+" /requesterName: "+requestUser.getRequester().getName());
-		pointLog.setACtion(giveCode);
-		pointLog.setUser(requestUser);
-		pointLog.setPoint(rewardPointSum);
-		pointLog.setReward(reward);
+		if(requesterActionCode.getValue().equals("deposit"))
+			requestUser.setPoint(requestUser.getPoint()-rewardPointSum);
+		else if(requesterActionCode.getValue().equals("withdraw"))
+			requestUser.setPoint(requestUser.getPoint()+rewardPointSum);
 		
-		reward.setState(rewardCode);
-		return pointLogService.add(pointLog);
+		reward.setState(rewardNextStateCode);
+		String logName = "action: "+requesterActionCode.getName()+" /questName: "+reward.getQuest().getName()+" /requesterName: "+requestUser.getRequester().getName();
+		return pointLogService.add(new PointLog(logName, requesterActionCode, requestUser, rewardPointSum, reward));
 	}
-	
 
 	
 }
