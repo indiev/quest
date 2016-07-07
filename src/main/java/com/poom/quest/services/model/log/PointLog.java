@@ -29,7 +29,6 @@ public class PointLog extends Log {
 		this.setUser(user);
 		this.setPoint(point);
 		this.setReward(reward);
-		
 	}
 	
 	
@@ -48,6 +47,4 @@ public class PointLog extends Log {
 	public void setPoint(Integer point) {
 		this.point = point;
 	}
-	
-	
 }

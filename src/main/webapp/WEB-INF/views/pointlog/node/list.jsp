@@ -5,22 +5,7 @@
 	color:white;
 }
 
-[action=deposit] {
-	background-color: Orange;
-	color: white;
-}
-
-[action=receiveWait] {
-	background-color: Orange;
-	color: white;
-}
-
-[action=withdraw] {
-	background-color: PaleGreen;
-	color: green;
-}
-
-[action=depositCancel] {
+[action=deposit],[action=withdraw] {
 	background-color: Orange;
 	color: white;
 }

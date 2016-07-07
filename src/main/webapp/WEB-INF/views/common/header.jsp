@@ -59,6 +59,8 @@
 						<li><a href="/point/deposit" class="load">포인트 예치</a>
 						<li><a href="/point/withdraw" class="load">포인트 예치 취소</a>
 						<li><a href="/point/give" class="load">포인트 지급</a>
+						<li><a href="/pointLog/list" class="load">포인트 거래 내역</a>
+						<li><a href="/paymentLog/list" class="load">포인트 결제 및 환불, 환전 내역 정보</a>
 						<li role="separator" class="divider"></li>
 						<li><a href="#" class="logout">로그아웃</a></li>
 					</ul>

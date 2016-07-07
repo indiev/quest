@@ -1,38 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 <style type="text/css">
-[action=charge] {
+[action=buy] {
 	background-color: SlateBlue;
 	color:white;
-}
-
-[action=deposit] {
-	background-color: Orange;
-	color: white;
-}
-
-[action=receiveWait] {
-	background-color: Orange;
-	color: white;
-}
-
-[action=withdraw] {
-	background-color: PaleGreen;
-	color: green;
-}
-
-[action=depositCancel] {
-	background-color: Orange;
-	color: white;
-}
-
-[action=give] {
-	background-color: OrangeRed;
-	color: white;
-}
-
-[action=receive] {
-	background-color: PaleGreen;
-	color: green;
 }
 
 </style>
@@ -52,6 +22,10 @@
 					
 					<div class="col-md-4">
 						<div data-content-append="name"></div>
+					</div>
+					
+					<div class="col-md-2">
+						<div data-content-append="money" data-format="money"></div>
 					</div>
 					
 					<div class="col-md-2">

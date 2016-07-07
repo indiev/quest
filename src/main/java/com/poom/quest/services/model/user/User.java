@@ -24,6 +24,8 @@ public class User extends GenericModel {
 	private String email;
 	private String phone;
 	private Integer point;
+	private Integer frozenPoint;
+	
 
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
@@ -101,4 +103,14 @@ public class User extends GenericModel {
 	public void setPortfolios(Set<Portfolio> portfolios) {
 		this.portfolios = portfolios;
 	}
+
+	public Integer getFrozenPoint() {
+		return frozenPoint;
+	}
+
+	public void setFrozenPoint(Integer frozenPoint) {
+		this.frozenPoint = frozenPoint;
+	}
+	
+	
 }
