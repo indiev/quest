@@ -58,6 +58,10 @@ public class Quest extends GenericModel {
 	@Cascade(CascadeType.ALL)
 	private Set<Requirement> requirements; //요구사항들
 	
+	@OneToMany(mappedBy = "quest", fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
+	private Set<Issue> issues; //이슈
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "requesterId", referencedColumnName = "id")
 	private Requester requester;	//발주자
@@ -156,6 +160,14 @@ public class Quest extends GenericModel {
 
 	public void setRequirements(Set<Requirement> requirements) {
 		this.requirements = requirements;
+	}
+	
+	public Set<Issue> getIssues() {
+		return issues;
+	}
+
+	public void setIssues(Set<Issue> issues) {
+		this.issues = issues;
 	}
 
 	public Requester getRequester() {

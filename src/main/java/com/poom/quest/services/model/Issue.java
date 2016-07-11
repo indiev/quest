@@ -14,6 +14,7 @@ import javax.persistence.PrePersist;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poom.quest.services.model.abstractModel.GenericModel;
 import com.poom.quest.services.model.user.User;
 
@@ -40,6 +41,11 @@ public class Issue extends GenericModel {
 	@OneToMany(mappedBy = "issue")
 	@Cascade(CascadeType.ALL)
 	private Set<IssueComment> comments;
+	
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "questId", referencedColumnName = "id")
+	private Quest quest;
 	
 	@PrePersist
 	public void onCreate() {
@@ -85,4 +91,14 @@ public class Issue extends GenericModel {
 	public void setComments(Set<IssueComment> comments) {
 		this.comments = comments;
 	}
+
+	public Quest getQuest() {
+		return quest;
+	}
+
+	public void setQuest(Quest quest) {
+		this.quest = quest;
+	}
+	
+	
 }
