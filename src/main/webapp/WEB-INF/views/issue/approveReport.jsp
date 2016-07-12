@@ -15,10 +15,7 @@ $(document).ready(function() {
 
 function approveReport(issueId) {
 	ajax.put("/api/issue/approveReport/"+issueId, {} ,function(result){
-		if(result!= "") {
-			alert("해당 보고 이슈를 승인 하였습니다.");
-		}
-		else alert("해당 보고 이슈를 승인 할 수 없습니다.");
+		console.log(result);
 	});
 	return false;
 }
@@ -30,8 +27,17 @@ function selectInputList(name, list, defaultText) {
 	select.append($("<option>").html(defaultText).val(null));
 	$.each(list, function(i, node) {
 		option = $("<option>");
-		option.html("이슈Id"+node.id+" /상태:"+node.type.name+"/ 퀘스트 id:"+node.quest.id).val(node.id).attr("id", this.value);
+		option.html("이슈Id"+node.id+" /타입:"+node.type.name+"/ 요구사항:"+stringToList(node.requirements)).val(node.id).attr("id", this.value);
 		select.append(option);
 	});
+}
+
+function stringToList(list) {
+	var result = "";
+	for ( var index in list) {
+		console.log(list[index]);
+		result += list[index].name+","; 
+	}
+	return result;
 }
 </script>
