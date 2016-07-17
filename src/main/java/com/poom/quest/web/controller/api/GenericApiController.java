@@ -21,9 +21,9 @@ import com.poom.quest.services.service.UserService;
 @RequestMapping("api")
 public abstract class GenericApiController<T extends GenericModel> {
 
-	@Autowired GenericService<T> service;
-	@Autowired UserService userService;
-	Class<T> domainClass;
+	@Autowired protected GenericService<T> service;
+	@Autowired protected UserService userService;
+	protected Class<T> domainClass;
 	
 	@ResponseBody
 	@RequestMapping
@@ -73,6 +73,7 @@ public abstract class GenericApiController<T extends GenericModel> {
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.POST)
 	public T add(@RequestBody T entity) {
+		//T의 Field Type에 User, Quester, Requester가 있다면. User에서 해당 클래스 넣기
 		return service.add(entity);
 	}
 	
@@ -81,6 +82,7 @@ public abstract class GenericApiController<T extends GenericModel> {
 	public T update(@PathVariable Integer id, @RequestParam Map<String, Object> params) {
 		int changeCount = 0;
 		T entity = service.get(id);
+		//T의 Field Type에 User, Quester, Requester가 있다면. 로그인이 되어 있는지 관련 사용자가 맞는지 확인
 		for(String key : params.keySet()) {
 			try {
 				Field field = domainClass.getField(key);
@@ -101,22 +103,22 @@ public abstract class GenericApiController<T extends GenericModel> {
 	}
 	
 	//보류 uri
-		// /{parent}s/{parentId} PUT
-		/* 
-		 * /{parent}s/{parentId} POST
-		@ResponseBody
-		@RequestMapping(value = "/{parent}s/{parentId}", method = RequestMethod.POST)
-		public T addForParent(@PathVariable("parent") String parent, @PathVariable("parentId") Integer parentId, @RequestBody T entity) {
-			try {
-				Class<?> parentClass = domainClass.getField(parent).getType();
-				Method methodOfSetParent = domainClass.getMethod("set"+parent, domainClass.getClass());
-				//find parentService
-				//Object parentObject = parentService.get(parentId); - method Invoke
-				//methodOfSetParent.invoke(entity, parentObject);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return service.add(entity);
+	// /{parent}s/{parentId} PUT
+	/* 
+	 * /{parent}s/{parentId} POST
+	@ResponseBody
+	@RequestMapping(value = "/{parent}s/{parentId}", method = RequestMethod.POST)
+	public T addForParent(@PathVariable("parent") String parent, @PathVariable("parentId") Integer parentId, @RequestBody T entity) {
+		try {
+			Class<?> parentClass = domainClass.getField(parent).getType();
+			Method methodOfSetParent = domainClass.getMethod("set"+parent, domainClass.getClass());
+			//find parentService
+			//Object parentObject = parentService.get(parentId); - method Invoke
+			//methodOfSetParent.invoke(entity, parentObject);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		*/
+		return service.add(entity);
+	}
+	*/
 }
