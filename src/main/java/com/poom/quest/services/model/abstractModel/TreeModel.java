@@ -12,7 +12,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 @MappedSuperclass
-public abstract class TreeModel<T> extends GenericModel {
+public abstract class TreeModel<T extends GenericModel> extends GenericModel {
 
 	private static final long serialVersionUID = 1L;
 	 
