@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.poom.quest.services.model.Work;
 
 @Controller
-@RequestMapping("api/work")
+@RequestMapping("api/works")
 public class WorkApiController extends GenericApiController<Work> {
 	
 	@ResponseBody
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public List<Work> list() {
-		return genericService.listByKeyId("parent", (Integer)null);
+		return service.listByKeyId("parent", (Integer)null);
 	}
 }

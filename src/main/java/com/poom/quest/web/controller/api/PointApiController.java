@@ -14,7 +14,7 @@ import com.poom.quest.services.service.UserService;
 
 
 @Controller
-@RequestMapping("api/point")
+@RequestMapping("api/points")
 public class PointApiController {
 	
 	@Autowired PointService pointService;

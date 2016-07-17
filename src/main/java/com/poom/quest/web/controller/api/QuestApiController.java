@@ -25,7 +25,7 @@ import com.poom.quest.services.service.QuesterService;
 import com.poom.quest.services.service.UserService;
 
 @Controller
-@RequestMapping("api/quest")
+@RequestMapping("api/quests")
 public class QuestApiController extends GenericApiController<Quest> {
 	
 	@Autowired QuestService questService;
@@ -42,7 +42,7 @@ public class QuestApiController extends GenericApiController<Quest> {
 	@ResponseBody
 	@RequestMapping(value = "all/search/{keyword}", method = RequestMethod.GET)
 	public List<Quest> search(@PathVariable("keyword") String keyword) {
-		return super.search(keyword);
+		return service.search(keyword, null);
 	}
 	
 	@ResponseBody
@@ -71,12 +71,12 @@ public class QuestApiController extends GenericApiController<Quest> {
 	@ResponseBody
 	@RequestMapping(value = "/apply", method = RequestMethod.PUT)
 	public Boolean apply(@RequestParam Integer id) {
-		Quest quest = genericService.get(id);
+		Quest quest = service.get(id);
 		User loginUser = userService.getLoginUserByRequest();
 		if(loginUser != null && loginUser != quest.getRequester().getUser()) {
 			Set<Quester> applicants = quest.getApplicants();
 			applicants.add(loginUser.getQuester());
-			genericService.update(quest);
+			service.update(quest);
 			return true;
 		}
 		return false;
@@ -85,7 +85,7 @@ public class QuestApiController extends GenericApiController<Quest> {
 	@ResponseBody
 	@RequestMapping(value = "/accept", method = RequestMethod.PUT)
 	public Boolean accept(@RequestParam Integer questId, @RequestParam Integer questerId) {
-		Quest quest = genericService.get(questId);
+		Quest quest = service.get(questId);
 		User loginUser = userService.getLoginUserByRequest();
 		if(loginUser != null && loginUser == quest.getRequester().getUser()) {
 			Quester quester = questerService.get(questerId);
@@ -93,7 +93,7 @@ public class QuestApiController extends GenericApiController<Quest> {
 			applicants.remove(quester);
 			Set<Quester> questers = quest.getQuesters();
 			questers.add(quester);
-			genericService.update(quest);
+			service.update(quest);
 			return true;
 		}
 		return false;
@@ -106,7 +106,7 @@ public class QuestApiController extends GenericApiController<Quest> {
 		Map<String, String> result = new HashMap<>();
 		User user = userService.getLoginUserByRequest();
 		if(user != null) {
-			Quest quest = genericService.get(id);
+			Quest quest = service.get(id);
 			if(quest.getRequester().getId().equals(user.getId())) {
 				result = questService.updateState(quest, stateValue);
 			} else result.put("error", "권한이 없습니다.");

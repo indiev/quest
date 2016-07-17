@@ -13,7 +13,7 @@ import com.poom.quest.services.service.PaymentService;
 import com.poom.quest.services.service.UserService;
 
 @Controller
-@RequestMapping("api/payment")
+@RequestMapping("api/payments")
 public class PaymentApiController {
 	
 	@Autowired PaymentService paymentService;

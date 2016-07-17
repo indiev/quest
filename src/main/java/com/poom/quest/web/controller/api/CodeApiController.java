@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.poom.quest.services.model.Code;
 
 @Controller
-@RequestMapping("api/code")
+@RequestMapping("api/codes")
 public class CodeApiController extends GenericApiController<Code> {
 
 	@ResponseBody
@@ -22,6 +22,6 @@ public class CodeApiController extends GenericApiController<Code> {
 		Map<String, Object> keys = new HashMap<String, Object>();
 		keys.put("model", model);
 		keys.put("attribute", attribute);
-		return genericService.listByKeys(keys);
+		return service.listByKeys(keys);
 	}
 }

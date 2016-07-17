@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.poom.quest.services.model.Area;
 
 @Controller
-@RequestMapping("api/area")
+@RequestMapping("api/areas")
 public class AreaApiController extends GenericApiController<Area> {
 	
 	@ResponseBody
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public List<Area> list() {
-		return genericService.listByKeyId("parent", (Integer)null);
+		return service.listByKeyId("parent", (Integer)null);
 	}
 }

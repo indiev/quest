@@ -14,7 +14,7 @@ import com.poom.quest.services.service.QuestService;
 import com.poom.quest.services.service.UserService;
 
 @Controller
-@RequestMapping("api/contract")
+@RequestMapping("api/contracts")
 public class ContractApiController extends GenericApiController<Contract> {
 	
 	@Autowired UserService userService;
@@ -24,7 +24,7 @@ public class ContractApiController extends GenericApiController<Contract> {
 	@RequestMapping(value = "/agree/{id}", method = RequestMethod.GET)
 	public Boolean checkAgree(@PathVariable Integer id) {
 		User user = userService.getLoginUserByRequest();
-		Contract contract = genericService.get(id);
+		Contract contract = service.get(id);
 		if(contract.getAgreedUsers().contains(user)) return true;
 		else return false;
 	}
@@ -33,9 +33,9 @@ public class ContractApiController extends GenericApiController<Contract> {
 	@RequestMapping(value = "/agree/{id}", method = RequestMethod.PUT)
 	public Boolean updateAgree(@PathVariable Integer id) {
 		User user = userService.getLoginUserByRequest();
-		Contract contract = genericService.get(id);
+		Contract contract = service.get(id);
 		contract.getAgreedUsers().add(user);
-		genericService.update(contract);
+		service.update(contract);
 		
 		Quest quest = contract.getQuest();
 		if(quest.getQuesters().size() + 1 == contract.getAgreedUsers().size()) { 	//전부다 동의했다면, 다음단계로.

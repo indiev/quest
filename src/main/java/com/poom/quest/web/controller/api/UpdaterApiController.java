@@ -15,7 +15,7 @@ import com.poom.quest.services.model.Updater;
 import com.poom.quest.services.model.user.User;
 
 @Controller
-@RequestMapping("api/updater")
+@RequestMapping("api/updaters")
 public class UpdaterApiController extends GenericApiController<Updater> {
 	
 	@Override
@@ -25,7 +25,7 @@ public class UpdaterApiController extends GenericApiController<Updater> {
 		User user = userService.getLoginUserByRequest();
 		if(user != null) {
 			entity.setUser(user);
-			return genericService.add(entity);
+			return service.add(entity);
 		}
 		return null;
 	}
@@ -37,6 +37,6 @@ public class UpdaterApiController extends GenericApiController<Updater> {
 		keys.put("model", model);
 		keys.put("attribute", attribute);
 		keys.put("refId", refId);
-		return genericService.listByKeys(keys);
+		return service.listByKeys(keys);
 	}
 }

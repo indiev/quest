@@ -13,7 +13,7 @@ import com.poom.quest.services.service.QuestService;
 
 
 @Controller
-@RequestMapping("api/quester")
+@RequestMapping("api/questers")
 public class QuesterApiController extends GenericApiController<Quester> {
 	
 	@Autowired QuestService questService;
@@ -25,7 +25,7 @@ public class QuesterApiController extends GenericApiController<Quester> {
 		User user = userService.getLoginUserByRequest();
 		if(user != null) {
 			entity.setUser(user);
-			return genericService.add(entity);
+			return service.add(entity);
 		}
 		return null;
 	}

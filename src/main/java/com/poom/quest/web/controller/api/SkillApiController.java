@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.poom.quest.services.model.Skill;
 
 @Controller
-@RequestMapping("api/skill")
+@RequestMapping("api/skills")
 public class SkillApiController extends GenericApiController<Skill> {
 }

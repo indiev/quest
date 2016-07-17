@@ -1,6 +1,7 @@
 package com.poom.quest.web.controller.api;
 
-import java.util.HashMap;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 
@@ -9,85 +10,113 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.poom.quest.services.model.abstractModel.GenericModel;
 import com.poom.quest.services.model.user.User;
 import com.poom.quest.services.service.GenericService;
 import com.poom.quest.services.service.UserService;
 
 @RequestMapping("api")
-public abstract class GenericApiController<T> {
+public abstract class GenericApiController<T extends GenericModel> {
 
-	@Autowired GenericService<T> genericService;
+	@Autowired GenericService<T> service;
 	@Autowired UserService userService;
+	Class<T> domainClass;
 	
 	@ResponseBody
 	@RequestMapping
-	public List<T> list() {
-		return genericService.list();
+	public List<T> list(@RequestParam Map<String, Object> params) {
+		return service.list();
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public T get(@PathVariable Integer id) {
-		return genericService.get(id);
+	public T get(@PathVariable Integer id, @RequestParam Map<String, Object> params) {
+		return service.get(id);
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	public List<T> listByUser() {
+	@RequestMapping(value = "/users/me", method = RequestMethod.GET)
+	public List<T> listByMe(@RequestParam Map<String, Object> params) {
 		User user = userService.getLoginUserByRequest();
-		if(user != null) return genericService.listByKeyId("user", user.getId());
+		if(user != null) listByParent(user.getClass().getSimpleName(), user.getId(), params);
 		return null;
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/user/{keyname}/{key}",  method = RequestMethod.GET)
-	public List<T> listByUserAndKey(@PathVariable("keyname") String keyName, @PathVariable("key") String key) {
-		Map<String, Object> keys = new HashMap<>();
-		User user = userService.getLoginUserByRequest();
-		if(user != null) {
-			keys.put("userId", user.getId());
-			keys.put(keyName, key);
-			return genericService.listByKeys(keys);
+	@RequestMapping(value = "/{parent}s/{parentId}", method = RequestMethod.GET)
+	public List<T> listByParent(@PathVariable("parent") String parent, @PathVariable("parentId") Integer parentId, @RequestParam Map<String, Object> params){
+		try {
+			Class<?> parentClass = domainClass.getField(parent).getType();
+			return service.listByParent(parentId, parent);
+		} catch (NoSuchFieldException | SecurityException e) {
+			e.printStackTrace();
+			return null;
 		}
-		return null;
 	}
 	
+	//temp
 	@ResponseBody
-	@RequestMapping(value = "/ref/{keyname}/{key}",  method = RequestMethod.GET)
-	public List<T> listByReferenceKey(@PathVariable("keyname") String keyName, @PathVariable("key") String key) {
-		return genericService.listByKeyId(keyName, key);
-	}
-	
-	@ResponseBody
-	@RequestMapping(value = "/{keyname}/{key}",  method = RequestMethod.GET)
-	public List<T> listByKey(@PathVariable("keyname") String keyName, @PathVariable("key") String key) {
-		return genericService.listByKey(keyName, key);
-	}
-	
-	@ResponseBody
-	@RequestMapping(value = "/search/{keyword}", method = RequestMethod.GET)
-	public List<T> search(@PathVariable String keyword/*, @RequestParam String[] keys*/) {
-		String[] keys = new String[] { "name" };
-		return genericService.search(keyword, keys);
+	@RequestMapping(value = "/{idForParent}/{parent}s/{parentId}", method = RequestMethod.GET)
+	public T getByParent(@PathVariable("idForParent") Integer idForParent, @PathVariable("parent") String parent, @PathVariable("parentId") Integer parentId, @RequestParam Map<String, Object> params) {
+		try {
+			Class<?> parentClass = domainClass.getField(parent).getType();
+			return service.get(idForParent);
+		} catch (NoSuchFieldException | SecurityException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.POST)
 	public T add(@RequestBody T entity) {
-		return genericService.add(entity);
+		return service.add(entity);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public T update(@PathVariable Integer id, @RequestBody T entity) {
-		return genericService.update(entity);
+	public T update(@PathVariable Integer id, @RequestParam Map<String, Object> params) {
+		int changeCount = 0;
+		T entity = service.get(id);
+		for(String key : params.keySet()) {
+			try {
+				Field field = domainClass.getField(key);
+				Method method = domainClass.getMethod("set"+field.getName(), domainClass.getClass());
+				method.invoke(entity, params.get(key));
+				changeCount++;
+			} catch (Exception e) { 
+				continue; 
+			}			
+		}
+		return (changeCount != 0)?service.update(entity):null;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public Integer delete(@PathVariable Integer id) {
-		return genericService.delete(id);
+	public Integer delete(@PathVariable Integer id, @RequestParam Map<String, Object> params) {
+		return service.delete(id);
 	}
+	
+	//보류 uri
+		// /{parent}s/{parentId} PUT
+		/* 
+		 * /{parent}s/{parentId} POST
+		@ResponseBody
+		@RequestMapping(value = "/{parent}s/{parentId}", method = RequestMethod.POST)
+		public T addForParent(@PathVariable("parent") String parent, @PathVariable("parentId") Integer parentId, @RequestBody T entity) {
+			try {
+				Class<?> parentClass = domainClass.getField(parent).getType();
+				Method methodOfSetParent = domainClass.getMethod("set"+parent, domainClass.getClass());
+				//find parentService
+				//Object parentObject = parentService.get(parentId); - method Invoke
+				//methodOfSetParent.invoke(entity, parentObject);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return service.add(entity);
+		}
+		*/
 }
