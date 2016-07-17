@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ import com.poom.quest.util.reflect.Reflect;
 @RequestMapping("api")
 public abstract class GenericApiController<T extends GenericModel> {
 
+	@Autowired protected ApplicationContext applicationContext;
 	@Autowired protected GenericService<T> service;
 	@Autowired protected UserService userService;
 	protected Class<T> domainClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
@@ -59,16 +61,8 @@ public abstract class GenericApiController<T extends GenericModel> {
 	@ResponseBody
 	@RequestMapping(value = "/{id}/{child}s/{childId}", method = RequestMethod.GET)
 	public <S extends GenericModel> S getChildByParent(@PathVariable("id") Integer id, @PathVariable("child") String child, @PathVariable("childId") Integer childId, @RequestParam Map<String, Object> params) {
-		try {
-			T entity = service.get(id);
-			Method method = Reflect.getMethod(domainClass, "get"+child+"s");
-			if(method != null)
-				for(S childEntity : (Set<S>) method.invoke(entity)) //Child Service를 이용하도록 바꿔야함
-					if(childEntity.getId().equals(childId)) return childEntity;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+		GenericService<S> childService = applicationContext.getBean(child+"Service", GenericService.class);
+		return childService.get(childId);
 	}
 	
 	@ResponseBody
@@ -100,8 +94,7 @@ public abstract class GenericApiController<T extends GenericModel> {
 		for(String key : params.keySet()) {	//바뀌면 안되는 Key 제한. ex) Id, CreatedDate...
 			if(key.equalsIgnoreCase("id")) continue;
 			try {
-				Field field = Reflect.getField(domainClass, key);
-				Method method = Reflect.getMethod(domainClass, "set"+field.getName());
+				Method method = Reflect.getMethod(domainClass, "set"+key+"s");
 				method.invoke(entity, params.get(key));
 				changeCount++;
 			} catch (Exception e) { 
@@ -117,17 +110,17 @@ public abstract class GenericApiController<T extends GenericModel> {
 		int changeCount = 0;
 		T entity = service.get(id);
 		//T의 Field Type에 User, Quester, Requester가 있다면. 로그인이 되어 있는지 관련 사용자가 맞는지 확인
-		/*try {
-			Field field = domainClass.getField(child+"s");
-			Method method = domainClass.getMethod("get"+child+"s", domainClass.getClass());
-			// find child Service, get ChildEntity
-			Class<?> childClass = field.getType();
-			S childEntity = (S)childClass.newInstance();
+		try {
+			Field field = Reflect.getField(domainClass, child+"s");
+			Method method = Reflect.getMethod(domainClass, "get"+child+"s");
+			GenericService<S> childService = applicationContext.getBean(child+"Service", GenericService.class);
+			S childEntity = childService.get(childId);
 			Set<S> childList = (Set<S>) method.invoke(entity);
-			childList.add((S)childEntity);
+			childList.add(childEntity);
+			changeCount++;
 		} catch (Exception e) { 
 			e.printStackTrace(); 
-		}*/
+		}
 		return (changeCount != 0)?service.update(entity):null;
 	}
 	
