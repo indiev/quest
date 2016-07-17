@@ -13,9 +13,4 @@ import com.poom.quest.web.controller.api.generic.TreeApiController;
 @Controller
 @RequestMapping("api/works")
 public class WorkApiController extends TreeApiController<Work> {
-	@ResponseBody
-	@RequestMapping(value = "", method = RequestMethod.GET)
-	public List<Work> list() {
-		return service.listByKeyId("parent", (Integer)null);
-	}
 }

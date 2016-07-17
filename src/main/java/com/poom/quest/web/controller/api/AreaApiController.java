@@ -13,10 +13,4 @@ import com.poom.quest.web.controller.api.generic.TreeApiController;
 @Controller
 @RequestMapping("api/areas")
 public class AreaApiController extends TreeApiController<Area> {
-	
-	@ResponseBody
-	@RequestMapping(value = "", method = RequestMethod.GET)
-	public List<Area> list() {
-		return service.listByKeyId("parent", (Integer)null);
-	}
 }
