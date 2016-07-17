@@ -28,7 +28,7 @@ public abstract class GenericApiController<T extends GenericModel> {
 	@ResponseBody
 	@RequestMapping
 	public List<T> list(@RequestParam Map<String, Object> params) {
-		return service.list();
+		return service.listByKeys(params);
 	}
 
 	@ResponseBody
