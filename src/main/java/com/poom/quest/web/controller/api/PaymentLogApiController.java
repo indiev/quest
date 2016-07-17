@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.poom.quest.services.model.log.PaymentLog;
 
 @Controller
-@RequestMapping("api/paymentLog")
+@RequestMapping("api/paymentLogs")
 public class PaymentLogApiController extends GenericApiController<PaymentLog> {
 	
 }

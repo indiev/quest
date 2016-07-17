@@ -15,7 +15,7 @@ import com.poom.quest.services.model.user.User;
 import com.poom.quest.services.service.PortfolioService;
 
 @Controller
-@RequestMapping("api/portfolio")
+@RequestMapping("api/portfolios")
 public class PortfolioApiController extends GenericApiController<Portfolio> {
 	
 	@Autowired PortfolioService portfolioService;
@@ -27,7 +27,7 @@ public class PortfolioApiController extends GenericApiController<Portfolio> {
 		User user = userService.getLoginUserByRequest();
 		if(user != null) {
 			entity.setUser(user);
-			return genericService.add(entity);
+			return service.add(entity);
 		}
 		return null;
 	}
@@ -53,7 +53,7 @@ public class PortfolioApiController extends GenericApiController<Portfolio> {
 	public List<Portfolio> search(@PathVariable String keyword) {
 		User user = userService.getLoginUserByRequest();
 		if(user != null) {
-			return genericService.search(keyword, null, user.getId());
+			return service.search(keyword, null, user.getId());
 		}
 		return null;
 	}

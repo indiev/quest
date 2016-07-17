@@ -9,7 +9,7 @@ import com.poom.quest.services.service.RequesterService;
 
 
 @Controller
-@RequestMapping("api/requester")
+@RequestMapping("api/requesters")
 public class RequesterApiController extends GenericApiController<Requester>{
 	
 	@Autowired RequesterService requesterService;

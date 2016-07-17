@@ -14,7 +14,7 @@ import com.poom.quest.services.model.user.User;
 import com.poom.quest.services.service.IssueService;
 
 @Controller
-@RequestMapping("api/issueComment")
+@RequestMapping("api/issueComments")
 public class IssueCommentApiController extends GenericApiController<IssueComment> {
 	
 	@Autowired IssueService issueService; 
@@ -27,7 +27,7 @@ public class IssueCommentApiController extends GenericApiController<IssueComment
 			Issue issue = issueService.get(id);
 			entity.setIssue(issue);
 			entity.setUser(user);
-			return genericService.add(entity);
+			return service.add(entity);
 		}
 		return null;
 	}
