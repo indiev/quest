@@ -41,16 +41,17 @@ public abstract class GenericApiController<T extends GenericModel> {
 	@RequestMapping(value = "/users/me", method = RequestMethod.GET)
 	public List<T> listByMe(@RequestParam Map<String, Object> params) {
 		User user = userService.getLoginUserByRequest();
-		if(user != null) listByParent(user.getClass().getSimpleName(), user.getId(), params);
+		if(user != null) children(user.getClass().getSimpleName(), user.getId(), params);
 		return null;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/{parent}s/{parentId}", method = RequestMethod.GET)
-	public List<T> listByParent(@PathVariable("parent") String parent, @PathVariable("parentId") Integer parentId, @RequestParam Map<String, Object> params){
+	public List<T> children(@PathVariable("parent") String parent, @PathVariable("parentId") Integer parentId, @RequestParam Map<String, Object> params){
 		try {
-			Class<?> parentClass = domainClass.getField(parent).getType();
-			return service.listByParent(parentId, parent);
+			Class<?> parentClass = domainClass;
+			if(!parent.equals("parent")) parentClass = domainClass.getField(parent).getType();
+			return service.listByParent(parentId, parentClass);
 		} catch (NoSuchFieldException | SecurityException e) {
 			e.printStackTrace();
 			return null;
