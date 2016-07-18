@@ -8,4 +8,16 @@ import com.poom.quest.services.model.abstractModel.TreeModel;
 public class Work extends TreeModel<Work> {
 
 	private static final long serialVersionUID = 1L;
+	
+	private String description;
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	
 }

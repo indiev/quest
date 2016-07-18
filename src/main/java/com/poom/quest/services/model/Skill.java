@@ -8,4 +8,14 @@ import com.poom.quest.services.model.abstractModel.GenericModel;
 public class Skill extends GenericModel {
 
 	private static final long serialVersionUID = 1L;
+	
+	private String description;
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 }
