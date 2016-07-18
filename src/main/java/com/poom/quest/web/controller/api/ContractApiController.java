@@ -31,7 +31,7 @@ public class ContractApiController extends GenericApiController<Contract> {
 	
 	@ResponseBody
 	@RequestMapping(value = "/agree/{id}", method = RequestMethod.PUT)
-	public Boolean updateAgree(@PathVariable Integer id) {
+	public Contract agreeUser(@PathVariable("id") Integer id) {
 		User user = userService.getLoginUserByRequest();
 		Contract contract = service.get(id);
 		contract.getAgreedUsers().add(user);
@@ -42,6 +42,6 @@ public class ContractApiController extends GenericApiController<Contract> {
 			questService.updateState(quest, "progress");
 		}
 		
-		return true;
+		return contract;
 	}
 }

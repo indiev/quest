@@ -13,27 +13,22 @@ import com.poom.quest.services.model.abstractModel.GenericModel;
 @Transactional
 public class CodeService extends GenericService<Code> {
 	
-	public Code getState(String stateValue) {
+	public Code get(String model, String attribute, String value) {
 		Map<String, String> keys = new HashMap<>();
-		keys.put("model", "Quest");
-		keys.put("attribute", "state");
-		keys.put("value", stateValue);
+		keys.put("model", model);
+		keys.put("attribute", attribute);
+		keys.put("value", value);
 		return getByKeys(keys);
 	}
-	
-	public Code getAction(String actionValue, String modelName) {
-		Map<String, String> keys = new HashMap<>();
-		keys.put("model", modelName);
-		keys.put("attribute", "action");
-		keys.put("value", actionValue);
-		return getByKeys(keys);
+	public Code getQuestState(String stateValue) {
+		return this.get("Quest", "state", stateValue);
 	}
 	
-	public Code getState(String stateValue, String modelName) {
-		Map<String, String> keys = new HashMap<>();
-		keys.put("model", modelName);
-		keys.put("attribute", "state");
-		keys.put("value", stateValue);
-		return getByKeys(keys);
+	public Code getAction(String value, String model) {
+		return this.get(model, "action", value);
+	}
+	
+	public Code getState(String value, String model) {
+		return this.get(model, "state", value);
 	}
 }

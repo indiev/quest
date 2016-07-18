@@ -1,6 +1,5 @@
 package com.poom.quest.web.controller.api;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +53,7 @@ public class QuestApiController extends GenericApiController<Quest> {
 	@ResponseBody
 	@RequestMapping(value = "{stateValue}/search/{keyword}", method = RequestMethod.GET)
 	public List<Quest> searchBySateValue(@PathVariable("stateValue") String stateValue, @PathVariable("keyword") String keyword) {
-		Code state = codeService.getState(stateValue);
+		Code state = codeService.getQuestState(stateValue);
 		return questService.searchByState(state.getId(), keyword);
 	}
 	
