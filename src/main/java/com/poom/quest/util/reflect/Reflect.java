@@ -12,7 +12,7 @@ public class Reflect {
 	}
 	
 	static public Field getField(Class<?> clazz, String keyword) {
-		for(Field field: clazz.getFields())
+		for(Field field: clazz.getDeclaredFields())
 			if(field.getName().equalsIgnoreCase(keyword)) return field;
 		return null;
 	}

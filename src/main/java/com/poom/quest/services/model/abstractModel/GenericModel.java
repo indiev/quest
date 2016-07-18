@@ -10,11 +10,9 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.poom.quest.services.model.Model;
 
 @MappedSuperclass
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public abstract class GenericModel extends Model {
 	
 	private static final long serialVersionUID = 1L;
