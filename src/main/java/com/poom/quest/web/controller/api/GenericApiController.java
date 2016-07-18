@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.poom.quest.services.model.Code;
+import com.poom.quest.services.model.Model;
 import com.poom.quest.services.model.abstractModel.GenericModel;
 import com.poom.quest.services.model.user.User;
+import com.poom.quest.services.service.CodeService;
 import com.poom.quest.services.service.GenericService;
 import com.poom.quest.services.service.UserService;
 import com.poom.quest.util.reflect.Reflect;
@@ -28,6 +31,7 @@ public abstract class GenericApiController<T extends GenericModel> {
 	@Autowired protected ApplicationContext applicationContext;
 	@Autowired protected GenericService<T> service;
 	@Autowired protected UserService userService;
+	@Autowired protected CodeService codeService;
 	protected Class<T> domainClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	
 	@ResponseBody
@@ -94,9 +98,29 @@ public abstract class GenericApiController<T extends GenericModel> {
 		for(String key : params.keySet()) {	//바뀌면 안되는 Key 제한. ex) Id, CreatedDate...
 			if(key.equalsIgnoreCase("id")) continue;
 			try {
-				Method method = Reflect.getMethod(domainClass, "set"+key+"s");
-				method.invoke(entity, params.get(key));
-				changeCount++;
+				Field field = Reflect.getField(domainClass, key);
+				if(field != null) {
+					Class<?> fieldClass = field.getType();
+					Method getMethod = Reflect.getMethod(domainClass, "get"+key);
+					Method setMethod = Reflect.getMethod(domainClass, "set"+key);
+					if(field.getType().isAssignableFrom(Model.class)) { //Type이 모델이라면
+						if(field.getType().isAssignableFrom(Code.class)) {	//Type이 Code일 경우
+							Code code = codeService.get(domainClass.getSimpleName(), key, (String)params.get(key));
+							setMethod.invoke(entity, code);
+						} else {
+							GenericService nodeService = applicationContext.getBean(key+"Service", GenericService.class);
+							Object node = nodeService.get((Integer)params.get(key));
+							setMethod.invoke(entity, fieldClass.cast(node));
+						}
+					} else if(field.getType().isAssignableFrom(Set.class)) { //Type이 List일 경우
+						key = key.substring(0, key.length()-1); //'s' 제거
+						GenericService nodeService = applicationContext.getBean(key+"Service", GenericService.class);
+						Object node = nodeService.get((Integer)params.get(key));
+						Set nodeSet = (Set)getMethod.invoke(entity);
+						nodeSet.add(fieldClass.cast(node));
+					} else setMethod.invoke(entity, params.get(key));
+					changeCount++;
+				}
 			} catch (Exception e) { 
 				continue; 
 			}			
@@ -111,10 +135,9 @@ public abstract class GenericApiController<T extends GenericModel> {
 		T entity = service.get(id);
 		//T의 Field Type에 User, Quester, Requester가 있다면. 로그인이 되어 있는지 관련 사용자가 맞는지 확인
 		try {
-			Field field = Reflect.getField(domainClass, child+"s");
-			Method method = Reflect.getMethod(domainClass, "get"+child+"s");
 			GenericService<S> childService = applicationContext.getBean(child+"Service", GenericService.class);
 			S childEntity = childService.get(childId);
+			Method method = Reflect.getMethod(domainClass, "get"+child+"s");
 			Set<S> childList = (Set<S>) method.invoke(entity);
 			childList.add(childEntity);
 			changeCount++;
