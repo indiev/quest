@@ -1,6 +1,7 @@
 package com.poom.quest.web.controller.api;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
@@ -65,8 +66,19 @@ public abstract class GenericApiController<T extends GenericModel> {
 	@ResponseBody
 	@RequestMapping(value = "/{id}/{child}s/{childId}", method = RequestMethod.GET)
 	public <S extends GenericModel> S getChildByParent(@PathVariable("id") Integer id, @PathVariable("child") String child, @PathVariable("childId") Integer childId, @RequestParam Map<String, Object> params) {
-		GenericService<S> childService = applicationContext.getBean(child+"Service", GenericService.class);
-		return childService.get(childId);
+		try {
+			GenericService<S> childService = applicationContext.getBean(child+"Service", GenericService.class);
+			T entity = service.get(id);
+			Method method = Reflect.getMethod(domainClass, "get"+child+"s");
+			if(method != null) {
+				Set<S> nodeSet = (Set<S>)method.invoke(entity);
+				S childEntity = childService.get(childId);
+				if(nodeSet.contains(childEntity)) return childEntity;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	@ResponseBody
@@ -130,21 +142,21 @@ public abstract class GenericApiController<T extends GenericModel> {
 	
 	@ResponseBody
 	@RequestMapping(value = "/{id}/{child}s/{childId}", method = RequestMethod.PUT)
-	public <S extends GenericModel> Integer putChild(@PathVariable("id") Integer id, @PathVariable("child") String child, @PathVariable("childId") Integer childId, @RequestParam Map<String, Object> params) {
+	public T putChild(@PathVariable("id") Integer id, @PathVariable("child") String child, @PathVariable("childId") Integer childId, @RequestParam Map<String, Object> params) {
 		int changeCount = 0;
 		T entity = service.get(id);
 		//T의 Field Type에 User, Quester, Requester가 있다면. 로그인이 되어 있는지 관련 사용자가 맞는지 확인
 		try {
-			GenericService<S> childService = applicationContext.getBean(child+"Service", GenericService.class);
-			S childEntity = childService.get(childId);
+			GenericService childService = applicationContext.getBean(child+"Service", GenericService.class);
+			Object childEntity = childService.get(childId);
 			Method method = Reflect.getMethod(domainClass, "get"+child+"s");
-			Set<S> childList = (Set<S>) method.invoke(entity);
+			Set childList = (Set) method.invoke(entity);
 			childList.add(childEntity);
 			changeCount++;
 		} catch (Exception e) { 
 			e.printStackTrace(); 
 		}
-		return changeCount;
+		return (changeCount != 0)?service.update(entity):null;
 	}
 	
 	@ResponseBody
