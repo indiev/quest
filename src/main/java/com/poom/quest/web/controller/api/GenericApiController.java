@@ -165,6 +165,27 @@ public abstract class GenericApiController<T extends GenericModel> {
 		return service.delete(id);
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/{id}/{child}s/{childId}", method = RequestMethod.DELETE)
+	public T removeChild(@PathVariable("id") Integer id, @PathVariable("child") String child, @PathVariable("childId") Integer childId, @RequestParam Map<String, Object> params) {
+		int changeCount = 0;
+		T entity = service.get(id);
+		//T의 Field Type에 User, Quester, Requester가 있다면. 로그인이 되어 있는지 관련 사용자가 맞는지 확인
+		try {
+			GenericService childService = applicationContext.getBean(child+"Service", GenericService.class);
+			Object childEntity = childService.get(childId);
+			Method method = Reflect.getMethod(domainClass, "get"+child+"s");
+			Set childList = (Set) method.invoke(entity);
+			if(childList.contains(childEntity)) {
+				childList.remove(childEntity);
+				changeCount++;
+			}
+		} catch (Exception e) { 
+			e.printStackTrace(); 
+		}
+		return (changeCount != 0)?service.update(entity):null;
+	}
+	
 	//보류 uri
 	// /{parent}s/{parentId} PUT
 	/* 
