@@ -23,12 +23,6 @@ public class IssueService extends GenericService<Issue> {
 	@Autowired PointService pointService;
 	@Autowired QuestService questService;
 
-	public Issue add(Issue entity, User user) {
-		entity.setUser(user);
-		return add(entity);
-	}
-
-
 	public Map<String, String> approveReport(Integer issueId, User user) {
 		Map<String, String> result = new HashMap<>();
 		Issue issue = this.get(issueId);

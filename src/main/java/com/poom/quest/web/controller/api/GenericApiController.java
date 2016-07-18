@@ -106,7 +106,7 @@ public abstract class GenericApiController<T extends GenericModel> {
 	
 	@ResponseBody
 	@RequestMapping(value = "/{id}/{child}s/{childId}", method = RequestMethod.PUT)
-	public <S> T putChild(@PathVariable("id") Integer id, @PathVariable("child") String child, @PathVariable("childId") Integer childId, @RequestParam Map<String, Object> params) {
+	public <S extends GenericModel> Integer putChild(@PathVariable("id") Integer id, @PathVariable("child") String child, @PathVariable("childId") Integer childId, @RequestParam Map<String, Object> params) {
 		int changeCount = 0;
 		T entity = service.get(id);
 		//T의 Field Type에 User, Quester, Requester가 있다면. 로그인이 되어 있는지 관련 사용자가 맞는지 확인
@@ -121,7 +121,7 @@ public abstract class GenericApiController<T extends GenericModel> {
 		} catch (Exception e) { 
 			e.printStackTrace(); 
 		}
-		return (changeCount != 0)?service.update(entity):null;
+		return changeCount;
 	}
 	
 	@ResponseBody

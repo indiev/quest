@@ -15,14 +15,15 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.poom.quest.services.model.abstractModel.GenericModel;
+import com.poom.quest.services.model.abstractModel.WithUserModel;
 import com.poom.quest.services.model.user.User;
 
 @Entity
-public class Issue extends GenericModel {
+public class Issue extends WithUserModel {
 	private static final long serialVersionUID = 1L;
 
 	private Boolean closed;
+	private Boolean approval;
 	private String description;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -50,6 +51,7 @@ public class Issue extends GenericModel {
 	@PrePersist
 	public void onCreate() {
 		super.onCreate();
+		this.closed = false;
 		this.closed = false;
 	}
 	
