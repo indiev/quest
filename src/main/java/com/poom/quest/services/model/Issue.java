@@ -23,7 +23,6 @@ public class Issue extends WithUserModel {
 	private static final long serialVersionUID = 1L;
 
 	private Boolean closed;
-	private Boolean approval;
 	private String description;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -51,7 +50,6 @@ public class Issue extends WithUserModel {
 	@PrePersist
 	public void onCreate() {
 		super.onCreate();
-		this.closed = false;
 		this.closed = false;
 	}
 	

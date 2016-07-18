@@ -33,7 +33,7 @@ public class QuestService extends GenericService<Quest> {
 		entity.setRequester(user.getRequester());
 		for(Requirement requirement : entity.getRequirements()) requirement.setQuest(entity);
 		for(Reward reward : entity.getRewards()) reward.setQuest(entity);
-		entity.setState(codeService.getState("wait"));
+		entity.setState(codeService.getQuestState("wait"));
 		Contract contract = new Contract();
 		contract.setName("");
 		contract.setQuesterPenalty(30);
@@ -53,7 +53,7 @@ public class QuestService extends GenericService<Quest> {
 	
 	public Map<String, String> updateState(Quest quest, String stateValue) {
 		Map<String, String> result = new HashMap<>();
-		Code state = codeService.getState(stateValue);
+		Code state = codeService.getQuestState(stateValue);
 		 
 		if(state != null) {
 			if(!quest.getState().getId().equals(state.getId())) {
@@ -66,12 +66,12 @@ public class QuestService extends GenericService<Quest> {
 	}
 	
 	public List<Quest> questsOfQuester(Integer questerId, String stateValue) {
-		Code state = (stateValue != null)?codeService.getState(stateValue):null;
+		Code state = (stateValue != null)?codeService.getQuestState(stateValue):null;
 		return questRepository.questsOfQuester(questerId, state.getId());
 	}
 	
 	public List<Quest> questsOfApplicant(Integer questerId, String stateValue) {
-		Code state = (stateValue != null)?codeService.getState(stateValue):null;
+		Code state = (stateValue != null)?codeService.getQuestState(stateValue):null;
 		return questRepository.questsOfApplicant(questerId, state.getId());
 	}
 	
@@ -80,7 +80,7 @@ public class QuestService extends GenericService<Quest> {
 		List<Integer> list = new ArrayList();
 		
 		for(String stateValue : ongoingStates) {
-			list.add(codeService.getState(stateValue).getId());
+			list.add(codeService.getQuestState(stateValue).getId());
 		}
 		return this.questsOfApplicant(questerId, list);
 	}
@@ -90,7 +90,7 @@ public class QuestService extends GenericService<Quest> {
 	}
 	
 	public List<Quest> questsOfRequester(Integer requesterId, String stateValue) {
-		Code state = (stateValue != null)?codeService.getState(stateValue):null;
+		Code state = (stateValue != null)?codeService.getQuestState(stateValue):null;
 		return questRepository.questsOfRequester(requesterId, state.getId());
 	}
 	
@@ -99,7 +99,7 @@ public class QuestService extends GenericService<Quest> {
 		List<Integer> list = new ArrayList();
 		
 		for(String stateValue : ongoingStates) {
-			list.add(codeService.getState(stateValue).getId());
+			list.add(codeService.getQuestState(stateValue).getId());
 		}
 		return this.questsOfRequester(requesterId, list);
 	}
