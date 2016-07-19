@@ -17,13 +17,13 @@ import com.poom.quest.services.model.user.User;
 
 @Service
 @Transactional
-public class IssueService extends GenericService<Issue> {
+public class IssueService extends GenericService<Issue, Long> {
 
 	@Autowired CodeService codeService;
 	@Autowired PointService pointService;
 	@Autowired QuestService questService;
 
-	public Map<String, String> approveReport(Integer issueId, User user) {
+	public Map<String, String> approveReport(Long issueId, User user) {
 		Map<String, String> result = new HashMap<>();
 		Issue issue = this.get(issueId);
 		if(issue!=null && issue.getQuest().getRequester().equals(user.getRequester()))

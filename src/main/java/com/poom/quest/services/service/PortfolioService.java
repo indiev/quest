@@ -12,12 +12,12 @@ import com.poom.quest.services.repository.PortfolioRepository;
 
 @Service
 @Transactional
-public class PortfolioService extends GenericService<Portfolio> {
+public class PortfolioService extends GenericService<Portfolio, Long> {
 	
 	@Autowired PortfolioRepository portfolioDao;
 	@Autowired CodeService codeService;
 	
-	public List<Portfolio> searchByType(String typeValue, String keyword, Integer userId) {
+	public List<Portfolio> searchByType(String typeValue, String keyword, Long userId) {
 		Code type = codeService.getByKey("value", typeValue);
 		return portfolioDao.searchByType(type.getId(), keyword, userId);
 	}

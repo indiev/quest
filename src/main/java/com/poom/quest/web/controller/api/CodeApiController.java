@@ -7,5 +7,5 @@ import com.poom.quest.services.model.Code;
 
 @Controller
 @RequestMapping("api/codes")
-public class CodeApiController extends GenericApiController<Code> {
+public class CodeApiController extends GenericApiController<Code, Long> {
 }

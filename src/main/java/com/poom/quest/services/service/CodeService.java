@@ -11,7 +11,7 @@ import com.poom.quest.services.model.abstractModel.GenericModel;
 
 @Service
 @Transactional
-public class CodeService extends GenericService<Code> {
+public class CodeService extends GenericService<Code, Long> {
 	
 	public Code get(String model, String attribute, String value) {
 		Map<String, String> keys = new HashMap<>();

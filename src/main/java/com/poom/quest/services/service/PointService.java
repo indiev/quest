@@ -29,7 +29,7 @@ public class PointService {
 	}
 
 
-	public PointLog deposit(Integer rewardId, User user) {
+	public PointLog deposit(Long rewardId, User user) {
 		if(rewardService.get(rewardId) != null && rewardService.get(rewardId).getQuest().getRequester().equals(user.getRequester()))
 			return this.deposit(rewardService.get(rewardId));
 		return null;
@@ -43,7 +43,7 @@ public class PointService {
 		return tradeRequesterToQuester(reward, requesterActionCode, null, rewardConditionStateCode, rewardNextStateCode);
 	}
 
-	public PointLog withdraw(Integer rewardId, User user) {
+	public PointLog withdraw(Long rewardId, User user) {
 		if(rewardService.get(rewardId) != null && rewardService.get(rewardId).getQuest().getRequester().equals(user.getRequester()))
 			return this.withdraw(rewardService.get(rewardId));
 		return null;
@@ -58,7 +58,7 @@ public class PointService {
 	}
 
 
-	public PointLog give(Integer rewardId, User user) {
+	public PointLog give(Long rewardId, User user) {
 		if(rewardService.get(rewardId) != null && rewardService.get(rewardId).getQuest().getRequester().equals(user.getRequester()))
 			return this.give(rewardService.get(rewardId));
 		return null;

@@ -7,6 +7,6 @@ import com.poom.quest.services.model.user.Requester;
 
 @Service
 @Transactional
-public class RequesterService extends GenericService<Requester> {
+public class RequesterService extends GenericService<Requester, Long> {
 	
 }

@@ -6,6 +6,6 @@ import com.poom.quest.services.model.log.PaymentLog;
 
 @Service
 @Transactional
-public class PaymentLogService extends GenericService<PaymentLog> {
+public class PaymentLogService extends GenericService<PaymentLog, Long> {
 	
 }

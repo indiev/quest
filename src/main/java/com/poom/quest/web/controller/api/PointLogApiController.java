@@ -7,6 +7,6 @@ import com.poom.quest.services.model.log.PointLog;
 
 @Controller
 @RequestMapping("api/pointLogs")
-public class PointLogApiController extends GenericApiController<PointLog> {
+public class PointLogApiController extends GenericApiController<PointLog, Long> {
 	
 }

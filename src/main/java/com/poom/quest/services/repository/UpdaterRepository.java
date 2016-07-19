@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import com.poom.quest.services.model.Updater;
 
 @Repository
-public class UpdaterRepository extends GenericRepository<Updater> {
+public class UpdaterRepository extends GenericRepository<Updater, Long> {
 
 }

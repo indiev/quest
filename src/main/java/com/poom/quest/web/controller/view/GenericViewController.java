@@ -14,7 +14,7 @@ import com.poom.quest.services.service.UserService;
 @RequestMapping("/")
 public abstract class GenericViewController<T> {
 
-	@Autowired GenericService<T> genericService;
+	@Autowired GenericService<T, Long> genericService;
 	@Autowired private UserService userService;
 	
 	@SuppressWarnings("unchecked")
@@ -58,7 +58,7 @@ public abstract class GenericViewController<T> {
 	}
 	
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public String detail(@PathVariable Integer id) {
+	public String detail(@PathVariable Long id) {
 		return modelName + "/detail";
 	}
 	

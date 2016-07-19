@@ -12,5 +12,5 @@ import com.poom.quest.web.controller.api.generic.TreeApiController;
 
 @Controller
 @RequestMapping("api/works")
-public class WorkApiController extends TreeApiController<Work> {
+public class WorkApiController extends TreeApiController<Work, Long> {
 }

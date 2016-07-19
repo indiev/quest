@@ -7,5 +7,5 @@ import com.poom.quest.services.model.Reward;
 
 @Controller
 @RequestMapping("api/rewards")
-public class RewardApiController extends GenericApiController<Reward> {
+public class RewardApiController extends GenericApiController<Reward, Long> {
 }

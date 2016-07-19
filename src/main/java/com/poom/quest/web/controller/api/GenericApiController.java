@@ -27,10 +27,10 @@ import com.poom.quest.services.service.UserService;
 import com.poom.quest.util.reflect.Reflect;
 
 @RequestMapping("api")
-public abstract class GenericApiController<T extends GenericModel> {
+public abstract class GenericApiController<T extends GenericModel, ID> {
 
 	@Autowired protected ApplicationContext applicationContext;
-	@Autowired protected GenericService<T> service;
+	@Autowired protected GenericService<T, ID> service;
 	@Autowired protected UserService userService;
 	@Autowired protected CodeService codeService;
 	protected Class<T> domainClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
@@ -43,7 +43,7 @@ public abstract class GenericApiController<T extends GenericModel> {
 
 	@ResponseBody
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public T get(@PathVariable Integer id, @RequestParam Map<String, Object> params) {
+	public T get(@PathVariable ID id, @RequestParam Map<String, Object> params) {
 		return service.get(id);
 	}
 	
@@ -51,13 +51,13 @@ public abstract class GenericApiController<T extends GenericModel> {
 	@RequestMapping(value = "/users/me", method = RequestMethod.GET)
 	public List<T> listByMe(@RequestParam Map<String, Object> params) {
 		User user = userService.getLoginUserByRequest();
-		if(user != null) children(user.getClass().getSimpleName(), user.getId(), params);
+		if(user != null) children(user.getClass().getSimpleName(), (ID)user.getId(), params);
 		return null;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/{parent}s/{parentId}", method = RequestMethod.GET)
-	public List<T> children(@PathVariable("parent") String parent, @PathVariable("parentId") Integer parentId, @RequestParam Map<String, Object> params){
+	public List<T> children(@PathVariable("parent") String parent, @PathVariable("parentId") ID parentId, @RequestParam Map<String, Object> params){
 		Class<?> parentClass = domainClass;
 		if(!parent.equals("parent")) parentClass = Reflect.getField(domainClass, parent).getType();
 		return service.listByParent(parentId, parentClass);
@@ -65,9 +65,9 @@ public abstract class GenericApiController<T extends GenericModel> {
 	
 	@ResponseBody
 	@RequestMapping(value = "/{id}/{child}s/{childId}", method = RequestMethod.GET)
-	public <S extends GenericModel> S getChildByParent(@PathVariable("id") Integer id, @PathVariable("child") String child, @PathVariable("childId") Integer childId, @RequestParam Map<String, Object> params) {
+	public <S extends GenericModel> S getChildByParent(@PathVariable("id") ID id, @PathVariable("child") String child, @PathVariable("childId") ID childId, @RequestParam Map<String, Object> params) {
 		try {
-			GenericService<S> childService = applicationContext.getBean(child+"Service", GenericService.class);
+			GenericService<S, ID> childService = applicationContext.getBean(child+"Service", GenericService.class);
 			T entity = service.get(id);
 			Method method = Reflect.getMethod(domainClass, "get"+child+"s");
 			if(method != null) {
@@ -83,7 +83,7 @@ public abstract class GenericApiController<T extends GenericModel> {
 	
 	@ResponseBody
 	@RequestMapping(value = "/{id}/{child}s", method = RequestMethod.GET)
-	public <S extends GenericModel> Set<S> childrenByParent(@PathVariable("id") Integer id, @PathVariable("child") String child, @RequestParam Map<String, Object> params) {
+	public <S extends GenericModel> Set<S> childrenByParent(@PathVariable("id") ID id, @PathVariable("child") String child, @RequestParam Map<String, Object> params) {
 		try {
 			T entity = service.get(id);
 			Method method = Reflect.getMethod(domainClass, "get"+child+"s");
@@ -103,7 +103,7 @@ public abstract class GenericApiController<T extends GenericModel> {
 	
 	@ResponseBody
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public T update(@PathVariable Integer id, @RequestParam Map<String, Object> params) {
+	public T update(@PathVariable ID id, @RequestParam Map<String, Object> params) {
 		int changeCount = 0;
 		T entity = service.get(id);
 		//T의 Field Type에 User, Quester, Requester가 있다면. 로그인이 되어 있는지 관련 사용자가 맞는지 확인
@@ -121,13 +121,13 @@ public abstract class GenericApiController<T extends GenericModel> {
 							setMethod.invoke(entity, code);
 						} else {
 							GenericService nodeService = applicationContext.getBean(key+"Service", GenericService.class);
-							Object node = nodeService.get((Integer)params.get(key));
+							Object node = nodeService.get((ID)params.get(key));
 							setMethod.invoke(entity, fieldClass.cast(node));
 						}
 					} else if(field.getType().isAssignableFrom(Set.class)) { //Type이 List일 경우
 						key = key.substring(0, key.length()-1); //'s' 제거
 						GenericService nodeService = applicationContext.getBean(key+"Service", GenericService.class);
-						Object node = nodeService.get((Integer)params.get(key));
+						Object node = nodeService.get((ID)params.get(key));
 						Set nodeSet = (Set)getMethod.invoke(entity);
 						nodeSet.add(fieldClass.cast(node));
 					} else setMethod.invoke(entity, params.get(key));
@@ -141,8 +141,24 @@ public abstract class GenericApiController<T extends GenericModel> {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value = "/{id}/{child}s", method = RequestMethod.PUT)
+	public T putChilds(@PathVariable("id") ID id, @PathVariable("child") String child, @RequestParam Map<String, Object> params) {
+		String childIds = (String)params.get("ids");
+		if(childIds != null) {
+			for(String childId : childIds.split(",")) {
+				
+			}
+		}
+		
+		
+		
+		return null;
+		
+	}
+	
+	@ResponseBody
 	@RequestMapping(value = "/{id}/{child}s/{childId}", method = RequestMethod.PUT)
-	public T putChild(@PathVariable("id") Integer id, @PathVariable("child") String child, @PathVariable("childId") Integer childId, @RequestParam Map<String, Object> params) {
+	public T putChild(@PathVariable("id") ID id, @PathVariable("child") String child, @PathVariable("childId") ID childId, @RequestParam Map<String, Object> params) {
 		int changeCount = 0;
 		T entity = service.get(id);
 		//T의 Field Type에 User, Quester, Requester가 있다면. 로그인이 되어 있는지 관련 사용자가 맞는지 확인
@@ -151,7 +167,8 @@ public abstract class GenericApiController<T extends GenericModel> {
 			Object childEntity = childService.get(childId);
 			Method method = Reflect.getMethod(domainClass, "get"+child+"s");
 			Set childList = (Set) method.invoke(entity);
-			childList.add(childEntity);
+			if(childList.contains(childEntity)) childList.remove(childEntity);
+			else childList.add(childEntity);
 			changeCount++;
 		} catch (Exception e) { 
 			e.printStackTrace(); 
@@ -161,13 +178,13 @@ public abstract class GenericApiController<T extends GenericModel> {
 	
 	@ResponseBody
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public Integer delete(@PathVariable Integer id, @RequestParam Map<String, Object> params) {
+	public ID delete(@PathVariable ID id, @RequestParam Map<String, Object> params) {
 		return service.delete(id);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/{id}/{child}s/{childId}", method = RequestMethod.DELETE)
-	public T removeChild(@PathVariable("id") Integer id, @PathVariable("child") String child, @PathVariable("childId") Integer childId, @RequestParam Map<String, Object> params) {
+	public T removeChild(@PathVariable("id") ID id, @PathVariable("child") String child, @PathVariable("childId") ID childId, @RequestParam Map<String, Object> params) {
 		int changeCount = 0;
 		T entity = service.get(id);
 		//T의 Field Type에 User, Quester, Requester가 있다면. 로그인이 되어 있는지 관련 사용자가 맞는지 확인
@@ -192,7 +209,7 @@ public abstract class GenericApiController<T extends GenericModel> {
 	 * /{parent}s/{parentId} POST
 	@ResponseBody
 	@RequestMapping(value = "/{parent}s/{parentId}", method = RequestMethod.POST)
-	public T addForParent(@PathVariable("parent") String parent, @PathVariable("parentId") Integer parentId, @RequestBody T entity) {
+	public T addForParent(@PathVariable("parent") String parent, @PathVariable("parentId") ID parentId, @RequestBody T entity) {
 		try {
 			Class<?> parentClass = domainClass.getField(parent).getType();
 			Method methodOfSetParent = domainClass.getMethod("set"+parent, domainClass.getClass());

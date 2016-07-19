@@ -9,11 +9,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public abstract class GenericRepository<T> {
+public abstract class GenericRepository<T, ID> {
 
 	static private final String REGION = "services";
 	
@@ -31,7 +30,7 @@ public abstract class GenericRepository<T> {
 		return entity;
 	}
 	
-	public T get(Integer id) {
+	public T get(ID id) {
 		return em.find(clazz, id);
 	}
 	
@@ -54,7 +53,7 @@ public abstract class GenericRepository<T> {
 		return em.createNativeQuery(SELECT_ALL_SQL, clazz).getResultList();
 	}
 	
-	public List<T> listByKeyId(String keyName, Integer key) {
+	public List<T> listByKeyId(String keyName, ID key) {
 		return this.listByKey(keyName + "Id", key);
 	}
 	
@@ -62,7 +61,7 @@ public abstract class GenericRepository<T> {
 		return this.listByKey(keyName + "Id", key);
 	}
 	
-	public List<T> listByKey(String keyName, Integer key) {
+	public List<T> listByKey(String keyName, ID key) {
 		if(key != null) {
 			String where = " WHERE " + keyName + "=:key";
 			return em.createNativeQuery(SELECT_ALL_SQL + where, clazz).setParameter("key", key).getResultList();			
@@ -90,7 +89,7 @@ public abstract class GenericRepository<T> {
 		return query.getResultList();
 	}
 	
-	public List<T> listByParent(Integer parentId, Class<?> parentClass) {
+	public List<T> listByParent(ID parentId, Class<?> parentClass) {
 		String parentName = parentClass.getSimpleName();
 		String columnName = parentName.toLowerCase() + "Id";
 		if(parentId != null) {
@@ -102,7 +101,7 @@ public abstract class GenericRepository<T> {
 		}
 	}
 	
-	public List<T> listByParent(Integer parentId, String parentName) {
+	public List<T> listByParent(ID parentId, String parentName) {
 		String columnName = parentName.toLowerCase() + "Id";
 		if(parentId != null) {
 			String where = " WHERE " + columnName + "=:" + columnName;
@@ -124,7 +123,7 @@ public abstract class GenericRepository<T> {
 		return em.createNativeQuery(SELECT_ALL_SQL + where, clazz).setParameter("keyword", keyword).getResultList();
 	}
 	
-	public List<T> search(String keyword, String[] keys, Integer userId) {
+	public List<T> search(String keyword, String[] keys, ID userId) {
 		keyword = ("%" + keyword + "%").toLowerCase();
 		String where = " WHERE ";
 		if(keys == null || keys.length == 0) keys = new String[]{"name"};
@@ -144,7 +143,7 @@ public abstract class GenericRepository<T> {
 		return em.createNamedQuery(SELECT_COUNT_SQL, Long.class).getSingleResult();
 	}
 	
-	public void delete(Integer id) {
+	public void delete(ID id) {
 		em.remove(this.get(id));
 	}
 }

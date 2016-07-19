@@ -8,5 +8,5 @@ import com.poom.quest.web.controller.api.generic.TreeApiController;
 
 @Controller
 @RequestMapping("api/areas")
-public class AreaApiController extends TreeApiController<Area> {
+public class AreaApiController extends TreeApiController<Area, Long> {
 }

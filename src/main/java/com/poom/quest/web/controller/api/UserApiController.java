@@ -15,7 +15,7 @@ import com.poom.quest.services.service.RequesterService;
 
 @Controller
 @RequestMapping("api/users")
-public class UserApiController extends GenericApiController<User> {
+public class UserApiController extends GenericApiController<User, Long> {
 	
 	@Autowired RequesterService requestserService;
 	@Autowired QuesterService questerService;

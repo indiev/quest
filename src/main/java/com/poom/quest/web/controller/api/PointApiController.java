@@ -22,7 +22,7 @@ public class PointApiController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/deposit/{rewardId}", method = RequestMethod.PUT)
-	public PointLog deposit(@PathVariable("rewardId") Integer rewardId) {
+	public PointLog deposit(@PathVariable("rewardId") Long rewardId) {
 		User user = userService.getLoginUserByRequest();
 		if(user !=null ) return pointService.deposit(rewardId, user);
 		else return null;
@@ -30,7 +30,7 @@ public class PointApiController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/withdraw/{rewardId}", method = RequestMethod.PUT)
-	public PointLog withdraw(@PathVariable("rewardId") Integer rewardId) {
+	public PointLog withdraw(@PathVariable("rewardId") Long rewardId) {
 		User user = userService.getLoginUserByRequest();
 		if(user !=null ) return pointService.withdraw(rewardId, user);
 		else return null;
@@ -38,7 +38,7 @@ public class PointApiController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/give/{rewardId}", method = RequestMethod.PUT)
-	public PointLog give(@PathVariable("rewardId") Integer rewardId) {
+	public PointLog give(@PathVariable("rewardId") Long rewardId) {
 		User user = userService.getLoginUserByRequest();
 		if(user !=null ) return pointService.give(rewardId, user);
 		else return null;

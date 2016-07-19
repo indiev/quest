@@ -7,6 +7,6 @@ import com.poom.quest.services.model.Area;;
 
 @Service
 @Transactional
-public class AreaService extends GenericService<Area> {
+public class AreaService extends GenericService<Area, Long> {
 	
 }

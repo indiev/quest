@@ -14,18 +14,15 @@ import com.poom.quest.services.model.Contract;
 import com.poom.quest.services.model.Quest;
 import com.poom.quest.services.model.user.User;
 import com.poom.quest.services.service.QuestService;
-import com.poom.quest.services.service.UserService;
 
 @Controller
 @RequestMapping("api/contracts")
-public class ContractApiController extends GenericApiController<Contract> {
-	
-	@Autowired UserService userService;
+public class ContractApiController extends GenericApiController<Contract, Long> {
 	@Autowired QuestService questService;
 	
 	@ResponseBody
 	@RequestMapping(value = "/{id}/AgreeUsers/me", method = RequestMethod.GET)
-	public User getChildByParent(@PathVariable("id") Integer id, @RequestParam Map<String, Object> params) {
+	public User getChildByParent(@PathVariable("id") Long id, @RequestParam Map<String, Object> params) {
 		User user = userService.getLoginUserByRequest();
 		Contract contract = service.get(id);
 		if(contract.getAgreedUsers().contains(user)) return user;
@@ -34,7 +31,7 @@ public class ContractApiController extends GenericApiController<Contract> {
 	
 	@ResponseBody
 	@RequestMapping(value = "/{id}/AgreeUsers/me", method = RequestMethod.PUT)
-	public Contract putChild(@PathVariable("id") Integer id, @RequestParam Map<String, Object> params) {
+	public Contract putChild(@PathVariable("id") Long id, @RequestParam Map<String, Object> params) {
 		User user = userService.getLoginUserByRequest();
 		Contract contract = service.get(id);
 		contract.getAgreedUsers().add(user);

@@ -7,6 +7,6 @@ import com.poom.quest.services.model.Reward;
 
 @Service
 @Transactional
-public class RewardService extends GenericService<Reward> {
+public class RewardService extends GenericService<Reward, Long> {
 	
 }

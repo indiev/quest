@@ -7,6 +7,6 @@ import com.poom.quest.services.model.SampleModel;
 
 //@Service
 //@Transactional
-public class SampleService extends GenericService<SampleModel> {
+public class SampleService extends GenericService<SampleModel, Long> {
 	
 }

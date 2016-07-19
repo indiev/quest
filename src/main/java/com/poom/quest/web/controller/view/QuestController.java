@@ -17,7 +17,7 @@ public class QuestController extends GenericViewController<Quest> {
 	@Autowired CodeService codeService;
 	
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public String detail(@PathVariable Integer id) {
+	public String detail(@PathVariable Long id) {
 		Quest quest = genericService.get(id);
 		Code state = codeService.get(quest.getState().getId());
 		//return return modelName + "/detail/" + state.getName();

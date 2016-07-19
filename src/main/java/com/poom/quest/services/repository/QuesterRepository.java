@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import com.poom.quest.services.model.user.Quester;
 
 @Repository
-public class QuesterRepository extends GenericRepository<Quester> {
+public class QuesterRepository extends GenericRepository<Quester, Long> {
 
 }

@@ -7,6 +7,6 @@ import com.poom.quest.services.model.Provision;
 
 @Service
 @Transactional
-public class ProvisionService extends GenericService<Provision> {
+public class ProvisionService extends GenericService<Provision, Long> {
 	
 }

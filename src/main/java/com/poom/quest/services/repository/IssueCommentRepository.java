@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import com.poom.quest.services.model.IssueComment;
 
 @Repository
-public class IssueCommentRepository extends GenericRepository<IssueComment> {
+public class IssueCommentRepository extends GenericRepository<IssueComment, Long> {
 
 }

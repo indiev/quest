@@ -4,5 +4,5 @@ import com.poom.quest.services.model.SampleModel;
 
 //@Controller
 //@RequestMapping("api/..")
-public class SampleApiController extends GenericApiController<SampleModel> {
+public class SampleApiController extends GenericApiController<SampleModel, Long> {
 }

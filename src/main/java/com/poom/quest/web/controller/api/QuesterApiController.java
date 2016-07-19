@@ -14,7 +14,7 @@ import com.poom.quest.services.service.QuestService;
 
 @Controller
 @RequestMapping("api/questers")
-public class QuesterApiController extends GenericApiController<Quester> {
+public class QuesterApiController extends GenericApiController<Quester, Long> {
 	
 	@Autowired QuestService questService;
 	

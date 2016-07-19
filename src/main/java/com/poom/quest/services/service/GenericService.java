@@ -11,17 +11,17 @@ import com.poom.quest.services.repository.GenericRepository;
 
 @Service
 @Transactional
-public abstract class GenericService<T> {
+public abstract class GenericService<T, ID> {
 
 	static private final String REGION = "services";
 	
-	@Autowired GenericRepository<T> genericRepository;
+	@Autowired GenericRepository<T, ID> genericRepository;
 	
 	public T add(T entity) {
 		return genericRepository.add(entity);
 	}
 	
-	public T get(Integer id) {
+	public T get(ID id) {
 		return genericRepository.get(id);
 	}
 	
@@ -29,7 +29,7 @@ public abstract class GenericService<T> {
 		return genericRepository.getByKey(keyName, key);
 	}
 	
-	public T getByKey(String keyName, Integer key) {
+	public T getByKey(String keyName, ID key) {
 		return genericRepository.getByKey(keyName, key.toString());
 	}
 	
@@ -41,7 +41,7 @@ public abstract class GenericService<T> {
 		return genericRepository.list();
 	}
 	
-	public List<T> listByKeyId(String keyName, Integer key) {
+	public List<T> listByKeyId(String keyName, ID key) {
 		return genericRepository.listByKeyId(keyName, key);
 	}
 	
@@ -49,7 +49,7 @@ public abstract class GenericService<T> {
 		return genericRepository.listByKeyId(keyName, key);
 	}
 	
-	public List<T> listByKey(String keyName, Integer key) {
+	public List<T> listByKey(String keyName, ID key) {
 		return genericRepository.listByKey(keyName, key);
 	}
 	
@@ -57,11 +57,11 @@ public abstract class GenericService<T> {
 		return genericRepository.listByKey(keyName, key);
 	}
 	
-	public List<T> listByParent(Integer parentId, Class<?> parentClass) {
+	public List<T> listByParent(ID parentId, Class<?> parentClass) {
 		return genericRepository.listByParent(parentId, parentClass);
 	}
 	
-	public List<T> listByParent(Integer parentId, String parentName) {
+	public List<T> listByParent(ID parentId, String parentName) {
 		return genericRepository.listByParent(parentId, parentName);
 	}
 	
@@ -73,7 +73,7 @@ public abstract class GenericService<T> {
 		return genericRepository.search(keyword, keys);
 	}
 	
-	public List<T> search(String keyword, String[] keys, Integer userId) {
+	public List<T> search(String keyword, String[] keys, ID userId) {
 		return genericRepository.search(keyword, keys, userId);
 	}
 	
@@ -85,7 +85,7 @@ public abstract class GenericService<T> {
 		return genericRepository.count();
 	}
 	
-	public Integer delete(Integer id) {
+	public ID delete(ID id) {
 		genericRepository.delete(id);
 		return id;
 	}

@@ -16,7 +16,7 @@ import com.poom.quest.services.model.user.User;
 
 @Controller
 @RequestMapping("api/updaters")
-public class UpdaterApiController extends GenericApiController<Updater> {
+public class UpdaterApiController extends GenericApiController<Updater, Long> {
 	
 	@Override
 	@ResponseBody

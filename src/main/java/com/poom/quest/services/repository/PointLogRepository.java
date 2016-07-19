@@ -6,6 +6,6 @@ import com.poom.quest.services.model.SampleModel;
 import com.poom.quest.services.model.log.PointLog;
 
 @Repository
-public class PointLogRepository extends GenericRepository<PointLog> {
+public class PointLogRepository extends GenericRepository<PointLog, Long> {
 
 }

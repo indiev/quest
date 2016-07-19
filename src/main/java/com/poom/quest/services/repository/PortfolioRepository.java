@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 import com.poom.quest.services.model.Portfolio;
 
 @Repository
-public class PortfolioRepository extends GenericRepository<Portfolio> {
+public class PortfolioRepository extends GenericRepository<Portfolio, Long> {
 	
-	public List<Portfolio> searchByType(Integer typeId, String keyword, Integer userId) {
+	public List<Portfolio> searchByType(Long typeId, String keyword, Long userId) {
 		keyword = ("%" + keyword + "%").toLowerCase();
 		String where = " WHERE typeId = :typeId AND userId = :userId";
 		where += " AND LOWER(name) LIKE :keyword";

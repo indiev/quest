@@ -7,6 +7,6 @@ import com.poom.quest.services.model.Updater;
 
 @Service
 @Transactional
-public class UpdaterService extends GenericService<Updater> {
+public class UpdaterService extends GenericService<Updater, Long> {
 	
 }

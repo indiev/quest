@@ -16,7 +16,7 @@ import com.poom.quest.services.service.PortfolioService;
 
 @Controller
 @RequestMapping("api/portfolios")
-public class PortfolioApiController extends GenericApiController<Portfolio> {
+public class PortfolioApiController extends GenericApiController<Portfolio, Long> {
 	
 	@Autowired PortfolioService portfolioService;
 	

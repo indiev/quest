@@ -6,6 +6,6 @@ import com.poom.quest.services.model.log.PointLog;
 
 @Service
 @Transactional
-public class PointLogService extends GenericService<PointLog> {
+public class PointLogService extends GenericService<PointLog, Long> {
 	
 }

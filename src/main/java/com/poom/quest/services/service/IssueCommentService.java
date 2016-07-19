@@ -7,6 +7,6 @@ import com.poom.quest.services.model.IssueComment;
 
 @Service
 @Transactional
-public class IssueCommentService extends GenericService<IssueComment> {
+public class IssueCommentService extends GenericService<IssueComment, Long> {
 	
 }

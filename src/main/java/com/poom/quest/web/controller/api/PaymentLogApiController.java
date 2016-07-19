@@ -7,6 +7,6 @@ import com.poom.quest.services.model.log.PaymentLog;
 
 @Controller
 @RequestMapping("api/paymentLogs")
-public class PaymentLogApiController extends GenericApiController<PaymentLog> {
+public class PaymentLogApiController extends GenericApiController<PaymentLog, Long> {
 	
 }

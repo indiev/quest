@@ -7,6 +7,6 @@ import com.poom.quest.services.model.Contract;
 
 @Service
 @Transactional
-public class ContractService extends GenericService<Contract> {
+public class ContractService extends GenericService<Contract, Long> {
 	
 }

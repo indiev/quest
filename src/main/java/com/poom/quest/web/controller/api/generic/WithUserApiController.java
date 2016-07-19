@@ -10,7 +10,7 @@ import com.poom.quest.services.model.user.User;
 import com.poom.quest.web.controller.api.GenericApiController;
 
 @RequestMapping("api")
-public abstract class WithUserApiController<T extends WithUserModel> extends GenericApiController<T> {
+public abstract class WithUserApiController<T extends WithUserModel, ID> extends GenericApiController<T, ID> {
 	@ResponseBody
 	@RequestMapping(value = "/users/me", method = RequestMethod.POST)
 	public T addByUser(@RequestBody T entity) {

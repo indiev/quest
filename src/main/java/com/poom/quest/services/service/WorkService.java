@@ -7,6 +7,6 @@ import com.poom.quest.services.model.Work;;
 
 @Service
 @Transactional
-public class WorkService extends GenericService<Work> {
+public class WorkService extends GenericService<Work, Long> {
 	
 }

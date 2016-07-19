@@ -25,7 +25,7 @@ import com.poom.quest.services.service.UserService;
 
 @Controller
 @RequestMapping("api/quests")
-public class QuestApiController extends GenericApiController<Quest> {
+public class QuestApiController extends GenericApiController<Quest, Long> {
 	
 	@Autowired QuestService questService;
 	@Autowired UserService userService;
@@ -69,7 +69,7 @@ public class QuestApiController extends GenericApiController<Quest> {
 	
 	@ResponseBody
 	@RequestMapping(value = "/apply", method = RequestMethod.PUT)
-	public Boolean apply(@RequestParam Integer id) {
+	public Boolean apply(@RequestParam Long id) {
 		Quest quest = service.get(id);
 		User loginUser = userService.getLoginUserByRequest();
 		if(loginUser != null && loginUser != quest.getRequester().getUser()) {
@@ -83,7 +83,7 @@ public class QuestApiController extends GenericApiController<Quest> {
 	
 	@ResponseBody
 	@RequestMapping(value = "/accept", method = RequestMethod.PUT)
-	public Boolean accept(@RequestParam Integer questId, @RequestParam Integer questerId) {
+	public Boolean accept(@RequestParam Long questId, @RequestParam Long questerId) {
 		Quest quest = service.get(questId);
 		User loginUser = userService.getLoginUserByRequest();
 		if(loginUser != null && loginUser == quest.getRequester().getUser()) {
@@ -101,7 +101,7 @@ public class QuestApiController extends GenericApiController<Quest> {
 	//정해진 상태값 이외의 값으로 변경될 시 에외 처리 추가해야됨
 	@ResponseBody
 	@RequestMapping(value = "/{id}/state/{stateValue}", method = RequestMethod.GET)
-	public Map<String, String> updateState(@PathVariable("id") Integer id, @PathVariable("stateValue") String stateValue) {
+	public Map<String, String> updateState(@PathVariable("id") Long id, @PathVariable("stateValue") String stateValue) {
 		Map<String, String> result = new HashMap<>();
 		User user = userService.getLoginUserByRequest();
 		if(user != null) {
@@ -116,7 +116,7 @@ public class QuestApiController extends GenericApiController<Quest> {
 	
 	@ResponseBody
 	@RequestMapping(value = "/questerId/{id}/stateGroup/ongoing",  method = RequestMethod.GET)
-	public List<Quest> questsOfApplicantOngoing(@PathVariable("id") Integer id) {
+	public List<Quest> questsOfApplicantOngoing(@PathVariable("id") Long id) {
 		User user = userService.getLoginUserByRequest();
 		if(user != null) {
 			return questService.questsOfApplicantOngoing(id);
@@ -126,7 +126,7 @@ public class QuestApiController extends GenericApiController<Quest> {
 	
 	@ResponseBody
 	@RequestMapping(value = "/questerId/{id}/state/{stateValue}",  method = RequestMethod.GET)
-	public List<Quest> questsOfApplicant(@PathVariable("id") Integer id, @PathVariable("stateValue") String stateValue) {
+	public List<Quest> questsOfApplicant(@PathVariable("id") Long id, @PathVariable("stateValue") String stateValue) {
 		User user = userService.getLoginUserByRequest();
 		if(user != null) {
 			return questService.questsOfApplicant(id, stateValue);
@@ -136,7 +136,7 @@ public class QuestApiController extends GenericApiController<Quest> {
 	
 	@ResponseBody
 	@RequestMapping(value = "/requesterId/{id}/stateGroup/ongoing",  method = RequestMethod.GET)
-	public List<Quest> questsOfRequesterOngoing(@PathVariable("id") Integer id) {
+	public List<Quest> questsOfRequesterOngoing(@PathVariable("id") Long id) {
 		User user = userService.getLoginUserByRequest();
 		if(user != null) {
 			return questService.questsOfRequesterOngoing(id);
@@ -146,7 +146,7 @@ public class QuestApiController extends GenericApiController<Quest> {
 	
 	@ResponseBody
 	@RequestMapping(value = "/requesterId/{id}/state/{stateValue}",  method = RequestMethod.GET)
-	public List<Quest> questsOfRequester(@PathVariable("id") Integer id, @PathVariable("stateValue") String stateValue) {
+	public List<Quest> questsOfRequester(@PathVariable("id") Long id, @PathVariable("stateValue") String stateValue) {
 		User user = userService.getLoginUserByRequest();
 		if(user != null) {
 			return questService.questsOfRequester(id, stateValue);

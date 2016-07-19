@@ -15,13 +15,13 @@ import com.poom.quest.services.service.IssueService;
 
 @Controller
 @RequestMapping("api/issueComments")
-public class IssueCommentApiController extends GenericApiController<IssueComment> {
+public class IssueCommentApiController extends GenericApiController<IssueComment, Long> {
 	
 	@Autowired IssueService issueService; 
 	
 	@ResponseBody
 	@RequestMapping(value = "/issue/{id}", method = RequestMethod.POST)
-	public IssueComment add(@RequestBody IssueComment entity, @PathVariable Integer id) {
+	public IssueComment add(@RequestBody IssueComment entity, @PathVariable Long id) {
 		User user = userService.getLoginUserByRequest();
 		if(user != null) {
 			Issue issue = issueService.get(id);

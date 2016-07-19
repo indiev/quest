@@ -7,6 +7,6 @@ import com.poom.quest.services.model.Skill;
 
 @Service
 @Transactional
-public class SkillService extends GenericService<Skill> {
+public class SkillService extends GenericService<Skill, Long> {
 	
 }

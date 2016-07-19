@@ -10,7 +10,7 @@ import com.poom.quest.services.model.user.User;
 
 @Service
 @Transactional
-public class UserService extends GenericService<User> {
+public class UserService extends GenericService<User, Long> {
 	
 	public User getLoginUserByRequest() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();

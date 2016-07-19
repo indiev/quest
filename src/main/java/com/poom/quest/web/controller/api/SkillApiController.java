@@ -7,5 +7,5 @@ import com.poom.quest.services.model.Skill;
 
 @Controller
 @RequestMapping("api/skills")
-public class SkillApiController extends GenericApiController<Skill> {
+public class SkillApiController extends GenericApiController<Skill, Long> {
 }

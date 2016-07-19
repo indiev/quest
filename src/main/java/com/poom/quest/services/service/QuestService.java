@@ -23,7 +23,7 @@ import com.poom.quest.services.repository.QuestRepository;
 
 @Service
 @Transactional
-public class QuestService extends GenericService<Quest> {
+public class QuestService extends GenericService<Quest, Long> {
 	
 	@Autowired CodeService codeService;
 	@Autowired QuestRepository questRepository;
@@ -65,19 +65,19 @@ public class QuestService extends GenericService<Quest> {
 		return result;
 	}
 	
-	public List<Quest> questsOfQuester(Integer questerId, String stateValue) {
+	public List<Quest> questsOfQuester(Long questerId, String stateValue) {
 		Code state = (stateValue != null)?codeService.getQuestState(stateValue):null;
 		return questRepository.questsOfQuester(questerId, state.getId());
 	}
 	
-	public List<Quest> questsOfApplicant(Integer questerId, String stateValue) {
+	public List<Quest> questsOfApplicant(Long questerId, String stateValue) {
 		Code state = (stateValue != null)?codeService.getQuestState(stateValue):null;
 		return questRepository.questsOfApplicant(questerId, state.getId());
 	}
 	
-	public List<Quest> questsOfApplicantOngoing(Integer questerId) {
+	public List<Quest> questsOfApplicantOngoing(Long questerId) {
 		String[] ongoingStates  = {"wait", "discuss", "progress"};
-		List<Integer> list = new ArrayList();
+		List<Long> list = new ArrayList();
 		
 		for(String stateValue : ongoingStates) {
 			list.add(codeService.getQuestState(stateValue).getId());
@@ -85,18 +85,18 @@ public class QuestService extends GenericService<Quest> {
 		return this.questsOfApplicant(questerId, list);
 	}
 	
-	public List<Quest> questsOfApplicant(Integer questerId, List<Integer> stateIds) {
+	public List<Quest> questsOfApplicant(Long questerId, List<Long> stateIds) {
 		return questRepository.questsOfApplicant(questerId, stateIds);
 	}
 	
-	public List<Quest> questsOfRequester(Integer requesterId, String stateValue) {
+	public List<Quest> questsOfRequester(Long requesterId, String stateValue) {
 		Code state = (stateValue != null)?codeService.getQuestState(stateValue):null;
 		return questRepository.questsOfRequester(requesterId, state.getId());
 	}
 	
-	public List<Quest> questsOfRequesterOngoing(Integer requesterId) {
+	public List<Quest> questsOfRequesterOngoing(Long requesterId) {
 		String[] ongoingStates  = {"wait", "discuss", "progress"};
-		List<Integer> list = new ArrayList();
+		List<Long> list = new ArrayList();
 		
 		for(String stateValue : ongoingStates) {
 			list.add(codeService.getQuestState(stateValue).getId());
@@ -104,11 +104,11 @@ public class QuestService extends GenericService<Quest> {
 		return this.questsOfRequester(requesterId, list);
 	}
 	
-	public List<Quest> questsOfRequester(Integer requesterId, List<Integer> stateIds) {
+	public List<Quest> questsOfRequester(Long requesterId, List<Long> stateIds) {
 		return questRepository.questsOfRequester(requesterId, stateIds);
 	}
 	
-	public List<Quest> searchByState(Integer stateId, String keyword) {
+	public List<Quest> searchByState(Long stateId, String keyword) {
 		return questRepository.searchByState(stateId, keyword);
 	}
 
