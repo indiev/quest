@@ -1,9 +1,8 @@
 package com.poom.quest.web.controller.view.admin;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -11,18 +10,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/admin")
 public class AdminController {
 	
-	@RequestMapping(value = "area/add", method = RequestMethod.GET)
-	public String addArea(HttpServletRequest request, Model model) {
-		return "admin/area/add";
+	@RequestMapping(value = "area/edit", method = RequestMethod.GET)
+	public String editArea() {
+		return "admin/area/edit";
 	}
 	
-	@RequestMapping(value = "work/add", method = RequestMethod.GET)
-	public String addWork(HttpServletRequest request, Model model) {
-		return "admin/work/add";
+	@RequestMapping(value = "work/edit", method = RequestMethod.GET)
+	public String editWork() {
+		return "admin/work/edit";
 	}
 	
-	@RequestMapping(value = "skill/add", method = RequestMethod.GET)
-	public String addSkill(HttpServletRequest request, Model model) {
-		return "admin/skill/add";
+	@RequestMapping(value = "skill/edit", method = RequestMethod.GET)
+	public String editSkill() {
+		return "admin/skill/edit";
+	}
+	
+	@RequestMapping(value = "{model}/node/{view}", method = RequestMethod.GET)
+	public String node(@PathVariable("model") String model, @PathVariable("view") String view) {
+		return "admin/"+ model +"/node/" + view;
 	}
 }
