@@ -66,7 +66,7 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 	@RequestMapping(value = "/{id}/{child}s/{childId}", method = RequestMethod.GET)
 	public <S extends GenericModel> S getChildByParent(@PathVariable("id") ID id, @PathVariable("child") String child, @PathVariable("childId") ID childId, @RequestParam Map<String, Object> params) {
 		try {
-			GenericService<S, ID> childService = applicationContext.getBean(child+"Service", GenericService.class);
+			GenericService<S, ID> childService = getFieldService(child);
 			T entity = service.get(id);
 			Method method = Reflect.getMethod(domainClass, "get"+child+"s");
 			if(method != null) {
@@ -119,13 +119,13 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 							Code code = codeService.get(domainClass.getSimpleName(), key, (String)params.get(key));
 							setMethod.invoke(entity, code);
 						} else {
-							GenericService nodeService = applicationContext.getBean(key+"Service", GenericService.class);
+							GenericService nodeService = getFieldService(key);
 							Object node = nodeService.get((ID)params.get(key));
 							setMethod.invoke(entity, fieldClass.cast(node));
 						}
 					} else if(field.getType().isAssignableFrom(Set.class)) { //Type이 List일 경우
 						key = key.substring(0, key.length()-1); //'s' 제거
-						GenericService nodeService = applicationContext.getBean(key+"Service", GenericService.class);
+						GenericService nodeService = getFieldService(key);
 						Object node = nodeService.get((ID)params.get(key));
 						Set nodeSet = (Set)getMethod.invoke(entity);
 						nodeSet.add(fieldClass.cast(node));
@@ -160,7 +160,7 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 		T entity = service.get(id);
 		//T의 Field Type에 User, Quester, Requester가 있다면. 로그인이 되어 있는지 관련 사용자가 맞는지 확인
 		try {
-			GenericService childService = applicationContext.getBean(child+"Service", GenericService.class);
+			GenericService childService = getFieldService(child);
 			Object childEntity = childService.get(childId);
 			Method method = Reflect.getMethod(domainClass, "get"+child+"s");
 			Set childList = (Set) method.invoke(entity);
@@ -186,7 +186,7 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 		T entity = service.get(id);
 		//T의 Field Type에 User, Quester, Requester가 있다면. 로그인이 되어 있는지 관련 사용자가 맞는지 확인
 		try {
-			GenericService childService = applicationContext.getBean(child+"Service", GenericService.class);
+			GenericService childService = getFieldService(child);
 			Object childEntity = childService.get(childId);
 			Method method = Reflect.getMethod(domainClass, "get"+child+"s");
 			Set childList = (Set) method.invoke(entity);
@@ -200,7 +200,14 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 		return (changeCount != 0)?service.update(entity):null;
 	}
 	
-	//보류 uri
+	public GenericService getFieldService(String fieldName) {
+		Field field = Reflect.getField(domainClass, fieldName);
+		if(field != null && field.getType().isAssignableFrom(Model.class))
+			return applicationContext.getBean(fieldName+"Service", GenericService.class);			
+		else return null;
+	}
+	
+	//보류 ;ri
 	// /{parent}s/{parentId} PUT
 	/* 
 	 * /{parent}s/{parentId} POST
