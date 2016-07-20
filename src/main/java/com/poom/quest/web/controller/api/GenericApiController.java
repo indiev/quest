@@ -1,7 +1,6 @@
 package com.poom.quest.web.controller.api;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
@@ -140,7 +139,7 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 		return (changeCount != 0)?service.update(entity):null;
 	}
 	
-	@ResponseBody
+	/*@ResponseBody
 	@RequestMapping(value = "/{id}/{child}s", method = RequestMethod.PUT)
 	public T putChilds(@PathVariable("id") ID id, @PathVariable("child") String child, @RequestParam Map<String, Object> params) {
 		String childIds = (String)params.get("ids");
@@ -150,11 +149,9 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 			}
 		}
 		
-		
-		
 		return null;
 		
-	}
+	}*/
 	
 	@ResponseBody
 	@RequestMapping(value = "/{id}/{child}s/{childId}", method = RequestMethod.PUT)
