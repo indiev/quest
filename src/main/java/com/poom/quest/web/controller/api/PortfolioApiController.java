@@ -13,24 +13,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.poom.quest.services.model.Portfolio;
 import com.poom.quest.services.model.user.User;
 import com.poom.quest.services.service.PortfolioService;
+import com.poom.quest.web.controller.api.generic.WithUserApiController;
 
 @Controller
 @RequestMapping("api/portfolios")
-public class PortfolioApiController extends GenericApiController<Portfolio, Long> {
+public class PortfolioApiController extends WithUserApiController<Portfolio, Long> {
 	
+	/*
 	@Autowired PortfolioService portfolioService;
-	
-	@Override
-	@ResponseBody
-	@RequestMapping(value = "", method = RequestMethod.POST)
-	public Portfolio add(@RequestBody Portfolio entity) {
-		User user = userService.getLoginUserByRequest();
-		if(user != null) {
-			entity.setUser(user);
-			return service.add(entity);
-		}
-		return null;
-	}
 	
 	@ResponseBody
 	@RequestMapping(value = "user/search", method = RequestMethod.GET)
@@ -66,10 +56,5 @@ public class PortfolioApiController extends GenericApiController<Portfolio, Long
 			return portfolioService.searchByType(typeValue, keyword, user.getId());
 		}
 		return null;
-	}
-	 
-	
-	
-	
-
+	}*/
 }

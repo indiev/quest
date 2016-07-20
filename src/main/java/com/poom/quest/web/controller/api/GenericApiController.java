@@ -29,10 +29,16 @@ import com.poom.quest.util.reflect.Reflect;
 public abstract class GenericApiController<T extends GenericModel, ID> {
 
 	@Autowired protected ApplicationContext applicationContext;
-	@Autowired protected GenericService<T, ID> service;
 	@Autowired protected UserService userService;
 	@Autowired protected CodeService codeService;
-	protected Class<T> domainClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+	protected GenericService<T, ID> service;
+	protected Class<T> domainClass;
+	
+	
+	protected GenericApiController() {
+		domainClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+		service = getService(domainClass.getSimpleName());
+	}
 	
 	@ResponseBody
 	@RequestMapping
@@ -200,10 +206,13 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 		return (changeCount != 0)?service.update(entity):null;
 	}
 	
+	private GenericService getService(String model) {
+		return applicationContext.getBean(model+"Service", GenericService.class);			
+	}
+	
 	public GenericService getFieldService(String fieldName) {
 		Field field = Reflect.getField(domainClass, fieldName);
-		if(field != null && field.getType().isAssignableFrom(Model.class))
-			return applicationContext.getBean(fieldName+"Service", GenericService.class);			
+		if(field != null && field.getType().isAssignableFrom(Model.class)) return getService(fieldName);
 		else return null;
 	}
 	

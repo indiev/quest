@@ -10,10 +10,10 @@ import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poom.quest.services.model.Quest;
-import com.poom.quest.services.model.abstractModel.GenericModel;
+import com.poom.quest.services.model.abstractModel.WithUserModel;
 
 @Entity
-public class Requester extends GenericModel {
+public class Requester extends WithUserModel {
 	
 	private static final long serialVersionUID = 1L;
 

@@ -5,11 +5,11 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.poom.quest.services.model.abstractModel.GenericModel;
+import com.poom.quest.services.model.abstractModel.WithUserModel;
 import com.poom.quest.services.model.user.User;
 
 @Entity
-public class Updater extends GenericModel {
+public class Updater extends WithUserModel {
 
 	private static final long serialVersionUID = 1L;
 	

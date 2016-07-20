@@ -15,9 +15,10 @@ import com.poom.quest.services.model.Quest;
 import com.poom.quest.services.model.Skill;
 import com.poom.quest.services.model.Work;
 import com.poom.quest.services.model.abstractModel.GenericModel;
+import com.poom.quest.services.model.abstractModel.WithUserModel;
 
 @Entity
-public class Quester extends GenericModel {
+public class Quester extends WithUserModel {
 
 	private static final long serialVersionUID = 1L;
 

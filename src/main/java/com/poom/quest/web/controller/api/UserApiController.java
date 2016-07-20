@@ -22,7 +22,7 @@ public class UserApiController extends GenericApiController<User, Long> {
 	
 	@Override
 	@ResponseBody
-	@RequestMapping(value = "", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public User add(@RequestBody User entity) {
 		Requester requester = new Requester();
 		Quester quester = new Quester();
@@ -37,7 +37,7 @@ public class UserApiController extends GenericApiController<User, Long> {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "get", method = RequestMethod.GET)
+	@RequestMapping(value = "/me", method = RequestMethod.GET)
 	public User get() {
 		User user = userService.getLoginUserByRequest();
 		if(user != null) {

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.poom.quest.services.model.Code;
 import com.poom.quest.services.model.Quest;
 import com.poom.quest.services.model.user.Quester;
 import com.poom.quest.services.model.user.User;
@@ -28,11 +27,9 @@ import com.poom.quest.services.service.UserService;
 public class QuestApiController extends GenericApiController<Quest, Long> {
 	
 	@Autowired QuestService questService;
-	@Autowired UserService userService;
 	@Autowired QuesterService questerService;
-	@Autowired CodeService codeService;
 
-	@ResponseBody
+	/*@ResponseBody
 	@RequestMapping(value = "all/search", method = RequestMethod.GET)
 	public List<Quest> search() {
 		return search("");
@@ -55,19 +52,19 @@ public class QuestApiController extends GenericApiController<Quest, Long> {
 	public List<Quest> searchBySateValue(@PathVariable("stateValue") String stateValue, @PathVariable("keyword") String keyword) {
 		Code state = codeService.getQuestState(stateValue);
 		return questService.searchByState(state.getId(), keyword);
-	}
+	}*/
 	
 	//정해진 값 범위 내에서 추가되도록, 벗어나는 값 관련 작업 필요
 	@Override
 	@ResponseBody
-	@RequestMapping(value = "", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public Quest add(@RequestBody Quest entity) {
 		User user = userService.getLoginUserByRequest();
-		if(user != null) return questService.add(entity, user);
+		if(user != null) return questService.add(entity, user);	//service.add로 수정
 		else return null;
 	}
 	
-	@ResponseBody
+	/*@ResponseBody
 	@RequestMapping(value = "/apply", method = RequestMethod.PUT)
 	public Boolean apply(@RequestParam Long id) {
 		Quest quest = service.get(id);
@@ -96,10 +93,10 @@ public class QuestApiController extends GenericApiController<Quest, Long> {
 			return true;
 		}
 		return false;
-	}
+	}*/
 
 	//정해진 상태값 이외의 값으로 변경될 시 에외 처리 추가해야됨
-	@ResponseBody
+	/*@ResponseBody
 	@RequestMapping(value = "/{id}/state/{stateValue}", method = RequestMethod.GET)
 	public Map<String, String> updateState(@PathVariable("id") Long id, @PathVariable("stateValue") String stateValue) {
 		Map<String, String> result = new HashMap<>();
@@ -152,7 +149,5 @@ public class QuestApiController extends GenericApiController<Quest, Long> {
 			return questService.questsOfRequester(id, stateValue);
 		}
 		return null;
-	}
-	
-	
+	}*/
 }
