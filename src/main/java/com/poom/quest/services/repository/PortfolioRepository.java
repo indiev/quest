@@ -14,7 +14,7 @@ public class PortfolioRepository extends GenericRepository<Portfolio, Long> {
 		keyword = ("%" + keyword + "%").toLowerCase();
 		String where = " WHERE typeId = :typeId AND userId = :userId";
 		where += " AND LOWER(name) LIKE :keyword";
-		Query query = em.createNativeQuery(SELECT_ALL_SQL + where, clazz).setParameter("typeId", typeId).setParameter("userId", userId).setParameter("keyword", "%" + keyword + "%");
+		Query query = em.createNativeQuery(SELECT_ALL_SQL + where, domainClass).setParameter("typeId", typeId).setParameter("userId", userId).setParameter("keyword", "%" + keyword + "%");
 		return query.getResultList();
 	}
 

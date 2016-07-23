@@ -32,7 +32,7 @@ public class UserApiController extends GenericApiController<User, Long> {
 		quester.setUser(entity);
 		entity.setRequester(requester);
 		entity.setQuester(quester);
-		User user = service.add(entity);
+		User user = getService().add(entity);
 		return user;
 	}
 	

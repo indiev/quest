@@ -15,6 +15,6 @@ public abstract class TreeApiController<T extends TreeModel<T>, ID> extends Gene
 	@ResponseBody
 	@RequestMapping("/parents")
 	public List<T> parents(@RequestParam Map<String, Object> params) {
-		return service.listByParent((ID)null, domainClass);
+		return getService().listByParent((ID)null, domainClass);
 	}
 }

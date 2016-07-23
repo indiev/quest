@@ -31,25 +31,25 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 	@Autowired protected ApplicationContext applicationContext;
 	@Autowired protected UserService userService;
 	@Autowired protected CodeService codeService;
-	protected GenericService<T, ID> service;
+	@Autowired protected GenericService<T, ID> service;
 	protected Class<T> domainClass;
 	
 	
 	protected GenericApiController() {
 		domainClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-		service = getService(domainClass.getSimpleName());
+		/*if(service == null) setService(getService(domainClass.getSimpleName()));*/
 	}
 	
 	@ResponseBody
 	@RequestMapping
 	public List<T> list(@RequestParam Map<String, Object> params) {
-		return service.listByKeys(params);
+		return getService().listByKeys(params);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public T get(@PathVariable ID id, @RequestParam Map<String, Object> params) {
-		return service.get(id);
+		return getService().get(id);
 	}
 	
 	@ResponseBody
@@ -65,7 +65,7 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 	public List<T> children(@PathVariable("parent") String parent, @PathVariable("parentId") ID parentId, @RequestParam Map<String, Object> params){
 		Class<?> parentClass = domainClass;
 		if(!parent.equals("parent")) parentClass = Reflect.getField(domainClass, parent).getType();
-		return service.listByParent(parentId, parentClass);
+		return getService().listByParent(parentId, parentClass);
 	}
 	
 	@ResponseBody
@@ -73,7 +73,7 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 	public <S extends GenericModel> S getChildByParent(@PathVariable("id") ID id, @PathVariable("child") String child, @PathVariable("childId") ID childId, @RequestParam Map<String, Object> params) {
 		try {
 			GenericService<S, ID> childService = getFieldService(child);
-			T entity = service.get(id);
+			T entity = getService().get(id);
 			Method method = Reflect.getMethod(domainClass, "get"+child+"s");
 			if(method != null) {
 				Set<S> nodeSet = (Set<S>)method.invoke(entity);
@@ -90,7 +90,7 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 	@RequestMapping(value = "/{id}/{child}s", method = RequestMethod.GET)
 	public <S extends GenericModel> Set<S> childrenByParent(@PathVariable("id") ID id, @PathVariable("child") String child, @RequestParam Map<String, Object> params) {
 		try {
-			T entity = service.get(id);
+			T entity = getService().get(id);
 			Method method = Reflect.getMethod(domainClass, "get"+child+"s");
 			if(method != null) return (Set<S>)method.invoke(entity);
 		} catch (Exception e) {
@@ -103,14 +103,14 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 	@RequestMapping(method = RequestMethod.POST)
 	public T add(@RequestBody T entity) {
 		//T의 Field Type에 User, Quester, Requester가 있다면. User에서 해당 클래스 넣기
-		return service.add(entity);
+		return getService().add(entity);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public T update(@PathVariable ID id, @RequestParam Map<String, Object> params) {
 		int changeCount = 0;
-		T entity = service.get(id);
+		T entity = getService().get(id);
 		//T의 Field Type에 User, Quester, Requester가 있다면. 로그인이 되어 있는지 관련 사용자가 맞는지 확인
 		for(String key : params.keySet()) {	//바뀌면 안되는 Key 제한. ex) Id, CreatedDate...
 			if(key.equalsIgnoreCase("id")) continue;
@@ -120,8 +120,8 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 					Class<?> fieldClass = field.getType();
 					Method getMethod = Reflect.getMethod(domainClass, "get"+key);
 					Method setMethod = Reflect.getMethod(domainClass, "set"+key);
-					if(field.getType().isAssignableFrom(Model.class)) { //Type이 모델이라면
-						if(field.getType().isAssignableFrom(Code.class)) {	//Type이 Code일 경우
+					if(Model.class.isAssignableFrom(field.getType())) { //Type이 모델이라면
+						if(Code.class.isAssignableFrom(field.getType())) {	//Type이 Code일 경우
 							Code code = codeService.get(domainClass.getSimpleName(), key, (String)params.get(key));
 							setMethod.invoke(entity, code);
 						} else {
@@ -129,7 +129,7 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 							Object node = nodeService.get((ID)params.get(key));
 							setMethod.invoke(entity, fieldClass.cast(node));
 						}
-					} else if(field.getType().isAssignableFrom(Set.class)) { //Type이 List일 경우
+					} else if(Set.class.isAssignableFrom(field.getType())) { //Type이 List일 경우
 						key = key.substring(0, key.length()-1); //'s' 제거
 						GenericService nodeService = getFieldService(key);
 						Object node = nodeService.get((ID)params.get(key));
@@ -142,7 +142,7 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 				continue; 
 			}			
 		}
-		return (changeCount != 0)?service.update(entity):null;
+		return (changeCount != 0)?getService().update(entity):null;
 	}
 	
 	/*@ResponseBody
@@ -163,7 +163,7 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 	@RequestMapping(value = "/{id}/{child}s/{childId}", method = RequestMethod.PUT)
 	public T putChild(@PathVariable("id") ID id, @PathVariable("child") String child, @PathVariable("childId") ID childId, @RequestParam Map<String, Object> params) {
 		int changeCount = 0;
-		T entity = service.get(id);
+		T entity = getService().get(id);
 		//T의 Field Type에 User, Quester, Requester가 있다면. 로그인이 되어 있는지 관련 사용자가 맞는지 확인
 		try {
 			GenericService childService = getFieldService(child);
@@ -176,20 +176,20 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 		} catch (Exception e) { 
 			e.printStackTrace(); 
 		}
-		return (changeCount != 0)?service.update(entity):null;
+		return (changeCount != 0)?getService().update(entity):null;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ID delete(@PathVariable ID id, @RequestParam Map<String, Object> params) {
-		return service.delete(id);
+		return getService().delete(id);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/{id}/{child}s/{childId}", method = RequestMethod.DELETE)
 	public T removeChild(@PathVariable("id") ID id, @PathVariable("child") String child, @PathVariable("childId") ID childId, @RequestParam Map<String, Object> params) {
 		int changeCount = 0;
-		T entity = service.get(id);
+		T entity = getService().get(id);
 		//T의 Field Type에 User, Quester, Requester가 있다면. 로그인이 되어 있는지 관련 사용자가 맞는지 확인
 		try {
 			GenericService childService = getFieldService(child);
@@ -203,7 +203,7 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 		} catch (Exception e) { 
 			e.printStackTrace(); 
 		}
-		return (changeCount != 0)?service.update(entity):null;
+		return (changeCount != 0)?getService().update(entity):null;
 	}
 	
 	private GenericService getService(String model) {
@@ -212,8 +212,16 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 	
 	public GenericService getFieldService(String fieldName) {
 		Field field = Reflect.getField(domainClass, fieldName);
-		if(field != null && field.getType().isAssignableFrom(Model.class)) return getService(fieldName);
+		if(field != null && Model.class.isAssignableFrom(field.getType())) return getService(fieldName);
 		else return null;
+	}
+
+	public GenericService<T, ID> getService() {
+		return service;
+	}
+
+	public void setService(GenericService<T, ID> service) {
+		this.service = service;
 	}
 	
 	//보류 ;ri

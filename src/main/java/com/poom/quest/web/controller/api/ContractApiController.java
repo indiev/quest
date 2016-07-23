@@ -24,7 +24,7 @@ public class ContractApiController extends GenericApiController<Contract, Long> 
 	@RequestMapping(value = "/{id}/AgreeUsers/me", method = RequestMethod.GET)
 	public User getChildByParent(@PathVariable("id") Long id, @RequestParam Map<String, Object> params) {
 		User user = userService.getLoginUserByRequest();
-		Contract contract = service.get(id);
+		Contract contract = getService().get(id);
 		if(contract.getAgreedUsers().contains(user)) return user;
 		return null;
 	}
@@ -33,9 +33,9 @@ public class ContractApiController extends GenericApiController<Contract, Long> 
 	@RequestMapping(value = "/{id}/AgreeUsers/me", method = RequestMethod.PUT)
 	public Contract putChild(@PathVariable("id") Long id, @RequestParam Map<String, Object> params) {
 		User user = userService.getLoginUserByRequest();
-		Contract contract = service.get(id);
+		Contract contract = getService().get(id);
 		contract.getAgreedUsers().add(user);
-		service.update(contract);
+		getService().update(contract);
 		
 		Quest quest = contract.getQuest();
 		if(quest.getQuesters().size() + 1 <= contract.getAgreedUsers().size()) { 	//전부다 동의했다면, 다음단계로.
