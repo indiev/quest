@@ -15,9 +15,9 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">관리자 <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="/admin/area/add" class="load">분야</a></li>
-						<li><a href="/admin/work/add" class="load">업무</a></li>
-						<li><a href="/admin/skill/add" class="load">스킬</a></li>
+						<li><a href="/admin/area/edit" class="load">분야</a></li>
+						<li><a href="/admin/work/edit" class="load">업무</a></li>
+						<li><a href="/admin/skill/edit" class="load">스킬</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
