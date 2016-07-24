@@ -8,7 +8,7 @@ function getId() {
 
 function accept(questerId) {
 	if(confirm("수락하시겠습니까?")) {
-		ajax.put("/api/quest/accept", {"questId":getId(), "questerId":questerId}, function(result){
+		ajax.put("/api/quests/" + getId() + "/questers/" + questerId , {}, function(result){
 			if(result) {
 				alert("수락했습니다");				
 			} else {
@@ -24,13 +24,13 @@ function detail(id) {
         link: function (value) { return "/quest/" + value; }
     });
 	
-	ajax.get("/api/quest/"+id, {}, function(quest){
+	ajax.get("/api/quests/"+id, {}, function(quest){
 		$("div.quest-detail").loadTemplate("/quest/node/detail", quest);
 	});
 }
 
 function next(id) {
-	ajax.get("/api/quest/" + id + "/state/discuss", {}, function(result) {
+	ajax.get("/api/quests/" + id, {'state':'discuss'}, function(result) {
 		console.log(result);
 	});
 }

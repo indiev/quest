@@ -7,7 +7,7 @@
 	<span data-content="description"></span>
 </div>
 <div>
-	<form action="/api/issueComment/issue/" method="post" name="issueCommentForm">
+	<form action="/api/issueComments/" method="post" name="issueCommentForm">
 		<div class="input-group">
 			<textarea name="name" rows="3" class="form-control" style="resize:none;"></textarea>
 			<span data-value="id" class="input-group-addon btn btn-primary" onclick="return submitComment(this);">Send</span>

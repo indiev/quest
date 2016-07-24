@@ -123,6 +123,7 @@ public abstract class GenericRepository<T, ID> {
 	
 	public List<T> listByParent(ID parentId, Class<?> parentClass) {
 		String parentName = parentClass.getSimpleName();
+		if(parentClass.equals(domainClass)) parentName = "parent";
 		String columnName = parentName.toLowerCase() + "Id";
 		if(parentId != null) {
 			String where = " WHERE " + columnName + "=:" + columnName;

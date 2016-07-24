@@ -25,7 +25,7 @@
 $(function() {
 	/* 
 	
-	ajax.get("/api/updater", {}, function(list){
+	ajax.get("/api/updaters", {}, function(list){
 		$template = $("div.updater-content table tbody");
 		$template.loadTemplate($template.children(), list);
 	}); */

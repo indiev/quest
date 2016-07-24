@@ -12,7 +12,7 @@ span.badge.skill { background-color: #d9534f; }
 	border-color: #ccc;
 }
 </style>
-<form role="form" action="/api/quest" method="POST" onsubmit="return request(this);">
+<form role="form" action="/api/quests" method="POST" onsubmit="return request(this);">
 	<div class="container-pluid">
 		<div class="form-group">
 			<label for="name" class="sr-only">퀘스트명</label>	
@@ -186,18 +186,18 @@ $(function() {
 	selectInputList("subWork", {}, "세부업무");
 	selectInputList("Skill", {}, "스킬");
 	
-	ajax.get("/api/area", {}, function(list) { selectInputList("area", list, "상위분야"); });
-	ajax.get("/api/work", {}, function(list) { selectInputList("work", list, "상위업무"); });
-	ajax.get("/api/skill", {}, function(list) { selectInputList("skill", list, "스킬"); });
+	ajax.get("/api/areas/parents", {}, function(list) { selectInputList("area", list, "상위분야"); });
+	ajax.get("/api/works/parents", {}, function(list) { selectInputList("work", list, "상위업무"); });
+	ajax.get("/api/skills", {}, function(list) { selectInputList("skill", list, "스킬"); });
 	
 	$("select[name='area']").change(function() {
-		if(this.value != "") ajax.get("/api/area/ref/parent/" + this.value, {}, function(list) {
+		if(this.value != "") ajax.get("/api/areas/parents/" + this.value, {}, function(list) {
 			selectInputList('subArea', list, "세부분야");
 		});
 	});
 	
 	$("select[name='work']").change(function() {
-		if(this.value != "") ajax.get("/api/work/ref/parent/" + this.value, {}, function(list) {
+		if(this.value != "") ajax.get("/api/works/parents/" + this.value, {}, function(list) {
 			selectInputList('subWork', list, "세부업무");
 		});
 	});

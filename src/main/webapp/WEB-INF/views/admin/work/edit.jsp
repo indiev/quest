@@ -51,6 +51,7 @@
 <script type="text/javascript">
 	var workList = [];
 	var selectedRecord = {};
+	var apiUrl = "/api/works/";
 	
 	$(document).ready(function() {
 		list();
@@ -80,7 +81,7 @@
 	
 	function list() {
 		$("#jstree").append($("<ul class='work-content'>"));
-		 ajax.get("/api/work/", {}, function(list){
+		 ajax.get(apiUrl, {}, function(list){
 		 	ajax.get("/admin/work/node/list", {}, function(html) {
 		 		$("ul.work-content").loadTemplate($(html).clone(), list);
 		 		$("#jstree").jstree();
@@ -122,7 +123,7 @@
 		if($div.find(".description").val()!="")
 			selectedRecord.description = $div.find(".description").val();
 		
-		ajax.put("/api/work/"+selectedRecord.id, selectedRecord, function(result){
+		ajax.put(apiUrl+selectedRecord.id, selectedRecord, function(result){
 			alert(result);
 			init();
 		});
@@ -141,7 +142,7 @@
 		work.name = $div.find(".name").val();
 		work.description = $div.find(".description").val();
 		
-		ajax.post("/api/work", work, function(result){
+		ajax.post(apiUrl, work, function(result){
 			if(result!= null) alert("새로운 레코드를 생성하였습니다.");
 			else alert(result.mssege);
 			init();
@@ -154,9 +155,9 @@
 		work.name = "새로운 레코드 ";
 		work.description = "";
 		
-		ajax.get("/api/work",{},function(data){
+		ajax.get(apiUrl,{},function(data){
 			work.name  += data.length;
-			ajax.post("/api/work", work, function(result){
+			ajax.post(apiUrl, work, function(result){
 				if(result!= null) alert("새로운 레코드를 생성하였습니다.");
 				else alert(result.mssege);
 				init();
@@ -169,7 +170,7 @@
 		if(selectedRecord==null)
 			return;
 		
-		ajax.del("/api/work/"+selectedRecord.id, {}, function(result){
+		ajax.del(apiUrl+selectedRecord.id, {}, function(result){
 			if(result!= null) alert("선택한 레코드가 삭제되었습니다.");
 			else alert(result.mssege);
 			init();

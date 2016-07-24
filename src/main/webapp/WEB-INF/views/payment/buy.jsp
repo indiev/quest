@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
-<form role="form" action="/api/payment/buy" method="PUT" onsubmit="return buy(this);">
+<form role="form" action="/api/payments/buy" method="PUT" onsubmit="return buy(this);">
 	<div class="container-pluid">
 		<div class="form-gorup">
 			<input type="number" name="point" id="point" class="form-control" placeholder="결제 포인트양">

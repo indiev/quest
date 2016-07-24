@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 <div class="updater-content">
-	<form role="form" class="form-horizontal" action="/api/updater" method="post" onsubmit="return add(this);">
+	<form role="form" class="form-horizontal" action="/api/updaters" method="post" onsubmit="return add(this);">
 		<input type="hidden" name="model" data-value="model">
 		<input type="hidden" name="attribute" data-value="attribute">
 		<input type="hidden" name="refId" data-value="refId">

@@ -16,7 +16,7 @@ function join(form) {
 }
 </script>
 
-<form role="form" action="/api/user" method="POST" onsubmit="return join(this);">
+<form role="form" action="/api/users" method="POST" onsubmit="return join(this);">
 	<div class="container-pluid">
 		<div class="form-group input-group">
 			<span class="input-group-addon">ID</span>

@@ -6,7 +6,7 @@ function login(form) {
 		data = JSON.parse(data);
 		if(data.success) {
 			$("#modal-sm").modal('toggle');
-			ajax.get("/api/user/get", {}, function(data) { 
+			ajax.get("/api/users/me", {}, function(data) { 
 				user = data;
 				$("header").loadTemplate("/header", user);
 			});

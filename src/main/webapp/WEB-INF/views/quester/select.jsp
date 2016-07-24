@@ -6,7 +6,7 @@ $(document).ready(function() {
 	
 	
 	/* 퀘스터  리스트  */
-	ajax.get("/api/quester/list/user", {}, function(list){
+	ajax.get("/api/questers/users/me", {}, function(list){
 		$.get("/quester/node/list", function(questerNode){
 			for(i in list) {
 				var quester = list[i]; 
@@ -50,8 +50,8 @@ $(document).ready(function() {
 });
 
 function selectMainQuester(selectedId) {
-	ajax.get("/api/user/get", {}, function(user) {
-		ajax.put("/api/user/"+user.id+"/mainQuester/"+selectedId, {}, function(result){
+	ajax.get("/api/users/me", {}, function(user) {
+		ajax.put("/api/users/"+user.id+"/questers/"+selectedId, {}, function(result){
 			$("#selectQuesterDialog").modal('hide');
 			getMainQuesterDetail();
 			alert("메인 퀘스터가 변경되었습니다.");

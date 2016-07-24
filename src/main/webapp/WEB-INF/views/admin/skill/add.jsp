@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
-<form role="form" action="/api/skill" method="POST" onsubmit="return request(this);">
+<form role="form" action="/api/skills" method="POST" onsubmit="return request(this);">
 	<div class="container-pluid">
 		<div class="form-group">
 			<label for="superArea">1.생성 스킬명</label>

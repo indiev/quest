@@ -12,7 +12,7 @@ span.badge.skill { background-color: #d9534f; }
 	border-color: #ccc;
 }
 </style>
-<form role="form" action="/api/portfolio" method="POST" onsubmit="return request(this);">
+<form role="form" action="/api/portfolios" method="POST" onsubmit="return request(this);">
 	<div class="container-pluid">
 		<div class="form-group typeId">
 			<label id="typeId_label" for="typeId" class="sr-only">type</label>
@@ -153,13 +153,13 @@ $(function() {
 	selectInputList("subWork", {}, "세부업무");
 	selectInputList("Skill", {}, "스킬");
 	
-	ajax.get("/api/code/Portfolio/type",{},function(list){ 
+	ajax.get("/api/codes/",{'model':'PortFolio','attribute':'type'},function(list){ 
 		selectInputList("typeId", list, "유형");
 		selectInputList("subPortfolioType", list, "유형");
 	});
-	ajax.get("/api/area",{},function(list){ selectInputList("area", list, "분야"); });
-	ajax.get("/api/work",{},function(list){ selectInputList("work", list, "업무"); });
-	ajax.get("/api/skill",{},function(list){ selectInputList("skill", list, "스킬"); });
+	ajax.get("/api/areas/parents",{},function(list){ selectInputList("area", list, "분야"); });
+	ajax.get("/api/works/parents",{},function(list){ selectInputList("work", list, "업무"); });
+	ajax.get("/api/skills",{},function(list){ selectInputList("skill", list, "스킬"); });
 	
 	hideElem();
 	
@@ -208,19 +208,19 @@ $(function() {
 	})
 	
 	$("select[name='subPortfolioType']").change(function(){
-		if(this.value != "") ajax.get("/api/portfolio/user/typeId/" + this.value, {}, function(list) {
+		if(this.value != "") ajax.get("/api/portfolios/users/me", {'type':this.value}, function(list) {
 			selectInputList('subPortfolio', list, "관련 포트폴리오");
 		});
 	});
 	
 	$("select[name='area']").change(function(){
-		if(this.value != "") ajax.get("/api/area/parentId/" + this.value, {}, function(list) {
+		if(this.value != "") ajax.get("/api/areas/parents/" + this.value, {}, function(list) {
 			selectInputList('subArea', list, "세부분야");
 		});
 	});
 	
 	$("select[name='work']").change(function(){
-		if(this.value != "") ajax.get("/api/work/parentId/" + this.value, {}, function(list) {
+		if(this.value != "") ajax.get("/api/work/parents/" + this.value, {}, function(list) {
 			selectInputList('subWork', list, "세부업무");
 		});
 	});

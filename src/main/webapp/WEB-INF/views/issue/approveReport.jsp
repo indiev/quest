@@ -5,8 +5,9 @@
 
 
 <script type="text/javascript">
+var apiUrl = "/api/issues/" 
 $(document).ready(function() {
-	ajax.get("/api/issue/", {}, function(list) {
+	ajax.get(apiUrl, {}, function(list) {
 		selectInputList('issue', list, '이슈');
 	})
 	
@@ -14,7 +15,7 @@ $(document).ready(function() {
 });
 
 function approveReport(issueId) {
-	ajax.put("/api/issue/approveReport/"+issueId, {} ,function(result){
+	ajax.put(apiUrl + "approveReport/"+issueId, {} ,function(result){
 		console.log(result);
 	});
 	return false;

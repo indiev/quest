@@ -4,7 +4,7 @@
 	<div class="jumbotron">
 		<div class="jumbotron-contents text-center">
 		  	<h2><span class="portfolio-search-length">0</span>개의 포트폴리오가 있습니다</h2>
-	 		<form class="form-inline" name="portfolioSearchForm" role="form" action="/api/portfolio/user/search/" method="GET" onsubmit="return list();">
+	 		<form class="form-inline" name="portfolioSearchForm" role="form" action="/api/portfolios/user/me" method="GET" onsubmit="return list();">
 		 		<div class="input-group form-search">
 		 			
 		 			<label for="searchKeyword" class="sr-only">검색</label>
@@ -42,7 +42,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	ajax.get("/api/code/portfolio/type",{},function(portfolioTypes){
+	ajax.get("/api/codes",{'model':'Portfolio', 'attribute':'type'},function(portfolioTypes){
 		$select = $("select");
 		$select.empty();
 		$select.append($("<option>").html("전체").val("").attr("selected", "selected"));
@@ -62,7 +62,7 @@ $(document).ready(function() {
 });
 
 function del(value) {
-	ajax.del("/api/portfolio/"+value, {}, function(result){
+	ajax.del("/api/portfolios/"+value, {}, function(result){
 		if(result) alert("해당 포트폴리오를 삭제했습니다.");
 		else alert("해당 포트폴리오를 삭제할 수 없습니다.");
 	});
@@ -77,7 +77,7 @@ function list() {
 	$form = $("form[name='portfolioSearchForm']");
 	searchKeyword = $form.find("[name='searchKeyword']").val();
 	portfolioType = $form.find(".portfolioType").val();
-	ajax.get("/api/portfolio/user/"+portfolioType+"/search/"+searchKeyword, {}, function(list){
+	ajax.get("/api/portfolios/user/me", {'type':portfolioType, 'name':searchKeyword}, function(list){
 		$("span.portfolio-search-length").html(list.length);
 		$("div.portfolio-content").loadTemplate("/portfolio/node/list", list);
 	});

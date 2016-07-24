@@ -3,7 +3,7 @@
 
 <script type="text/javascript">
 function basicInfo(id) {
-	ajax.get("/api/requester/"+id, {}, function(requester){
+	ajax.get("/api/requesters/"+id, {}, function(requester){
 		$("div.requester-basiscInfo").loadTemplate("/requester/node/basicInfo", requester);
 	});
 }

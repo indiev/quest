@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
-<form action="/api/issueComment" method="post" name="issueCommentForm" onsubmit="return add(this);">
+<form action="/api/issueComments" method="post" name="issueCommentForm" onsubmit="return add(this);">
 	<input type="hidden" name="issueId" id="issueId" data-value="id">
 	<div class="input-group">
 		<textarea name="name" rows="3" class="form-control" style="resize:none;" placeholder="내용"></textarea>

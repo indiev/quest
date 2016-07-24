@@ -27,7 +27,7 @@ $(function() {
         link: function (value) { return "/issueComment/" + value; },
     });
 	
-	ajax.get("/api/issue", {}, function(list){
+	ajax.get("/api/issueComments", {}, function(list){
 		$template = $("div.issueComment-content table tbody");
 		$template.loadTemplate($template.children(), list);
 	});
@@ -36,7 +36,7 @@ function detail(elem) {
 	var value = $(elem).attr("value");
 	$modal = $("body div.modal");
 	$modal.find("div.modal-title").html("이슈 등록");
-	ajax.get("/api/issueComment/" + value, {}, function(issue) {
+	ajax.get("/api/issueComments/" + value, {}, function(issue) {
 		$modal.find("div.modal-body").loadTemplate("/issueComment/" + value, issue);
 	});
 }

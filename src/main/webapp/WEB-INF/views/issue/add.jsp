@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 <div class="issue-content">
-	<form role="form" action="/api/issue" method="post" onsubmit="return add(this);">
+	<form role="form" action="/api/issues" method="post" onsubmit="return add(this);">
 		<div class="form-group">
 			<label for="name" class="sr-only">종류</label>
 			<select name="typeId" id="type" class="form-control">
@@ -28,7 +28,7 @@ function add(form) {
 	return false;
 }
 $(document).ready(function() {
-	ajax.get("/api/code/issue/type", {}, function(list) {
+	ajax.get("/api/codes", {'model':'issue', 'attribute':'type'}, function(list) {
 		$select = $("div.issue-content").find("select[name='typeId']");
 		$select.loadTemplate($select.children(), list);
 	});

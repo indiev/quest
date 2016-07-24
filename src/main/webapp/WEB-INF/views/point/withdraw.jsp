@@ -6,7 +6,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	ajax.get("/api/reward", {}, function(list) {
+	ajax.get("/api/rewards", {}, function(list) {
 		console.log(list);
 		selectInputList('reward', list, '보상');
 	})
@@ -15,7 +15,7 @@ $(document).ready(function() {
 });
 
 function withdraw(rewardId) {
-	ajax.put("/api/point/withdraw/"+rewardId, {} ,function(result){
+	ajax.put("/api/points/withdraw/"+rewardId, {} ,function(result){
 		if(result!= "") {
 			alert("해당 보상으로 포인트를 예치취소 하였습니다.");
 		}

@@ -64,12 +64,12 @@ $(document).ready(function(){
 	/* $("header").load("/header"); */
 	/* $("footer").load("/footer"); */
 	$("main").load("${mainContent}");
-	ajax.get("/api/user/get", {}, function(data) { 
+	ajax.get("/api/users/me", {}, function(data) { 
 		user = data;
 		$.addTemplateFormatter({
-			userlink: function (value) { return "/user/" + value; },
-			questerlink: function (value) { return "/quester/" + value; },
-			requesterlink: function (value) { return "/requester/" + value; }
+			userlink: function (value) { return "/users/" + value; },
+			questerlink: function (value) { return "/questers/" + value; },
+			requesterlink: function (value) { return "/requesters/" + value; }
 	    });
 		$("header").loadTemplate("/header", user);
 		/* $("header").loadTemplate($("header").children(), user); */

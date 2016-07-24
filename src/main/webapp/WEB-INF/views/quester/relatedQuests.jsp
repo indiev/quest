@@ -16,19 +16,19 @@ function releatedQuests(id) {
 		date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
 		link: function (value) { return "/quest/" + value; }
     });
-	ajax.get("/api/quest/questerId/"+ id +"/state/ready", {}, function(list){
+	ajax.get("/api/quests/questers/"+ id, {'state':'ready'}, function(list){
 		$("span.readyRequest-length").html(list.length);
 		$("div.readyRequest-content").loadTemplate("/quest/node/list", list);
 	});
 	
 	/* 진행중 */
-	ajax.get("/api/quest/questerId/"+ id +"/stateGroup/ongoing", {}, function(list){
+	ajax.get("/api/quests/questers/"+ id, {'state':'discuss,progress'}, function(list){
 		$("span.progressRequest-length").html(list.length);
 		$("div.progressRequest-content").loadTemplate("/quest/node/list", list);
 	});
 	
 	/* 완료중 */
-	ajax.get("/api/quest/questerId/"+ id +"/state/complete", {}, function(list){
+	ajax.get("/api/quests/questers/"+ id, {'state':'complete'}, function(list){
 		$("span.completeRequest-length").html(list.length);
 		$("div.completeRequest-content").loadTemplate("/quest/node/list", list);
 	});

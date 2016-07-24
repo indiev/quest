@@ -10,7 +10,7 @@
 
 <script type="text/javascript">
 function detail(id) {
-	ajax.get("/api/quest/"+id, {}, function(quest){
+	ajax.get("/api/quests/"+id, {}, function(quest){
 	});
 }
 

@@ -16,7 +16,7 @@ function list() {
     	point: function (value) {return value + " point"}
 	});
 	
-	ajax.get("/api/pointLog/user/", {}, function(list){
+	ajax.get("/api/pointLogs/user/", {}, function(list){
 		$("div.pointLog-content").loadTemplate("/pointLog/node/list", list);
 	});
 	return false;

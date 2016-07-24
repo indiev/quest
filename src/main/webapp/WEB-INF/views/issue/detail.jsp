@@ -15,8 +15,7 @@
 $(document).ready(function() {
 	var issueId = $("input[name='issueId']").val();
 	$("div.issueCommentForm").loadTemplate("/issueComment/add", {"id":issueId});
-	ajax.get("/api/issueComment/ref/issue/" + issueId, {}, function(list) {
-		console.log(list);
+	ajax.get("/api/issueComments/issues/" + issueId, {}, function(list) {
 		$("div.issueCommentList").loadTemplate("/issueComment/node/list", list);
 	});
 });

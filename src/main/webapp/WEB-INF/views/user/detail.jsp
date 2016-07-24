@@ -9,7 +9,7 @@ function detail(id) {
 		date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
     });
 	
-	ajax.get("/api/user/"+id, {}, function(user){
+	ajax.get("/api/users/"+id, {}, function(user){
 		$("div.user-detail").loadTemplate("/user/node/detail", user);
 	});
 			

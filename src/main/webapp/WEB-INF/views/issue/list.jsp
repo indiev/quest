@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 <div class="issue-content">
 	<div>
-		<form class="form-inline" name="questSearchForm" role="form" action="/api/quest/all/search/" method="GET" onsubmit="return list();">
+		<form class="form-inline" name="questSearchForm" role="form" action="/api/issues" method="GET" onsubmit="return list();">
 	 		<div class="input-group form-search">
 	 			<label for="searchKeyword" class="sr-only">검색</label>
 	 			<input type="text" name="searchKeyword" id="searchKeyword" class="form-control input-sm search-query" placeholder="검색" />
@@ -35,13 +35,14 @@
 </div>
 
 <script type="text/javascript">
+var apiUrl = "/api/issues/"
 $(function() {
 	$.addTemplateFormatter({
 		date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
         link: function (value) { return "/issue/" + value; },
     });
 	
-	ajax.get("/api/issue", {}, function(list){
+	ajax.get(apiUrl, {}, function(list){
 		$template = $("div.issue-content table tbody");
 		$template.loadTemplate($template.children(), list);
 	});
@@ -53,7 +54,7 @@ function detail(elem) {
 	var value = $(elem).attr("value");
 	$modal = $("body div.modal");
 	$modal.find("div.modal-title").html("이슈 등록");
-	ajax.get("/api/issue/" + value, {}, function(issue) {
+	ajax.get(apiUrl + value, {}, function(issue) {
 		$modal.find("div.modal-body").loadTemplate("/issue/" + value, issue);
 	});
 }

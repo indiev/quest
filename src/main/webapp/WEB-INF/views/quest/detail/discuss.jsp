@@ -3,7 +3,7 @@
 <script type="text/javascript">
 var origin = new Array();
 function detail(id) {
-	ajax.get("/api/quest/" + id, {}, function(quest){
+	ajax.get("/api/quests/" + id, {}, function(quest){
 		$("div.quest-detail").loadTemplate("/quest/node/discuss", quest);
 		ajax.get("/api/contract/agree/" + quest.contract.id, {}, function(result){
 			$("div.quest-detail").find("button").attr("disabled", result);
@@ -12,7 +12,7 @@ function detail(id) {
 }
 
 function agree(value) {
-	ajax.put("/api/contract/agree/" + value, {}, function(result){
+	ajax.put("/api/contracts/agree/" + value, {}, function(result){
 		console.log(result);
 		alert("협의");
 		$("div.quest-detail").find("button").attr("disabled", true);
@@ -33,7 +33,7 @@ $(document).on("mouseenter", ".updater", function(){
 	var data = saveOrigin(this);
 	$this.append($("div.quest-detail").find("template").html());
 	$this.find("span.list").click(function() {
-		ajax.get("/api/updater/"+data.model+"/"+data.attribute+"/"+data.refId, {}, function(list) {
+		ajax.get("/api/updaters/"+data.model+"/"+data.attribute+"/"+data.refId, {}, function(list) {
 			$("#modal").find(".modal-body").load("/updater/list", function() {
 				$template = $("#modal").find("tbody");
 				$template.loadTemplate($template.children(), list, {bindingOptions:{"ignoreNull":false}});
@@ -49,7 +49,7 @@ $(document).on("mouseenter", ".updater", function(){
 	$this.find("span.remove").click(function() {
 		if(confirm("삭제 요청을 하시겠습니까?")) {
 			data.type = "D";
-			ajax.post("/api/updater", data, function() {
+			ajax.post("/api/updaters", data, function() {
 				alert("삭제 요청을 했습니다.");
 			});
 		}

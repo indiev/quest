@@ -9,7 +9,7 @@ function detail(id) {
 		link: function (value) { return "/portfolio/" + value; }
     });
 	
-	ajax.get("/api/portfolio/"+id, {}, function(portfolio){
+	ajax.get("/api/portfolios/"+id, {}, function(portfolio){
 		$("div.portfolio-detail").loadTemplate("/portfolio/node/detail", portfolio);
 	});
 			

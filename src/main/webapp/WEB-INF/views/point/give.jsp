@@ -12,7 +12,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	ajax.get("/api/reward", {}, function(list) {
+	ajax.get("/api/rewards", {}, function(list) {
 		selectInputList('reward', list, '보상');
 	})
 	
@@ -20,7 +20,7 @@ $(document).ready(function() {
 });
 
 function give(rewardId) {
-	ajax.put("/api/point/give/"+rewardId, {} ,function(result){
+	ajax.put("/api/points/give/"+rewardId, {} ,function(result){
 		if(result!= "") {
 			alert("해당 보상으로 포인트를 지급 하였습니다.");
 		}

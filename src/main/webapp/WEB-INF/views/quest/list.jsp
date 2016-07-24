@@ -19,7 +19,7 @@
 		<div class="jumbotron" style="position:fixed; height:100%;">
 			<div class="jumbotron-contents text-center">
 			  	<h2><span class="project-search-length">0</span>개의 프로젝트가 있습니다</h2>
-		 		<form class="form-inline" name="questSearchForm" role="form" action="/api/quest/all/search/" method="GET" onsubmit="return list();">
+		 		<form class="form-inline" name="questSearchForm" role="form" action="/api/quests/" method="GET" onsubmit="return list();">
 			 		<div class="input-group form-search">
 			 			<label for="searchKeyword" class="sr-only">검색</label>
 			 			<input type="text" name="searchKeyword" id="searchKeyword" class="form-control input-sm search-query" placeholder="검색" />
@@ -35,14 +35,15 @@
 	<div class="quest-content col-md-9" style="margin-top:15px;"></div>
 </div>
 <script type="text/javascript">
-function apply(value) {
-	ajax.put("/api/quest/apply", {"id":value}, function(result){
+var apiUrl = "/api/quests/";
+function apply(id) {
+	ajax.put(apiUrl + id + "/applicants/" + user.quester.id, {}, function(result) {
 		if(result) alert("지원하였습니다");
 		else alert("지원할 수 없습니다.")
 	});
 }
-function del(value) {
-	ajax.del("/api/quest/"+value, {}, function(result){
+function del(id) {
+	ajax.del(apiUrl + id, {}, function(result){
 		if(result) alert("퀘스트를 삭제했습니다.");
 		else alert("퀘스트를 삭제할 수 없습니다.");
 	});
