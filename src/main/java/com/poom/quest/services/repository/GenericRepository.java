@@ -2,6 +2,8 @@ package com.poom.quest.services.repository;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -98,9 +100,11 @@ public abstract class GenericRepository<T, ID> {
 				continue; 
 			}
 			if(Model.class.isAssignableFrom(field.getType())) { //Type이 모델이라면
-				if(Code.class.isAssignableFrom(field.getType()))	//Type이 Code일 경우
-					where += " AND " + key + "Id=(SELECT id FROM Code WHERE model='" + model + "' AND attribute='" + key + "' AND value=:" + key +")";
-				else  where += " AND " + key + "Id=:" + key;
+				if(Code.class.isAssignableFrom(field.getType())) {	//Type이 Code일 경우
+					//params.put(key, Arrays.asList(key.split(",")));
+					params.put(key, Arrays.asList(((String)params.get(key)).split(",")));
+					where += " AND " + key + "Id IN (SELECT id FROM Code WHERE model='" + model + "' AND attribute='" + key + "' AND value IN :" + key +")";
+				} else  where += " AND " + key + "Id=:" + key;
 			} else if(Set.class.isAssignableFrom(field.getType())) { //Type이 List일 경우
 				//join해서 검색
 			} else if(String.class.isAssignableFrom(field.getType())){ //문자열 검색
@@ -142,23 +146,17 @@ public abstract class GenericRepository<T, ID> {
 	
 	public List<T> search(String keyword, String[] keys) {
 		keyword = ("%" + keyword + "%").toLowerCase();
-		String where = " WHERE ";
+		String where = " WHERE 1=1";
 		if(keys == null || keys.length == 0) keys = new String[]{"name"};
-		for (int i=0; i<keys.length; i++) {
-			if(i !=0 ) where += " AND ";
-			where += "LOWER(" + keys[i] + ") LIKE :keyword";
-		}
+		for (String key : keys) where += " AND LOWER(" + key + ") LIKE :keyword";
 		return em.createNativeQuery(SELECT_ALL_SQL + where, domainClass).setParameter("keyword", keyword).getResultList();
 	}
 	
 	public List<T> search(String keyword, String[] keys, ID userId) {
 		keyword = ("%" + keyword + "%").toLowerCase();
-		String where = " WHERE ";
+		String where = " WHERE 1=1";
 		if(keys == null || keys.length == 0) keys = new String[]{"name"};
-		for (int i=0; i<keys.length; i++) {
-			if(i !=0 ) where += " AND ";
-			where += "LOWER(" + keys[i] + ") LIKE :keyword";
-		}
+		for (String key : keys) where += " AND LOWER(" + key + ") LIKE :keyword";
 		where += " AND userId = :userId";
 		return em.createNativeQuery(SELECT_ALL_SQL + where, domainClass).setParameter("keyword", keyword).setParameter("userId", userId).getResultList();
 	}
