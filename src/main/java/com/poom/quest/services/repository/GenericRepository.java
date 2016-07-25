@@ -1,5 +1,6 @@
 package com.poom.quest.services.repository;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import javax.persistence.EntityManager;
+import javax.persistence.JoinTable;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -106,14 +108,27 @@ public abstract class GenericRepository<T, ID> {
 					where += " AND " + key + "Id IN (SELECT id FROM Code WHERE model='" + model + "' AND attribute='" + key + "' AND value IN :" + key +")";
 				} else  where += " AND " + key + "Id=:" + key;
 			} else if(Set.class.isAssignableFrom(field.getType())) { //Type이 List일 경우
+				for(Annotation annotation : field.getDeclaredAnnotations()) {
+					String keyId = key.substring(0, key.length()-1) + "Id";
+					if(annotation.annotationType().getSimpleName().equals("JoinTable")) { //manytomany
+						String table = ((JoinTable)annotation).name();
+						// join table on model.key = table.key 
+						where += " AND id in (SELECT " + model + "Id FROM " + table + " WHERE " + keyId + "=:" + key + ")"; 
+					} else { //onetomany
+						String keyModel = key.substring(0).toUpperCase() + key.substring(1, key.length()-1);
+						// join keyModel on model.key = keyModel.key
+						//id in (select modelId from table where key=:key)
+						//where += " AND id in (SELECT " + model + "Id FROM " + keyModel + " WHERE " + id + "=:key)";
+					}
+				}
 				//join해서 검색
 			} else if(String.class.isAssignableFrom(field.getType())){ //문자열 검색
 				params.put(key, ("%"+params.get(key)+"%").toLowerCase());
 				where += " AND LOWER(" + key + ") LIKE :" + key +"";
-			} else if(Integer.class.isAssignableFrom(field.getType())){ //숫자 검색
+			/*} else if(Integer.class.isAssignableFrom(field.getType())){ //숫자 검색
 				;
 			} else if(Date.class.isAssignableFrom(field.getType())){ //날짜 검색
-				;
+				;*/
 			} else where += " AND " + key + "=:" + key;
 		}
 		Query query = em.createNativeQuery(SELECT_ALL_SQL + where, domainClass);

@@ -56,28 +56,35 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 	@RequestMapping(value = "/users/me", method = RequestMethod.GET)
 	public List<T> listByMe(@RequestParam Map<String, Object> params) {
 		User user = userService.getLoginUserByRequest();
-		if(user != null) return children(user.getClass().getSimpleName(), (ID)user.getId(), params);
-		return null;
+		return (user != null)?children(user.getClass().getSimpleName(), (ID)user.getId(), params):null;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/{parent}s/{parentId}", method = RequestMethod.GET)
 	public List<T> children(@PathVariable("parent") String parent, @PathVariable("parentId") ID parentId, @RequestParam Map<String, Object> params){
-		Class<?> parentClass = domainClass;
-		if(!parent.equals("parent")) parentClass = Reflect.getField(domainClass, parent).getType();
-		return getService().listByParent(parentId, parentClass);
+		Field field = Reflect.getField(domainClass, parent);
+		if(field != null) {
+			params.put(parent, parentId);
+			return getService().listByKeys(params);
+		} else {
+			field = Reflect.getField(domainClass, parent + "s"); //manyToMany
+			if(field != null) {
+				params.put(parent+"s", parentId);
+				return getService().listByKeys(params);
+			} else return null;
+		}
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/{id}/{child}s/{childId}", method = RequestMethod.GET)
 	public <S extends GenericModel> S getChildByParent(@PathVariable("id") ID id, @PathVariable("child") String child, @PathVariable("childId") ID childId, @RequestParam Map<String, Object> params) {
 		try {
-			GenericService<S, ID> childService = getFieldService(child);
 			T entity = getService().get(id);
 			Method method = Reflect.getMethod(domainClass, "get"+child+"s");
 			if(method != null) {
 				Set<S> nodeSet = (Set<S>)method.invoke(entity);
-				S childEntity = childService.get(childId);
+				GenericService childService = getFieldService(child);
+				S childEntity = (S) childService.get(childId);
 				if(nodeSet.contains(childEntity)) return childEntity;
 			}
 		} catch (Exception e) {
@@ -89,14 +96,13 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 	@ResponseBody
 	@RequestMapping(value = "/{id}/{child}s", method = RequestMethod.GET)
 	public <S extends GenericModel> Set<S> childrenByParent(@PathVariable("id") ID id, @PathVariable("child") String child, @RequestParam Map<String, Object> params) {
-		try {
-			T entity = getService().get(id);
-			Method method = Reflect.getMethod(domainClass, "get"+child+"s");
-			if(method != null) return (Set<S>)method.invoke(entity);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+		Field field = Reflect.getField(domainClass, child + "s");
+		GenericService<S, ID> childService = (GenericService<S, ID>) getFieldService(child);
+		if(childService != null) {
+			params.put(domainClass.getSimpleName()+"s", id);
+			return (Set<S>)childService.listByKeys(params);			
+		} else return null;
+		
 	}
 	
 	@ResponseBody
@@ -206,11 +212,11 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 		return (changeCount != 0)?getService().update(entity):null;
 	}
 	
-	private GenericService getService(String model) {
+	private GenericService<?, ID> getService(String model) {
 		return applicationContext.getBean(model+"Service", GenericService.class);			
 	}
 	
-	public GenericService getFieldService(String fieldName) {
+	public GenericService<?, ID> getFieldService(String fieldName) {
 		Field field = Reflect.getField(domainClass, fieldName);
 		if(field != null && Model.class.isAssignableFrom(field.getType())) return getService(fieldName);
 		else return null;
