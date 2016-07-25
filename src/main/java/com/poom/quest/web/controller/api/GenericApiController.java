@@ -56,7 +56,7 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 	@RequestMapping(value = "/users/me", method = RequestMethod.GET)
 	public List<T> listByMe(@RequestParam Map<String, Object> params) {
 		User user = userService.getLoginUserByRequest();
-		if(user != null) children(user.getClass().getSimpleName(), (ID)user.getId(), params);
+		if(user != null) return children(user.getClass().getSimpleName(), (ID)user.getId(), params);
 		return null;
 	}
 	

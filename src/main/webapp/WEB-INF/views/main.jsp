@@ -67,9 +67,9 @@ $(document).ready(function(){
 	ajax.get("/api/users/me", {}, function(data) { 
 		user = data;
 		$.addTemplateFormatter({
-			userlink: function (value) { return "/users/" + value; },
-			questerlink: function (value) { return "/questers/" + value; },
-			requesterlink: function (value) { return "/requesters/" + value; }
+			userlink: function (value) { return "/user/" + value; },
+			questerlink: function (value) { return "/quester/" + value; },
+			requesterlink: function (value) { return "/requester/" + value; }
 	    });
 		$("header").loadTemplate("/header", user);
 		/* $("header").loadTemplate($("header").children(), user); */
