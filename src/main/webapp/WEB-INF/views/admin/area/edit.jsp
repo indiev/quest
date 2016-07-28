@@ -122,7 +122,7 @@
 		selectedRecord.name = $div.find(".name").val();
 		if($div.find(".description").val()!="")
 			selectedRecord.description = $div.find(".description").val();
-		
+		console.log(selectedRecord);
 		ajax.put(apiUrl+selectedRecord.id, selectedRecord, function(result){
 			alert(result);
 			init();

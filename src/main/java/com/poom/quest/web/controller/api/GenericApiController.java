@@ -121,8 +121,10 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 		for(String key : params.keySet()) {	//바뀌면 안되는 Key 제한. ex) Id, CreatedDate...
 			if(key.equalsIgnoreCase("id")) continue;
 			try {
+				System.out.println("Field : "+key);
 				Field field = Reflect.getField(domainClass, key);
 				if(field != null) {
+					System.out.println("||||||||"+field.getName());
 					Class<?> fieldClass = field.getType();
 					Method getMethod = Reflect.getMethod(domainClass, "get"+key);
 					Method setMethod = Reflect.getMethod(domainClass, "set"+key);
