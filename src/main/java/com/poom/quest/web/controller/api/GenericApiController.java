@@ -83,7 +83,7 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 			Method method = Reflect.getMethod(domainClass, "get"+child+"s");
 			if(method != null) {
 				Set<S> nodeSet = (Set<S>)method.invoke(entity);
-				GenericService childService = getFieldService(child);
+				GenericService childService = getService(child);
 				S childEntity = (S) childService.get(childId);
 				if(nodeSet.contains(childEntity)) return childEntity;
 			}
@@ -95,12 +95,13 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 	
 	@ResponseBody
 	@RequestMapping(value = "/{id}/{child}s", method = RequestMethod.GET)
-	public <S extends GenericModel> Set<S> childrenByParent(@PathVariable("id") ID id, @PathVariable("child") String child, @RequestParam Map<String, Object> params) {
+	public <S extends GenericModel> List<S> childrenByParent(@PathVariable("id") ID id, @PathVariable("child") String child, @RequestParam Map<String, Object> params) {
 		Field field = Reflect.getField(domainClass, child + "s");
-		GenericService<S, ID> childService = (GenericService<S, ID>) getFieldService(child);
+		GenericService<S, ID> childService = (GenericService<S, ID>) getService(child);
+		System.out.println(childService);
 		if(childService != null) {
 			params.put(domainClass.getSimpleName()+"s", id);
-			return (Set<S>)childService.listByKeys(params);			
+			return (List<S>) childService.listByKeys(params);			
 		} else return null;
 		
 	}
@@ -219,9 +220,7 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 	}
 	
 	public GenericService<?, ID> getFieldService(String fieldName) {
-		Field field = Reflect.getField(domainClass, fieldName);
-		if(field != null && Model.class.isAssignableFrom(field.getType())) return getService(fieldName);
-		else return null;
+		return getService(fieldName);
 	}
 
 	public GenericService<T, ID> getService() {

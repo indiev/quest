@@ -39,7 +39,8 @@ public class Quester extends WithUserModel {
 	@JoinTable(name = "QuesterSkill", joinColumns = {@JoinColumn(name = "questerId")}, inverseJoinColumns = {@JoinColumn(name = "skillId")})
 	private Set<Skill> skills;
 
-	@ManyToMany(mappedBy = "questers", fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "QuesterQuest", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "questerId")})
 	@JsonIgnore
 	private Set<Quest> quests;
 	
