@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
-<!-- <div class="jumbotron">
+<!-- <div class="jumbotron" style="position:fixed; height:100%;">
 	<div class="jumbotron-contents text-center">
 	  	<h2><span class="project-search-length">0</span>개의 프로젝트가 있습니다</h2>
- 		<form class="form-inline" name="questSearchForm" role="form" action="/api/quest/all/search/" method="GET" onsubmit="return list();">
+ 		<form class="form-inline" name="questSearchForm" role="form" action="/api/quests/" method="GET" onsubmit="return list();">
 	 		<div class="input-group form-search">
 	 			<label for="searchKeyword" class="sr-only">검색</label>
 	 			<input type="text" name="searchKeyword" id="searchKeyword" class="form-control input-sm search-query" placeholder="검색" />
@@ -16,23 +16,25 @@
 </div> -->
 <div class="row">
 	<div class="col-md-3">
-		<div class="jumbotron" style="position:fixed; height:100%;">
-			<div class="jumbotron-contents text-center">
-			  	<h2><span class="project-search-length">0</span>개의 프로젝트가 있습니다</h2>
-		 		<form class="form-inline" name="questSearchForm" role="form" action="/api/quests/" method="GET" onsubmit="return list();">
-			 		<div class="input-group form-search">
-			 			<label for="searchKeyword" class="sr-only">검색</label>
-			 			<input type="text" name="searchKeyword" id="searchKeyword" class="form-control input-sm search-query" placeholder="검색" />
-			 			<span class="input-group-btn">
-			 				<button class="btn btn-default btn-sm" type="button" onclick="list()"><span class="glyphicon-search glyphicon" aria-hidden="true"></span></button>
-			 				<button type="button" class="btn btn-default btn-sm" name="requestButton" data-toggle="modal" data-target="#modal"><span class="glyphicon-plus glyphicon" aria-hidden="true"></span></button>
-			 			</span>
-			 		</div>
-		 		</form>
-		 	</div>
+	<div class="navbar navbar-default col-md-2 text-center" role="navigation" style="position:fixed; height:100%">
+		<h4><span class="project-search-length">0</span>개의 프로젝트가 있습니다</h4>
+ 		<form class="form-inline" name="questSearchForm" role="form" action="/api/quests/" method="GET" onsubmit="return list();">
+	 		<div class="input-group form-search">
+	 			<label for="searchKeyword" class="sr-only">검색</label>
+	 			<input type="text" name="searchKeyword" id="searchKeyword" class="form-control input-sm search-query" placeholder="검색" />
+	 			<span class="input-group-btn">
+	 				<button class="btn btn-default btn-sm" type="button" onclick="list()"><span class="glyphicon-search glyphicon" aria-hidden="true"></span></button>
+	 				<button type="button" class="btn btn-default btn-sm" name="requestButton" data-toggle="modal" data-target="#modal"><span class="glyphicon-plus glyphicon" aria-hidden="true"></span></button>
+	 			</span>
+	 		</div>
+ 		</form>
 		</div>
 	</div>
-	<div class="quest-content col-md-9" style="margin-top:15px;"></div>
+	<div class="col-md-6">
+		<div class="quest-content"></div>
+	</div>
+	<div class="col-md-3">
+	</div>
 </div>
 <script type="text/javascript">
 var apiUrl = "/api/quests/";

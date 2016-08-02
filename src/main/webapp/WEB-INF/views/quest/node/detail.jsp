@@ -2,94 +2,112 @@
 <div class="container-fluid quest-detail-node">
 	<div class="row">
 		<div class="col-md-9">
-			<div class="panel panel-info" style="margin-top:20px; position: relative; padding-bottom:15px;">
+			<div class="panel panel-default" style="margin-top:20px; position: relative; padding-bottom:15px;">
 				<div class="panel-body">
 					<p data-content="name" class="h3"></p>
+					<hr/>
 					<div class="row">
-						<div class="col-md-6">
-							<div data-content-append="requester.name" class="pull-left"><span class="glyphicon glyphicon-user"></span></div>
-							<span class="glyphicon glyphicon-gift pull-left"></span>
-							<ul data-list="rewards" class="list-inline pull-left">
-								<li data-content-prepend="hwan">H</li>
-							</ul>
-							<span data-content="qualification" class="pull-left"></span>
-							<div class="row">
-								<div class="col-md-12">
-									<ul data-list="areas">
-										<li data-content="name" class="badge label-info"></li>
-									</ul>
-									<ul data-list="works">
-										<li data-content="name" class="badge label-warning"></li>
-									</ul>
-									<ul data-list="skills">
-										<li data-content="name" class="badge label-danger"></li>
-									</ul>
+						<div class="col-md-6 vertical-line">
+							<div style="padding-bottom:20px;">
+								<ul data-list="areas" class="list-inline pull-left" style="padding-left:10px;"><li data-content="name" class="label label-info"></li></ul>
+								<ul data-list="works" class="list-inline pull-left" style="padding-left:10px;"><li data-content="name" class="label label-warning"></li></ul>
+								<ul data-list="skills" class="list-inline pull-left" style="padding-left:10px;"><li data-content="name" class="label label-danger"></li></ul>
+							</div>
+							<div class="panel panel-default" style="clear:left; margin-top:15px">
+								<!-- <div class="panel-heading" style="font-weight:bold;">내용</div> -->
+								<div class="panel-body" data-content="description"></div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-body">
+									<div class="row">
+										<div class="col-md-2 vertical-line">
+											<span class="h4">보상</span>
+										</div>
+										<div class="col-md-10">
+											<span class="glyphicon glyphicon-gift pull-left"></span>
+											<ul data-list="rewards" class="list-inline pull-left">
+												<li data-content-prepend="hwan">H</li>
+											</ul>
+										</div>
+									</div>
 								</div>
 							</div>
-							<div data-content="createdDate" data-format="date" class="col-md-2"></div>
-						</div>
-						<div class="col-md-6">
-							<div class="row" style="border:1px solid #000000; margin-left:15px; margin-right:15px;">
-								<div class="col-md-6">
-									<table class="table table-hover table-condensed">
-										<thead>
-											<tr>
-												<th>지원자 (<span data-content="applicants.length"></span>명 지원)</th>
-											</tr>
-										</thead>
-										<tbody data-list="applicants">
-											<tr>
-												<td data-content-prepend="name" data-value="id" onclick="accept(this.value)"></td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-								<div class="col-md-6">
-									<table class="table table-hover table-condensed">
-										<thead>
-											<tr>
-												<th>퀘스터  (<span data-content="questers.length"></span>명 선정)</th>
-											</tr>
-										</thead>
-										<tbody data-list="questers">
-											<tr>
-												<td data-content="name" data-value="id" onclick="remove(this.value)"></td>
-											</tr>
-										</tbody>
-									</table>
+							<div class="panel panel-default">
+								<div class="panel-body">
+									<div><span class="glyphicon glyphicon-calendar"></span> 약 <span data-content="duration"></span>일 소요</div>
+									<div>자격 : <span data-content="qualification" class="pull-left"></span></div>
+									<div>위치 : </div>
 								</div>
 							</div>
-						</div>
-					</div>
-					<div class="row" style="margin-top:15px;">
-						<div class="col-md-6">
-							<div style="border:1px solid; margin-left:15px; margin-right:15px;">
-								<div><span class="glyphicon glyphicon-calendar"></span> 약 <span data-content="duration"></span>일 소요</div>
-								<div data-list="requirements">
-									<p data-content="name" class="h4"></p>
-									<span data-content="description"></span>
-								</div>
-							</div>
-							<div style="border:1px solid; margin-left:15px; margin-right:15px;">
-								<div data-content="description"></div>
+							<div class="panel panel-default">
+								<div class="panel-heading"><strong>요구사항</strong></div>
+								<ul class="list-group" data-list="requirements">
+									<li class="list-group-item">
+										<h5 class="list-group-item-heading"><strong data-content="name"></strong></h5>
+										<blockquote class="list-group-item-text" data-content="description" style="font-size:10pt; padding:6px 12px"></blockquote>
+									</li>
+								</ul>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div style="border:1px solid; margin-left:15px; margin-right:15px;">
-								<div>
+							<div class="panel panel-default">
+								<div class="panel-body">
+									<div class="row">
+										<div class="col-md-6">
+											<table class="table table-hover table-condensed">
+												<thead>
+													<tr>
+														<th>지원자 (<span data-content="applicants.length"></span>명 지원)</th>
+													</tr>
+												</thead>
+												<tbody data-list="applicants">
+													<tr>
+														<td data-content-prepend="name" data-value="id" onclick="accept(this.value)"></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										<div class="col-md-6">
+											<table class="table table-hover table-condensed">
+												<thead>
+													<tr>
+														<th>퀘스터  (<span data-content="questers.length"></span>명 선정)</th>
+													</tr>
+												</thead>
+												<tbody data-list="questers">
+													<tr>
+														<td data-content="name" data-value="id" onclick="remove(this.value)"></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-body">
+									<div data-content-append="requester.name"><span class="glyphicon glyphicon-user"></span></div>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading"><strong>계약</strong></div>
+								<div class="panel-body">
 									<p>리퀘스터 패널티 : <span data-content-append="contract.requesterPenalty"></span>%</p>
 									<p>퀘스터 패널티 : <span data-content-append="contract.questerPenalty"></span>%</p>
 								</div>
-								<div data-list="contract.provisions">
-									<p data-content="name" class="h4"></p>
-									<span data-content="description"></span>
-								</div>
+								<ul class="list-group" data-list="contract.provisions">
+									<li class="list-group-item">
+										<h5 class="list-group-item-heading"><strong data-content="name"></strong></h5>
+										<blockquote class="list-group-item-text" data-content="description" style="font-size:10pt; padding:6px 12px"></blockquote>
+									</li>
+								</ul>
 							</div>
 						</div>
 					</div>
 					<div style="border:1px solid; position:absolute; top:0px; right:0px; padding:15px;">
+						<span>~일 전 글 (<span data-content="createdDate" data-format="date"></span>)</span>
 						<span class="glyphicon glyphicon-calendar"></span>
-						<span data-content-prepend="recruitmentEndDate" data-format="date"></span> 마감
+						<span data-content-prepend="recruitmentEndDate" data-format="date"></span> 마감(~일 남음)
 						<button type="button" class="btn btn-default" data-value="id" onclick="apply(this.value);">지원</button>
 					</div>
 				</div>
@@ -101,10 +119,8 @@
 			</div>
 		</div>
 		<div class="col-md-3">
-			<div class="panel panel-info" style="margin-top:20px; position: relative; padding-bottom:15px;">
+			<div class="panel panel-default" style="margin-top:20px; position: relative; padding-bottom:15px;">
 				<div class="panel-body">
-					리퀘스터 정보
-					<p data-content="requester.name"></p>
 				</div>
 			</div>
 		</div>

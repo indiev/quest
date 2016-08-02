@@ -162,7 +162,9 @@ span.badge.skill { background-color: #d9534f; }
 			<label for="description" class="sr-only">내용</label>
 			<textarea name="description" id="description" rows="3" class="form-control" style="resize:none;" placeholder="내용"></textarea>
 		</div>
-		<input type="submit" id="" name="" class="btn btn-default pull-right" value="요청">
+		<div class="text-center">
+			<input type="submit" id="" name="" class="btn btn-default" value="요청">
+		</div>
 	</div>
 </form>
 
