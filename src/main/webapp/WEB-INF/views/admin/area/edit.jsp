@@ -101,8 +101,8 @@
 		$updateForm.find(".name").val(record.name);
 		$updateForm.find(".description").val(record.description);
 		
-		if(record.parent != null) {
-			$updateForm.find("select[name='parentId']").val(record.parent.id);
+		if(record.parentId != undefined) {
+			$updateForm.find("select[name='parentId']").val(record.parentId);
 			$updateForm.find("select[name='parentId']").removeAttr('disabled');
 			$addForm.hide();
 		}
@@ -125,20 +125,17 @@
 	
 		 $('#jstree').on('select_node.jstree', function (e, data) {
 				var i, j, r = [];
-			    for(i = 0, j = data.selected.length; i < j; i++) {
-			    	data.instance.get_node(data.selected[i]).name
-			    	r.push(data.instance.get_node(data.selected[i]).text);
-			    }
-			    
+				for(i = 0, j = data.selected.length; i < j; i++) {
+					r.push(data.selected[i]);
+				}
+				
 			    $(areaList).each(function(i,elem) {
-			    	if(elem.name == r[0]) {
-			    		elem.parent = null;
+			    	if(elem.id == r[0]) 
 			    		return selectedRecord = elem;
-			    	}
 			    	else if(elem.childs!=undefined && elem.childs.length!=0) {
 			    		$(elem.childs).each(function(j,sub_elem) {
-			    			if(sub_elem.name == r[0]) {
-			    				sub_elem.parent = elem;
+			    			if(sub_elem.id == r[0]) {
+			    				sub_elem.parentId = elem.id;
 			    				return selectedRecord = sub_elem;
 			    			}
 			    		});
@@ -150,18 +147,16 @@
 	 }
 	
 	function updateRecord() {
-		$updateForm = $(".updateRecordForm");
+		$form = $(".updateRecordForm");
 		
-		if($updateForm.find(".name").val() == "") {
+		if($form.find(".name").val() == "") {
 			alert("이름은 입력 해야만 합니다.")
 			return;
 		}
 
-		selectedRecord.name = $updateForm.find(".name").val();
-		if($updateForm.find(".description").val()!="")
-			selectedRecord.description = $updateForm.find(".description").val();
-		
-		$updateForm.find("select[name='parentId']").
+		selectedRecord.name = $form.find(".name").val();
+		if($form.find(".description").val()!="")
+			selectedRecord.description = $form.find(".description").val();
 		
 		console.log(selectedRecord);
 		ajax.put(apiUrl+selectedRecord.id, selectedRecord, function(result){
@@ -171,18 +166,19 @@
 	}
 	
 	function addSubRecord() {
-		$div = $(".addSubRecordForm");
+		$form = $(".addSubRecordForm");
 		
-		if($div.find(".name").val() == "") {
+		if($form.find(".name").val() == "") {
 			alert("이름은 입력 해야만 합니다.")
 			return;
 		}
 		
 		var area = {};
-		area.parentId = selectedRecord.id;
-		area.name = $div.find(".name").val();
-		area.description = $div.find(".description").val();
+		area.parent = selectedRecord;
+		area.name = $form.find(".name").val();
+		area.description = $form.find(".description").val();
 		
+		console.log(area);
 		ajax.post(apiUrl, area, function(result){
 			if(result!= null) alert("새로운 레코드를 생성하였습니다.");
 			else alert(result.mssege);
@@ -192,7 +188,7 @@
 	
 	function addRecord() {
 		var area = {};
-		area.parentId = null;
+		area.parent = null;
 		area.name = "새로운 레코드 ";
 		area.description = "";
 		
