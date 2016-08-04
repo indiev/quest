@@ -202,12 +202,12 @@
 		}
 		
 		var work = {};
-		work.parent = {"id":selectedRecord.id};
 		work.name = $form.find(".name").val();
 		work.description = $form.find(".description").val();
 		
 		console.log(work);
-		ajax.post(apiUrl, work, function(result){
+		
+		ajax.post("/api/works/parents/"+selectedRecord.id, work, function(result){
 			if(result!= null) alert("새로운 레코드를 생성하였습니다.");
 			else alert(result.mssege);
 			init();

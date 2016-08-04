@@ -14,6 +14,7 @@ import com.poom.quest.services.model.Contract;
 import com.poom.quest.services.model.Quest;
 import com.poom.quest.services.model.user.User;
 import com.poom.quest.services.service.QuestService;
+import com.poom.quest.web.controller.api.generic.GenericApiController;
 
 @Controller
 @RequestMapping("api/contracts")

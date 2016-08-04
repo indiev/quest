@@ -21,6 +21,7 @@ import com.poom.quest.services.service.CodeService;
 import com.poom.quest.services.service.QuestService;
 import com.poom.quest.services.service.QuesterService;
 import com.poom.quest.services.service.UserService;
+import com.poom.quest.web.controller.api.generic.GenericApiController;
 
 @Controller
 @RequestMapping("api/quests")

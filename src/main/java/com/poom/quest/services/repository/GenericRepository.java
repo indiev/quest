@@ -1,15 +1,12 @@
 package com.poom.quest.services.repository;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.JoinTable;
@@ -21,7 +18,6 @@ import org.springframework.stereotype.Repository;
 
 import com.poom.quest.services.model.Code;
 import com.poom.quest.services.model.Model;
-import com.poom.quest.services.model.abstractModel.GenericModel;
 import com.poom.quest.util.reflect.Reflect;
 
 @Repository

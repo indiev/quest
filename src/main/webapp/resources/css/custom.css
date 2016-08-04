@@ -114,3 +114,8 @@ li.badge:not(:first-child) {
 li.label:not(:first-child) {
 	margin-left: 5px;
 }
+
+.label {
+	font-size: 9pt;
+	padding-top: 6px;
+}

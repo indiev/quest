@@ -92,8 +92,8 @@
 							<div class="panel panel-default">
 								<div class="panel-heading"><strong>계약</strong></div>
 								<div class="panel-body">
-									<p>리퀘스터 패널티 : <span data-content-append="contract.requesterPenalty"></span>%</p>
-									<p>퀘스터 패널티 : <span data-content-append="contract.questerPenalty"></span>%</p>
+									<p>리퀘스터 패널티 : <span data-content="contract.requesterPenalty"></span>% / 조건 : </p>
+									<p>퀘스터 패널티 : <span data-content="contract.questerPenalty"></span>% / 조건 : </p>
 								</div>
 								<ul class="list-group" data-list="contract.provisions">
 									<li class="list-group-item">

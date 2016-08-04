@@ -15,21 +15,20 @@ import org.hibernate.annotations.CascadeType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @MappedSuperclass
-public abstract class TreeModel<T extends GenericModel> extends GenericModel {
+public abstract class TreeModel<T extends TreeModel<T>> extends GenericModel {
 
 	private static final long serialVersionUID = 1L;
 	 
-	private Integer sequency;
+	protected Integer sequency;
 
-	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@Cascade(CascadeType.MERGE)
 	@JoinColumn(name = "parentId", referencedColumnName = "id")
-	private T parent;
+	protected T parent;
 	
 	@OneToMany(mappedBy="parent", fetch = FetchType.LAZY)
 	@OrderBy("sequency DESC")
-	private Set<T> childs;
+	protected Set<T> childs;
 	
 	public Integer getSequency() {
 		return sequency;
@@ -37,6 +36,7 @@ public abstract class TreeModel<T extends GenericModel> extends GenericModel {
 	public void setSequency(Integer sequency) {
 		this.sequency = sequency;
 	}
+	@JsonIgnore
 	public T getParent() {
 		return parent;
 	}

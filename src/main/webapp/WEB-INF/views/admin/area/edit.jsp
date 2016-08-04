@@ -174,12 +174,11 @@
 		}
 		
 		var area = {};
-		area.parent = selectedRecord;
 		area.name = $form.find(".name").val();
 		area.description = $form.find(".description").val();
 		
 		console.log(area);
-		ajax.post(apiUrl, area, function(result){
+		ajax.post("/api/areas/parents/"+selectedRecord.id, area, function(result){
 			if(result!= null) alert("새로운 레코드를 생성하였습니다.");
 			else alert(result.mssege);
 			init();

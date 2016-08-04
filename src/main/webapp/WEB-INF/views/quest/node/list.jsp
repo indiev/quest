@@ -5,7 +5,7 @@
 		<div class="col-md-10 vertical-line" style="position:initial;">
 			<p><a data-content="name" data-href="id" data-format="link" data-format-target="href" class="load h4"></a></p>
 			<div class="row">
-				<div class="col-md-10">
+				<div class="col-md-10 vertical-line">
 					<div data-content="description" class="ellipsis-line2" style="font-size:12pt;"></div>
 				</div>
 				<div class="col-md-2">

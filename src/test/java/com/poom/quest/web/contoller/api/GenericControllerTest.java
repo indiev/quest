@@ -31,7 +31,7 @@ import com.poom.quest.services.model.Area;
 import com.poom.quest.services.model.user.User;
 import com.poom.quest.services.service.AreaService;
 import com.poom.quest.services.service.UserService;
-import com.poom.quest.web.controller.api.GenericApiController;
+import com.poom.quest.web.controller.api.generic.GenericApiController;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration

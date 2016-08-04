@@ -1,6 +1,7 @@
-package com.poom.quest.web.controller.api;
+package com.poom.quest.web.controller.api.generic;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.poom.quest.services.model.Code;
 import com.poom.quest.services.model.Model;
 import com.poom.quest.services.model.abstractModel.GenericModel;
+import com.poom.quest.services.model.abstractModel.TreeModel;
 import com.poom.quest.services.model.user.User;
 import com.poom.quest.services.service.CodeService;
 import com.poom.quest.services.service.GenericService;
@@ -97,6 +99,7 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 	@RequestMapping(value = "/{id}/{child}s", method = RequestMethod.GET)
 	public <S extends GenericModel> List<S> childrenByParent(@PathVariable("id") ID id, @PathVariable("child") String child, @RequestParam Map<String, Object> params) {
 		Field field = Reflect.getField(domainClass, child + "s");
+		if(field == null) return null;
 		GenericService<S, ID> childService = (GenericService<S, ID>) getService(child);
 		System.out.println(childService);
 		if(childService != null) {
@@ -114,6 +117,29 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value = "/{parent}s/{parentId}", method = RequestMethod.POST)
+	public T add(@PathVariable("parent") String parent, @PathVariable("parentId") ID parentId, @RequestBody T entity) {
+		//T의 Field Type에 User, Quester, Requester가 있다면. User에서 해당 클래스 넣기
+		Field parentField = Reflect.getField(domainClass, parent);
+		if(parentField == null) return null;
+		Object parentEntity = null;
+		if(TreeModel.class.isAssignableFrom(domainClass) && parent.equals("parent")) { //Tree Model
+			parentEntity = getService().get(parentId);
+		} else {
+			GenericService<?, ID> parentService = this.getFieldService(parent);
+			parentEntity = parentService.get(parentId);
+		}
+		try {
+			Method setMethod = Reflect.getMethod(domainClass, "set" + parent);
+			setMethod.invoke(entity, parentEntity);
+			return getService().add(entity);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@ResponseBody
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public T update(@PathVariable ID id, @RequestParam Map<String, Object> params) {
 		int changeCount = 0;
@@ -122,10 +148,8 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 		for(String key : params.keySet()) {	//바뀌면 안되는 Key 제한. ex) Id, CreatedDate...
 			if(key.equalsIgnoreCase("id")) continue;
 			try {
-				System.out.println("Field : "+key);
 				Field field = Reflect.getField(domainClass, key);
 				if(field != null) {
-					System.out.println("||||||||"+field.getName());
 					Class<?> fieldClass = field.getType();
 					Method getMethod = Reflect.getMethod(domainClass, "get"+key);
 					Method setMethod = Reflect.getMethod(domainClass, "set"+key);
@@ -134,13 +158,13 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 							Code code = codeService.get(domainClass.getSimpleName(), key, (String)params.get(key));
 							setMethod.invoke(entity, code);
 						} else {
-							GenericService nodeService = getFieldService(key);
+							GenericService<?, ID> nodeService = getFieldService(key);
 							Object node = nodeService.get((ID)params.get(key));
 							setMethod.invoke(entity, fieldClass.cast(node));
 						}
 					} else if(Set.class.isAssignableFrom(field.getType())) { //Type이 List일 경우
 						key = key.substring(0, key.length()-1); //'s' 제거
-						GenericService nodeService = getFieldService(key);
+						GenericService<?, ID> nodeService = getFieldService(key);
 						Object node = nodeService.get((ID)params.get(key));
 						Set nodeSet = (Set)getMethod.invoke(entity);
 						nodeSet.add(fieldClass.cast(node));
@@ -175,10 +199,10 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 		T entity = getService().get(id);
 		//T의 Field Type에 User, Quester, Requester가 있다면. 로그인이 되어 있는지 관련 사용자가 맞는지 확인
 		try {
-			GenericService childService = getFieldService(child);
+			GenericService<?, ID> childService = getFieldService(child);
 			Object childEntity = childService.get(childId);
 			Method method = Reflect.getMethod(domainClass, "get"+child+"s");
-			Set childList = (Set) method.invoke(entity);
+			Set<Object> childList = (Set<Object>) method.invoke(entity);
 			if(childList.contains(childEntity)) childList.remove(childEntity);
 			else childList.add(childEntity);
 			changeCount++;
@@ -201,10 +225,10 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 		T entity = getService().get(id);
 		//T의 Field Type에 User, Quester, Requester가 있다면. 로그인이 되어 있는지 관련 사용자가 맞는지 확인
 		try {
-			GenericService childService = getFieldService(child);
+			GenericService<?, ID> childService = getFieldService(child);
 			Object childEntity = childService.get(childId);
 			Method method = Reflect.getMethod(domainClass, "get"+child+"s");
-			Set childList = (Set) method.invoke(entity);
+			Set<?> childList = (Set<?>) method.invoke(entity);
 			if(childList.contains(childEntity)) {
 				childList.remove(childEntity);
 				changeCount++;

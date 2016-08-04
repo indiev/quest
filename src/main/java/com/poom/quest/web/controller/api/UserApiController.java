@@ -12,6 +12,7 @@ import com.poom.quest.services.model.user.Requester;
 import com.poom.quest.services.model.user.User;
 import com.poom.quest.services.service.QuesterService;
 import com.poom.quest.services.service.RequesterService;
+import com.poom.quest.web.controller.api.generic.GenericApiController;
 
 @Controller
 @RequestMapping("api/users")

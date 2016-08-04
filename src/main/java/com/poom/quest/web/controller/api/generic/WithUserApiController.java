@@ -13,7 +13,6 @@ import com.poom.quest.services.model.abstractModel.WithUserModel;
 import com.poom.quest.services.model.user.User;
 import com.poom.quest.services.service.GenericService;
 import com.poom.quest.util.reflect.Reflect;
-import com.poom.quest.web.controller.api.GenericApiController;
 
 @RequestMapping("api")
 public abstract class WithUserApiController<T extends WithUserModel, ID> extends GenericApiController<T, ID> {
@@ -35,7 +34,7 @@ public abstract class WithUserApiController<T extends WithUserModel, ID> extends
 			User user = userService.getLoginUserByRequest();
 			entity.setUser(user);
 			if(user != null) {
-				GenericService parentServcie = getFieldService(parent);
+				GenericService<?, ID> parentServcie = getFieldService(parent);
 				Object parentEntity = parentServcie.get(parentId);
 				Method method = Reflect.getMethod(domainClass, parent);
 				method.invoke(entity, parentEntity);

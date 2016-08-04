@@ -19,13 +19,13 @@ public abstract class GenericModel extends Model {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	protected Long id;
 	@NotNull
-	private String name;
+	protected String name;
 	@NotNull
-	private Date createdDate;
+	protected Date createdDate;
 	@NotNull
-	private Date modifiedDate;
+	protected Date modifiedDate;
 	
 	@PrePersist
 	public void onCreate() {
