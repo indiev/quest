@@ -12,6 +12,8 @@
 		 				<button type="button" class="btn btn-default btn-sm" name="requestButton" data-toggle="modal" data-target="#modal"><span class="glyphicon-plus glyphicon" aria-hidden="true"></span></button>
 		 			</span>
 		 		</div>
+		 		<div>가격바</div>
+		 		<div>프로젝트 상태 체크</div>
 	 		</form>
 		</div>
 		<div class="col-md-6 col-md-offset-3">

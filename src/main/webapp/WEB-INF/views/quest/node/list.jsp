@@ -3,7 +3,7 @@
 <div class="panel" style="padding:10px; margin-top:15px; max-width:900px;">
 	<div class="row" style="position:relative;">
 		<div class="col-md-10 vertical-line" style="position:initial;">
-			<p><a data-content="name" data-href="id" data-format="link" data-format-target="href" class="load h4"></a></p>
+			<p><a data-href="id" data-format="link" data-format-target="href" class="load h4"><strong data-content="name"></strong></a></p>
 			<div class="row">
 				<div class="col-md-10 vertical-line">
 					<div data-content="description" class="ellipsis-line2" style="font-size:12pt;"></div>

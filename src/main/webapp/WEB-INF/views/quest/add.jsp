@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
 <style type="text/css">
-span.badge.area { background-color: #5bc0de; }
-span.badge.work { background-color: #f0ad4e; }
-span.badge.skill { background-color: #d9534f; }
 .btn-default:hover,
 .btn-default:focus,
 .btn-default:active,
@@ -19,59 +16,32 @@ span.badge.skill { background-color: #d9534f; }
 			<input type="text" name="name" id="name" class="form-control" placeholder="퀘스트명" title="퀘스트명" required>
 		</div>
 		<div class="form-group">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="input-group">
-						<span class="input-group-addon">
-							<span class="glyphicon glyphicon-globe"></span>
-						</span>
-						<label for="area" class="sr-only">상위분야</label>
-						<select name="area" id="area" class="form-control"></select>
-						<span class="input-group-btn" style="width:0px;"></span>
-						<label for="subArea" class="sr-only">세부분야</label>
-						<select name="subArea" id="subArea" class="form-control"></select>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<button type="button" class="btn btn-default form-control area" onclick="return false;"></button>
-				</div>
+			<div class="input-group select2-bootstrap-prepend">
+				<span class="input-group-addon">
+					<span class="glyphicon glyphicon-globe"></span>
+				</span>
+				<label for="area" class="sr-only">분야</label>
+				<select name="area" id="area" class="form-control" multiple="multiple"></select>
+				<!-- <span class="input-group-btn" style="width:0px;"></span> -->
 			</div>
 		</div>
 		<div class="form-group">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="input-group">
-						<span class="input-group-addon">
-							<span class="glyphicon glyphicon-briefcase"></span>
-						</span>
-						<label for="work" class="sr-only">상위업무</label>
-						<select name="work" id="work" class="form-control"></select>
-						<span class="input-group-btn" style="width:0px;"></span>
-						<label for="subArea" class="sr-only">세부업무</label>
-						<select name="subWork" id="subWork" class="form-control"></select>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<button type="button" class="btn btn-default form-control work" onclick="return false;"></button>
-				</div>
+			<div class="input-group select2-bootstrap-prepend">
+				<span class="input-group-addon">
+					<span class="glyphicon glyphicon-briefcase"></span>
+				</span>
+				<label for="work" class="sr-only">업무</label>
+				<select name="work" id="work" class="form-control" multiple="multiple"></select>
+				<!-- <span class="input-group-btn" style="width:0px;"></span> -->
 			</div>
 		</div>
-		<div class="form-group row">
-			<div class="col-md-4">
-				<div class="input-group">
-					<span class="input-group-addon">
-						<span class="glyphicon glyphicon-wrench"></span>
-					</span>
-					<label for="skill" class="sr-only">스킬</label>
-					<select name="skill" id="skill" class="form-control"></select>
-				</div>
-			</div>
-			<div class="col-md-8">
-				<button type="button" class="btn btn-default form-control skill" onclick="return false;"></button>
+		<div class="form-group">
+			<div class="input-group select2-bootstrap-prepend">
+				<span class="input-group-addon">
+					<span class="glyphicon glyphicon-wrench"></span>
+				</span>
+				<label for="skill" class="sr-only">스킬</label>
+				<select name="skill" id="skill" class="form-control" multiple="multiple"></select>
 			</div>
 		</div>
 		<div class="form-group row">
@@ -182,34 +152,35 @@ var classQuest = function() {
 var quest = new classQuest();
 
 $(function() {
-	selectInputList("area", {}, "상위분야");
-	selectInputList("subArea", {}, "세부분야");
-	selectInputList("work", {}, "상위업무");
-	selectInputList("subWork", {}, "세부업무");
-	selectInputList("Skill", {}, "스킬");
+	ajax.get("/api/areas/parents", {}, function(list) { selectInputGroupList("area", list); });
+	ajax.get("/api/works/parents", {}, function(list) { selectInputGroupList("work", list); });
+	ajax.get("/api/skills", {}, function(list) { selectInputList("skill", list); });
 	
-	ajax.get("/api/areas/parents", {}, function(list) { selectInputList("area", list, "상위분야"); });
-	ajax.get("/api/works/parents", {}, function(list) { selectInputList("work", list, "상위업무"); });
-	ajax.get("/api/skills", {}, function(list) { selectInputList("skill", list, "스킬"); });
-	
-	$("select[name='area']").change(function() {
-		if(this.value != "") ajax.get("/api/areas/parents/" + this.value, {}, function(list) {
-			selectInputList('subArea', list, "세부분야");
-		});
-	});
-	
-	$("select[name='work']").change(function() {
-		if(this.value != "") ajax.get("/api/works/parents/" + this.value, {}, function(list) {
-			selectInputList('subWork', list, "세부업무");
-		});
-	});
-	
-	$("select[name='subArea']").change(function(){ addSelectValue(this, "area", quest.areas); });
+/* 	$("select[name='subArea']").change(function(){ addSelectValue(this, "area", quest.areas); });
 	$("select[name='subWork']").change(function() { addSelectValue(this, "work", quest.works); });
-	$("select[name='skill']").change(function() { addSelectValue(this, "skill", quest.skills); });
+	$("select[name='skill']").change(function() { addSelectValue(this, "skill", quest.skills); }); */
+	
+	$("select[name='area']").select2({
+		maximumSelectionLength: 3,
+		placeholder: "분야 (최대 3개)",
+		allowClear: true,
+		theme: "bootstrap"
+	});
+	$("select[name='work']").select2({
+		maximumSelectionLength: 3,
+		placeholder: "업무 (최대 3개)",
+		allowClear: true,
+		theme: "bootstrap"
+	});
+	$("select[name='skill']").select2({
+		maximumSelectionLength: 3,
+		placeholder: "스킬 (최대 3개)",
+		allowClear: true,
+		theme: "bootstrap"
+	});
 });
 
-function inArrayObject(value, list) {
+/* function inArrayObject(value, list) {
 	return list.map(function(e) { return e.id; }).indexOf(value);
 }
 
@@ -227,16 +198,32 @@ function addSelectValue(elem, category, list) {
 			return $node;
 		});
 	}
+} */
+
+function selectInputGroupList(name, list) {
+	var $select = $("select[name='" + name + "']");
+	$select.empty();
+	$.each(list, function(i, node) {
+		if(node.childs != undefined && node.childs.length > 0) {
+			var $optgroup = $("<optgroup>");
+			$optgroup.attr("label", node.name);
+			$.each(node.childs, function(i, child) {
+				var $option = $("<option>");
+				$option.html(child.name).val(child.id);
+				$optgroup.append($option);
+			});
+			$select.append($optgroup);
+		}
+	});
 }
 
-function selectInputList(name, list, defaultText) {
-	var select = $("select[name='" + name + "']");
-	select.empty();
-	select.append($("<option>").html(defaultText).val(null));
+function selectInputList(name, list) {
+	var $select = $("select[name='" + name + "']");
+	$select.empty();
 	$.each(list, function(i, node) {
-		option = $("<option>");
-		option.html(node.name).val(node.id);
-		select.append(option);
+		var $option = $("<option>");
+		$option.html(node.name).val(node.id);
+		$select.append($option);
 	});
 }
 
