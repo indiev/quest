@@ -9,9 +9,10 @@
 	border-color: #ccc;
 }
 </style>
-<div class="container-pluid">
-	<form role="form" action="/api/quests" method="POST" onsubmit="return request(this);">
-		<div class="col-md-6">
+
+<div class="panel panel-default" style="width:920px; margin:0 auto; margin-top:30px;">
+	<div class="panel-body">
+		<form name="questRequestForm" role="form" action="/api/quests" method="POST" onsubmit="return request(this);">
 			<div class="form-group">
 				<label for="name" class="sr-only">퀘스트명</label>	
 				<input type="text" name="name" id="name" class="form-control" placeholder="퀘스트명" title="퀘스트명" required>
@@ -48,7 +49,7 @@
 			<div class="form-group">
 				<label>요구사항</label>
 				<button type="button" class="btn btn-default btn-sm" name="requirementAddButton" data-toggle="modal" data-target="#modal"><span class="glyphicon-plus glyphicon" aria-hidden="true"></span></button>
-				<table class="table table-bordered requirement-list" style="margin-bottom: 0">
+				<table class="table table-bordered requirement-list" style="margin-top: 5px;">
 					<tbody>
 						<tr><td>없음</td></tr>
 					</tbody>
@@ -89,55 +90,63 @@
 			<hr>
 			<div class="form-group">
 				<div class="row">
-					<label>계약조항</label>
-					<button type="button" class="btn btn-default btn-sm" name="provisionAddButton" data-toggle="modal" data-target="#modal"><span class="glyphicon-plus glyphicon" aria-hidden="true"></span></button>
-				</div>
-				<div class="row">
 					<div class="col-md-4">
-						<label for="contract.requesterPenalty">리퀘스터 위약금</label>
+						<label for="contract.requesterPenalty" class="sr-only">리퀘스터 위약금</label>
 						<div class="input-group">
 							<input type="number" name="contract.requesterPenalty" id="contract.requesterPenalty" class="form-control" placeholder="리퀘스터 위약금" title="리퀘스터 위약금" min="0" step="1" required>
 							<span class="input-group-addon">%</span>
 						</div>
 					</div>
 					<div class="col-md-4">
+						<label for="contract.questerPenalty" class="sr-only">퀘스터 위약금</label>
 						<div class="input-group">
-							<label for="contract.questerPenalty"class="sr-only">퀘스터 위약금</label>
 							<input type="number" name="contract.questerPenalty" id="contract.questerPenalty" class="form-control" placeholder="퀘스터 위약금" title="퀘스터 위약금" min="0" step="1" required>
 							<span class="input-group-addon">%</span>
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<table class="table table-bordered provision-list" style="margin-bottom: 0">
-						<tbody>
-							<tr><td>없음</td></tr>
-						</tbody>
-					</table>
-				</div>
+			</div>
+			<div class="form-group">
+				<label>계약조항</label>
+				<button type="button" class="btn btn-default btn-sm" name="provisionAddButton" data-toggle="modal" data-target="#modal"><span class="glyphicon-plus glyphicon" aria-hidden="true"></span></button>
+				<table class="table table-bordered provision-list" style="margin-top: 5px;">
+					<tbody>
+						<tr><td>없음</td></tr>
+					</tbody>
+				</table>
 			</div>
 			<div class="text-center">
 				<input type="submit" id="" name="" class="btn btn-default" value="요청" title="요청">
 			</div>
-		</div>
-		<div class="col-md-6">
-		</div>
-	</form>
+		</form>
+	</div>
 </div>
 
 <template name="requirementAdd">
+	<div class="form-group">
 		<label for="requirementName" class="sr-only">요구사항 제목</label>
 		<input type="text" name="requirementName" id="requirementName" class="form-control" placeholder="제목" title="요구사항 제목">
+	</div>
+	<div class="form-group">
 		<label for="requirementDescription" class="sr-only">요구사항 내용</label>
 		<textarea name="requirementDescription" id="requirementDescription" rows="3" class="form-control" style="resize:none;" placeholder="내용" title="요구사항 내용"></textarea>
-		<button type="button" id="" name="" class="btn btn-default" title="요구사항 추가" onclick="addRequirement();">추가</button>	
+	</div>
+	<div class="text-center">
+		<button type="button" id="" name="" class="btn btn-default" title="요구사항 추가" onclick="addRequirement();">추가</button>
+	</div>	
 </template>
 <template name="provisionAdd">
+	<div class="form-group">
 		<label for="provisionName" class="sr-only">계약조항 제목</label>
 		<input type="text" name="provisionName" id="provisionName" class="form-control" placeholder="제목" title="계약조항 제목">
+	</div>
+	<div class="form-group">
 		<label for="provisionDescriptoin" class="sr-only">계약조항 내용</label>
 		<textarea name="provisionDescription" id="provisionDescription" rows="3" class="form-control" style="resize:none;" placeholder="내용" title="계약조항 내용"></textarea>
-		<button type="button" id="" name="" class="btn btn-default" title="계약조항 추가" onclick="addProvision();">추가</button>	
+	</div>
+	<div class="text-center">
+		<button type="button" id="" name="" class="btn btn-default" title="계약조항 추가" onclick="addProvision();">추가</button>
+	</div>	
 </template>
 
 <script type="text/javascript">
@@ -154,6 +163,11 @@ var classQuest = function() {
 var quest = new classQuest();
 
 $(function() {
+	/* if(user == null) { //ajax 호출 문제로 오류 발생
+		alert("로그인하지 않은 사용자입니다.");
+		history.back();
+		return ;
+	} */
 	ajax.get("/api/areas/parents", {}, function(list) { selectInputGroupList("area", list); });
 	ajax.get("/api/works/parents", {}, function(list) { selectInputGroupList("work", list); });
 	ajax.get("/api/skills", {}, function(list) { selectInputList("skill", list); });
@@ -250,58 +264,70 @@ function htmlBadge(text, value, category) {
 
 function addRequirement() {
 	var $name = $("input[name='requirementName']");
-	var $description = $("input[name='requirementDescription']");
+	var $description = $("textarea[name='requirementDescription']");
 	var name = $name.val();
 	var description = $description.val();
-	$name.val('');
-	$description.val('');
 	
 	$row = $("<tr>");
-	$row.append($("<td>").html(name).addClass("col-xs-3"));
-	$row.append($("<td>").html(description).addClass("col-xs-8"));
-	$button = $("<button>").addClass("btn glyphicon glyphicon-remove").attr("type", "button");
+	$td = $("<td>").css("vertical-align", "middle");
+	$row.append($td.clone().html(name).addClass("col-xs-3"));
+	$row.append($td.clone().html(description).addClass("col-xs-8"));
+	$button = $("<button>").addClass("btn btn-sm glyphicon glyphicon-remove").attr("type", "button");
 	$button.click(function() {
 		$elem = $(this);
 		$.each(quest.requirements, function(i, requirement) {
 			if(this.name == name && this.description == description) {
 				quest.requirements.splice(i, 1);
 				$elem.parent().parent().remove();
+				if(quest.requirements.length == 0) $("table.requirement-list > tbody > tr:first-child").removeClass("hide");
 				return false;
 			}
 		});
 	});
 	$row.append($("<td>").html($button).addClass("col-xs-1"));
+	if(quest.requirements.length == 0) $("table.requirement-list > tbody > tr:first-child").addClass("hide");
 	$("table.requirement-list > tbody").append($row);
 	
 	quest.requirements.push({"name":name, "description":description});
+	
+	$name.val('');
+	$description.val('');
+	
+	$("#modal").modal("toggle");
 }
 
 function addProvision() {
 	var $name = $("input[name='provisionName']");
-	var $description = $("input[name='provisionDescription']");
+	var $description = $("textarea[name='provisionDescription']");
 	var name = $name.val();
 	var description = $description.val();
-	$name.val('');
-	$description.val('');
 	
 	$row = $("<tr>");
-	$row.append($("<td>").html(name).addClass("col-xs-3"));
-	$row.append($("<td>").html(description).addClass("col-xs-8"));
-	$button = $("<button>").addClass("btn glyphicon glyphicon-remove").attr("type", "button");
+	$td = $("<td>").css("vertical-align", "middle");
+	$row.append($td.clone().html(name).addClass("col-xs-3"));
+	$row.append($td.clone().html(description).addClass("col-xs-8"));
+	$button = $("<button>").addClass("btn btn-sm glyphicon glyphicon-remove").attr("type", "button");
 	$button.click(function() {
 		$elem = $(this);
 		$.each(quest.contract.provisions, function(i, provision) {
 			if(this.name == name && this.description == description) {
 				quest.contract.provisions.splice(i, 1);
 				$elem.parent().parent().remove();
+				if(quest.requirements.length == 0) $("table.provision-list > tbody > tr:first-child").removeClass("hide");
 				return false;
 			}
 		});
 	});
 	$row.append($("<td>").html($button).addClass("col-xs-1"));
+	if(quest.requirements.length == 0) $("table.provision-list > tbody > tr:first-child").addClass("hide");
 	$("table.provision-list > tbody").append($row);
 	
 	quest.contract.provisions.push({"name":name, "description":description});
+	
+	$name.val('');
+	$description.val('');
+	
+	$("#modal").modal("toggle");
 }
 
 function request(form) {
@@ -309,7 +335,7 @@ function request(form) {
 	ajax.submit(form, quest, function(result) {
 		if(result != "") {
 			alert("퀘스트를 추가했습니다.");
-			$("#dialog").modal("toggle");
+			$("form[name='questRequestForm']").reset();
 			//퀘스트 리로드 갱신
 		}
 		else alert("퀘스트를 추가하는 데 실패했습니다.");

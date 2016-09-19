@@ -21,7 +21,7 @@
 	       	</div>
 		</form>
 		<ul class="nav navbar-nav">
-			<li><a href="/quest/add" class="laod"><strong>요청</strong></a></li>
+			<li><a href="/quest/add" class="load" data-exist><strong>요청</strong></a></li>
 			<li><a href="/quest/list" class="load"><strong>수행</strong></a></li>
 			<!-- <li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">관리자 <span class="caret"></span></a>
@@ -66,7 +66,6 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$("li a.logout").click(function(){
-		console.log(1);
 		ajax.get("/api/logout", {}, function(result) {
 			user = null;
 			$("header").loadTemplate("/header", null);

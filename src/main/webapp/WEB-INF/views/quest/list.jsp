@@ -9,7 +9,7 @@
 		 			<input type="text" name="searchKeyword" id="searchKeyword" class="form-control input-sm search-query" placeholder="검색" />
 		 			<span class="input-group-btn">
 		 				<button class="btn btn-default btn-sm" type="button" onclick="list()"><span class="glyphicon-search glyphicon" aria-hidden="true"></span></button>
-		 				<button type="button" class="btn btn-default btn-sm" name="requestButton" data-toggle="modal" data-target="#modal"><span class="glyphicon-plus glyphicon" aria-hidden="true"></span></button>
+		 				<a href="/quest/add" class="load"><span class="btn btn-default btn-sm"><span class="glyphicon-plus glyphicon" aria-hidden="true"></span></span></a>
 		 			</span>
 		 		</div>
 		 		<div>가격바</div>
@@ -54,9 +54,5 @@ function list() {
 
 $(document).ready(function(){
 	list();
-	$("button[name='requestButton']").click(function(){
-		$modal = $("body div.modal");
-		$modal.find("div.modal-body").load("/quest/add");
-	});
 });
 </script>
