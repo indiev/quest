@@ -9,134 +9,136 @@
 	border-color: #ccc;
 }
 </style>
-<form role="form" action="/api/quests" method="POST" onsubmit="return request(this);">
-	<div class="container-pluid">
-		<div class="form-group">
-			<label for="name" class="sr-only">퀘스트명</label>	
-			<input type="text" name="name" id="name" class="form-control" placeholder="퀘스트명" title="퀘스트명" required>
-		</div>
-		<div class="form-group">
-			<div class="input-group select2-bootstrap-prepend">
-				<span class="input-group-addon">
-					<span class="glyphicon glyphicon-globe"></span>
-				</span>
-				<label for="area" class="sr-only">분야</label>
-				<select name="area" id="area" class="form-control" multiple="multiple"></select>
-				<!-- <span class="input-group-btn" style="width:0px;"></span> -->
+<div class="container-pluid">
+	<form role="form" action="/api/quests" method="POST" onsubmit="return request(this);">
+		<div class="col-md-6">
+			<div class="form-group">
+				<label for="name" class="sr-only">퀘스트명</label>	
+				<input type="text" name="name" id="name" class="form-control" placeholder="퀘스트명" title="퀘스트명" required>
 			</div>
-		</div>
-		<div class="form-group">
-			<div class="input-group select2-bootstrap-prepend">
-				<span class="input-group-addon">
-					<span class="glyphicon glyphicon-briefcase"></span>
-				</span>
-				<label for="work" class="sr-only">업무</label>
-				<select name="work" id="work" class="form-control" multiple="multiple"></select>
-				<!-- <span class="input-group-btn" style="width:0px;"></span> -->
-			</div>
-		</div>
-		<div class="form-group">
-			<div class="input-group select2-bootstrap-prepend">
-				<span class="input-group-addon">
-					<span class="glyphicon glyphicon-wrench"></span>
-				</span>
-				<label for="skill" class="sr-only">스킬</label>
-				<select name="skill" id="skill" class="form-control" multiple="multiple"></select>
-			</div>
-		</div>
-		<div class="form-group row">
-			<div class="col-md-4">
-				<div class="input-group">
-					<label for="duration" class="sr-only">기간</label>
-					<input type="number" name="duration" id="duration" class="form-control" placeholder="기간" min="0" step="1" required>
-					<span class="input-group-addon">일</span>
+			<div class="form-group row">
+				<div class="col-md-6">
+					<div class="input-group select2-bootstrap-prepend">
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+						</span>
+						<label for="area" class="sr-only">분야</label>
+						<select name="area" id="area" class="form-control" multiple="multiple" title="분야"></select>
+					</div>
 				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="input-group">
-					<label for="reward"class="sr-only">보상</label>
-					<input type="number" name="reward" id="reward" class="form-control" placeholder="보상" min="0" step="1" required>
-					<span class="input-group-addon">환</span>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<label for="reward"class="sr-only">마감일</label>
-				<input type="date" name="recruitmentEndDate" id="recruitmentEndDate" class="form-control" placeholder="마감일" required>
-			</div>
-		</div>
-		<div class="form-group row">
-			<div class="col-md-4">
-				<div class="input-group">
-					<label for="contract.requesterPenalty" class="sr-only">리퀘스터 위약금</label>
-					<input type="number" name="contract.requesterPenalty" id="contract.requesterPenalty" class="form-control" placeholder="리퀘스터 위약금" min="0" step="1" required>
-					<span class="input-group-addon">%</span>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="input-group">
-					<label for="contract.questerPenalty"class="sr-only">퀘스터 위약금</label>
-					<input type="number" name="contract.questerPenalty" id="contract.questerPenalty" class="form-control" placeholder="퀘스터 위약금" min="0" step="1" required>
-					<span class="input-group-addon">%</span>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="input-group">
-					<label for="qualification" class="sr-only">자격</label>
-					<input type="text" name="qualification" id="qualification" class="form-control" placeholder="자격" required>
-				</div>
-			</div>
-		</div>
-		<div class="form-group">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="input-group">
-						<label for="requirementName" class="sr-only">요구사항 제목</label>
-						<input type="text" name="requirementName" id="requirementName" class="form-control" placeholder="요구사항 제목">
-						<span class="input-group-btn" style="width:0px;"></span>
-						<label for="requirementDescription" class="sr-only">요구사항 내용</label>
-						<input type="text" name="requirementDescription" id="requirementDescription" class="form-control" placeholder="요구사항 내용">
-						<div class="input-group-btn">
-							<button type="button" id="" name="" class="btn btn-default" onclick="addRequirement();">추가</button>	
-						</div>
+				<div class="col-md-6">
+					<div class="input-group select2-bootstrap-prepend">
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>
+						</span>
+						<label for="work" class="sr-only">업무</label>
+						<select name="work" id="work" class="form-control" multiple="multiple" title="업무"></select>
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<table class="table table-bordered requirement-list" style="margin-bottom: 0"><tbody></tbody></table>
+			<div class="form-group">
+				<div class="input-group select2-bootstrap-prepend">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+					</span>
+					<label for="skill" class="sr-only">스킬</label>
+					<select name="skill" id="skill" class="form-control" multiple="multiple" title="스킬"></select>
 				</div>
 			</div>
-		</div>
-		<div class="form-group">
-			<div class="row">
-				<div class="col-md-12">
+			<div class="form-group">
+				<label>요구사항</label>
+				<button type="button" class="btn btn-default btn-sm" name="requirementAddButton" data-toggle="modal" data-target="#modal"><span class="glyphicon-plus glyphicon" aria-hidden="true"></span></button>
+				<table class="table table-bordered requirement-list" style="margin-bottom: 0">
+					<tbody>
+						<tr><td>없음</td></tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="form-group row">
+				<div class="col-md-4">
 					<div class="input-group">
-						<label for="provisionName" class="sr-only">계약조항 제목</label>
-						<input type="text" name="provisionName" id="provisionName" class="form-control" placeholder="계약조항 제목">
-						<span class="input-group-btn" style="width:0px;"></span>
-						<label for="provisionDescriptoin" class="sr-only">계약조항 내용</label>
-						<input type="text" name="provisionDescription" id="provisionDescription" class="form-control" placeholder="계약조항 내용">
-						<div class="input-group-btn">
-							<button type="button" id="" name="" class="btn btn-default" onclick="addProvision();">추가</button>	
-						</div>
+						<label for="duration" class="sr-only">소요기간</label>
+						<input type="number" name="duration" id="duration" class="form-control" placeholder="소요기간" min="0" step="1" title="소요기간" required>
+						<span class="input-group-addon">일</span>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="input-group">
+						<label for="reward"class="sr-only">보상</label>
+						<input type="number" name="reward" id="reward" class="form-control" placeholder="보상" min="0" step="1" title="보상" required>
+						<span class="input-group-addon">환</span>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<label for="reward"class="sr-only">마감일</label>
+					<input type="date" name="recruitmentEndDate" id="recruitmentEndDate" class="form-control" placeholder="마감일" title="마감일" required>
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-md-4">
+					<div class="input-group">
+						<label for="qualification" class="sr-only">자격</label>
+						<input type="text" name="qualification" id="qualification" class="form-control" placeholder="자격" title="자격" required>
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<table class="table table-bordered provision-list" style="margin-bottom: 0"><tbody></tbody></table>
+			<div class="form-group">
+				<label for="description" class="sr-only">내용</label>
+				<textarea name="description" id="description" rows="3" class="form-control" style="resize:none;" placeholder="내용" title="내용"></textarea>
+			</div>
+			<hr>
+			<div class="form-group">
+				<div class="row">
+					<label>계약조항</label>
+					<button type="button" class="btn btn-default btn-sm" name="provisionAddButton" data-toggle="modal" data-target="#modal"><span class="glyphicon-plus glyphicon" aria-hidden="true"></span></button>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<label for="contract.requesterPenalty">리퀘스터 위약금</label>
+						<div class="input-group">
+							<input type="number" name="contract.requesterPenalty" id="contract.requesterPenalty" class="form-control" placeholder="리퀘스터 위약금" title="리퀘스터 위약금" min="0" step="1" required>
+							<span class="input-group-addon">%</span>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="input-group">
+							<label for="contract.questerPenalty"class="sr-only">퀘스터 위약금</label>
+							<input type="number" name="contract.questerPenalty" id="contract.questerPenalty" class="form-control" placeholder="퀘스터 위약금" title="퀘스터 위약금" min="0" step="1" required>
+							<span class="input-group-addon">%</span>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<table class="table table-bordered provision-list" style="margin-bottom: 0">
+						<tbody>
+							<tr><td>없음</td></tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
+			<div class="text-center">
+				<input type="submit" id="" name="" class="btn btn-default" value="요청" title="요청">
+			</div>
 		</div>
-		<div class="form-group">
-			<label for="description" class="sr-only">내용</label>
-			<textarea name="description" id="description" rows="3" class="form-control" style="resize:none;" placeholder="내용"></textarea>
+		<div class="col-md-6">
 		</div>
-		<div class="text-center">
-			<input type="submit" id="" name="" class="btn btn-default" value="요청">
-		</div>
-	</div>
-</form>
+	</form>
+</div>
+
+<template name="requirementAdd">
+		<label for="requirementName" class="sr-only">요구사항 제목</label>
+		<input type="text" name="requirementName" id="requirementName" class="form-control" placeholder="제목" title="요구사항 제목">
+		<label for="requirementDescription" class="sr-only">요구사항 내용</label>
+		<textarea name="requirementDescription" id="requirementDescription" rows="3" class="form-control" style="resize:none;" placeholder="내용" title="요구사항 내용"></textarea>
+		<button type="button" id="" name="" class="btn btn-default" title="요구사항 추가" onclick="addRequirement();">추가</button>	
+</template>
+<template name="provisionAdd">
+		<label for="provisionName" class="sr-only">계약조항 제목</label>
+		<input type="text" name="provisionName" id="provisionName" class="form-control" placeholder="제목" title="계약조항 제목">
+		<label for="provisionDescriptoin" class="sr-only">계약조항 내용</label>
+		<textarea name="provisionDescription" id="provisionDescription" rows="3" class="form-control" style="resize:none;" placeholder="내용" title="계약조항 내용"></textarea>
+		<button type="button" id="" name="" class="btn btn-default" title="계약조항 추가" onclick="addProvision();">추가</button>	
+</template>
 
 <script type="text/javascript">
 var classQuest = function() {
@@ -163,20 +165,34 @@ $(function() {
 	$("select[name='area']").select2({
 		maximumSelectionLength: 3,
 		placeholder: "분야 (최대 3개)",
+		width: "100%",
 		allowClear: true,
 		theme: "bootstrap"
+		
 	});
 	$("select[name='work']").select2({
 		maximumSelectionLength: 3,
 		placeholder: "업무 (최대 3개)",
+		width: "100%",
 		allowClear: true,
 		theme: "bootstrap"
 	});
 	$("select[name='skill']").select2({
-		maximumSelectionLength: 3,
-		placeholder: "스킬 (최대 3개)",
+		maximumSelectionLength: 5,
+		placeholder: "스킬 (최대 5개)",
+		width: "100%",
 		allowClear: true,
 		theme: "bootstrap"
+	});
+	
+	$("button[name='requirementAddButton']").click(function(){
+		$modal = $("body div.modal");
+		$modal.find("div.modal-body").html($("template[name='requirementAdd']").html());
+	});
+	$("button[name='provisionAddButton']").click(function(){
+		$modal = $("body div.modal");
+		console.log($("template[name='provisionAdd']").html());
+		$modal.find("div.modal-body").html($("template[name='provisionAdd']").html());
 	});
 });
 

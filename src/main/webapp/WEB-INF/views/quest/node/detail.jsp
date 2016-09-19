@@ -105,9 +105,10 @@
 						</div>
 					</div>
 					<div style="border:1px solid; position:absolute; top:0px; right:0px; padding:15px;">
-						<span>~일 전 글 (<span data-content="createdDate" data-format="date"></span>)</span>
 						<span class="glyphicon glyphicon-calendar"></span>
-						<span data-content-prepend="recruitmentEndDate" data-format="date"></span> 마감(~일 남음)
+						<span data-content="createdDate" data-format="ago"></span> 작성 |
+						<span class="glyphicon glyphicon-calendar"></span>
+						마감 <span data-content="recruitmentEndDate" data-format="remain"></span>
 						<button type="button" class="btn btn-default" data-value="id" onclick="apply(this.value);">지원</button>
 					</div>
 				</div>

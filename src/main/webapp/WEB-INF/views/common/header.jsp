@@ -21,7 +21,7 @@
 	       	</div>
 		</form>
 		<ul class="nav navbar-nav">
-			<li><a href="#" class=""><strong>요청</strong></a></li>
+			<li><a href="/quest/add" class="laod"><strong>요청</strong></a></li>
 			<li><a href="/quest/list" class="load"><strong>수행</strong></a></li>
 			<!-- <li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">관리자 <span class="caret"></span></a>
@@ -32,12 +32,13 @@
 				</ul>
 			</li> -->
 		</ul>
-		<div class="nav btn-group navbar-right" style="padding-right:10px;">
-			<button type="button" data-non-exist class="btn btn-sm navbar-btn btn-primary" name="loginButton" data-toggle="modal" data-target="#modal-sm">로그인</button>
-			<button type="button" data-non-exist class="btn btn-sm navbar-btn btn-info" name="joinButton" data-toggle="modal" data-target="#modal">회원가입</button>
+		<div data-non-exist class="nav btn-group navbar-right" style="padding-right:10px;">
+			<button type="button" class="btn btn-sm navbar-btn btn-primary" name="loginButton" data-toggle="modal" data-target="#modal-sm">로그인</button>
+			<button type="button" class="btn btn-sm navbar-btn btn-info" name="joinButton" data-toggle="modal" data-target="#modal">회원가입</button>
 		</div>
-		<ul class="nav navbar-nav navbar-right" style="padding-right:10px;">
-			<li data-exist class="dropdown">
+		<ul data-exist class="nav navbar-nav navbar-right" style="padding-right:10px;">
+			<li><a href="#" class="laod"><span class="glyphicon glyphicon-exclamation-sign"></span></a></li>
+			<li class="dropdown">
 				<a data-content-prepend="name" data-format="name" href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu">
 					<li role="presentation"><a href="#">Messages <span class="badge">3</span></a></li>

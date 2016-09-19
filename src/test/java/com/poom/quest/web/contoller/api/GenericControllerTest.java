@@ -33,8 +33,8 @@ import com.poom.quest.services.service.AreaService;
 import com.poom.quest.services.service.UserService;
 import com.poom.quest.web.controller.api.generic.GenericApiController;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
+/*@RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration*/
 public class GenericControllerTest {
 /*
 	@Autowired private WebApplicationContext webApplicationContext;
