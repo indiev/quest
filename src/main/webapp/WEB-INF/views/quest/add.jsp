@@ -10,7 +10,7 @@
 }
 </style>
 
-<div class="panel panel-default" style="width:920px; margin:0 auto; margin-top:30px;">
+<div class="panel panel-default" style="width:920px; margin:30px auto;">
 	<div class="panel-body">
 		<form name="questRequestForm" role="form" action="/api/quests" method="POST" onsubmit="return request(this);">
 			<div class="form-group">
@@ -313,13 +313,13 @@ function addProvision() {
 			if(this.name == name && this.description == description) {
 				quest.contract.provisions.splice(i, 1);
 				$elem.parent().parent().remove();
-				if(quest.requirements.length == 0) $("table.provision-list > tbody > tr:first-child").removeClass("hide");
+				if(quest.contract.provisions.length == 0) $("table.provision-list > tbody > tr:first-child").removeClass("hide");
 				return false;
 			}
 		});
 	});
 	$row.append($("<td>").html($button).addClass("col-xs-1"));
-	if(quest.requirements.length == 0) $("table.provision-list > tbody > tr:first-child").addClass("hide");
+	if(quest.contract.provisions.length == 0) $("table.provision-list > tbody > tr:first-child").addClass("hide");
 	$("table.provision-list > tbody").append($row);
 	
 	quest.contract.provisions.push({"name":name, "description":description});
