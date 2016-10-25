@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.poom.quest.services.model.Code;
 import com.poom.quest.services.model.Model;
-import com.poom.quest.services.model.abstractModel.GenericModel;
+import com.poom.quest.services.model.abstractModel.Domain;
 import com.poom.quest.services.model.abstractModel.TreeModel;
 import com.poom.quest.services.model.user.User;
 import com.poom.quest.services.service.CodeService;
@@ -28,7 +28,7 @@ import com.poom.quest.services.service.UserService;
 import com.poom.quest.util.reflect.Reflect;
 
 @RequestMapping("api")
-public abstract class GenericApiController<T extends GenericModel, ID> {
+public abstract class GenericApiController<T extends Domain, ID> {
 
 	@Autowired protected ApplicationContext applicationContext;
 	@Autowired protected UserService userService;
@@ -79,7 +79,7 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 	
 	@ResponseBody
 	@RequestMapping(value = "/{id}/{child}s/{childId}", method = RequestMethod.GET)
-	public <S extends GenericModel> S getChildByParent(@PathVariable("id") ID id, @PathVariable("child") String child, @PathVariable("childId") ID childId, @RequestParam Map<String, Object> params) {
+	public <S extends Domain> S getChildByParent(@PathVariable("id") ID id, @PathVariable("child") String child, @PathVariable("childId") ID childId, @RequestParam Map<String, Object> params) {
 		try {
 			T entity = getService().get(id);
 			Method method = Reflect.getMethod(domainClass, "get"+child+"s");
@@ -97,7 +97,7 @@ public abstract class GenericApiController<T extends GenericModel, ID> {
 	
 	@ResponseBody
 	@RequestMapping(value = "/{id}/{child}s", method = RequestMethod.GET)
-	public <S extends GenericModel> List<S> childrenByParent(@PathVariable("id") ID id, @PathVariable("child") String child, @RequestParam Map<String, Object> params) {
+	public <S extends Domain> List<S> childrenByParent(@PathVariable("id") ID id, @PathVariable("child") String child, @RequestParam Map<String, Object> params) {
 		Field field = Reflect.getField(domainClass, child + "s");
 		if(field == null) return null;
 		GenericService<S, ID> childService = (GenericService<S, ID>) getService(child);

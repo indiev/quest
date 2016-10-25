@@ -11,7 +11,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.poom.quest.services.model.abstractModel.GenericModel;
 import com.poom.quest.services.model.abstractModel.WithUserModel;
 import com.poom.quest.services.model.user.User;
 

@@ -14,11 +14,11 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.poom.quest.services.model.abstractModel.GenericModel;
+import com.poom.quest.services.model.abstractModel.Domain;
 import com.poom.quest.services.model.user.User;
 
 @Entity
-public class Contract extends GenericModel {
+public class Contract extends Domain {
 
 	private static final long serialVersionUID = 1L;
 	

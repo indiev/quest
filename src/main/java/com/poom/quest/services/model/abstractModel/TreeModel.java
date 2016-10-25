@@ -15,7 +15,7 @@ import org.hibernate.annotations.CascadeType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @MappedSuperclass
-public abstract class TreeModel<T extends TreeModel<T>> extends GenericModel {
+public abstract class TreeModel<T extends TreeModel<T>> extends Domain {
 
 	private static final long serialVersionUID = 1L;
 	 

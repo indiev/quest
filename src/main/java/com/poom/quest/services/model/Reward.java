@@ -6,10 +6,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.poom.quest.services.model.abstractModel.GenericModel;
+import com.poom.quest.services.model.abstractModel.Domain;
 
 @Entity
-public class Reward extends GenericModel {
+public class Reward extends Domain {
 
 	private static final long serialVersionUID = 1L;
 	

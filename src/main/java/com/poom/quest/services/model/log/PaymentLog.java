@@ -2,7 +2,7 @@ package com.poom.quest.services.model.log;
 
 import javax.persistence.Entity;
 
-import com.poom.quest.services.model.abstractModel.GenericModel;
+import com.poom.quest.services.model.abstractModel.Domain;
 import com.poom.quest.services.model.abstractModel.Log;
 
 @Entity

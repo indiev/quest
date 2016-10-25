@@ -14,7 +14,6 @@ import com.poom.quest.services.model.Area;
 import com.poom.quest.services.model.Quest;
 import com.poom.quest.services.model.Skill;
 import com.poom.quest.services.model.Work;
-import com.poom.quest.services.model.abstractModel.GenericModel;
 import com.poom.quest.services.model.abstractModel.WithUserModel;
 
 @Entity
@@ -45,9 +44,8 @@ public class Quester extends WithUserModel {
 	private Set<Quest> quests;
 	
 	@JsonIgnore
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "ApplicantQuest", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "questerId")})
-	private Set<Quest> appliedQuests;
+	@ManyToMany(mappedBy = "quester", fetch = FetchType.LAZY)
+	private Set<Applicant> applicants;
 	
 	public User getUser() {
 		return user;
@@ -89,11 +87,11 @@ public class Quester extends WithUserModel {
 		this.quests = quests;
 	}
 	
-	public Set<Quest> getAppliedQuests() {
-		return appliedQuests;
+	public Set<Applicant> getApplicants() {
+		return applicants;
 	}
 
-	public void setAppliedQuests(Set<Quest> appliedQuests) {
-		this.appliedQuests = appliedQuests;
+	public void setApplicants(Set<Applicant> applicants) {
+		this.applicants = applicants;
 	}
 }

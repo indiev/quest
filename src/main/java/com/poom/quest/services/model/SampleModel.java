@@ -2,10 +2,10 @@ package com.poom.quest.services.model;
 
 import javax.persistence.Entity;
 
-import com.poom.quest.services.model.abstractModel.GenericModel;
+import com.poom.quest.services.model.abstractModel.Domain;
 
 //@Entity
-public class SampleModel extends GenericModel {
+public class SampleModel extends Domain {
 
 	private static final long serialVersionUID = 1L;
 }

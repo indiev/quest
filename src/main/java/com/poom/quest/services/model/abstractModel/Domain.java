@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 import com.poom.quest.services.model.Model;
 
 @MappedSuperclass
-public abstract class GenericModel extends Model {
+public abstract class Domain extends Model {
 	
 	private static final long serialVersionUID = 1L;
 
