@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false"%>
+<input type="hidden" name="questId" id="questId" data-value="id">
 <div class="container-fluid quest-detail-node">
 	<div class="row">
 		<div class="col-md-9">
@@ -35,7 +36,7 @@
 							<div class="panel panel-default">
 								<div class="panel-body">
 									<div><span class="glyphicon glyphicon-calendar"></span> 약 <span data-content="duration"></span>일 소요</div>
-									<div>자격 : <span data-content="qualification" class="pull-left"></span></div>
+									<div>자격 : <span data-content="qualification"></span></div>
 									<div>위치 : </div>
 								</div>
 							</div>
@@ -109,7 +110,7 @@
 						<span data-content="createdDate" data-format="ago"></span> 작성 |
 						<span class="glyphicon glyphicon-calendar"></span>
 						마감 <span data-content="recruitmentEndDate" data-format="remain"></span>
-						<button type="button" class="btn btn-default" data-value="id" onclick="apply(this.value);">지원</button>
+						<button type="button" class="btn btn-default" data-value="id" data-toggle="modal" data-target="#modal" name="applyButton">지원</button>
 					</div>
 				</div>
 				<div class="row">
@@ -135,3 +136,50 @@
 	<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
 	<span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
 </template>
+<template name="applyLayer">
+	<form name="" role="form" action="/api/applicants" method="POST" onsubmit="return apply(this)">
+		<div class="form-group">
+			<label for="reward">희망 보상</label>
+			<div class="input-group">
+				<input type="number" name="reward" id="reward" class="form-control" placeholder="보상" min="0" step="1" title="보상" required>
+				<span class="input-group-addon">환</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="resume" class="sr-only">이력서</label>
+			<select name="resume" id="resume" class="form-control" title="이력서">
+				<option value="">이력서 선택</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="message" class="sr-only">지원 내용</label>
+			<textarea name="message" id="message" rows="3" class="form-control" style="resize:none;" placeholder="지원  내용" title="지원  내용"></textarea>
+		</div>
+		<div class="text-center">
+			<input type="submit" id="" name="" class="btn btn-default" value="지원" title="지원">
+		</div>
+	</form>
+</template>
+<script type="text/javascript">
+$("button[name='applyButton']").click(function(){
+	$modal = $("body div.modal");
+	$modal.find("div.modal-body").html($("template[name='applyLayer']").html());
+});
+
+function apply(form) {
+	quester, quest
+	data["quest"] = {"id":$("input[name='questId']").value()};
+	data["quester"] = {"id":user.quester.id};
+	ajax.submit(form, data, function(result){
+		if(result != "") {
+			alert("지원을 완료 했습니다.");
+			$(form).reset();
+			$("#modal").modal("toggle");
+		} else alert("오류로 지원되지 않았습니다.");
+	});
+	if(confirm("지원하시겠습니까?")) {
+		
+	}
+	return false;
+}
+</script>

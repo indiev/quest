@@ -65,7 +65,7 @@
 				</div>
 				<div class="col-md-4">
 					<div class="input-group">
-						<label for="reward"class="sr-only">보상</label>
+						<label for="reward" class="sr-only">보상</label>
 						<input type="number" name="reward" id="reward" class="form-control" placeholder="보상" min="0" step="1" title="보상" required>
 						<span class="input-group-addon">환</span>
 					</div>
@@ -335,7 +335,7 @@ function request(form) {
 	ajax.submit(form, quest, function(result) {
 		if(result != "") {
 			alert("퀘스트를 추가했습니다.");
-			$("form[name='questRequestForm']").reset();
+			$(form).reset();
 			//퀘스트 리로드 갱신
 		}
 		else alert("퀘스트를 추가하는 데 실패했습니다.");

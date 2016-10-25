@@ -9,7 +9,7 @@
 		 			<input type="text" name="searchKeyword" id="searchKeyword" class="form-control input-sm search-query" placeholder="검색" />
 		 			<span class="input-group-btn">
 		 				<button class="btn btn-default btn-sm" type="button" onclick="list()"><span class="glyphicon-search glyphicon" aria-hidden="true"></span></button>
-		 				<a href="/quest/add" class="load"><span class="btn btn-default btn-sm"><span class="glyphicon-plus glyphicon" aria-hidden="true"></span></span></a>
+		 				<!-- <a href="/quest/add" class="load"><span class="btn btn-default btn-sm"><span class="glyphicon-plus glyphicon" aria-hidden="true"></span></span></a> -->
 		 			</span>
 		 		</div>
 		 		<div>가격바</div>
@@ -45,7 +45,7 @@ function list() {
 	
 	$form = $("form[name='questSearchForm']");
 	searchKeyword = $form.find("[name='searchKeyword']").val();
-	ajax.get($form.attr("action") + searchKeyword, {}, function(list){
+	ajax.get($form.attr("action"), {"name":searchKeyword}, function(list){
 		$("span.project-search-length").html(list.length);
 		$("div.quest-content").loadTemplate("/quest/node/list", list);
 	});
