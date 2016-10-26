@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.springframework.data.annotation.CreatedBy;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poom.quest.services.model.Quest;
 import com.poom.quest.services.model.abstractModel.WithUserModel;
@@ -17,6 +19,7 @@ public class Requester extends WithUserModel {
 	
 	private static final long serialVersionUID = 1L;
 
+	@CreatedBy
 	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userId", referencedColumnName="id")

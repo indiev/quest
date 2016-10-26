@@ -9,6 +9,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
+import org.springframework.data.annotation.CreatedBy;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poom.quest.services.model.Area;
 import com.poom.quest.services.model.Quest;
@@ -21,6 +23,7 @@ public class Quester extends WithUserModel {
 
 	private static final long serialVersionUID = 1L;
 
+	@CreatedBy
 	@JsonIgnore
 	@OneToOne(fetch =  FetchType.LAZY)
 	@JoinColumn(name = "userId", referencedColumnName="id")
