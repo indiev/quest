@@ -22,7 +22,6 @@ public class LoginService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
 		UserDetails userDetails = null;
 		try {
-			System.out.println(name);
 			User user = userService.getByKey("name", name);
 			if(user != null) {
 				userDetails = new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), true, true, true, true, getAuthorities());

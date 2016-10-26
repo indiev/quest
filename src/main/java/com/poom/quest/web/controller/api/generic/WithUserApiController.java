@@ -1,5 +1,6 @@
 package com.poom.quest.web.controller.api.generic;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -7,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.poom.quest.services.model.abstractModel.WithUserModel;
 import com.poom.quest.services.model.user.User;
@@ -15,7 +15,7 @@ import com.poom.quest.services.service.GenericService;
 import com.poom.quest.util.reflect.Reflect;
 
 @RequestMapping("api")
-public abstract class WithUserApiController<T extends WithUserModel, ID> extends GenericApiController<T, ID> {
+public abstract class WithUserApiController<T extends WithUserModel, ID extends Serializable> extends GenericApiController<T, ID> {
 	@RequestMapping(method = RequestMethod.POST)
 	public T add(@RequestBody T entity) {
 		User user = userService.getLoginUserByRequest();

@@ -1,5 +1,6 @@
 package com.poom.quest.web.controller.api.generic;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -27,7 +28,7 @@ import com.poom.quest.services.service.UserService;
 import com.poom.quest.util.reflect.Reflect;
 
 @RequestMapping("api")
-public abstract class GenericApiController<T extends Domain, ID> {
+public abstract class GenericApiController<T extends Domain, ID extends Serializable> {
 
 	@Autowired protected ApplicationContext applicationContext;
 	@Autowired protected UserService userService;

@@ -1,5 +1,6 @@
 package com.poom.quest.services.service;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +12,7 @@ import com.poom.quest.services.repository.GenericRepository;
 
 @Service
 @Transactional
-public abstract class GenericService<T, ID> {
+public abstract class GenericService<T, ID extends Serializable> {
 
 	static private final String REGION = "services";
 	
