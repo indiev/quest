@@ -10,6 +10,9 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import com.poom.quest.services.model.Model;
 
 @MappedSuperclass
@@ -22,8 +25,10 @@ public abstract class Domain extends Model {
 	protected Long id;
 	@NotNull
 	protected String name;
+	@CreatedDate
 	@NotNull
 	protected Date createdDate;
+	@LastModifiedDate
 	@NotNull
 	protected Date modifiedDate;
 	
