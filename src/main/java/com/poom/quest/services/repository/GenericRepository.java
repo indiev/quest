@@ -1,5 +1,6 @@
 package com.poom.quest.services.repository;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
@@ -14,18 +15,21 @@ import javax.persistence.ManyToMany;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.poom.quest.services.model.Code;
 import com.poom.quest.services.model.Model;
 import com.poom.quest.util.reflect.Reflect;
 
 @Repository
-public abstract class GenericRepository<T, ID> {
+public abstract class GenericRepository<T, ID extends Serializable> {
 
 	static private final String REGION = "services";
 	
-	@PersistenceContext(unitName = "localEntityManagerUnit")
+	@PersistenceContext(unitName = "entityManagerUnit")
 	protected EntityManager em;
 	
     @SuppressWarnings("unchecked")
@@ -34,8 +38,9 @@ public abstract class GenericRepository<T, ID> {
 	protected String SELECT_ALL_SQL = "SELECT * FROM " + this.model;
 	private String SELECT_COUNT_SQL = "SELECT count(*) FROM " + this.model;
 	
+	@Transactional
 	public T add(T entity) {
-		em.merge(entity);
+		em.persist(entity);
 		return entity;
 	}
 	
@@ -173,6 +178,7 @@ public abstract class GenericRepository<T, ID> {
 		return em.createNativeQuery(SELECT_ALL_SQL + where, domainClass).setParameter("keyword", keyword).setParameter("userId", userId).getResultList();
 	}
 	
+	@Transactional
 	public T update(T entity) {
 		return em.merge(entity);
 	}
@@ -181,6 +187,7 @@ public abstract class GenericRepository<T, ID> {
 		return em.createNamedQuery(SELECT_COUNT_SQL, Long.class).getSingleResult();
 	}
 	
+	@Transactional
 	public void delete(ID id) {
 		em.remove(this.get(id));
 	}

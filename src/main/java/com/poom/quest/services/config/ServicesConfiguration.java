@@ -26,13 +26,13 @@ public class ServicesConfiguration {
 	public static final String UPLOADS_DIRECTORY = "/";
 
 	@Autowired
-	@Qualifier("localEntityManager")
-	EntityManagerFactory localEntityManagerFactory;
+	@Qualifier("entityManager")
+	EntityManagerFactory entityManagerFactory;
 	
 	
     @Primary
-    @Bean(name="localTransactionManager")
-    public PlatformTransactionManager localTransactionManager() throws Exception {
-        return new JpaTransactionManager(localEntityManagerFactory);
+    @Bean(name="transactionManager")
+    public PlatformTransactionManager transactionManager() throws Exception {
+        return new JpaTransactionManager(entityManagerFactory);
     }
 }

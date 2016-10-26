@@ -33,10 +33,10 @@ import com.poom.quest.services.model.Model;
 public class MysqlDataSourceConfiguration   {
 
 	@Autowired
-	@Qualifier("localDataSource")
-	DataSource localDataSource;
+	@Qualifier("dataSource")
+	DataSource dataSource;
 	
-    @Bean(name="localDataSource")
+    @Bean(name="dataSource")
     public DataSource dataSource( Environment environment ) throws Exception {
         String user = environment.getProperty("ds.user"),
                 pw = environment.getProperty("ds.password"),
@@ -47,13 +47,13 @@ public class MysqlDataSourceConfiguration   {
     }
 
     @Primary
-    @Bean(name = "localEntityManager")
-    @PersistenceUnit(name = "localEntityManagerUnit")
-    public LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean() throws Exception {
+    @Bean(name = "entityManager")
+    @PersistenceUnit(name = "entityManagerUnit")
+    public LocalContainerEntityManagerFactoryBean containerEntityManagerFactoryBean() throws Exception {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setBeanName("localEntityManager");
-        em.setPersistenceUnitName("localEntityManagerUnit");
-        em.setDataSource( localDataSource );
+        em.setBeanName("entityManager");
+        em.setPersistenceUnitName("entityManagerUnit");
+        em.setDataSource( dataSource );
         em.setPackagesToScan(Model.class.getPackage().getName());
         em.setPersistenceProvider(new HibernatePersistenceProvider());
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
