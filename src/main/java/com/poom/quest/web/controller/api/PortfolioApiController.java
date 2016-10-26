@@ -3,19 +3,18 @@ package com.poom.quest.web.controller.api;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.poom.quest.services.model.Portfolio;
 import com.poom.quest.services.model.user.User;
 import com.poom.quest.services.service.PortfolioService;
 import com.poom.quest.web.controller.api.generic.WithUserApiController;
 
-@Controller
+@RestController
 @RequestMapping("api/portfolios")
 public class PortfolioApiController extends WithUserApiController<Portfolio, Long> {
 	

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.poom.quest.services.model.Code;
 import com.poom.quest.services.model.Model;
@@ -42,26 +41,22 @@ public abstract class GenericApiController<T extends Domain, ID> {
 		/*if(service == null) setService(getService(domainClass.getSimpleName()));*/
 	}
 	
-	@ResponseBody
 	@RequestMapping
 	public List<T> list(@RequestParam Map<String, Object> params) {
 		return getService().listByKeys(params);
 	}
 
-	@ResponseBody
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public T get(@PathVariable ID id, @RequestParam Map<String, Object> params) {
 		return getService().get(id);
 	}
 	
-	@ResponseBody
 	@RequestMapping(value = "/users/me", method = RequestMethod.GET)
 	public List<T> listByMe(@RequestParam Map<String, Object> params) {
 		User user = userService.getLoginUserByRequest();
 		return (user != null)?children(user.getClass().getSimpleName(), (ID)user.getId(), params):null;
 	}
 	
-	@ResponseBody
 	@RequestMapping(value = "/{parent}s/{parentId}", method = RequestMethod.GET)
 	public List<T> children(@PathVariable("parent") String parent, @PathVariable("parentId") ID parentId, @RequestParam Map<String, Object> params){
 		Field field = Reflect.getField(domainClass, parent);
@@ -77,7 +72,6 @@ public abstract class GenericApiController<T extends Domain, ID> {
 		}
 	}
 	
-	@ResponseBody
 	@RequestMapping(value = "/{id}/{child}s/{childId}", method = RequestMethod.GET)
 	public <S extends Domain> S getChildByParent(@PathVariable("id") ID id, @PathVariable("child") String child, @PathVariable("childId") ID childId, @RequestParam Map<String, Object> params) {
 		try {
@@ -95,7 +89,6 @@ public abstract class GenericApiController<T extends Domain, ID> {
 		return null;
 	}
 	
-	@ResponseBody
 	@RequestMapping(value = "/{id}/{child}s", method = RequestMethod.GET)
 	public <S extends Domain> List<S> childrenByParent(@PathVariable("id") ID id, @PathVariable("child") String child, @RequestParam Map<String, Object> params) {
 		Field field = Reflect.getField(domainClass, child + "s");
@@ -109,14 +102,12 @@ public abstract class GenericApiController<T extends Domain, ID> {
 		
 	}
 	
-	@ResponseBody
 	@RequestMapping(method = RequestMethod.POST)
 	public T add(@RequestBody T entity) {
 		//T의 Field Type에 User, Quester, Requester가 있다면. User에서 해당 클래스 넣기
 		return getService().add(entity);
 	}
 	
-	@ResponseBody
 	@RequestMapping(value = "/{parent}s/{parentId}", method = RequestMethod.POST)
 	public T add(@PathVariable("parent") String parent, @PathVariable("parentId") ID parentId, @RequestBody T entity) {
 		//T의 Field Type에 User, Quester, Requester가 있다면. User에서 해당 클래스 넣기
@@ -139,7 +130,6 @@ public abstract class GenericApiController<T extends Domain, ID> {
 		return null;
 	}
 	
-	@ResponseBody
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public T update(@PathVariable ID id, @RequestParam Map<String, Object> params) {
 		int changeCount = 0;
@@ -178,7 +168,7 @@ public abstract class GenericApiController<T extends Domain, ID> {
 		return (changeCount != 0)?getService().update(entity):null;
 	}
 	
-	/*@ResponseBody
+	/*
 	@RequestMapping(value = "/{id}/{child}s", method = RequestMethod.PUT)
 	public T putChilds(@PathVariable("id") ID id, @PathVariable("child") String child, @RequestParam Map<String, Object> params) {
 		String childIds = (String)params.get("ids");
@@ -192,7 +182,6 @@ public abstract class GenericApiController<T extends Domain, ID> {
 		
 	}*/
 	
-	@ResponseBody
 	@RequestMapping(value = "/{id}/{child}s/{childId}", method = RequestMethod.PUT)
 	public T putChild(@PathVariable("id") ID id, @PathVariable("child") String child, @PathVariable("childId") ID childId, @RequestParam Map<String, Object> params) {
 		int changeCount = 0;
@@ -212,13 +201,11 @@ public abstract class GenericApiController<T extends Domain, ID> {
 		return (changeCount != 0)?getService().update(entity):null;
 	}
 	
-	@ResponseBody
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ID delete(@PathVariable ID id, @RequestParam Map<String, Object> params) {
 		return getService().delete(id);
 	}
 	
-	@ResponseBody
 	@RequestMapping(value = "/{id}/{child}s/{childId}", method = RequestMethod.DELETE)
 	public T removeChild(@PathVariable("id") ID id, @PathVariable("child") String child, @PathVariable("childId") ID childId, @RequestParam Map<String, Object> params) {
 		int changeCount = 0;

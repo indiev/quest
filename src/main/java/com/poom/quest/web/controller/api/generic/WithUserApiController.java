@@ -16,7 +16,6 @@ import com.poom.quest.util.reflect.Reflect;
 
 @RequestMapping("api")
 public abstract class WithUserApiController<T extends WithUserModel, ID> extends GenericApiController<T, ID> {
-	@ResponseBody
 	@RequestMapping(method = RequestMethod.POST)
 	public T add(@RequestBody T entity) {
 		User user = userService.getLoginUserByRequest();
@@ -27,7 +26,6 @@ public abstract class WithUserApiController<T extends WithUserModel, ID> extends
 		return null;
 	}
 	
-	@ResponseBody
 	@RequestMapping(value = "/{parent}s/{parentId}", method = RequestMethod.POST)
 	public T add(@PathVariable("parent") String parent, @PathVariable("parentId") ID parentId, @RequestBody T entity) {
 		try {
