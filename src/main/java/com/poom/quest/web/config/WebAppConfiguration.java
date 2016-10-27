@@ -1,45 +1,35 @@
 package com.poom.quest.web.config;
 
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.data.repository.support.DomainClassConverter;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.data.web.config.EnableSpringDataWebSupport;
-import org.springframework.http.MediaType;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.data.web.SortHandlerMethodArgumentResolver;
+import org.springframework.format.support.FormattingConversionService;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
-import com.poom.quest.services.config.ServicesConfiguration;
 import com.poom.quest.web.adapter.TemplateInterceptor;
 
 
 @Configuration
-@EnableWebMvc
-@EnableSpringDataWebSupport
-@Import(ServicesConfiguration.class)
+/*@EnableSpringDataWebSupport
+@Import(ServicesConfiguration.class)*/
 @ComponentScan(basePackages={"com.poom.quest.web.controller", "com.poom.quest.services.model"})
 //@EnableHypermediaSupport(type = { null })
-public class WebAppConfiguration extends WebMvcConfigurerAdapter {
+public class WebAppConfiguration extends WebMvcConfigurationSupport {
 	
 	@Bean
 	public MultipartResolver multipartResolver() {
@@ -66,32 +56,44 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter {
         return messageSource;
     }
     
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-    	argumentResolvers.add(new PageableHandlerMethodArgumentResolver());
-    }
-    
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+    @Bean
+    public DomainClassConverter<?> domainClassConverter() {
+    	return new DomainClassConverter<FormattingConversionService>(mvcConversionService());
     }
 
     @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
+    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+    	super.addResourceHandlers(registry);
+        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
     
     @Override
-    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-        configurer.enable();
-    }
-    
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
+    protected void addInterceptors(InterceptorRegistry registry) {
+    	super.addInterceptors(registry);
     	registry.addInterceptor(new TemplateInterceptor());
     }
     
     @Override
-	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+    protected void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+    	super.addArgumentResolvers(argumentResolvers);
+    	argumentResolvers.add(new PageableHandlerMethodArgumentResolver(new SortHandlerMethodArgumentResolver()));
+    }
+    
+    @Override
+    protected void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+    	super.configureDefaultServletHandling(configurer);
+        configurer.enable();
+    }
+    
+/*    @Override
+    @Bean
+	public RequestMappingHandlerMapping requestMappingHandlerMapping() {
+    	RequestMappingHandlerMapping handler = super.requestMappingHandlerMapping();
+    	handler.setOrder(1);
+    	return handler;
+    }
+    @Override
+    protected void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
     	super.configureMessageConverters(converters);
     	MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
     	List<MediaType> supportedMediaTypes = new ArrayList<MediaType>();
@@ -100,5 +102,5 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter {
     	mappingJackson2HttpMessageConverter.setSupportedMediaTypes(supportedMediaTypes);
     	mappingJackson2HttpMessageConverter.setObjectMapper(new ObjectMapper().registerModule(new Hibernate5Module()));
     	converters.add(new MappingJackson2HttpMessageConverter());
-	}
+	}*/
 }

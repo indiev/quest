@@ -11,11 +11,15 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.poom.quest.services.model.Code;
 import com.poom.quest.services.model.Model;
@@ -43,9 +47,15 @@ public abstract class GenericApiController<T extends Domain, ID extends Serializ
 	}
 	
 	@RequestMapping
+	public List<T> list(@RequestParam Map<String, Object> params, @PageableDefault(sort = {"createdDate"}, direction = Direction.DESC, size = 6) Pageable pageable) {
+		//return getService().list(pageable);
+		return getService().listByKeys(params, pageable);
+	}
+	
+	/*@RequestMapping
 	public List<T> list(@RequestParam Map<String, Object> params) {
 		return getService().listByKeys(params);
-	}
+	}*/
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public T get(@PathVariable ID id, @RequestParam Map<String, Object> params) {

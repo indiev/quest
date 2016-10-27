@@ -3,7 +3,9 @@ package com.poom.quest.services.repository;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -14,9 +16,15 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Root;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,6 +73,98 @@ public abstract class GenericRepository<T, ID extends Serializable> {
 	
 	public List<T> list() {
 		return em.createNativeQuery(SELECT_ALL_SQL, domainClass).getResultList();
+	}
+	
+	protected void getQuery() {
+		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+		CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(domainClass);
+		Root<T> model = criteriaQuery.from(domainClass);
+		criteriaQuery.select(criteriaQuery.from(domainClass));
+		TypedQuery<T> typedQuery = em.createQuery(criteriaQuery);
+	}
+	
+	protected CriteriaQuery<T> setSort(Pageable pageable, CriteriaQuery<T> criteriaQuery, Root<T> model) {
+		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+		List<Order> orders = new ArrayList<>();
+		for(Sort.Order sortOrder : pageable.getSort())
+			if(sortOrder.getDirection().equals(Sort.Direction.ASC))
+				orders.add(criteriaBuilder.asc(model.get(sortOrder.getProperty())));
+			else
+				orders.add(criteriaBuilder.desc(model.get(sortOrder.getProperty())));
+		criteriaQuery.orderBy(orders);
+		return criteriaQuery;
+	}
+	
+	protected Query setPageable(Pageable pageable, Query query) {
+		return query.setMaxResults(pageable.getPageSize())
+				.setFirstResult(pageable.getOffset());
+	}
+	
+	public List<T> list(Pageable pageable) {
+		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+		CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(domainClass);
+		Root<T> model = criteriaQuery.from(domainClass);
+		criteriaQuery.select(model);
+		this.setSort(pageable, criteriaQuery, model);
+		Query query = em.createQuery(criteriaQuery);
+		this.setPageable(pageable, query);
+		return query.getResultList();
+	}
+	
+	public List<T> listByKeys(Map<String, Object> params, Pageable pageable) {
+		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+		CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(domainClass);
+		Root<T> model = criteriaQuery.from(domainClass);
+		criteriaQuery.select(model);
+		this.setSort(pageable, criteriaQuery, model);
+		
+		for(String key : params.keySet()) {
+			Field field = Reflect.getField(domainClass, key);
+			if(field == null) { //검색되면 안되는 값. 필터링 해야 됨
+				params.remove(key);
+				continue; 
+			}
+			if(Model.class.isAssignableFrom(field.getType())) { //Type이 모델이라면
+				if(Code.class.isAssignableFrom(field.getType())) {	//Type이 Code일 경우
+					params.put(key, Arrays.asList(((String)params.get(key)).split(",")));
+					CriteriaQuery<Code> codeSubQuery = criteriaBuilder.createQuery(Code.class);
+					Root<Code> codeModel = codeSubQuery.from(Code.class);
+					codeSubQuery.from(Code.class);
+					codeModel.get("model");
+					codeSubQuery.where(criteriaBuilder.equal(codeModel.get("model"), model));
+					codeSubQuery.where(criteriaBuilder.equal(codeModel.get("attribute"), key));
+					codeSubQuery.where(criteriaBuilder.equal(codeModel.get("value"), params.get(key)));
+					criteriaQuery.where(model.get(key).in(codeSubQuery));
+				} else {
+					criteriaQuery.where(criteriaBuilder.equal(model.get(key+"Id"), params.get(key)));
+				}
+			} else if(Set.class.isAssignableFrom(field.getType())) { //Type이 List일 경우
+				String keyModel = key.substring(0, 1).toUpperCase() + key.substring(1, key.length()-1);
+				String keyId = keyModel + "Id";
+				if(field.getAnnotation(ManyToMany.class) != null) {
+					/*String table = null;
+					table = ((JoinTable)field.getAnnotation(JoinTable.class)).name();
+					where += " AND id in (SELECT " + model + "Id FROM " + table + " WHERE " + keyId + "=:" + key + ")";*/
+				} else { //onetomany
+					// join keyModel on model.key = keyModel.key
+					//id in (select modelId from table where key=:key)
+					//where += " AND id in (SELECT " + model + "Id FROM " + keyModel + " WHERE " + id + "=:key)";
+				}
+			} else if(String.class.isAssignableFrom(field.getType())){ //문자열 검색
+				criteriaQuery.where(criteriaBuilder.like(criteriaBuilder.lower(model.get(key)), ("%"+params.get(key)+"%").toLowerCase()));
+			/*} else if(Integer.class.isAssignableFrom(field.getType())){ //숫자 검색
+				;
+			} else if(Date.class.isAssignableFrom(field.getType())){ //날짜 검색
+				;*/
+			} else {
+				criteriaQuery.where(criteriaBuilder.equal(model.get(key), params.get(key)));
+			}
+			System.out.println(key);
+		}
+		this.setSort(pageable, criteriaQuery, model);
+		Query query = em.createQuery(criteriaQuery);
+		this.setPageable(pageable, query);
+		return query.getResultList();
 	}
 	
 	public List<T> listByKeyId(String keyName, ID key) {

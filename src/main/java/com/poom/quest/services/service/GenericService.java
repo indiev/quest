@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +41,14 @@ public abstract class GenericService<T, ID extends Serializable> {
 	
 	public List<T> list() {
 		return genericRepository.list();
+	}
+	
+	public List<T> list(Pageable pageable) {
+		return genericRepository.list(pageable);
+	}
+	
+	public List<T> listByKeys(Map<String, Object> keys, Pageable pageable) {
+		return genericRepository.listByKeys(keys, pageable);
 	}
 	
 	public List<T> listByKeyId(String keyName, ID key) {
