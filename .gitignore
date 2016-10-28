@@ -20,6 +20,7 @@ config.properties
 
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+/.settings/
 
 # Java annotation processor (APT)
 .factorypath
