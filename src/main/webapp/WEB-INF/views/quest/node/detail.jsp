@@ -138,10 +138,11 @@
 </template>
 <template name="applyLayer">
 	<form name="" role="form" action="/api/applicants" method="POST" onsubmit="return apply(this)">
+		<input type="hidden" name="name" id="" value="">
 		<div class="form-group">
-			<label for="reward">희망 보상</label>
+			<label for="hopedReward">희망 보상</label>
 			<div class="input-group">
-				<input type="number" name="reward" id="reward" class="form-control" placeholder="보상" min="0" step="1" title="보상" required>
+				<input type="number" name="hopedReward" id="hopedReward" class="form-control" placeholder="보상" min="0" step="1" title="보상" required>
 				<span class="input-group-addon">환</span>
 			</div>
 		</div>
@@ -167,9 +168,11 @@ $("button[name='applyButton']").click(function(){
 });
 
 function apply(form) {
-	quester, quest
-	data["quest"] = {"id":$("input[name='questId']").value()};
-	data["quester"] = {"id":user.quester.id};
+	var data = new Object();
+	//data = {"questId":$("input[name='questId']").val(), "questerId":user.quester.id};
+	data.quest = {"id":$("input[name='questId']").val()};
+	data.quester = {"id":user.quester.id};
+	console.log(data);
 	ajax.submit(form, data, function(result){
 		if(result != "") {
 			alert("지원을 완료 했습니다.");
