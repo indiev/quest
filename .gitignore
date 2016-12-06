@@ -8,7 +8,7 @@ tmp/
 *.swp
 *~.nib
 local.properties
-/.settings/
+.settings/
 .loadpath
 config.properties
 
@@ -30,3 +30,6 @@ config.properties
 ### Gradle template
 .gradle
 build/
+
+**/.*
+**/node_modules/**
