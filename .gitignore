@@ -8,7 +8,7 @@ tmp/
 *.swp
 *~.nib
 local.properties
-.settings/**
+.settings
 .loadpath
 config.properties
 
@@ -31,5 +31,4 @@ config.properties
 .gradle
 build/
 
-**/.*
 **/node_modules/**
