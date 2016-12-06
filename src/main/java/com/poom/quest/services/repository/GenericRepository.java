@@ -5,7 +5,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -16,35 +15,57 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.support.Querydsl;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import com.poom.quest.services.model.Code;
 import com.poom.quest.services.model.Model;
+import com.poom.quest.services.model.QCode;
+import com.poom.quest.services.model.abstractModel.Domain;
 import com.poom.quest.util.reflect.Reflect;
+import com.querydsl.core.types.EntityPath;
+import com.querydsl.core.types.dsl.PathBuilder;
+import com.querydsl.jpa.JPQLQuery;
 
 @Repository
-public abstract class GenericRepository<T, ID extends Serializable> {
+public abstract class GenericRepository<T extends Domain, ID extends Serializable> {
 
 	static private final String REGION = "services";
 	
-	@PersistenceContext(unitName = "entityManagerUnit")
 	protected EntityManager em;
 	
-    @SuppressWarnings("unchecked")
-	protected final Class<T> domainClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-	private final String model = domainClass.getSimpleName();
-	protected String SELECT_ALL_SQL = "SELECT * FROM " + this.model;
-	private String SELECT_COUNT_SQL = "SELECT count(*) FROM " + this.model;
+	protected final Class<T> domainClass;
+	private final String modelName;
+	protected final String SELECT_ALL_SQL;
+	protected final String SELECT_COUNT_SQL;
+	
+	protected final PathBuilder<T> entityPath;
+	protected Querydsl querydsl;
+	
+	public GenericRepository() {
+		domainClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+		modelName = domainClass.getSimpleName();
+		SELECT_ALL_SQL = "SELECT * FROM " + this.modelName;
+		SELECT_COUNT_SQL = "SELECT count(*) FROM " + this.modelName;
+		
+		entityPath = new PathBuilder<>(domainClass, modelName);
+	}
+	
+	@PersistenceContext(unitName = "entityManagerUnit")
+	public void setEntityManager(EntityManager entityManager) {
+		Assert.notNull(entityManager);
+		this.querydsl = new Querydsl(entityManager, entityPath);
+		this.em = entityManager;
+	}
 	
 	@Transactional
 	public T add(T entity) {
@@ -75,14 +96,6 @@ public abstract class GenericRepository<T, ID extends Serializable> {
 		return em.createNativeQuery(SELECT_ALL_SQL, domainClass).getResultList();
 	}
 	
-	protected void getQuery() {
-		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-		CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(domainClass);
-		Root<T> model = criteriaQuery.from(domainClass);
-		criteriaQuery.select(criteriaQuery.from(domainClass));
-		TypedQuery<T> typedQuery = em.createQuery(criteriaQuery);
-	}
-	
 	protected CriteriaQuery<T> setSort(Pageable pageable, CriteriaQuery<T> criteriaQuery, Root<T> model) {
 		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 		List<Order> orders = new ArrayList<>();
@@ -101,22 +114,11 @@ public abstract class GenericRepository<T, ID extends Serializable> {
 	}
 	
 	public List<T> list(Pageable pageable) {
-		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-		CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(domainClass);
-		Root<T> model = criteriaQuery.from(domainClass);
-		criteriaQuery.select(model);
-		this.setSort(pageable, criteriaQuery, model);
-		Query query = em.createQuery(criteriaQuery);
-		this.setPageable(pageable, query);
-		return query.getResultList();
+		return (List<T>) querydsl.applyPagination(pageable, from(entityPath)).fetch();
 	}
 	
 	public List<T> listByKeys(Map<String, Object> params, Pageable pageable) {
-		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-		CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(domainClass);
-		Root<T> model = criteriaQuery.from(domainClass);
-		criteriaQuery.select(model);
-		this.setSort(pageable, criteriaQuery, model);
+		JPQLQuery<T> query = (JPQLQuery<T>) from(entityPath);
 		
 		for(String key : params.keySet()) {
 			Field field = Reflect.getField(domainClass, key);
@@ -127,16 +129,12 @@ public abstract class GenericRepository<T, ID extends Serializable> {
 			if(Model.class.isAssignableFrom(field.getType())) { //Type이 모델이라면
 				if(Code.class.isAssignableFrom(field.getType())) {	//Type이 Code일 경우
 					params.put(key, Arrays.asList(((String)params.get(key)).split(",")));
-					CriteriaQuery<Code> codeSubQuery = criteriaBuilder.createQuery(Code.class);
-					Root<Code> codeModel = codeSubQuery.from(Code.class);
-					codeSubQuery.from(Code.class);
-					codeModel.get("model");
-					codeSubQuery.where(criteriaBuilder.equal(codeModel.get("model"), model));
-					codeSubQuery.where(criteriaBuilder.equal(codeModel.get("attribute"), key));
-					codeSubQuery.where(criteriaBuilder.equal(codeModel.get("value"), params.get(key)));
-					criteriaQuery.where(model.get(key).in(codeSubQuery));
+					QCode code = QCode.code;
+					JPQLQuery<Long> subQuery = from(code).select(code.id)
+						.where(code.model.eq(modelName), code.attribute.eq(key), code.value.eq(key));
+					query.where(entityPath.get(key+"Id").eq(subQuery));
 				} else {
-					criteriaQuery.where(criteriaBuilder.equal(model.get(key+"Id"), params.get(key)));
+					query.where(entityPath.get(key+"Id").eq(params.get(key)));
 				}
 			} else if(Set.class.isAssignableFrom(field.getType())) { //Type이 List일 경우
 				String keyModel = key.substring(0, 1).toUpperCase() + key.substring(1, key.length()-1);
@@ -151,20 +149,16 @@ public abstract class GenericRepository<T, ID extends Serializable> {
 					//where += " AND id in (SELECT " + model + "Id FROM " + keyModel + " WHERE " + id + "=:key)";
 				}
 			} else if(String.class.isAssignableFrom(field.getType())){ //문자열 검색
-				criteriaQuery.where(criteriaBuilder.like(criteriaBuilder.lower(model.get(key)), ("%"+params.get(key)+"%").toLowerCase()));
+				query.where(entityPath.getString(key).like(("%"+params.get(key)+"%").toLowerCase()));
 			/*} else if(Integer.class.isAssignableFrom(field.getType())){ //숫자 검색
 				;
 			} else if(Date.class.isAssignableFrom(field.getType())){ //날짜 검색
 				;*/
 			} else {
-				criteriaQuery.where(criteriaBuilder.equal(model.get(key), params.get(key)));
+				query.where(entityPath.get(key).eq(params.get(key)));
 			}
-			System.out.println(key);
 		}
-		this.setSort(pageable, criteriaQuery, model);
-		Query query = em.createQuery(criteriaQuery);
-		this.setPageable(pageable, query);
-		return query.getResultList();
+		return querydsl.applyPagination(pageable, query).fetch();
 	}
 	
 	public List<T> listByKeyId(String keyName, ID key) {
@@ -207,7 +201,7 @@ public abstract class GenericRepository<T, ID extends Serializable> {
 				if(Code.class.isAssignableFrom(field.getType())) {	//Type이 Code일 경우
 					//params.put(key, Arrays.asList(key.split(",")));
 					params.put(key, Arrays.asList(((String)params.get(key)).split(",")));
-					where += " AND " + key + "Id IN (SELECT id FROM Code WHERE model='" + model + "' AND attribute='" + key + "' AND value IN :" + key +")";
+					where += " AND " + key + "Id IN (SELECT id FROM Code WHERE model='" + modelName + "' AND attribute='" + key + "' AND value IN :" + key +")";
 				} else  where += " AND " + key + "Id=:" + key;
 			} else if(Set.class.isAssignableFrom(field.getType())) { //Type이 List일 경우
 				String keyModel = key.substring(0, 1).toUpperCase() + key.substring(1, key.length()-1);
@@ -215,7 +209,7 @@ public abstract class GenericRepository<T, ID extends Serializable> {
 				if(field.getAnnotation(ManyToMany.class) != null) {
 					String table = null;
 					table = ((JoinTable)field.getAnnotation(JoinTable.class)).name();
-					where += " AND id in (SELECT " + model + "Id FROM " + table + " WHERE " + keyId + "=:" + key + ")";
+					where += " AND id in (SELECT " + modelName + "Id FROM " + table + " WHERE " + keyId + "=:" + key + ")";
 				} else { //onetomany
 					// join keyModel on model.key = keyModel.key
 					//id in (select modelId from table where key=:key)
@@ -290,5 +284,9 @@ public abstract class GenericRepository<T, ID extends Serializable> {
 	@Transactional
 	public void delete(ID id) {
 		em.remove(this.get(id));
+	}
+	
+	protected JPQLQuery<?> from(EntityPath<?>... paths) {
+		return querydsl.createQuery(paths);
 	}
 }
