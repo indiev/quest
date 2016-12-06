@@ -1,5 +1,6 @@
 package com.poom.quest.web.controller.api.generic;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -7,17 +8,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.poom.quest.services.model.abstractModel.WithUserModel;
 import com.poom.quest.services.model.user.User;
 import com.poom.quest.services.service.GenericService;
 import com.poom.quest.util.reflect.Reflect;
-import com.poom.quest.web.controller.api.GenericApiController;
 
 @RequestMapping("api")
-public abstract class WithUserApiController<T extends WithUserModel, ID> extends GenericApiController<T, ID> {
-	@ResponseBody
+public abstract class WithUserApiController<T extends WithUserModel, ID extends Serializable> extends GenericApiController<T, ID> {
 	@RequestMapping(method = RequestMethod.POST)
 	public T add(@RequestBody T entity) {
 		User user = userService.getLoginUserByRequest();
@@ -28,14 +26,13 @@ public abstract class WithUserApiController<T extends WithUserModel, ID> extends
 		return null;
 	}
 	
-	@ResponseBody
 	@RequestMapping(value = "/{parent}s/{parentId}", method = RequestMethod.POST)
 	public T add(@PathVariable("parent") String parent, @PathVariable("parentId") ID parentId, @RequestBody T entity) {
 		try {
 			User user = userService.getLoginUserByRequest();
 			entity.setUser(user);
 			if(user != null) {
-				GenericService parentServcie = getFieldService(parent);
+				GenericService<?, ID> parentServcie = getFieldService(parent);
 				Object parentEntity = parentServcie.get(parentId);
 				Method method = Reflect.getMethod(domainClass, parent);
 				method.invoke(entity, parentEntity);

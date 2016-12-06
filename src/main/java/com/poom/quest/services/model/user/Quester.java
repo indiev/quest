@@ -9,12 +9,13 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
+import org.springframework.data.annotation.CreatedBy;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poom.quest.services.model.Area;
 import com.poom.quest.services.model.Quest;
 import com.poom.quest.services.model.Skill;
 import com.poom.quest.services.model.Work;
-import com.poom.quest.services.model.abstractModel.GenericModel;
 import com.poom.quest.services.model.abstractModel.WithUserModel;
 
 @Entity
@@ -22,6 +23,7 @@ public class Quester extends WithUserModel {
 
 	private static final long serialVersionUID = 1L;
 
+	@CreatedBy
 	@JsonIgnore
 	@OneToOne(fetch =  FetchType.LAZY)
 	@JoinColumn(name = "userId", referencedColumnName="id")
@@ -39,13 +41,14 @@ public class Quester extends WithUserModel {
 	@JoinTable(name = "QuesterSkill", joinColumns = {@JoinColumn(name = "questerId")}, inverseJoinColumns = {@JoinColumn(name = "skillId")})
 	private Set<Skill> skills;
 
-	@ManyToMany(mappedBy = "questers", fetch = FetchType.LAZY)
 	@JsonIgnore
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "QuesterQuest", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "questerId")})
 	private Set<Quest> quests;
 	
-	@ManyToMany(mappedBy = "applicants", fetch = FetchType.LAZY)
 	@JsonIgnore
-	private Set<Quest> appliedQuests;
+	@ManyToMany(mappedBy = "quester", fetch = FetchType.LAZY)
+	private Set<Applicant> applicants;
 	
 	public User getUser() {
 		return user;
@@ -87,11 +90,11 @@ public class Quester extends WithUserModel {
 		this.quests = quests;
 	}
 	
-	public Set<Quest> getAppliedQuests() {
-		return appliedQuests;
+	public Set<Applicant> getApplicants() {
+		return applicants;
 	}
 
-	public void setAppliedQuests(Set<Quest> appliedQuests) {
-		this.appliedQuests = appliedQuests;
+	public void setApplicants(Set<Applicant> applicants) {
+		this.applicants = applicants;
 	}
 }

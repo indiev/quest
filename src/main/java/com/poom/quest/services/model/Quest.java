@@ -15,12 +15,13 @@ import javax.persistence.OneToOne;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
-import com.poom.quest.services.model.abstractModel.GenericModel;
+import com.poom.quest.services.model.abstractModel.Domain;
+import com.poom.quest.services.model.user.Applicant;
 import com.poom.quest.services.model.user.Quester;
 import com.poom.quest.services.model.user.Requester;
 
 @Entity
-public class Quest extends GenericModel {
+public class Quest extends Domain {
 
 	private static final long serialVersionUID = 1L;
 
@@ -70,9 +71,8 @@ public class Quest extends GenericModel {
 	@JoinTable(name = "QuesterQuest", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "questerId")})
 	private Set<Quester> questers;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "ApplicantQuest", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "questerId")})
-	private Set<Quester> applicants;
+	@OneToMany(mappedBy ="quest", fetch = FetchType.LAZY)
+	private Set<Applicant> applicants;
 
 	public String getQualification() {
 		return qualification;
@@ -186,11 +186,11 @@ public class Quest extends GenericModel {
 		this.questers = questers;
 	}
 
-	public Set<Quester> getApplicants() {
+	public Set<Applicant> getApplicants() {
 		return applicants;
 	}
 
-	public void setApplicants(Set<Quester> applicants) {
+	public void setApplicants(Set<Applicant> applicants) {
 		this.applicants = applicants;
 	}
 }

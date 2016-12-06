@@ -1,19 +1,20 @@
 package com.poom.quest.web.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.poom.quest.services.model.user.Quester;
 import com.poom.quest.services.model.user.Requester;
 import com.poom.quest.services.model.user.User;
 import com.poom.quest.services.service.QuesterService;
 import com.poom.quest.services.service.RequesterService;
+import com.poom.quest.web.controller.api.generic.GenericApiController;
 
-@Controller
+@RestController
 @RequestMapping("api/users")
 public class UserApiController extends GenericApiController<User, Long> {
 	
@@ -21,7 +22,6 @@ public class UserApiController extends GenericApiController<User, Long> {
 	@Autowired QuesterService questerService;
 	
 	@Override
-	@ResponseBody
 	@RequestMapping(method = RequestMethod.POST)
 	public User add(@RequestBody User entity) {
 		Requester requester = new Requester();
@@ -36,7 +36,6 @@ public class UserApiController extends GenericApiController<User, Long> {
 		return user;
 	}
 	
-	@ResponseBody
 	@RequestMapping(value = "/me", method = RequestMethod.GET)
 	public User get() {
 		User user = userService.getLoginUserByRequest();

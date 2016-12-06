@@ -10,7 +10,7 @@ import com.poom.quest.services.model.Code;
 import com.poom.quest.services.model.user.User;
 
 @MappedSuperclass
-public abstract class Log extends GenericModel {
+public abstract class Log extends Domain {
 
 	private static final long serialVersionUID = 1L;
 	

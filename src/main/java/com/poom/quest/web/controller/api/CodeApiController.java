@@ -1,11 +1,12 @@
 package com.poom.quest.web.controller.api;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.poom.quest.services.model.Code;
+import com.poom.quest.web.controller.api.generic.GenericApiController;
 
-@Controller
+@RestController
 @RequestMapping("api/codes")
 public class CodeApiController extends GenericApiController<Code, Long> {
 }

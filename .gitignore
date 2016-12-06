@@ -30,3 +30,6 @@ config.properties
 ### Gradle template
 .gradle
 build/
+
+**/.*
+**/node_modules/**

@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
@@ -11,30 +12,36 @@ import javax.persistence.OrderBy;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @MappedSuperclass
-public abstract class TreeModel<T extends GenericModel> extends GenericModel {
+public abstract class TreeModel<T extends TreeModel<T>> extends Domain {
 
 	private static final long serialVersionUID = 1L;
 	 
-	private Integer parentId;
-	private Integer sequency;
-	@OneToMany(fetch = FetchType.EAGER)
+	protected Integer sequency;
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@Cascade(CascadeType.MERGE)
-	@JoinColumn(name = "parentId", referencedColumnName="id")
-	@OrderBy("sequency DESC")
-	private Set<T> childs;
+	@JoinColumn(name = "parentId", referencedColumnName = "id")
+	protected T parent;
 	
-	public Integer getParentId() {
-		return parentId;
-	}
-	public void setParentId(Integer parentId) {
-		this.parentId = parentId;
-	}
+	@OneToMany(mappedBy="parent", fetch = FetchType.LAZY)
+	@OrderBy("sequency DESC")
+	protected Set<T> childs;
+	
 	public Integer getSequency() {
 		return sequency;
 	}
 	public void setSequency(Integer sequency) {
 		this.sequency = sequency;
+	}
+	@JsonIgnore
+	public T getParent() {
+		return parent;
+	}
+	public void setParent(T parent) {
+		this.parent = parent;
 	}
 	public Set<T> getChilds() {
 		return childs;

@@ -17,16 +17,12 @@ body {
 }
 
 a, a:hover {
+	text-decoration: none;
 	color: #000000;
 }
 
 .footer {
 	padding: 15px 0;
-}
-
-.navWrap, .mainWrap {
-	width: 80%;
-	max-width: 1170px;
 }
 
 .firstWrap {
@@ -61,11 +57,11 @@ a, a:hover {
 	padding: 10px 15px;
 }
 
-.ellipsis-badge {
+.ellipsis-label {
 	display: block;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	max-width: 75px;
+	max-width: 150px;
 }
 
 .ellipsis-line {
@@ -84,6 +80,22 @@ a, a:hover {
 	-webkit-box-orient: vertical;
 }
 
+.ellipsis-line3 {
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-line-clamp: 4;
+	-webkit-box-orient: vertical;
+}
+
+.ellipsis-line4 {
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-line-clamp: 4;
+	-webkit-box-orient: vertical;
+}
+
 .vertical-line {
 	border-right: 1px solid #eee;
 }
@@ -93,4 +105,13 @@ ul {
 
 li.badge:not(:first-child) {
 	margin-left: 3px;
+}
+
+li.label:not(:first-child) {
+	margin-left: 5px;
+}
+
+.label {
+	font-size: 9pt;
+	padding-top: 6px;
 }

@@ -7,10 +7,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.poom.quest.services.model.abstractModel.GenericModel;
+import com.poom.quest.services.model.abstractModel.Domain;
 
 @Entity
-public class Requirement extends GenericModel {
+public class Requirement extends Domain {
 
 	private static final long serialVersionUID = 1L;
 	

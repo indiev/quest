@@ -61,17 +61,17 @@ $(document).ready(function() {
 	selectInputList("Skill", {}, "스킬");
 	
 	ajax.get("/api/areas/parents",{},function(list){ selectInputList("area", list, "분야"); });
-	ajax.get("/api/work/parents",{},function(list){ selectInputList("work", list, "업무"); });
-	ajax.get("/api/skill",{},function(list){ selectInputList("skill", list, "스킬"); });
+	ajax.get("/api/works/parents",{},function(list){ selectInputList("work", list, "업무"); });
+	ajax.get("/api/skills",{},function(list){ selectInputList("skill", list, "스킬"); });
 	
 	$("select[name='area']").change(function(){
-		if(this.value != "") ajax.get("/api/area/parents/" + this.value, {}, function(list) {
+		if(this.value != "") ajax.get("/api/areas/parents/" + this.value, {}, function(list) {
 			selectInputList('subArea', list, "세부분야" );
 		});
 	});
 	
 	$("select[name='work']").change(function(){
-		if(this.value != "") ajax.get("/api/work/parents/" + this.value, {}, function(list) {
+		if(this.value != "") ajax.get("/api/works/parents/" + this.value, {}, function(list) {
 			selectInputList('subWork', list, "세부업무");
 		});
 	});

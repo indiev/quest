@@ -21,7 +21,17 @@ function accept(questerId) {
 function detail(id) {
 	$.addTemplateFormatter({
 		date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
-        link: function (value) { return "/quest/" + value; }
+        link: function (value) { return "/quest/" + value; },
+        ago: function(value) {  
+        	var pretty = func.timeDifference(new Date(), new Date(value));
+        	if(pretty != null) return pretty + " 전";
+        	else return "";
+        },
+		remain: function(value) {
+			var pretty = func.timeDifference(new Date(value), new Date());
+			if(pretty != null) return pretty + " 후";
+			else return "지남";
+		}
     });
 	
 	ajax.get("/api/quests/"+id, {}, function(quest){

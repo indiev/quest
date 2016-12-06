@@ -12,10 +12,10 @@ import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poom.quest.services.model.Portfolio;
-import com.poom.quest.services.model.abstractModel.GenericModel;
+import com.poom.quest.services.model.abstractModel.Domain;
 
 @Entity
-public class User extends GenericModel {
+public class User extends Domain {
 
 	private static final long serialVersionUID = 1L;
 

@@ -10,22 +10,27 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import com.poom.quest.services.model.Model;
 
 @MappedSuperclass
-public abstract class GenericModel extends Model {
+public abstract class Domain extends Model {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	protected Long id;
 	@NotNull
-	private String name;
+	protected String name;
+	@CreatedDate
 	@NotNull
-	private Date createdDate;
+	protected Date createdDate;
+	@LastModifiedDate
 	@NotNull
-	private Date modifiedDate;
+	protected Date modifiedDate;
 	
 	@PrePersist
 	public void onCreate() {

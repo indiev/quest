@@ -77,7 +77,7 @@ function list() {
 	$form = $("form[name='portfolioSearchForm']");
 	searchKeyword = $form.find("[name='searchKeyword']").val();
 	portfolioType = $form.find(".portfolioType").val();
-	ajax.get("/api/portfolios/user/me", {'type':portfolioType, 'name':searchKeyword}, function(list){
+	ajax.get("/api/portfolios/users/me", {'type':portfolioType, 'name':searchKeyword}, function(list){
 		$("span.portfolio-search-length").html(list.length);
 		$("div.portfolio-content").loadTemplate("/portfolio/node/list", list);
 	});

@@ -11,7 +11,9 @@
 <link rel="icon" href="/resources/images/favicon.ico">
 <link rel="stylesheet" href="/resources/css/normalize.css">
 <link rel="stylesheet" href="/resources/assets/lib/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="/resources/assets/lib/bootflat/css/bootflat.min.css"> <!-- 부트스트랩 테마 Bootflat CSS -->
+<link rel="stylesheet" href="/resources/assets/lib/jquery-ui/jquery-ui.min.css">
+<link rel="stylesheet" href="/resources/assets/lib/select2/css/select2.min.css">
+<link rel="stylesheet" href="/resources/assets/lib/select2/css/select2-bootstrap.min.css">
 <link rel="stylesheet" href="/resources/css/custom.css">
 </head>
 <body>
@@ -23,38 +25,38 @@
 <div class="modal fade" id="modal" role="dialog" aria-labelledby="modalHeader" aria-hidden="true" tabindex="-1">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<div class="modal-header">
-				<!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="close"><span aria-hidden="true">&times;</span></button> -->
+			<!-- <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="close"><span aria-hidden="true">&times;</span></button>
 				<div class="modal-title h4" id="modalHeader"></div>
-			</div>
+			</div> -->
 			<div class="modal-body"></div>
-			<div class="modal-footer"></div>
+			<!-- <div class="modal-footer"></div> -->
 		</div>
 	</div>
 </div>
 <div class="modal fade" id="modal-sm" role="dialog" aria-labelledby="modalsmHeader" aria-hidden="true" tabindex="-1">
 	<div class="modal-dialog modal-sm">
 		<div class="modal-content">
-			<div class="modal-header">
-				<!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="close"><span aria-hidden="true">&times;</span></button> -->
+			<!-- <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="close"><span aria-hidden="true">&times;</span></button>
 				<div class="modal-title h4" id="modalsmHeader"></div>
-			</div>
+			</div> -->
 			<div class="modal-body"></div>
-			<div class="modal-footer"></div>
 		</div>
 	</div>
 </div>
 <!-- Javascript -->
 <script data-main="/resources/js/main" src="/resources/assets/lib/jquery/jquery-2.1.0.min.js"></script>
+<script data-main="/resources/js/main" src="/resources/assets/lib/jquery-ui/jquery-ui.min.js"></script>
 <script data-main="/resources/js/main" src="/resources/assets/lib/bootstrap/js/bootstrap.min.js"></script>
-<script data-main="/resources/js/main" src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script data-main="/resources/js/main" src="/resources/assets/lib/pjax/jquery.pjax.js"></script>
 <!-- <script data-main="/resources/js/main" src="/resources/assets/lib/jquery-loadTemplate/jquery.loadTemplate-1.4.4.min.js"></script> -->
 <script data-main="/resources/js/main" src="/resources/assets/lib/jquery-loadTemplate/jquery.loadTemplate-1.4.4.js"></script>
+<script data-main="/resources/js/main" src="/resources/assets/lib/select2/js/select2.min.js"></script>
 <!-- 부트스트랩 테마 Bootflat JS -->
-<script src="/resources/assets/lib/bootflat/js/icheck.min.js"></script>
+<!-- <script src="/resources/assets/lib/bootflat/js/icheck.min.js"></script>
 <script src="/resources/assets/lib/bootflat/js/jquery.fs.selecter.min.js"></script>
-<script src="/resources/assets/lib/bootflat/js/jquery.fs.stepper.min.js"></script>
+<script src="/resources/assets/lib/bootflat/js/jquery.fs.stepper.min.js"></script> -->
 <script data-main="/resources/js/main" src="/resources/js/ajax.js"></script>
 <script data-main="/resources/js/main" src="/resources/js/validation.js"></script>
 <script data-main="/resources/js/main" src="/resources/js/function.js"></script>
@@ -67,9 +69,9 @@ $(document).ready(function(){
 	ajax.get("/api/users/me", {}, function(data) { 
 		user = data;
 		$.addTemplateFormatter({
-			userlink: function (value) { return "/users/" + value; },
-			questerlink: function (value) { return "/questers/" + value; },
-			requesterlink: function (value) { return "/requesters/" + value; }
+			userlink: function (value) { return "/user/" + value; },
+			questerlink: function (value) { return "/quester/" + value; },
+			requesterlink: function (value) { return "/requester/" + value; }
 	    });
 		$("header").loadTemplate("/header", user);
 		/* $("header").loadTemplate($("header").children(), user); */

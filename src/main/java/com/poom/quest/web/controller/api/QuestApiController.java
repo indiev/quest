@@ -1,28 +1,18 @@
 package com.poom.quest.web.controller.api;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.poom.quest.services.model.Quest;
-import com.poom.quest.services.model.user.Quester;
 import com.poom.quest.services.model.user.User;
-import com.poom.quest.services.service.CodeService;
 import com.poom.quest.services.service.QuestService;
 import com.poom.quest.services.service.QuesterService;
-import com.poom.quest.services.service.UserService;
+import com.poom.quest.web.controller.api.generic.GenericApiController;
 
-@Controller
+@RestController
 @RequestMapping("api/quests")
 public class QuestApiController extends GenericApiController<Quest, Long> {
 	
@@ -56,7 +46,6 @@ public class QuestApiController extends GenericApiController<Quest, Long> {
 	
 	//정해진 값 범위 내에서 추가되도록, 벗어나는 값 관련 작업 필요
 	@Override
-	@ResponseBody
 	@RequestMapping(method = RequestMethod.POST)
 	public Quest add(@RequestBody Quest entity) {
 		User user = userService.getLoginUserByRequest();

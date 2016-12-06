@@ -7,7 +7,7 @@ function relatedQuestsStats(id) {
 		date: function (value) { return $.datepicker.formatDate("yy년 mm월 dd일", new Date(value)); },
     });
 	
-	ajax.get("/api/quest/questers/" + id, {'state':'discuss,progress'}, function(list){
+	ajax.get("/api/questers/"+id+"/quests", {'state':'discuss,progress'}, function(list){
 		$("div.quester-relatedQuestsStats-detail").loadTemplate("/quester/node/relatedQuestsStats", {});
 	});
 }

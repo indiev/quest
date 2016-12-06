@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.poom.quest.services.model.abstractModel.GenericModel;
+import com.poom.quest.services.model.abstractModel.Domain;
 import com.poom.quest.services.service.GenericService;
 import com.poom.quest.services.service.UserService;
 
-public abstract class GenericViewController<T extends GenericModel> {
+public abstract class GenericViewController<T extends Domain> {
 
 	@Autowired GenericService<T, Long> genericService;
 	@Autowired private UserService userService;
