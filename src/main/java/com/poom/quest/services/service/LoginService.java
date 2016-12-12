@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import com.poom.quest.services.model.user.User;
+import com.poom.quest.services.domain.user.User;
 
 @Component("loginService")
 public class LoginService implements UserDetailsService {

@@ -13,7 +13,7 @@ import com.poom.quest.services.domain.Issue;
 import com.poom.quest.services.domain.Quest;
 import com.poom.quest.services.domain.Requirement;
 import com.poom.quest.services.domain.Reward;
-import com.poom.quest.services.model.user.User;
+import com.poom.quest.services.domain.user.User;
 
 @Service
 @Transactional

@@ -1,4 +1,4 @@
-package com.poom.quest.services.model.abstractModel;
+package com.poom.quest.services.domain.abstractModel;
 
 import java.util.Date;
 

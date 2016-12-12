@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.poom.quest.services.domain.Issue;
-import com.poom.quest.services.model.user.User;
+import com.poom.quest.services.domain.user.User;
 import com.poom.quest.services.service.IssueService;
 import com.poom.quest.web.controller.api.generic.WithUserApiController;
 

@@ -2,7 +2,7 @@ package com.poom.quest.services.domain;
 
 import javax.persistence.Entity;
 
-import com.poom.quest.services.model.abstractModel.Domain;
+import com.poom.quest.services.domain.abstractModel.Domain;
 
 @Entity
 public class Code extends Domain {

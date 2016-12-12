@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.poom.quest.services.model.abstractModel.WithUserModel;
-import com.poom.quest.services.model.user.User;
+import com.poom.quest.services.domain.abstractModel.WithUserModel;
+import com.poom.quest.services.domain.user.User;
 import com.poom.quest.services.service.GenericService;
 import com.poom.quest.util.reflect.Reflect;
 

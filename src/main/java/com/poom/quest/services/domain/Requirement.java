@@ -7,7 +7,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.poom.quest.services.model.abstractModel.Domain;
+import com.poom.quest.services.domain.abstractModel.Domain;
 
 @Entity
 public class Requirement extends Domain {

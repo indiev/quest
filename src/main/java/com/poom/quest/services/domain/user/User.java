@@ -1,4 +1,4 @@
-package com.poom.quest.services.model.user;
+package com.poom.quest.services.domain.user;
 
 import java.util.Set;
 
@@ -12,7 +12,7 @@ import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poom.quest.services.domain.Portfolio;
-import com.poom.quest.services.model.abstractModel.Domain;
+import com.poom.quest.services.domain.abstractModel.Domain;
 
 @Entity
 public class User extends Domain {

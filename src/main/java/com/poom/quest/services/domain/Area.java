@@ -2,7 +2,7 @@ package com.poom.quest.services.domain;
 
 import javax.persistence.Entity;
 
-import com.poom.quest.services.model.abstractModel.TreeModel;
+import com.poom.quest.services.domain.abstractModel.TreeModel;
 
 @Entity
 public class Area extends TreeModel<Area> {

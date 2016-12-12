@@ -1,4 +1,4 @@
-package com.poom.quest.services.model.log;
+package com.poom.quest.services.domain.log;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,8 +7,8 @@ import javax.persistence.OneToOne;
 
 import com.poom.quest.services.domain.Code;
 import com.poom.quest.services.domain.Reward;
-import com.poom.quest.services.model.abstractModel.Log;
-import com.poom.quest.services.model.user.User;
+import com.poom.quest.services.domain.abstractModel.Log;
+import com.poom.quest.services.domain.user.User;
 
 @Entity
 public class PointLog extends Log {

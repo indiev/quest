@@ -8,7 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-import com.poom.quest.services.model.abstractModel.TreeModel;
+import com.poom.quest.services.domain.abstractModel.TreeModel;
 
 @Entity
 public class Work extends TreeModel<Work> {

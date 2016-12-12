@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.poom.quest.services.domain.Code;
-import com.poom.quest.services.model.log.PaymentLog;
-import com.poom.quest.services.model.user.User;
+import com.poom.quest.services.domain.log.PaymentLog;
+import com.poom.quest.services.domain.user.User;
 
 @Service
 @Transactional

@@ -1,9 +1,9 @@
-package com.poom.quest.services.model.log;
+package com.poom.quest.services.domain.log;
 
 import javax.persistence.Entity;
 
-import com.poom.quest.services.model.abstractModel.Domain;
-import com.poom.quest.services.model.abstractModel.Log;
+import com.poom.quest.services.domain.abstractModel.Domain;
+import com.poom.quest.services.domain.abstractModel.Log;
 
 @Entity
 public class PaymentLog extends Log {

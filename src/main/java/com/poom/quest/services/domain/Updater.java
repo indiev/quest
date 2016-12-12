@@ -5,8 +5,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.poom.quest.services.model.abstractModel.WithUserModel;
-import com.poom.quest.services.model.user.User;
+import com.poom.quest.services.domain.abstractModel.WithUserModel;
+import com.poom.quest.services.domain.user.User;
 
 @Entity
 public class Updater extends WithUserModel {

@@ -1,4 +1,4 @@
-package com.poom.quest.services.model.user;
+package com.poom.quest.services.domain.user;
 
 import java.util.Set;
 
@@ -12,7 +12,7 @@ import org.springframework.data.annotation.CreatedBy;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poom.quest.services.domain.Quest;
-import com.poom.quest.services.model.abstractModel.WithUserModel;
+import com.poom.quest.services.domain.abstractModel.WithUserModel;
 
 @Entity
 public class Requester extends WithUserModel {

@@ -23,9 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.poom.quest.services.domain.Code;
 import com.poom.quest.services.domain.Model;
-import com.poom.quest.services.model.abstractModel.Domain;
-import com.poom.quest.services.model.abstractModel.TreeModel;
-import com.poom.quest.services.model.user.User;
+import com.poom.quest.services.domain.abstractModel.Domain;
+import com.poom.quest.services.domain.abstractModel.TreeModel;
+import com.poom.quest.services.domain.user.User;
 import com.poom.quest.services.service.CodeService;
 import com.poom.quest.services.service.GenericService;
 import com.poom.quest.services.service.UserService;

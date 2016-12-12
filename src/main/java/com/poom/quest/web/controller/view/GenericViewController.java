@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.poom.quest.services.model.abstractModel.Domain;
+import com.poom.quest.services.domain.abstractModel.Domain;
 import com.poom.quest.services.service.GenericService;
 import com.poom.quest.services.service.UserService;
 

@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.poom.quest.services.model.log.PaymentLog;
-import com.poom.quest.services.model.user.User;
+import com.poom.quest.services.domain.log.PaymentLog;
+import com.poom.quest.services.domain.user.User;
 import com.poom.quest.services.service.PaymentService;
 import com.poom.quest.services.service.UserService;
 

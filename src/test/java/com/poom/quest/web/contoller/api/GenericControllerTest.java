@@ -28,7 +28,7 @@ import org.springframework.web.bind.support.SimpleSessionStatus;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.poom.quest.services.domain.Area;
-import com.poom.quest.services.model.user.User;
+import com.poom.quest.services.domain.user.User;
 import com.poom.quest.services.service.AreaService;
 import com.poom.quest.services.service.UserService;
 import com.poom.quest.web.controller.api.generic.GenericApiController;

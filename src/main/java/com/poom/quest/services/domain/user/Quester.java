@@ -1,4 +1,4 @@
-package com.poom.quest.services.model.user;
+package com.poom.quest.services.domain.user;
 
 import java.util.Set;
 
@@ -17,7 +17,7 @@ import com.poom.quest.services.domain.Area;
 import com.poom.quest.services.domain.Quest;
 import com.poom.quest.services.domain.Skill;
 import com.poom.quest.services.domain.Work;
-import com.poom.quest.services.model.abstractModel.WithUserModel;
+import com.poom.quest.services.domain.abstractModel.WithUserModel;
 
 @Entity
 public class Quester extends WithUserModel {

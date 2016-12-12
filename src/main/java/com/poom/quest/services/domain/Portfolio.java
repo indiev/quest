@@ -11,8 +11,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.poom.quest.services.model.abstractModel.WithUserModel;
-import com.poom.quest.services.model.user.User;
+import com.poom.quest.services.domain.abstractModel.WithUserModel;
+import com.poom.quest.services.domain.user.User;
 
 @Entity
 public class Portfolio extends WithUserModel {

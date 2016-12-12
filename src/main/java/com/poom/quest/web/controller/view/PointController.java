@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.poom.quest.services.model.user.User;
+import com.poom.quest.services.domain.user.User;
 
 @Controller
 @RequestMapping("/point")

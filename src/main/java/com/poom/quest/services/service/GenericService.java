@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.poom.quest.services.model.abstractModel.Domain;
+import com.poom.quest.services.domain.abstractModel.Domain;
 import com.poom.quest.services.repository.GenericRepository;
 
 @Service

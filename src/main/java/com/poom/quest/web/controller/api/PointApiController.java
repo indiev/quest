@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.poom.quest.services.model.log.PointLog;
-import com.poom.quest.services.model.user.User;
+import com.poom.quest.services.domain.log.PointLog;
+import com.poom.quest.services.domain.user.User;
 import com.poom.quest.services.service.PointService;
 import com.poom.quest.services.service.UserService;
 

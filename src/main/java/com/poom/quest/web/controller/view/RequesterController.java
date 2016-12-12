@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.poom.quest.services.model.user.Requester;
-import com.poom.quest.services.model.user.User;
+import com.poom.quest.services.domain.user.Requester;
+import com.poom.quest.services.domain.user.User;
 import com.poom.quest.services.service.UserService;
 
 

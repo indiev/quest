@@ -9,9 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.poom.quest.services.domain.Code;
 import com.poom.quest.services.domain.Reward;
-import com.poom.quest.services.model.log.PointLog;
-import com.poom.quest.services.model.user.Quester;
-import com.poom.quest.services.model.user.User;
+import com.poom.quest.services.domain.log.PointLog;
+import com.poom.quest.services.domain.user.Quester;
+import com.poom.quest.services.domain.user.User;
 
 @Service
 @Transactional

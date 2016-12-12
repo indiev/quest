@@ -24,7 +24,7 @@ import org.springframework.util.Assert;
 import com.poom.quest.services.domain.Code;
 import com.poom.quest.services.domain.Model;
 import com.poom.quest.services.domain.QCode;
-import com.poom.quest.services.model.abstractModel.Domain;
+import com.poom.quest.services.domain.abstractModel.Domain;
 import com.poom.quest.util.reflect.Reflect;
 import com.querydsl.core.types.EntityPath;
 import com.querydsl.core.types.dsl.PathBuilder;

@@ -15,10 +15,10 @@ import javax.persistence.OneToOne;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
-import com.poom.quest.services.model.abstractModel.Domain;
-import com.poom.quest.services.model.user.Applicant;
-import com.poom.quest.services.model.user.Quester;
-import com.poom.quest.services.model.user.Requester;
+import com.poom.quest.services.domain.abstractModel.Domain;
+import com.poom.quest.services.domain.user.Applicant;
+import com.poom.quest.services.domain.user.Quester;
+import com.poom.quest.services.domain.user.Requester;
 
 @Entity
 public class Quest extends Domain {

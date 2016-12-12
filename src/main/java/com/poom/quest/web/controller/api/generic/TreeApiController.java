@@ -7,7 +7,7 @@ import java.util.Map;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.poom.quest.services.model.abstractModel.TreeModel;
+import com.poom.quest.services.domain.abstractModel.TreeModel;
 
 @RequestMapping("api")
 public abstract class TreeApiController<T extends TreeModel<T>, ID extends Serializable> extends GenericApiController<T, ID> {

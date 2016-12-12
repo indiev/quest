@@ -1,4 +1,4 @@
-package com.poom.quest.services.model.abstractModel;
+package com.poom.quest.services.domain.abstractModel;
 
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -7,7 +7,7 @@ import javax.persistence.MappedSuperclass;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poom.quest.services.domain.Code;
-import com.poom.quest.services.model.user.User;
+import com.poom.quest.services.domain.user.User;
 
 @MappedSuperclass
 public abstract class Log extends Domain {
