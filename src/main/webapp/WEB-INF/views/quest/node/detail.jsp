@@ -5,20 +5,21 @@
 		<div class="col-md-9">
 			<div class="panel panel-default" style="margin-top:20px; position: relative; padding-bottom:15px;">
 				<div class="panel-body">
-					<p data-content="name" class="h3"></p>
-					<hr/>
 					<div class="row">
-						<div class="col-md-6 vertical-line">
-							<div style="padding-bottom:20px;">
+						<div class="col-md-12">
+							<p data-content="name" class="h3"></p>
+							<div>
 								<ul data-list="areas" class="list-inline pull-left" style="padding-left:10px;"><li data-content="name" class="label label-info"></li></ul>
 								<ul data-list="works" class="list-inline pull-left" style="padding-left:10px;"><li data-content="name" class="label label-warning"></li></ul>
 								<ul data-list="skills" class="list-inline pull-left" style="padding-left:10px;"><li data-content="name" class="label label-danger"></li></ul>
 							</div>
-							<div class="panel panel-default" style="clear:left; margin-top:15px">
-								<!-- <div class="panel-heading" style="font-weight:bold;">내용</div> -->
-								<div class="panel-body" data-content="description"></div>
-							</div>
+						</div>
+					</div>
+					<hr/>
+					<div class="row">
+						<div class="col-md-6 vertical-line">
 							<div class="panel panel-default">
+								<div class="panel-heading"><b>기본정보</b></div>
 								<div class="panel-body">
 									<div class="row">
 										<div class="col-md-2 vertical-line">
@@ -31,26 +32,98 @@
 											</ul>
 										</div>
 									</div>
+									<div class="row">
+										<div class="col-md-2 vertical-line">
+											<span class="h4">소요시간</span>
+										</div>
+										<div class="col-md-10">
+											<span class="glyphicon glyphicon-calendar"></span> 약 <span data-content="duration"></span>일
+										</div>
+									</div>
 								</div>
 							</div>
-							<div class="panel panel-default">
+							<!-- <div class="panel panel-default">
 								<div class="panel-body">
-									<div><span class="glyphicon glyphicon-calendar"></span> 약 <span data-content="duration"></span>일 소요</div>
 									<div>자격 : <span data-content="qualification"></span></div>
 									<div>위치 : </div>
 								</div>
-							</div>
+							</div> -->
 							<div class="panel panel-default">
-								<div class="panel-heading"><strong>요구사항</strong></div>
+								<div class="panel-heading"><b>요구사항</b></div>
 								<ul class="list-group" data-list="requirements">
 									<li class="list-group-item">
-										<h5 class="list-group-item-heading"><strong data-content="name"></strong></h5>
+										<h5 class="list-group-item-heading"><b data-content="name"></b></h5>
 										<blockquote class="list-group-item-text" data-content="description" style="font-size:10pt; padding:6px 12px"></blockquote>
 									</li>
 								</ul>
 							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading"><b>설명</b></div>
+								<div class="panel-body" data-content="description" style="height:250px;">
+								</div>
+							</div>
+							<!-- <div class="panel panel-default">
+								<div class="panel-heading"><b>계약</b></div>
+								<div class="panel-body">
+									<p>리퀘스터 패널티 : <span data-content="contract.requesterPenalty"></span>% / 조건 : </p>
+									<p>퀘스터 패널티 : <span data-content="contract.questerPenalty"></span>% / 조건 : </p>
+								</div>
+								<ul class="list-group" data-list="contract.provisions">
+									<li class="list-group-item">
+										<h5 class="list-group-item-heading"><b data-content="name"></b></h5>
+										<blockquote class="list-group-item-text" data-content="description" style="font-size:10pt; padding:6px 12px"></blockquote>
+									</li>
+								</ul>
+							</div> -->
 						</div>
 						<div class="col-md-6">
+							<div class="panel panel-default">
+								<div class="panel-heading"><b>요청자 정보</b></div>
+								<div class="panel-body">
+									<img src="#" style="width: 25px; height: 25px;">
+									<span data-content-append="requester.name"><span class="glyphicon glyphicon-user"></span></span>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-body">
+									<span data-content="applicants.length"></span>명 지원
+									<span style="float: right">
+										<span class="glyphicon glyphicon-calendar"></span> 마감 <span data-content="recruitmentEndDate" data-format="remain"></span>
+										<button type="button" class="btn btn-default" data-value="id" data-toggle="modal" data-target="#modal" name="applyButton">지원</button>
+									</span>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading"><b>지원정보</b></div>
+								<div class="list-group">
+									<div class="list-group-item">
+										<div class="row">
+											<div class="col-md-3 vertical-line">
+												<img src="#"/>지원자명
+											</div>
+											<div class="col-md-3 vertical-line">
+												<h4 class="list-group-item-heading">희망 보상</h4>
+												<p>1,200온(+200온) (내규에 따름)</p>
+											</div>
+											<div class="col-md-3 vertical-line">
+												<h4 class="list-group-item-heading">이력서 보기</h4>
+												<a href="#"><span class="glyphicon glyphicon-file"></span></a>
+											</div>
+											<div class="col-md-3">
+												<h4 class="list-group-item-heading">상태</h4>
+												<p>대기중</p>
+											</div>
+										</div>
+									</div>
+									<div class="list-group-item">
+										지원내용
+									</div>
+									<div class="list-group-item">
+										지원문의
+										(리퀘스터 의견)
+									</div>
+								</div>
+							</div>
 							<div class="panel panel-default">
 								<div class="panel-body">
 									<div class="row">
@@ -85,32 +158,13 @@
 									</div>
 								</div>
 							</div>
-							<div class="panel panel-default">
-								<div class="panel-body">
-									<div data-content-append="requester.name"><span class="glyphicon glyphicon-user"></span></div>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading"><strong>계약</strong></div>
-								<div class="panel-body">
-									<p>리퀘스터 패널티 : <span data-content="contract.requesterPenalty"></span>% / 조건 : </p>
-									<p>퀘스터 패널티 : <span data-content="contract.questerPenalty"></span>% / 조건 : </p>
-								</div>
-								<ul class="list-group" data-list="contract.provisions">
-									<li class="list-group-item">
-										<h5 class="list-group-item-heading"><strong data-content="name"></strong></h5>
-										<blockquote class="list-group-item-text" data-content="description" style="font-size:10pt; padding:6px 12px"></blockquote>
-									</li>
-								</ul>
-							</div>
 						</div>
 					</div>
-					<div style="border:1px solid; position:absolute; top:0px; right:0px; padding:15px;">
+					<!-- <div style="border:1px solid; position:absolute; top:0px; right:0px; padding:15px;"> -->
+					<div style="position:absolute; top:0px; right:0px; padding:15px;">
+						공유하기, 즐겨찾기, 조회수, 추천수(추천하기)? | 
 						<span class="glyphicon glyphicon-calendar"></span>
-						<span data-content="createdDate" data-format="ago"></span> 작성 |
-						<span class="glyphicon glyphicon-calendar"></span>
-						마감 <span data-content="recruitmentEndDate" data-format="remain"></span>
-						<button type="button" class="btn btn-default" data-value="id" data-toggle="modal" data-target="#modal" name="applyButton">지원</button>
+						<span data-content="createdDate" data-format="ago"></span> 작성
 					</div>
 				</div>
 				<div class="row">
@@ -170,18 +224,17 @@ $("button[name='applyButton']").click(function(){
 function apply(form) {
 	var data = new Object();
 	//data = {"questId":$("input[name='questId']").val(), "questerId":user.quester.id};
-	data.quest = {"id":$("input[name='questId']").val()};
-	data.quester = {"id":user.quester.id};
-	console.log(data);
-	ajax.submit(form, data, function(result){
-		if(result != "") {
-			alert("지원을 완료 했습니다.");
-			$(form).reset();
-			$("#modal").modal("toggle");
-		} else alert("오류로 지원되지 않았습니다.");
-	});
 	if(confirm("지원하시겠습니까?")) {
-		
+		data.quest = {"id":$("input[name='questId']").val()};
+		data.quester = {"id":user.quester.id};	//의미 없음
+		$(form).attr("action", "/api/applicants/quests/" + data.quest.id),
+		ajax.submit(form, data, function(result){
+			if(result != "") {
+				alert("지원을 완료 했습니다.");
+				$(form)[0].reset();
+				$("#modal").modal("toggle");
+			} else alert("오류로 지원되지 않았습니다.");
+		});
 	}
 	return false;
 }
