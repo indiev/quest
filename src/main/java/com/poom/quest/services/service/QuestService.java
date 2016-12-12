@@ -66,12 +66,14 @@ public class QuestService extends GenericService<Quest, Long> {
 	}
 	
 	public List<Quest> questsOfQuester(Long questerId, String stateValue) {
-		Code state = (stateValue != null)?codeService.getQuestState(stateValue):null;
+		//Code state = (stateValue != null)?codeService.getQuestState(stateValue):null;
+	    Code state = codeService.getQuestState(stateValue);
 		return questRepository.questsOfQuester(questerId, state.getId());
 	}
 	
 	public List<Quest> questsOfApplicant(Long questerId, String stateValue) {
-		Code state = (stateValue != null)?codeService.getQuestState(stateValue):null;
+		//Code state = (stateValue != null)?codeService.getQuestState(stateValue):null;
+		Code state = codeService.getQuestState(stateValue);
 		return questRepository.questsOfApplicant(questerId, state.getId());
 	}
 	
@@ -90,7 +92,8 @@ public class QuestService extends GenericService<Quest, Long> {
 	}
 	
 	public List<Quest> questsOfRequester(Long requesterId, String stateValue) {
-		Code state = (stateValue != null)?codeService.getQuestState(stateValue):null;
+		//Code state = (stateValue != null)?codeService.getQuestState(stateValue):null;
+	    Code state = codeService.getQuestState(stateValue);
 		return questRepository.questsOfRequester(requesterId, state.getId());
 	}
 	
