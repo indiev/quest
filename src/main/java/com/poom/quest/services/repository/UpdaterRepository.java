@@ -2,7 +2,7 @@ package com.poom.quest.services.repository;
 
 import org.springframework.stereotype.Repository;
 
-import com.poom.quest.services.model.Updater;
+import com.poom.quest.services.domain.Updater;
 
 @Repository
 public class UpdaterRepository extends GenericRepository<Updater, Long> {

@@ -15,21 +15,16 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Order;
-import javax.persistence.criteria.Root;
 
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.Querydsl;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import com.poom.quest.services.model.Code;
-import com.poom.quest.services.model.Model;
-import com.poom.quest.services.model.QCode;
+import com.poom.quest.services.domain.Code;
+import com.poom.quest.services.domain.Model;
+import com.poom.quest.services.domain.QCode;
 import com.poom.quest.services.model.abstractModel.Domain;
 import com.poom.quest.util.reflect.Reflect;
 import com.querydsl.core.types.EntityPath;

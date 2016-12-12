@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.poom.quest.services.model.Portfolio;
+import com.poom.quest.services.domain.Portfolio;
 import com.poom.quest.services.model.user.User;
 import com.poom.quest.services.service.PortfolioService;
 import com.poom.quest.web.controller.api.generic.WithUserApiController;

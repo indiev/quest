@@ -6,7 +6,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.poom.quest.services.model.Code;
+import com.poom.quest.services.domain.Code;
 import com.poom.quest.services.model.user.User;
 
 @MappedSuperclass

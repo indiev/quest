@@ -11,7 +11,7 @@ import javax.persistence.OneToOne;
 import org.springframework.data.annotation.CreatedBy;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.poom.quest.services.model.Quest;
+import com.poom.quest.services.domain.Quest;
 import com.poom.quest.services.model.abstractModel.WithUserModel;
 
 @Entity

@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.poom.quest.services.model.Code;
+import com.poom.quest.services.domain.Code;
 import com.poom.quest.services.model.abstractModel.Domain;
 
 @Service

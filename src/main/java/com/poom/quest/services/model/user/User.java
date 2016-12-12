@@ -11,7 +11,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.poom.quest.services.model.Portfolio;
+import com.poom.quest.services.domain.Portfolio;
 import com.poom.quest.services.model.abstractModel.Domain;
 
 @Entity

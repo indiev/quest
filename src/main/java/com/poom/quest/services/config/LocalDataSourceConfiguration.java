@@ -23,7 +23,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 
-import com.poom.quest.services.model.Model;
+import com.poom.quest.services.domain.Model;
 
 //@Configuration
 //@Profile("default")

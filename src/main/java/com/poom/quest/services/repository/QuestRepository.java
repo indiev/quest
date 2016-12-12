@@ -9,7 +9,7 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
-import com.poom.quest.services.model.Quest;
+import com.poom.quest.services.domain.Quest;
 
 @Repository
 public class QuestRepository extends GenericRepository<Quest, Long> {

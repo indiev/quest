@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.poom.quest.services.model.Code;
-import com.poom.quest.services.model.Quest;
+import com.poom.quest.services.domain.Code;
+import com.poom.quest.services.domain.Quest;
 import com.poom.quest.services.service.CodeService;
 
 @Controller

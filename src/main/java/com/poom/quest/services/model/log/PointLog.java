@@ -5,8 +5,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
-import com.poom.quest.services.model.Code;
-import com.poom.quest.services.model.Reward;
+import com.poom.quest.services.domain.Code;
+import com.poom.quest.services.domain.Reward;
 import com.poom.quest.services.model.abstractModel.Log;
 import com.poom.quest.services.model.user.User;
 

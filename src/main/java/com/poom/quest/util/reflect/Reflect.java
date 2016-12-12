@@ -3,7 +3,7 @@ package com.poom.quest.util.reflect;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import com.poom.quest.services.model.Model;
+import com.poom.quest.services.domain.Model;
 
 public class Reflect {
 

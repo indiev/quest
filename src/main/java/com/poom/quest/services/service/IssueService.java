@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.poom.quest.services.model.Code;
-import com.poom.quest.services.model.Issue;
-import com.poom.quest.services.model.Quest;
-import com.poom.quest.services.model.Requirement;
-import com.poom.quest.services.model.Reward;
+import com.poom.quest.services.domain.Code;
+import com.poom.quest.services.domain.Issue;
+import com.poom.quest.services.domain.Quest;
+import com.poom.quest.services.domain.Requirement;
+import com.poom.quest.services.domain.Reward;
 import com.poom.quest.services.model.user.User;
 
 @Service

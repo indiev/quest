@@ -12,10 +12,11 @@ import javax.persistence.OneToOne;
 import org.springframework.data.annotation.CreatedBy;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.poom.quest.services.model.Area;
-import com.poom.quest.services.model.Quest;
-import com.poom.quest.services.model.Skill;
-import com.poom.quest.services.model.Work;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.poom.quest.services.domain.Area;
+import com.poom.quest.services.domain.Quest;
+import com.poom.quest.services.domain.Skill;
+import com.poom.quest.services.domain.Work;
 import com.poom.quest.services.model.abstractModel.WithUserModel;
 
 @Entity

@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.poom.quest.services.model.Code;
-import com.poom.quest.services.model.Portfolio;
+import com.poom.quest.services.domain.Code;
+import com.poom.quest.services.domain.Portfolio;
 import com.poom.quest.services.repository.PortfolioRepository;
 
 @Service

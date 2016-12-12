@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.poom.quest.services.model.Code;
-import com.poom.quest.services.model.Model;
+import com.poom.quest.services.domain.Code;
+import com.poom.quest.services.domain.Model;
 import com.poom.quest.services.model.abstractModel.Domain;
 import com.poom.quest.services.model.abstractModel.TreeModel;
 import com.poom.quest.services.model.user.User;

@@ -7,8 +7,8 @@ import org.springframework.format.annotation.NumberFormat;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.poom.quest.services.model.Code;
-import com.poom.quest.services.model.Reward;
+import com.poom.quest.services.domain.Code;
+import com.poom.quest.services.domain.Reward;
 import com.poom.quest.services.model.log.PointLog;
 import com.poom.quest.services.model.user.Quester;
 import com.poom.quest.services.model.user.User;

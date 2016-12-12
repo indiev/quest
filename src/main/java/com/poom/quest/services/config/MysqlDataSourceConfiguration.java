@@ -26,7 +26,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import com.mysql.jdbc.Driver;
-import com.poom.quest.services.model.Model;
+import com.poom.quest.services.domain.Model;
 
 @Configuration
 @Profile("default")

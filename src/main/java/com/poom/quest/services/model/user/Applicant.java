@@ -6,7 +6,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.poom.quest.services.model.Quest;
+import com.poom.quest.services.domain.Quest;
 import com.poom.quest.services.model.abstractModel.Domain;
 
 @Entity

@@ -5,7 +5,7 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
-import com.poom.quest.services.model.Portfolio;
+import com.poom.quest.services.domain.Portfolio;
 
 @Repository
 public class PortfolioRepository extends GenericRepository<Portfolio, Long> {

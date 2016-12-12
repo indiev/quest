@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.poom.quest.services.model.Quest;
+import com.poom.quest.services.domain.Quest;
 import com.poom.quest.services.model.user.User;
 import com.poom.quest.services.service.QuestService;
 import com.poom.quest.services.service.QuesterService;

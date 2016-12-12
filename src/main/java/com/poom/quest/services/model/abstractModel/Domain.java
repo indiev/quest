@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import com.poom.quest.services.model.Model;
+import com.poom.quest.services.domain.Model;
 
 @MappedSuperclass
 public abstract class Domain extends Model {
@@ -23,7 +23,7 @@ public abstract class Domain extends Model {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long id;
-	@NotNull
+	/*@NotNull*/
 	protected String name;
 	@CreatedDate
 	@NotNull
