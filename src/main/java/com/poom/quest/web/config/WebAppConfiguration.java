@@ -1,5 +1,7 @@
 package com.poom.quest.web.config;
 
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.MessageSource;
@@ -11,6 +13,10 @@ import org.springframework.data.repository.support.DomainClassConverter;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.data.web.SortHandlerMethodArgumentResolver;
 import org.springframework.format.support.FormattingConversionService;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
@@ -21,6 +27,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import com.poom.quest.web.adapter.TemplateInterceptor;
 
 
@@ -92,15 +99,18 @@ public class WebAppConfiguration extends WebMvcConfigurationSupport {
     	handler.setOrder(1);
     	return handler;
     }
-    @Override
-    protected void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+*/
+    /*@Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
     	super.configureMessageConverters(converters);
     	MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
     	List<MediaType> supportedMediaTypes = new ArrayList<MediaType>();
     	supportedMediaTypes.add(new MediaType("application", "json", StandardCharsets.UTF_8));
     	supportedMediaTypes.add(new MediaType("application", "x-www-form-urlencoded", StandardCharsets.UTF_8));
     	mappingJackson2HttpMessageConverter.setSupportedMediaTypes(supportedMediaTypes);
-    	mappingJackson2HttpMessageConverter.setObjectMapper(new ObjectMapper().registerModule(new Hibernate5Module()));
+    	Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder = new Jackson2ObjectMapperBuilder();
+    	jackson2ObjectMapperBuilder.indentOutput(true);
+    	mappingJackson2HttpMessageConverter.setObjectMapper(jackson2ObjectMapperBuilder.build().registerModule(new Hibernate5Module()));
     	converters.add(new MappingJackson2HttpMessageConverter());
 	}*/
 }
