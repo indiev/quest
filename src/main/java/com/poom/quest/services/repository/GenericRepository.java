@@ -51,7 +51,7 @@ public abstract class GenericRepository<T extends Domain, ID extends Serializabl
 		SELECT_ALL_SQL = "SELECT * FROM " + this.modelName;
 		SELECT_COUNT_SQL = "SELECT count(*) FROM " + this.modelName;
 		
-		entityPath = new PathBuilder<>(domainClass, modelName);
+		entityPath = new PathBuilder<T>(domainClass, modelName);
 	}
 	
 	@PersistenceContext(unitName = "entityManagerUnit")
@@ -89,7 +89,6 @@ public abstract class GenericRepository<T extends Domain, ID extends Serializabl
 	public List<T> list() {
 		return em.createNativeQuery(SELECT_ALL_SQL, domainClass).getResultList();
 	}
-	
 	public List<T> list(Pageable pageable) {
 		return (List<T>) querydsl.applyPagination(pageable, from(entityPath)).fetch();
 	}

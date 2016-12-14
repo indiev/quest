@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.poom.quest.services.domain.Code;
 import com.poom.quest.services.domain.Model;
@@ -43,12 +42,10 @@ public abstract class GenericApiController<T extends Domain, ID extends Serializ
 	
 	protected GenericApiController() {
 		domainClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-		/*if(service == null) setService(getService(domainClass.getSimpleName()));*/
 	}
 	
 	@RequestMapping
 	public List<T> list(@RequestParam Map<String, Object> params, @PageableDefault(sort = {"createdDate"}, direction = Direction.DESC, size = 6) Pageable pageable) {
-		//return getService().list(pageable);
 		return getService().listByKeys(params, pageable);
 	}
 	
@@ -173,7 +170,7 @@ public abstract class GenericApiController<T extends Domain, ID extends Serializ
 					changeCount++;
 				}
 			} catch (Exception e) { 
-				continue; 
+			  e.printStackTrace();
 			}			
 		}
 		return (changeCount != 0)?getService().update(entity):null;
