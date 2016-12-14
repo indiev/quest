@@ -5,15 +5,17 @@
 	<groupId>com.poom</groupId>
 	<artifactId>quest</artifactId>
 	<name>Quest</name>
-	<!-- <packaging>war</packaging> -->
+	<packaging>war</packaging>
 	<properties>
 		<java-version>1.8</java-version>
-		<org.springframework-version>4.3.4.RELEASE</org.springframework-version>
+		<org.springframework-version>5.0.0.M3</org.springframework-version>
 		<org.springframework.data-version>1.10.1.RELEASE</org.springframework.data-version>
 		<org.springframework.security-version>4.1.0.RELEASE</org.springframework.security-version>
 		<org.aspectj-version>1.8.8</org.aspectj-version>
 		<org.slf4j-version>1.7.16</org.slf4j-version>
-		<org.hibernate-version>5.1.0.Final</org.hibernate-version>
+		<org.hibernate-version>5.2.5.Final</org.hibernate-version>
+		<org.hibernate-validator-version>5.3.4.Final</org.hibernate-validator-version>
+		<com.fasterxml.jackson-version>2.8.5</com.fasterxml.jackson-version>
 		<querydsl.version>4.1.4</querydsl.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -164,7 +166,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>${org.hibernate-version}</version>
+			<version>${org.hibernate-validator-version}</version>
 		</dependency>
 		
 		<dependency>
@@ -221,17 +223,17 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
-			<version>2.5.2</version>
+			<version>${com.fasterxml.jackson-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.5.2</version>
+			<version>${com.fasterxml.jackson-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-hibernate5</artifactId>
-			<version>2.7.1</version>
+			<version>${com.fasterxml.jackson-version}</version>
 		</dependency>
 		
 		<!-- Querydsl -->
@@ -342,5 +344,19 @@
 			</plugin>
         </plugins>
     </build>
+    <repositories>
+    	<repository>
+    		<id>central</id>
+    		<url>http://central.maven.org/maven2/</url>
+    	</repository>
+    	<repository>
+    		<id>spring-plugins</id>
+    		<url>http://repo.spring.io/plugins-release/</url>
+    	</repository>
+    	<repository>
+    		<id>spring-libs</id>
+    		<url>http://repo.spring.io/libs-milestone/</url>
+    	</repository>
+    </repositories>
     <version>dev</version>
 </project>
