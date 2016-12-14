@@ -31,23 +31,23 @@ public class Quest extends Domain {
 	private String description; //설명 description
 	//sub Project?
 
-	@OneToMany(mappedBy = "quest", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "quest", fetch = FetchType.EAGER)
 	@Cascade(CascadeType.ALL)
 	private Set<Reward> rewards; //보상 reward 경험치 point 물건? model로 따로 뺌? rewardPoint, rewardExperiencePoint other
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "stateId", referencedColumnName = "id")
 	private Code state; //상태 - 준비(R), 요청자를 기다림(wait), 토의(discuss), 진행(progress), 완료(complete), 중지(stop), 일시정지(pause)
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "QuestArea", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "areaId")})
 	private Set<Area> areas;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "QuestWork", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "workId")})
 	private Set<Work> works;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "QuestSkill", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "skillId")})
 	private Set<Skill> skills;
 	
@@ -63,15 +63,15 @@ public class Quest extends Domain {
 	@Cascade(CascadeType.ALL)
 	private Set<Issue> issues; //이슈
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "requesterId", referencedColumnName = "id")
 	private Requester requester;	//발주자
 	 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "QuesterQuest", joinColumns = {@JoinColumn(name = "questId")}, inverseJoinColumns = {@JoinColumn(name = "questerId")})
 	private Set<Quester> questers;
 	
-	@OneToMany(mappedBy ="quest", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy ="quest", fetch = FetchType.EAGER)
 	private Set<Applicant> applicants;
 
 	public String getQualification() {

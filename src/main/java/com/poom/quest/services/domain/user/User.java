@@ -27,11 +27,11 @@ public class User extends Domain {
 	private Integer frozenPoint;
 	
 
-	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
 	@Cascade(CascadeType.ALL)
 	private Requester requester;
 
-	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
 	@Cascade(CascadeType.ALL)
 	private Quester quester;
 
