@@ -41,9 +41,7 @@ public class MysqlDataSourceConfiguration   {
         String user = environment.getProperty("ds.user"),
                 pw = environment.getProperty("ds.password"),
                 url = environment.getProperty("ds.url");
-        Class<Driver> driverClass = environment.getPropertyAsClass( "ds.driverClass", Driver.class );
-
-        return getDataSource(user, pw, url, driverClass);
+        return getDataSource(user, pw, url, Driver.class);
     }
 
     @Primary
