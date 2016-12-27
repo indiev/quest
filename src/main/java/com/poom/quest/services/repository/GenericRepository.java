@@ -108,7 +108,7 @@ public abstract class GenericRepository<T extends Domain, ID extends Serializabl
 						.where(code.model.eq(modelName), code.attribute.eq(key), code.value.eq(key));
 					query.where(entityPath.get(key+"Id").eq(subQuery));
 				} else {
-					query.where(entityPath.get(key+"Id").eq(params.get(key)));
+					query.where(entityPath.get(key.toLowerCase()).eq(params.get(key)));
 				}
 			} else if(Set.class.isAssignableFrom(field.getType())) { //Type이 List일 경우
 				//String keyModel = key.substring(0, 1).toUpperCase() + key.substring(1, key.length()-1);

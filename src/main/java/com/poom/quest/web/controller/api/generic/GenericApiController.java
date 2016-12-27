@@ -98,16 +98,25 @@ public abstract class GenericApiController<T extends Domain, ID extends Serializ
 	}
 	
 	@RequestMapping(value = "/{id}/{child}s", method = RequestMethod.GET)
-	public <S extends Domain> List<S> childrenByParent(@PathVariable("id") ID id, @PathVariable("child") String child, @RequestParam Map<String, Object> params) {
-		Field field = Reflect.getField(domainClass, child + "s");
+	public <S extends Domain> Set<S> childrenByParent(@PathVariable("id") ID id, @PathVariable("child") String child, @RequestParam Map<String, Object> params) {
+		/*Field field = Reflect.getField(domainClass, child + "s");
 		if(field == null) return null;
-		GenericService<S, ID> childService = (GenericService<S, ID>) getService(child);
+		GenericService<S, Long> childService = (GenericService<S, Long>) getService(child);
 		System.out.println(childService);
 		if(childService != null) {
-			params.put(domainClass.getSimpleName()+"s", id);
+			params.put(domainClass.getSimpleName(), id);
 			return (List<S>) childService.listByKeys(params);			
-		} else return null;
-		
+		} else return null;*/
+		try {
+			T entity = getService().get(id);
+			Method method = Reflect.getMethod(domainClass, "get"+child+"s");
+			if(method != null) {
+				return (Set<S>)method.invoke(entity);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)

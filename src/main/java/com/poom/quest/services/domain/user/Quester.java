@@ -12,7 +12,6 @@ import javax.persistence.OneToOne;
 import org.springframework.data.annotation.CreatedBy;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.poom.quest.services.domain.Area;
 import com.poom.quest.services.domain.Quest;
 import com.poom.quest.services.domain.Skill;

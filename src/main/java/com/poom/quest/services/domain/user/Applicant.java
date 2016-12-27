@@ -5,6 +5,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poom.quest.services.domain.Quest;
 import com.poom.quest.services.domain.abstractModel.Domain;
@@ -18,12 +19,11 @@ public class Applicant extends Domain {
 	private String message;
 	//private Resume resume; //지원서
 	
-	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "questerId", referencedColumnName = "id")
 	private Quester quester;
 	
-	@JsonIgnore
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "questId", referencedColumnName = "id")
 	private Quest quest;
